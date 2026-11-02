@@ -1,6 +1,5 @@
 ---
 title: Preparing for rgbif v3.9.0 and pygbif v0.7.0 Moving to COL Extended Release
-author: []
 date: '2026-08-20'
 last_modified_at: '2026-08-20'
 slug: rgbif-colxr-preparation
