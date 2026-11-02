@@ -14,7 +14,7 @@ tags:
 - DwC-DP
 - Darwin Core
 - DwC-A
-- publish
+- publishing
 - sope
 - target
 series: Good SAMaritans

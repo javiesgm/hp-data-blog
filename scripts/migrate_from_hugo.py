@@ -68,6 +68,12 @@ TITLE_RULES = [
     ("community metrics", ["Citation and data use"]),
 ]
 
+# Duplicate tags merged into one spelling (the Hugo blog had several variants)
+TAG_MAP = {"checklists": "checklist", "publish": "publishing", "citizen": "citizen science",
+           "catalogue-of-life": "Catalogue of Life", "catalogue of life": "Catalogue of Life", "col": "Catalogue of Life",
+           "collection": "collections", "r": "rstats", "media": "multimedia", "image": "multimedia",
+           "quality": "data quality", "darwin core": "Darwin Core", "institution": "institution"}
+
 def categories_for(tags, title=""):
     if not tags:
         for key, cats in TITLE_RULES:
@@ -148,6 +154,7 @@ for f in posts:
     tags = []
     for t in fm.get("tags") or []:
         t = str(t).strip()
+        t = TAG_MAP.get(t.lower(), t)
         if t and t.lower() != "gbif" and t.lower() not in [x.lower() for x in tags]:
             tags.append(t)
 

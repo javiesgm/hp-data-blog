@@ -8,7 +8,7 @@ categories:
 - Publishing data
 - APIs and downloads
 tags:
-- publish
+- publishing
 - installation
 - IPT
 - symbiota

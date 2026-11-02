@@ -16,7 +16,7 @@ tags:
 - EBI
 - sequence
 - OTU
-- quality
+- data quality
 - howto
 - use
 - metagenomics

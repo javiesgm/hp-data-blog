@@ -2,6 +2,8 @@
 - text: Posts
   href: /
 - text: Topics
+  # Curated by hand on purpose: a new category in a post does NOT appear here until it is added below.
+  # It does appear on the home page topic chips and on /tags/ automatically.
   menu:
   - text: APIs and downloads
     href: /?category=APIs%20and%20downloads
@@ -21,6 +23,11 @@
     href: /?category=Citizen%20science
   - text: Molecular data
     href: /?category=Molecular%20data
+  - text: Multimedia
+    href: /?category=Multimedia
+  - text: "---"
+  - text: All topics and tags
+    href: /tags/
 - text: Series
   href: /series/
 - text: Authors

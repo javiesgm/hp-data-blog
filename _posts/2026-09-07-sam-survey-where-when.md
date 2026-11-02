@@ -14,7 +14,7 @@ tags:
 - DwC-DP
 - Darwin Core
 - DwC-A
-- publish
+- publishing
 - site
 - date
 - location

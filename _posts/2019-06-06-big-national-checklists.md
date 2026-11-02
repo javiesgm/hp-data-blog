@@ -8,7 +8,7 @@ categories:
 - Taxonomy
 - Analysis and maps
 tags:
-- checklists
+- checklist
 - data gaps
 - API
 thumbnail: /post/2019-05-15-big-national-checklists_files/europeMap.gif

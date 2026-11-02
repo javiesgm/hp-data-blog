@@ -16,7 +16,7 @@ The preview is marked as a test site, has no comments and is hidden from search 
   remembered per browser), a search box and the topic chips.
 - **Filtered lists** use the same page: `/?category=Taxonomy`, `/?author=john-waller`, `/?tag=rgbif`,
   `/?series=good-samaritans`. Author names and tags on a post link there.
-- **Series** (`/series/`) and **Authors** (`/authors/`) are built automatically from the posts' front matter.
+- **Series** (`/series/`), **Authors** (`/authors/`) and **Topics and tags** (`/tags/`) are built automatically from the posts' front matter. The Topics menu is a curated list in `_data/navigation.yml`.
 - Old Hugo addresses such as `/author/john-waller/` or `/tags/rgbif/` redirect to the matching filtered list.
 
 No Jekyll plugins are involved, so the site builds with the standard hosted-portal Gemfile.
@@ -48,8 +48,14 @@ filtered list the next time the site is built. Write your name exactly as on you
 To choose a different one, add `slug: something-else`.
 
 **Topics** (`categories`): APIs and downloads · Publishing data · Analysis and maps · Taxonomy ·
-Data quality · Citation and data use · Collections · Citizen science · Molecular data.
-New topics appear automatically, but please reuse these where possible.
+Data quality · Citation and data use · Collections · Citizen science · Molecular data · Multimedia.
+Every post needs at least one. A new topic appears by itself on the home page and on the
+Topics and tags page, but not in the Topics menu: the menu is curated by hand in
+`_data/navigation.yml`. Only create a new topic when none of these fits, and add it to the menu
+if it should be there.
+
+**Tags** are free keywords. Check [the tags page](/tags/) first and reuse an existing tag
+(`publishing`, not `publish`; `checklist`, not `checklists`) so posts on the same subject end up together.
 
 ### Optional settings
 

@@ -10,7 +10,7 @@ categories:
 tags:
 - API
 - taxonomy
-- catalogue-of-life
+- Catalogue of Life
 toc: true
 excerpt_separator: <!--more-->
 ---

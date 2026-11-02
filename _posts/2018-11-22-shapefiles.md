@@ -8,7 +8,7 @@ categories:
 - APIs and downloads
 - Analysis and maps
 tags:
-- R
+- rstats
 - maps
 - arctic
 - shapefile

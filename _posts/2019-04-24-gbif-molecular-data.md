@@ -18,7 +18,7 @@ tags:
 - OTU
 - Darwin Core
 - howto
-- publish
+- publishing
 thumbnail: https://www.publicdomainpictures.net/pictures/40000/velka/--1359709322C31.jpg#.XLcmtPqn2pQ.link
 excerpt_separator: <!--more-->
 ---

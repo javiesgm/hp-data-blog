@@ -258,3 +258,9 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
   .series-group { grid-template-columns: 1fr; }
   .series-group__image { grid-column: 1; grid-row: auto; }
 }
+
+// ---------- Topics and tags page ----------
+.terms-heading { font-size: 1.5rem; font-weight: 600; margin: 1.5rem 0 .75rem !important; }
+.terms-heading__count { font: 500 .9rem $gbif-body; color: $blog-muted; margin-left: .35rem; }
+.terms-list { gap: 0; }
+.terms-list--tags .tag { font-size: .85rem; }

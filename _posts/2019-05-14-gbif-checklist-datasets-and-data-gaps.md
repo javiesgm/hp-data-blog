@@ -10,7 +10,7 @@ categories:
 tags:
 - data gaps
 - data quality
-- checklists
+- checklist
 thumbnail: /post/2019-04-23-gbif-checklist-datasets-and-data-gaps_files/popularGroupsCoverageBackbone.svg
 excerpt_separator: <!--more-->
 ---
