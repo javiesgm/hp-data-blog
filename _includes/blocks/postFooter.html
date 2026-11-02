@@ -1,0 +1,42 @@
+{% comment %} Disclaimer, older/newer links, Discourse comments, MathJax when a post asks for it {% endcomment %}
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        {% if page.previous %}
+          <a class="post-end__link" href="{{ page.previous.url | relative_url }}">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">{{ page.previous.title }}</span>
+          </a>
+        {% else %}<span></span>{% endif %}
+        {% if page.next %}
+          <a class="post-end__link post-end__link--next" href="{{ page.next.url | relative_url }}">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">{{ page.next.title }}</span>
+          </a>
+        {% endif %}
+      </nav>
+
+      {% if site.discourse_comments and jekyll.environment == "production" %}
+      <h2 class="post-end__comments-title">Discuss this post</h2>
+      <div id="discourse-comments"></div>
+      <script>
+        window.DiscourseEmbed = { discourseUrl: 'https://discourse.gbif.org/',
+                                  discourseEmbedUrl: '{{ page.url | absolute_url }}' };
+        (function() {
+          var d = document.createElement('script'); d.async = true;
+          d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+          (document.head || document.body).appendChild(d);
+        })();
+      </script>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% if page.mathjax %}
+<script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+{% endif %}

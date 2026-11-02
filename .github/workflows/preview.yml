@@ -1,0 +1,63 @@
+# Builds the blog and publishes a preview to GitHub Pages.
+# Mirrors GBIF's hosted-portal build (Jekyll 4.1 with the hp-template Gemfile.lock).
+name: Preview on GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "2.7"
+          bundler: "2.1.4"
+          bundler-cache: true
+
+      - name: Build site
+        env:
+          JEKYLL_ENV: production
+        run: |
+          bundle exec jekyll build --trace \
+            --config _config.yml,_config_preview.yml \
+            --baseurl "/${{ github.event.repository.name }}"
+
+      - name: Adapt for the preview address
+        run: |
+          BP="/${{ github.event.repository.name }}"
+          # Post content links to /post/... and /assets/... from the site root; add the Pages sub-path.
+          if [ -n "$BP" ]; then
+            find _site -name '*.html' -print0 | xargs -0 sed -i -E "s#(src|href|srcset|poster)=\"/(post|assets|index\.xml)#\1=\"$BP/\2#g"
+          fi
+          # Keep the preview out of search engines.
+          printf 'User-agent: *\nDisallow: /\n' > _site/robots.txt
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

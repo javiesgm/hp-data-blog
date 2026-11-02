@@ -1,0 +1,6 @@
+# Overrides used only by the GitHub Pages preview build (.github/workflows/preview.yml)
+url: "https://javiesgm.github.io"
+testSite: true            # theme marks the header as a test site
+discourse_comments: false # Discourse only allows embedding on data-blog.gbif.org
+plausible:
+  enabled: false          # don't count preview visits in the blog's statistics

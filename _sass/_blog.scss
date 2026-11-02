@@ -1,0 +1,68 @@
+// GBIF Data Blog additions on top of the hosted-portal theme.
+// Kept small on purpose: the look comes from the theme so the blog stays part of the portal family.
+
+$blog-muted: #5d6a63;
+$blog-line: #e2e8e1;
+$blog-wash: #eef6ec;
+
+// ---------- Post list (home and /post/) ----------
+.blog-intro {
+  padding: 3rem 0 1rem;
+  .container { max-width: 1000px; padding: 0 1rem; }
+}
+.blog-intro__title { font-size: 2.5rem; font-weight: 700; line-height: 1.15; margin-bottom: .5rem; }
+.blog-intro__lede { font-size: 1.2rem; color: $blog-muted; max-width: 40rem; margin-bottom: 1.5rem; }
+.blog-search { max-width: 40rem; margin-bottom: 1rem; }
+.blog-search__status { font-size: .9rem; color: $blog-muted; min-height: 1.4em; margin-top: .35rem; }
+.blog-topics { margin-bottom: .5rem; }
+.blog-topics .tag { text-decoration: none; }
+.blog-topics__count { margin-left: .35em; opacity: .6; font-size: .85em; }
+.blog-list .feature-cards { max-width: 1200px; } // room for 3 cards per row (theme: 360px + gaps)
+.blog-list .feature.is-search-hidden { display: none !important; }
+.blog-list__empty { text-align: center; color: $blog-muted; padding: 2rem 1rem 4rem; }
+.blog-list .feature-pre-title { text-transform: none; letter-spacing: 0; }
+
+// ---------- Post page ----------
+// The theme gives each .article block large vertical margins; tighten them for our extra blocks.
+.post-meta, .post-series, .post-end {
+  .article { margin-top: 0; margin-bottom: 0; padding: 0 12px; }
+}
+.post-meta { margin-top: -0.5rem; }
+.post-meta__byline { color: $blog-muted; text-align: center; margin-bottom: .75rem; }
+.post-meta__byline span { margin: 0 .4em; }
+.post-meta__topics { justify-content: center; }
+
+.post-series { margin-top: -1.5rem; }
+.post-series__box {
+  border: 1px solid $blog-line; border-left: 4px solid $primary; border-radius: 8px;
+  padding: 1rem 1.25rem; margin-bottom: 2rem;
+  ol { margin: .5rem 0 0 1.25rem; }
+  li { margin: .35rem 0; line-height: 1.4; }
+  [aria-current] { font-weight: 600; }
+}
+.post-series__title { color: $blog-muted; }
+
+.post-end { margin-bottom: 4rem; }
+.post-end__disclaimer { font-style: italic; color: $blog-muted; font-size: .95rem; border-top: 1px solid $blog-line; padding-top: 1.25rem; }
+.post-end__nav { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin: 1.25rem 0 2.5rem; }
+.post-end__link {
+  display: block; border: 1px solid $blog-line; border-radius: 8px; padding: .9rem 1rem; color: inherit;
+  &:hover { border-color: $primary; }
+}
+.post-end__link--next { text-align: right; grid-column: 2; }
+.post-end__label { display: block; font-size: .85rem; color: $blog-muted; }
+.post-end__title { display: block; font-weight: 600; line-height: 1.3; }
+.post-end__comments-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; }
+@media (max-width: 640px) {
+  .post-end__nav { grid-template-columns: 1fr; }
+  .post-end__link--next { grid-column: 1; }
+}
+
+// Videos converted from Hugo shortcodes
+.video-embed { position: relative; padding-bottom: 56.25%; height: 0; margin: 1.5rem 0; }
+.video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; border-radius: 6px; }
+
+// Long code lines scroll instead of breaking the layout
+.article .content pre { overflow-x: auto; }
+.article .content .highlighter-rouge, .article .content > pre { margin-bottom: 1.25rem; }
+.article .content img { height: auto; }
