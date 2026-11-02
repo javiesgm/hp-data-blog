@@ -14,7 +14,7 @@ description: Everyone who has written for the blog, most posts first, each linki
 {% assign keyed = "" %}
 {% for n in names %}
   {% assign count = 0 %}
-  {% for post in posts %}{% if post.author == n or post.author contains n %}{% assign count = count | plus: 1 %}{% endif %}{% endfor %}
+  {% for post in posts %}{% if post.author == n or post.author.first and post.author contains n %}{% assign count = count | plus: 1 %}{% endif %}{% endfor %}
   {% assign key = 1000 | minus: count %}
   {% assign keyed = keyed | append: key | append: "~" | append: n | append: "|" %}
 {% endfor %}
@@ -36,7 +36,7 @@ description: Everyone who has written for the blog, most posts first, each linki
         {% assign n = parts[1] %}
         {% assign count = 1000 | minus: parts[0] %}
         {% assign latest = nil %}
-        {% for post in posts %}{% if post.author == n or post.author contains n %}{% assign latest = post %}{% break %}{% endif %}{% endfor %}
+        {% for post in posts %}{% if post.author == n or post.author.first and post.author contains n %}{% assign latest = post %}{% break %}{% endif %}{% endfor %}
         <li class="author-list__item">
           <a class="author-list__name" href="{{ listUrl }}?author={{ n | slugify }}">{{ n }}</a>
           <span class="author-list__count">{{ count }} {% if count == 1 %}post{% else %}posts{% endif %}</span>

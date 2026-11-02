@@ -40,6 +40,11 @@ thumbnail: /post/YYYY-MM-DD-your-post/plot1.png  # optional picture for the post
 ```
 
 The address of the post will be `/post/your-post/` (the file name without the date).
+
+**Authors** are picked up automatically: a new name appears on the Authors page and gets its own
+filtered list the next time the site is built. Write your name exactly as on your earlier posts
+(“John Waller”, not “J. Waller”), or you will show up as two people. With co-authors, use a list
+(`author: [Marie Grosjean, Kate Ingenloff]`), not “Marie Grosjean and Kate Ingenloff”.
 To choose a different one, add `slug: something-else`.
 
 **Topics** (`categories`): APIs and downloads · Publishing data · Analysis and maps · Taxonomy ·
