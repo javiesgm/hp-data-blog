@@ -190,6 +190,7 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
 }
 
 // ---------- List view ----------
+.blog-list.is-list .blog-toolbar { max-width: 944px; }   // line up with the narrower list
 .blog-list.is-list {
   .feature-cards { display: block; max-width: 920px; margin: 0 auto; }
   .feature {
