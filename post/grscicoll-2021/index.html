@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>The Global Registry of Scientific Collections (GRSciColl) in 2021
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1793626883">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/data-blog-logo.png" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+              
+                
+                
+                  <a href="/hp-data-blog/?category=APIs+and+downloads" class="navbar-item">
+                    APIs and downloads
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Analysis+and+maps" class="navbar-item">
+                    Analysis and maps
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citation+and+data+use" class="navbar-item">
+                    Citation and data use
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citizen+science" class="navbar-item">
+                    Citizen science
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Collections" class="navbar-item">
+                    Collections
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Data+quality" class="navbar-item">
+                    Data quality
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Molecular+data" class="navbar-item">
+                    Molecular data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Multimedia" class="navbar-item">
+                    Multimedia
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Publishing+data" class="navbar-item">
+                    Publishing data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Taxonomy" class="navbar-item">
+                    Taxonomy
+                  </a>
+                
+              
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://discourse.gbif.org/c/data-blog"
+            >
+            Community forum
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://www.gbif.org/"
+            >
+            GBIF.org
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>The Global Registry of Scientific Collections (GRSciColl) in 2021</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=marie-grosjean" title="All posts by Marie Grosjean">Marie Grosjean</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2021-03-12">12 March 2021</time>
+        <span aria-hidden="true">·</span>
+        4 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Collections">Collections</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=grscicoll">#GRSciColl</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=collections">#collections</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=institution">#institution</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=idigbio">#iDigBio</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=ih">#IH</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+      <div class="article">
+        <div class="content">
+  <p>The <a href="https://www.gbif.org/grscicoll">Global Registry of Scientific Collections</a>, also known as GRSciColl, has been <a href="https://www.gbif.org/news/5kyAslpqTVxYqZTwYn1cub/gbif-provides-new-home-for-the-global-registry-of-scientific-collections">available on GBIF.org since 2019</a> but it recently got some more attention when we connected it to GBIF occurrences.
+Now is the perfect time to share a bit of GRSciColl history and what we plan for its future.</p>
+
+<h1 id="a-brief-history-of-grscicoll">A brief history of GRSciColl</h1>
+
+<p>First of all, here are a few facts about GrSciColl today, at the start of 2021:</p>
+
+<blockquote>
+  <p>This registry of scientific collections builds on GRSciColl, a comprehensive, community-curated clearinghouse of collections information originally developed by Consortium of the Barcode of Life (CBOL). See: https://www.gbif.org/grscicoll</p>
+</blockquote>
+
+<ul>
+  <li>GRSciColl is embedded in the GBIF registry, available in the API and on the web, and can be edited by trusted data managers.</li>
+  <li>It currently hosts <a href="https://www.gbif.org/grscicoll/institution/search">8,140 institution entries</a> as well as <a href="https://www.gbif.org/grscicoll/collection/search">6,313 collection</a> and <a href="https://www.gbif.org/grscicoll/person/search">16,543 staff member</a> entries.</li>
+  <li>About half of the institutions, 67% of the collections and 77% of the staff entries are synchronized with <a href="http://sweetgum.nybg.org/science/ih/">Index Herbariorum</a>.</li>
+  <li>In addition to that, over 1,500 collections were created or updated by <a href="https://www.idigbio.org/portal/collections">iDigBio</a>.</li>
+  <li>Whenever possible, institutions and collections are linked to GBIF occurrences. See for example, <a href="https://www.gbif.org/grscicoll/collection/a7d9ed64-4668-41b3-a862-27d87c50bfed/metrics">the National Fish Collection of South African Institute for Aquatic Biodiversity</a>.</li>
+  <li>Currently, around 141 million (72%) <a href="https://www.gbif.org/occurrence/search?basis_of_record=PRESERVED_SPECIMEN&amp;basis_of_record=FOSSIL_SPECIMEN&amp;basis_of_record=LIVING_SPECIMEN&amp;occurrence_status=present">specimen-related occurrence records</a> link to a GRSciColl entity.</li>
+  <li>Institutions can request access to our registry to update and maintain their own institution and collection entries.</li>
+</ul>
+
+<p>But GRSciColl was quite different when we inherited it. Some of these features are the result of our work for the past two years.
+I will detail some of the GRSciColl history below. But first, I thought it would be nice to have a little visual so I summoned my doodling skills and made this:</p>
+
+<p><img src="/hp-data-blog/post/2021-02-08-grscicoll/GRSciColl.PNG" alt="GRSciColl doodles" /></p>
+
+<ol>
+  <li>In 2018 GBIF inherited GRSciColl from the <a href="https://www.si.edu">Smithsonian Institution</a>. It took some adjustment and work with the Smithsonian but we integrated into our registry and eventually made it available on GBIF.org (in 2019). Our first milestone!</li>
+  <li>In 2019, we reached out to the community: we welcomed volunteer editors and started working with Index Herbariorum (IH) and iDigBio on connecting them to GRSciColl.</li>
+  <li>By the beginning of 2020, GRSciColl was synchronizing with IH. Our second milestone! (thank you IH)</li>
+  <li>Not directly related to the technical developments of GRSciColl, but early 2020 also marks the <a href="https://www.gbif.org/news/6TvOkvpPlxRm5vHxljYNN5/virtual-workshop-advancing-the-catalogue-of-the-worlds-natural-history-collections">Advancing the Catalogue of the World’s Natural History Collections consultation</a>.</li>
+  <li>The same year, we finished importing the iDigBio collection data into GRSciColl and iDigBio started using our registry. An other milestone! (thank you iDigBio)</li>
+  <li>And we also linked occurrences from GBIF.org with institution and collection codes and identifiers with GRSciColl. More information <a href="https://www.gbif.org/faq?question=how-can-i-improve-the-matching-of-occurrence-records-with-grscicoll">here</a>. Our latest milestone!</li>
+</ol>
+
+<h1 id="remaining-challenges-and-future-plans">Remaining challenges and future plans</h1>
+
+<p>GRSciColl is still a work in progress, and many challenges remain. I won’t go into too many details (this is still a blogpost), but some of the areas we would like to address next include:</p>
+
+<ol>
+  <li><strong>Reduce the amount of duplicate records</strong>: The connection with Index Herbariorum and import of iDigBio enriched the catalogue, but also increased the number of duplicate entities that can’t be automatically handled. We have been working on implementing tools and functions to help data content managers identify and clean those dupicates more efficiently. We would like to ask the community for help to assess and clean these duplicates. One way to pariticpate, is to review the potiential duplicates listed in <a href="https://github.com/gbif/collections-duplicates">this GitHub repository</a>.</li>
+  <li><strong>Allow anyone to propose changes</strong>: Most of the update requests are handled by email. We aim to develop an interface allowing anyone to propose a change to any field and state whether they have authority to approve it. Changes are then to be reviewed and applied by the editorial team.</li>
+  <li><strong>Improve documentation.</strong></li>
+  <li><strong>Grow the pool of editors.</strong></li>
+  <li><strong>Define and implement the master data management solution</strong>.</li>
+  <li><strong>Develop a richer user interface</strong>.</li>
+</ol>
+
+<p>For more information, you can consult our <a href="https://github.com/gbif/registry/blob/master/roadmap-grscicoll.md">2021 Roadmap</a>.</p>
+
+<p>If you would like to contribute to improving the GRSciColl content, don’t hesitate to contact us at scientific-collections@gbif.org.</p>
+
+</div>
+      </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/gbif-filtering-guide/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Common things to look out for when post-processing GBIF downloads</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/microsoft-azure-and-gbif/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">GBIF and Apache-Spark on Microsoft Azure tutorial</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1793626883"></script>
+
+
+
+
+
+  </body>
+</html>

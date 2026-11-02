@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Sequence-based data on GBIF - Sharing your data
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1793626883">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/data-blog-logo.png" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+              
+                
+                
+                  <a href="/hp-data-blog/?category=APIs+and+downloads" class="navbar-item">
+                    APIs and downloads
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Analysis+and+maps" class="navbar-item">
+                    Analysis and maps
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citation+and+data+use" class="navbar-item">
+                    Citation and data use
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citizen+science" class="navbar-item">
+                    Citizen science
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Collections" class="navbar-item">
+                    Collections
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Data+quality" class="navbar-item">
+                    Data quality
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Molecular+data" class="navbar-item">
+                    Molecular data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Multimedia" class="navbar-item">
+                    Multimedia
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Publishing+data" class="navbar-item">
+                    Publishing data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Taxonomy" class="navbar-item">
+                    Taxonomy
+                  </a>
+                
+              
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://discourse.gbif.org/c/data-blog"
+            >
+            Community forum
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://www.gbif.org/"
+            >
+            GBIF.org
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Sequence-based data on GBIF - Sharing your data</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=marie-grosjean" title="All posts by Marie Grosjean">Marie Grosjean</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2019-04-24">24 April 2019</time>
+        <span aria-hidden="true">·</span>
+        9 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Molecular+data">Molecular data</a>
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=molecular">#molecular</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=dna">#DNA</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=edna">#eDNA</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=mixs">#MixS</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=ggbn">#GGBN</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=ebi">#EBI</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=sequence">#sequence</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=otu">#OTU</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=darwin-core">#Darwin Core</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=howto">#howto</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=publishing">#publishing</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+      <div class="article">
+        <div class="content">
+  <p>[Edit 2021-09-16]</p>
+
+<p><strong>Important</strong>: To find guidance on how to publish Sequence-based data on GBIF, please consult the following guide:</p>
+
+<blockquote>
+  <p>Andersson AF, Bissett A, Finstad AG, Fossøy F, Grosjean M, Hope M, Jeppesen TS, Kõljalg U, Lundin D, Nilsson RN, Prager M, Svenningsen C &amp; Schigel D (2020) Publishing DNA-derived data through biodiversity data platforms. v1.0 Copenhagen: GBIF Secretariat. https://doi.org/10.35035/doc-vf1a-nr22.</p>
+</blockquote>
+
+<p>[End edit 2021-09-16]</p>
+
+<p>GBIF is trying to make it easier to share sequence-based data. In fact, this past year alone, we worked with <a href="https://unite.ut.ee">UNITE</a> to integrate species hypothesis for fungi and with EMBL-<a href="https://www.ebi.ac.uk">EBI</a> to publish 295 metagenomics datasets.</p>
+
+<p>Unfortunately, documentation is not as quick to follow. Although we have now an <a href="https://www.gbif.org/faq?question=how-can-i-publish-molecular-data-to-gbif">FAQ</a> on the topic, I thought that anyone could use a blog post with some advice and examples.</p>
+
+<p>Note that this blog post is not intended to be documentation. The information written is subject to change, feel free to leave comments if you have any question or suggestion.</p>
+
+<!--more-->
+
+<p><img src="https://www.publicdomainpictures.net/pictures/40000/velka/--1359709322C31.jpg#.XLcmtPqn2pQ.link" alt="Structure Of DNA - Public Domain" width="600" /></p>
+
+<h1 id="type-of-sequence-based-data-on-gbif">Type of sequence-based data on GBIF</h1>
+
+<p>The term <code class="language-plaintext highlighter-rouge">sequence-based data</code> or <code class="language-plaintext highlighter-rouge">molecular-based data</code> refers to any type of data associated to some genetic material (DNA or RNA sequence, genotype, etc.).
+These data can  be sorted in one of the two following categories:</p>
+
+<ul>
+  <li>the genetic material comes from an <strong>observable specimen</strong> (whether it is macro or microscopic).</li>
+  <li>the genetic material is the <strong>only evidence of a given organism or community</strong>, see for example metagenomics samples.</li>
+</ul>
+
+<p>These two categories have different implications in terms of quality control but this will be the topic of an other post.</p>
+
+<h1 id="examples">Examples</h1>
+
+<p>The examples I will use in this post are the following:</p>
+
+<ul>
+  <li>Frøslev T, Ejrnæs R (2018). BIOWIDE eDNA Fungi dataset. Danish Biodiversity Information Facility. Occurrence dataset https://doi.org/10.15468/nesbvx accessed via GBIF.org on 2019-04-17.</li>
+  <li>PlutoF (2019). UNITE - Unified system for the DNA based fungal species linked to the classification. Version 1.2. Checklist dataset https://doi.org/10.15156/bio/587474 accessed via GBIF.org on 2019-04-17.</li>
+  <li>Cox F, Newsham K, Robinson C, Sweetlove M (2019). Microbial Fungi in soils on different Sub-Antarctic islands. SCAR - Microbial Antarctic Resource System. Metadata dataset https://doi.org/10.15468/jekfdj accessed via GBIF.org on 2019-04-17. + <a href="https://www.gbif.org/dataset/search?type=METADATA&amp;publishing_org=af290483-8639-4b58-87fb-a4824c65e577">all the SCAR - Microbial Antarctic Resource System metadata-only datasets</a></li>
+  <li>MGnify (2017). EMOSE (2017) Inter-Comparison of Marine Plankton Metagenome Analysis Methods. Sampling event dataset https://doi.org/10.15468/re7eoi accessed via GBIF.org on 2019-04-17. + <a href="https://www.gbif.org/dataset/search?publishing_org=ab733144-7043-4e88-bd4f-fca7bf858880">MGnify datasets</a></li>
+  <li>Telfer A (2018). Centre for Biodiversity Genomics - Canadian Specimens. University of Guelph. Occurrence dataset https://doi.org/10.15468/mbwnw9 accessed via GBIF.org on 2019-04-17.</li>
+</ul>
+
+<h1 id="choosing-a-dataset-class">Choosing a dataset class</h1>
+
+<p>Data providers must organize their data into datasets in order to share them on GBIF. Four different dataset classes are supported: resources metadata, checklists, occurrence datasets and sampling-event datasets (see <a href="https://www.gbif.org/dataset-classes">this page</a> for more details). For the rest of this post, I assume that you are familiar with the structures of Darwin Core Archives, please consult <a href="https://github.com/gbif/ipt/wiki/DwCAHowToGuide">this page</a> for more information).</p>
+
+<p>When choosing which dataset class would suit your data best, keep in mind that extensions can only describe the core file. For example:</p>
+
+<ul>
+  <li>If you would like to share sequences for each occurrence, consider organizing your data as an occurrence dataset: the extension containing the sequences will attached to occurrences (see <a href="https://doi.org/10.15468/nesbvx">BIOWIDE eDNA Fungi dataset</a>.</li>
+  <li>Sampling-event datasets allow to put a greater emphasis on sampling protocol. This is the class adopted by <a href="https://www.gbif.org/publisher/ab733144-7043-4e88-bd4f-fca7bf858880">Mgnify</a> to map its metagenomics data.</li>
+</ul>
+
+<p>Hopefully, the rest of this blog post might give you a better idea of what is possible.</p>
+
+<h1 id="linnaean-classification-and-non-linnaean-classification">Linnaean classification and non-Linnaean classification</h1>
+
+<p><img align="right" style="padding: 15px" src="https://upload.wikimedia.org/wikipedia/commons/c/c0/Carolus_Linnaeus.jpg" alt="Portrait of Carl von Linné (Carolus Linnaeus) - Public domain" width="300" /></p>
+
+<p>As mentioned in our <a href="https://www.gbif.org/faq?question=how-can-i-publish-molecular-data-to-gbif">FAQ</a>:</p>
+
+<p>A basic requirement [on GBIF] is that organisms are identified–either using Linnean classification or another accepted taxonomy (e.g. DNA-based Species Hypotheses (SH) for fungi). If a specific taxonomy is not available, organisms may be identified to the nearest possible taxon (e.g. Bacteria).</p>
+
+<p>In other words, checklists, occurrence and sampling-event datasets must contain scientific names (our system doesn’t handle OTUs). If you would like to check what can be matched to the GBIF taxonomy, please try out our name matching tool: https://www.gbif.org/tools/species-lookup.</p>
+
+<p>The <a href="https://doi.org/10.15468/nesbvx">BIOWIDE eDNA Fungi dataset</a> is a good example of dataset with some DNA-based Species Hypotheses (SH) for fungi.
+If no scientific name is available, you can always publish metadata-only datasets. See for example this dataset about <a href="https://doi.org/10.15468/jekfdj">Microbial Fungi in soils on different Sub-Antarctic islands</a>.</p>
+
+<h1 id="protocols-and-analysis-pipelines">Protocols and analysis pipelines</h1>
+
+<p>The sampling protocol, sequencing technology, quality control and sequence analysis pipelines make a huge difference in what can be detected at the microscopic level. For metagenomics datasets, the set of methods employed is probably the most valuable piece of information for a data user.
+There are two ways to convey this type of information in a tabular form:</p>
+
+<ul>
+  <li>Using non-core extensions</li>
+  <li>Using <a href="https://dwc.tdwg.org/terms/">Darwin Core terms</a> only</li>
+</ul>
+
+<p>[<strong>Edit:</strong> 2023-11-09: this paragraph was updated]
+In the first case, the information can be structured using defined terms, which makes it easier for users to compare methods once the data is aggregated with other dataset. In addition to that, this is a good way to make the information compatible across platforms. For example, the <a href="https://doi.org/10.15468/inygc6">International Barcode of Life project (iBOL)</a> uses <a href="https://rs.gbif.org/extension/gbif/1.0/dna_derived_data_2024-07-11.xml">DNA derived data extension</a>. However, GBIF won’t index these extenstions as it indexes only Core and Multimedia ones. Which means that the information isn’t displayed on the portal. In fact, it is only available to users downloading the source Darwin Core archive on the dataset pages (click on the download tab and choose <code class="language-plaintext highlighter-rouge">Source archive</code>).</p>
+
+<p>The alternative is to use some of the <a href="https://dwc.tdwg.org/terms/">Darwin Core terms</a>. For example, <a href="https://www.gbif.org/publisher/ab733144-7043-4e88-bd4f-fca7bf858880">Mgnify</a> organized its datasets as follow:</p>
+
+<ul>
+  <li>The sampling protocols are described in the event files under the <a href="https://dwc.tdwg.org/terms/#dwc:samplingProtocol">dwc:samplingProtocol</a> and the <a href="https://dwc.tdwg.org/terms/#dwc:eventRemarks">dwc:eventRemarks</a> terms (see <a href="https://www.gbif.org/dataset/20b968fd-b7e0-4002-9136-1ccfa8e5b9df/event/MGYA00163069">this event</a> from the <a href="https://doi.org/10.15468/re7eoi">Inter-Comparison of Marine Plankton Metagenome Analysis Methods</a>).</li>
+  <li>The bioinformatics analysis pipelines are described in the occurrence files under <a href="https://dwc.tdwg.org/terms/#dwc:identificationReferences">dwc:identificationReferences</a> with a link to the pipeline and <a href="https://dwc.tdwg.org/terms/#dwc:identificationRemarks">dwc:identificationRemarks</a> with the description (see <a href="https://www.gbif.org/occurrence/2027240778">this occurrence</a> from the same dataset).</li>
+  <li>The total number of reads in a sample are given in the event file under <a href="https://dwc.tdwg.org/terms/#dwc:sampleSizeValue">dwc:sampleSizeValue</a> and <a href="https://dwc.tdwg.org/terms/#dwc:sampleSizeUnit">dwc:sampleSizeUnit</a> and the number of reads matched to a specific taxon are given in the occurrence file under <a href="https://dwc.tdwg.org/terms/#dwc:organismQuantity">dwc:organismQuantity</a> and <a href="https://dwc.tdwg.org/terms/#dwc:organismQuantityType">dwc:organismQuantityType</a>.</li>
+</ul>
+
+<p>These fields are displayed on the occurrence and event pages but contain mostly free text. The lack of structure can be an issue when comparing data from different data sources.</p>
+
+<p>Note that the methods can also be described in the datasets metadata. For example, the <a href="https://www.gbif.org/dataset/search?type=METADATA&amp;publishing_org=af290483-8639-4b58-87fb-a4824c65e577">SCAR - Microbial Antarctic Resource System metadata-only datasets</a> contain sampling and laboratory protocols (see for example <a href="https://doi.org/10.15468/jekfdj">Microbial Fungi in soils on different Sub-Antarctic islands</a>)</p>
+
+<p>A third option could be to do both: structure the information in extensions and make it available in <a href="https://dwc.tdwg.org/terms/">Darwin Core terms</a>. This approach would require more work but would ensure that the information is structured and accessible to more users.</p>
+
+<h3 id="extensions-available">Extensions available</h3>
+
+<p>A few extensions are currently available for structuring laboratory protocols. As mentioned previously, <a href="https://doi.org/10.15468/nesbvx">BIOWIDE eDNA Fungi dataset</a> uses <a href="http://rs.gbif.org/extension/ggbn/">GGBN extensions</a>.
+The <a href="https://rs.gbif.org/sandbox/extension/mixs_sample.xml">MIxS sample extension</a> can also be an alternative.</p>
+
+<p>Keep in mind that GBIF doesn’t maintain extensions (it is up to the community) so some extensions available can become deprecated.</p>
+
+<h1 id="sequences">Sequences</h1>
+
+<p>You cannot make your sequences available directly on GBIF but you can reference them via the <a href="https://dwc.tdwg.org/terms/#dwc:associatedSequences">dwc:associatedSequences</a> field or share them via an extension.</p>
+
+<p>The <a href="https://dwc.tdwg.org/terms/#dwc:associatedSequences">dwc:associatedSequences</a> field should contain a reference to a sequence (for example to EBI or EMBL) not the sequence itself, see for example, the <a href="https://doi.org/10.15468/mbwnw9">Centre for Biodiversity Genomics - Canadian Specimens</a>.</p>
+
+<p>The <a href="http://rs.gbif.org/extension/ggbn/">GGBN extensions</a> allow to share sequences but it is not indexed by the system and is therefore available only in the raw Darwin Core archive, see the <a href="https://doi.org/10.15468/nesbvx">BIOWIDE eDNA Fungi dataset</a>.</p>
+
+<h1 id="environmental-data">Environmental data</h1>
+
+<p>Your samples or observations might be associated with measurements such as the water salinity or the soil pH. You can structure this type of information by using the <a href="http://rs.tdwg.org/dwc/terms/#measurementorfact">MeasurmentOrFact</a> extension. However, as I mentioned in the two paragraphs above, GBIF doesn’t index extension so these measurements would only be available in the Darwin Core Archive.</p>
+
+<p>An alternative would be to use the <a href="http://rs.tdwg.org/dwc/terms/#dwc:dynamicProperties">dwc:dynamicProperties</a> field. This solution is not ideal but the properties will be displayed on the portal (see <a href="https://www.gbif.org/occurrence/2027240778">this occurrence</a> from the <a href="https://doi.org/10.15468/re7eoi">Inter-Comparison of Marine Plankton Metagenome Analysis Methods</a>).</p>
+
+<p>Perhaps the best solution for now would be to use both <a href="http://rs.tdwg.org/dwc/terms/#measurementorfact">MeasurmentOrFact</a> and <a href="http://rs.tdwg.org/dwc/terms/#dwc:dynamicProperties">dwc:dynamicProperties</a> to ensure that the information is accessible.</p>
+
+<h1 id="in-summary">In summary</h1>
+
+<p>Publishing molecular data on GBIF is like publishing any other type of data, it depends on each particular case. We are still figuring things out and would appreciated any thoughts on the topic. Don’t hesitate to leave a comment or email helpdesk@gbif.org if you have any question.</p>
+
+<h1 id="references">References</h1>
+
+<ul>
+  <li><a href="https://www.gbif.org/news/2LrgV5t3ZuGeU2WIymSEuk/adding-sequence-based-identifiers-to-backbone-taxonomy-reveals-dark-taxa-fungi">Adding sequence-based identifiers to backbone taxonomy reveals ‘dark taxa’ fungi</a></li>
+  <li><a href="https://unite.ut.ee">UNITE</a></li>
+  <li><a href="https://www.gbif.org/news/6ewyUhBpRYammYWI2CgsM4/biodiversity-infrastructures-to-crosslink-metagenomics-and-species-occurrence-data">Biodiversity infrastructures to crosslink metagenomics and species occurrence data</a></li>
+  <li><a href="https://www.ebi.ac.uk">EBI</a></li>
+  <li><a href="https://www.gbif.org/faq?question=how-can-i-publish-molecular-data-to-gbif">(How) can I publish molecular/sequence/DNA based data to GBIF?</a></li>
+  <li><a href="https://www.gbif.org/dataset-classes">Dataset classes</a></li>
+  <li><a href="https://github.com/gbif/ipt/wiki/DwCAHowToGuide">Darwin Core Archives - How-to Guide</a></li>
+  <li><a href="https://dwc.tdwg.org/terms/">Darwin Core terms quick reference guide</a></li>
+  <li><a href="https://github.com/gbif/ipt/wiki">IPT manual</a></li>
+  <li><a href="https://www.gbif.org/publishing-data">Quick guide to publishing data through GBIF.org</a></li>
+  <li><a href="https://www.gbif.org/faq?question=how-can-i-publish-molecular-data-to-gbif">FAQ - (How) can I publish molecular/sequence/DNA based data to GBIF?</a></li>
+  <li><a href="https://www.gbif.org/tools/species-lookup">Name matching tool</a></li>
+  <li><a href="https://tools.gbif.org/dwca-validator/extensions.do">Extensions</a></li>
+  <li><a href="http://rs.tdwg.org/dwc/terms/#measurementorfact">MeasurmentOrFact extension</a></li>
+  <li><a href="http://rs.gbif.org/extension/ggbn/">GGBN extensions</a></li>
+  <li>Frøslev T, Ejrnæs R (2018). BIOWIDE eDNA Fungi dataset. Danish Biodiversity Information Facility. Occurrence dataset https://doi.org/10.15468/nesbvx accessed via GBIF.org on 2019-04-17.</li>
+  <li>PlutoF (2019). UNITE - Unified system for the DNA based fungal species linked to the classification. Version 1.2. Checklist dataset https://doi.org/10.15156/bio/587474 accessed via GBIF.org on 2019-04-17.</li>
+  <li>Cox F, Newsham K, Robinson C, Sweetlove M (2019). Microbial Fungi in soils on different Sub-Antarctic islands. SCAR - Microbial Antarctic Resource System. Metadata dataset https://doi.org/10.15468/jekfdj accessed via GBIF.org on 2019-04-17. + <a href="https://www.gbif.org/dataset/search?type=METADATA&amp;publishing_org=af290483-8639-4b58-87fb-a4824c65e577">all the SCAR - Microbial Antarctic Resource System metadata-only datasets</a></li>
+  <li>MGnify (2017). EMOSE (2017) Inter-Comparison of Marine Plankton Metagenome Analysis Methods. Sampling event dataset https://doi.org/10.15468/re7eoi accessed via GBIF.org on 2019-04-17. + <a href="https://www.gbif.org/dataset/search?publishing_org=ab733144-7043-4e88-bd4f-fca7bf858880">MGnify datasets</a></li>
+  <li>Telfer A (2018). Centre for Biodiversity Genomics - Canadian Specimens. University of Guelph. Occurrence dataset https://doi.org/10.15468/mbwnw9 accessed via GBIF.org on 2019-04-17.</li>
+</ul>
+
+</div>
+      </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/gridded-datasets-update/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Gridded Datasets Update</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/gbif-molecular-data-quality/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Sequenced-based data on GBIF - What you need to know before analyzing data</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1793626883"></script>
+
+
+
+
+
+  </body>
+</html>

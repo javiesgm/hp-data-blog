@@ -1,0 +1,6786 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>All posts
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1793626883">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/data-blog-logo.png" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+              
+                
+                
+                  <a href="/hp-data-blog/?category=APIs+and+downloads" class="navbar-item">
+                    APIs and downloads
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Analysis+and+maps" class="navbar-item">
+                    Analysis and maps
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citation+and+data+use" class="navbar-item">
+                    Citation and data use
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citizen+science" class="navbar-item">
+                    Citizen science
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Collections" class="navbar-item">
+                    Collections
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Data+quality" class="navbar-item">
+                    Data quality
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Molecular+data" class="navbar-item">
+                    Molecular data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Multimedia" class="navbar-item">
+                    Multimedia
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Publishing+data" class="navbar-item">
+                    Publishing data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Taxonomy" class="navbar-item">
+                    Taxonomy
+                  </a>
+                
+              
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://discourse.gbif.org/c/data-blog"
+            >
+            Community forum
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://www.gbif.org/"
+            >
+            GBIF.org
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+
+
+<section class="blog-intro">
+  <div class="container">
+    <h1 class="blog-intro__title">All posts</h1>
+    <p class="blog-intro__lede">Tutorials, analyses and news about GBIF data.</p>
+
+    <div class="blog-search" role="search">
+      <label for="blog-search-input" class="is-sr-only">Search posts</label>
+      <input id="blog-search-input" class="input is-medium" type="search" autocomplete="off"
+             placeholder="Search 60 posts by title, author or topic…">
+    </div>
+
+    <div class="blog-topics tags" aria-label="Topics">
+      
+        <a class="tag is-medium" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads <span class="blog-topics__count">21</span></a>
+      
+        <a class="tag is-medium" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps <span class="blog-topics__count">13</span></a>
+      
+        <a class="tag is-medium" href="/hp-data-blog/?category=Citation+and+data+use">Citation and data use <span class="blog-topics__count">8</span></a>
+      
+        <a class="tag is-medium" href="/hp-data-blog/?category=Citizen+science">Citizen science <span class="blog-topics__count">3</span></a>
+      
+        <a class="tag is-medium" href="/hp-data-blog/?category=Collections">Collections <span class="blog-topics__count">4</span></a>
+      
+        <a class="tag is-medium" href="/hp-data-blog/?category=Data+quality">Data quality <span class="blog-topics__count">12</span></a>
+      
+        <a class="tag is-medium" href="/hp-data-blog/?category=Molecular+data">Molecular data <span class="blog-topics__count">2</span></a>
+      
+        <a class="tag is-medium" href="/hp-data-blog/?category=Multimedia">Multimedia <span class="blog-topics__count">1</span></a>
+      
+        <a class="tag is-medium" href="/hp-data-blog/?category=Publishing+data">Publishing data <span class="blog-topics__count">15</span></a>
+      
+        <a class="tag is-medium" href="/hp-data-blog/?category=Taxonomy">Taxonomy <span class="blog-topics__count">12</span></a>
+      
+    </div>
+    <p class="blog-browse">
+      Browse by <a href="/hp-data-blog/series/">series</a>, <a href="/hp-data-blog/authors/">author</a> or <a href="/hp-data-blog/tags/">tag</a>.
+    </p>
+  </div>
+</section>
+
+<div class="features blog-list" id="blog-list">
+  <div class="blog-toolbar">
+    <div class="blog-toolbar__filter" id="blog-filter" aria-live="polite"></div>
+    <div class="blog-toolbar__view" role="group" aria-label="Layout">
+      <button type="button" class="blog-view-btn" data-view="cards" aria-pressed="true" title="Cards">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1"/></svg>
+        <span>Cards</span>
+      </button>
+      <button type="button" class="blog-view-btn" data-view="list" aria-pressed="false" title="List">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="3" rx="1"/><rect x="3" y="10.5" width="18" height="3" rx="1"/><rect x="3" y="17" width="18" height="3" rx="1"/></svg>
+        <span>List</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="feature-cards has-60-elements">
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Publishing data|"
+               data-authors="|marie-grosjean|kate-ingenloff|" data-author-names="Marie Grosjean|Kate Ingenloff"
+               data-tags="|sam|humboldt|dwc-dp|darwin-core|dwc-a|publishing|protocols|" data-tag-names="SAM|Humboldt|DwC-DP|Darwin Core|DwC-A|publishing|protocols"
+               data-series="good-samaritans" data-series-name="Good SAMaritans"
+               data-search="good samaritans – how to model sampling protocols in survey and monitoring (sam) datasets marie grosjean kate ingenloff sam humboldt dwc-dp darwin core dwc-a publishing protocols publishing data good samaritans welcome back to our series of post where kate ingenloff and i teach you how to model and share survey and monitoring (sam) data using darwin core with...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2026-10-22-sam-survey-protocol/spooky_protocol_feet.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/sam-survey-protocol/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/sam-survey-protocol/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Marie Grosjean, Kate Ingenloff · 22 Oct 2026</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/sam-survey-protocol/" ><p>Good SAMaritans – How to model sampling protocols in Survey and Monitoring (SAM) datasets</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Welcome back to our series of post where Kate Ingenloff and I teach you how to model and share Survey and Monitoring (SAM) data using Darwin Core with…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="APIs and downloads|"
+               data-authors="|matthew-blissett|" data-author-names="Matthew Blissett"
+               data-tags="|cloud-computing|downloads|aws|" data-tag-names="cloud computing|downloads|aws"
+               
+               data-search="extending the parquet data snapshots matthew blissett cloud computing downloads aws apis and downloads  in april 2021, gbif began exporting monthly data snapshots to the microsoft planetary computer (azure), as an amazon aws open dataset and as a google public dataset. these...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2026-10-02-extending-parquet-snapshots/coordinate-fixes-brazil.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/extending-parquet-snapshots/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/extending-parquet-snapshots/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Matthew Blissett · 19 Oct 2026</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/extending-parquet-snapshots/" ><p>Extending the Parquet data snapshots</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>In April 2021, GBIF began exporting monthly data snapshots to the Microsoft Planetary Computer (Azure), as an Amazon AWS Open Dataset and as a Google Public Dataset. These…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="APIs and downloads|Taxonomy|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|api|sql|taxonomy|catalogue-of-life|" data-tag-names="API|SQL|taxonomy|Catalogue of Life"
+               
+               data-search="recent breaking changes to sql downloads to support the col xr john waller api sql taxonomy catalogue of life apis and downloads taxonomy  gbif sql downloads now use the catalogue of life extended release (col xr) as the default taxonomy for organizing results. they also use col xr taxon keys by...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/sql-downloads-col-xr/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 14 Oct 2026</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/sql-downloads-col-xr/" ><p>Recent breaking changes to SQL downloads to support the COL XR</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>GBIF SQL downloads now use the Catalogue of Life Extended Release (COL XR) as the default taxonomy for organizing results. They also use COL XR taxon keys by…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Taxonomy">Taxonomy</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Citation and data use|"
+               data-authors="|andrew-rodrigues|john-waller|" data-author-names="Andrew Rodrigues|John Waller"
+               data-tags="|" data-tag-names=""
+               
+               data-search="community metrics andrew rodrigues john waller  citation and data use  data gaps are a common topic of discussion when talking about gbif. taxonomic, geographic and temporal gaps in the global dataset exist, yet we still have problems quantifying...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/community-metrics/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Andrew Rodrigues, John Waller · 28 Sep 2026</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/community-metrics/" ><p>Community Metrics</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Data gaps are a common topic of discussion when talking about GBIF. Taxonomic, geographic and temporal gaps in the global dataset exist, yet we still have problems quantifying…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Citation+and+data+use">Citation and data use</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Publishing data|"
+               data-authors="|marie-grosjean|kate-ingenloff|" data-author-names="Marie Grosjean|Kate Ingenloff"
+               data-tags="|sam|humboldt|dwc-dp|darwin-core|dwc-a|publishing|site|date|location|time|" data-tag-names="SAM|Humboldt|DwC-DP|Darwin Core|DwC-A|publishing|site|date|location|time"
+               data-series="good-samaritans" data-series-name="Good SAMaritans"
+               data-search="good samaritans – modelling survey location, date and time when publishing survey and monitoring data to gbif marie grosjean kate ingenloff sam humboldt dwc-dp darwin core dwc-a publishing site date location time publishing data good samaritans if you are new here, this post is the third installment in a series about modelling and sharing survey and monitoring (sam) data on gbif. my name is...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2026-09-07-sam-survey-where-when/Sam_meets_TARDIS.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/sam-survey-where-when/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/sam-survey-where-when/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Marie Grosjean, Kate Ingenloff · 7 Sep 2026</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/sam-survey-where-when/" ><p>Good SAMaritans – Modelling survey location, date and time when publishing Survey and Monitoring data to GBIF</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>If you are new here, this post is the third installment in a series about modelling and sharing survey and monitoring (SAM) data on GBIF. My name is…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="APIs and downloads|"
+               data-authors="|" data-author-names=""
+               data-tags="|rstats|" data-tag-names="rstats"
+               
+               data-search="preparing for rgbif v3.9.0 and pygbif v0.7.0 moving to col extended release  rstats apis and downloads  the newest version of rgbif (3.9.0 - planned release to cran the end of september) introduces breaking changes because the default taxonomy has changed from the gbif backbone...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/rgbif-colxr-preparation/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">20 Aug 2026</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/rgbif-colxr-preparation/" ><p>Preparing for rgbif v3.9.0 and pygbif v0.7.0 Moving to COL Extended Release</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>The newest version of rgbif (3.9.0 - planned release to CRAN the end of September) introduces breaking changes because the default taxonomy has changed from the GBIF Backbone…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Publishing data|"
+               data-authors="|marie-grosjean|kate-ingenloff|" data-author-names="Marie Grosjean|Kate Ingenloff"
+               data-tags="|sam|humboldt|dwc-dp|darwin-core|dwc-a|publishing|sope|target|" data-tag-names="SAM|Humboldt|DwC-DP|Darwin Core|DwC-A|publishing|sope|target"
+               data-series="good-samaritans" data-series-name="Good SAMaritans"
+               data-search="good samaritans – how to model survey targets in survey and monitoring (sam) datasets marie grosjean kate ingenloff sam humboldt dwc-dp darwin core dwc-a publishing sope target publishing data good samaritans welcome to the second installment of our series on publishing survey and monitoring (“sam”) data to gbif where i’m simultaneously learning how to do it and teaching you...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2026-08-13-sam-survey-scope/expectationVSreality.PNG" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/sam-survey-scope/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/sam-survey-scope/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Marie Grosjean, Kate Ingenloff · 13 Aug 2026</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/sam-survey-scope/" ><p>Good SAMaritans – How to model survey targets in Survey and Monitoring (SAM) datasets</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Welcome to the second installment of our series on publishing Survey and Monitoring (“SAM”) data to GBIF where I’m simultaneously learning how to do it and teaching you…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Publishing data|"
+               data-authors="|marie-grosjean|kate-ingenloff|" data-author-names="Marie Grosjean|Kate Ingenloff"
+               data-tags="|sam|humboldt|dwc-dp|darwin-core|dwc-a|publishing|" data-tag-names="SAM|Humboldt|DwC-DP|Darwin Core|DwC-A|publishing"
+               data-series="good-samaritans" data-series-name="Good SAMaritans"
+               data-search="good samaritans - introduction to best practices for publishing survey and monitoring (sam) data to gbif marie grosjean kate ingenloff sam humboldt dwc-dp darwin core dwc-a publishing publishing data good samaritans perhaps, like me, you don’t know much about publishing survey and monitoring data(“sam data” ). maybe you have heard about event cores and humboldt extensions, and you aren’t...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2026-07-15-sam-intoduction/intro_sam.PNG" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/sam-introduction/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/sam-introduction/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Marie Grosjean, Kate Ingenloff · 15 Jul 2026</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/sam-introduction/" ><p>Good SAMaritans - Introduction to best practices for publishing Survey and Monitoring (SAM) data to GBIF</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Perhaps, like me, you don’t know much about publishing Survey and Monitoring data(“SAM data” ). Maybe you have heard about event cores and Humboldt extensions, and you aren’t…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="APIs and downloads|Taxonomy|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|api|taxonomy|catalogue-of-life|" data-tag-names="API|taxonomy|Catalogue of Life"
+               
+               data-search="how to migrate from the legacy gbif backbone taxonomy to catalogue of life extended release john waller api taxonomy catalogue of life apis and downloads taxonomy  recently gbif.org has updated the default taxonomy it uses to organize occurrence records to the catalogue of life extended release (col xr). the gbif backbone was last updated...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/catalogue-of-life-taxonomic-backbone/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 23 Jun 2026</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/catalogue-of-life-taxonomic-backbone/" ><p>How to migrate from the legacy GBIF Backbone Taxonomy to Catalogue of Life Extended Release</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Recently GBIF.org has updated the default taxonomy it uses to organize occurrence records to the Catalogue of Life Extended Release (COL XR). The GBIF backbone was last updated…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Taxonomy">Taxonomy</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Data quality|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|" data-tag-names=""
+               
+               data-search="introducing rule-based annotations john waller  data quality  note: this is experimental, and the implementation may change. gbif makes no guarantees about the availability or stability of this tool. rule-based annotations is an experimental tool that...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2026-01-21-rule-based-annotations/make_rule.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/2026-01-21-rule-based-annotations/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/2026-01-21-rule-based-annotations/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 21 Jan 2026</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/2026-01-21-rule-based-annotations/" ><p>Introducing Rule-based Annotations</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>NOTE: This is experimental, and the implementation may change. GBIF makes no guarantees about the availability or stability of this tool. Rule-based annotations is an experimental tool that…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Data+quality">Data quality</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Citation and data use|"
+               data-authors="|andrew-rodrigues|" data-author-names="Andrew Rodrigues"
+               data-tags="|" data-tag-names=""
+               
+               data-search="species occurrence data and corporate sustainability frameworks andrew rodrigues  citation and data use  as the business and financial sectors increasingly look towards integrating biodiversity within their sustainability frameworks, this overview outlines the different frameworks that exist, the sectors they belong to,...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2025-10-28-species-occurrence-data-and-corporate-sustainability-frameworks/tree.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/2025-10-28-species-occurrence-data-and-corporate-sustainability-frameworks/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/2025-10-28-species-occurrence-data-and-corporate-sustainability-frameworks/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Andrew Rodrigues · 28 Oct 2025</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/2025-10-28-species-occurrence-data-and-corporate-sustainability-frameworks/" ><p>Species Occurrence Data and Corporate Sustainability Frameworks</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>As the business and financial sectors increasingly look towards integrating biodiversity within their sustainability frameworks, this overview outlines the different frameworks that exist, the sectors they belong to,…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Citation+and+data+use">Citation and data use</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Analysis and maps|APIs and downloads|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|" data-tag-names=""
+               
+               data-search="species accumulation curves with gbif sql downloads john waller  analysis and maps apis and downloads  update: gbif sql downloads now use col xr taxonomy by default. if you maintain sql queries that use gbif backbone keys, see recent changes to sql downloads. with...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2025-03-26-species-accumulations-curves-with-gbif-sql-downloads/images/SE.svg" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/2025-03-26-species-accumulations-curves-with-gbif-sql-downloads/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/2025-03-26-species-accumulations-curves-with-gbif-sql-downloads/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 22 Apr 2025</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/2025-03-26-species-accumulations-curves-with-gbif-sql-downloads/" ><p>Species accumulation curves with GBIF SQL downloads</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Update: GBIF SQL downloads now use COL XR taxonomy by default. If you maintain SQL queries that use GBIF Backbone keys, see recent changes to SQL downloads. With…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Analysis and maps|APIs and downloads|"
+               data-authors="|kit-lewers|" data-author-names="Kit Lewers"
+               data-tags="|" data-tag-names=""
+               
+               data-search="understanding google earth engine (gee) and its python api kit lewers  analysis and maps apis and downloads  google earth engine (gee) is a cloud-based platform designed to process and analyze vast amounts of geospatial data. with access to a rich archive of remote sensing imagery,...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/2025-01-29-understanding-google-earth-engine-gee-and-its-python-api-a-primer-for-gbif-users/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Kit Lewers · 6 Feb 2025</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/2025-01-29-understanding-google-earth-engine-gee-and-its-python-api-a-primer-for-gbif-users/" ><p>Understanding Google Earth Engine (GEE) and Its Python API</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Google Earth Engine (GEE) is a cloud-based platform designed to process and analyze vast amounts of geospatial data. With access to a rich archive of remote sensing imagery,…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Analysis and maps|APIs and downloads|"
+               data-authors="|kit-lewers|" data-author-names="Kit Lewers"
+               data-tags="|" data-tag-names=""
+               
+               data-search="tutorial using google earth engine with gbif mediated occurrences kit lewers  analysis and maps apis and downloads  in this tutorial, we explored how to integrate remote sensing data with biodiversity observations to analyze the relationships between environmental factors and species occurrences. specifically, we focused on...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2025-01-23-time-series-of-land-surface-temperature/images/download%20(1" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/2025-01-23-time-series-of-land-surface-temperature/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/2025-01-23-time-series-of-land-surface-temperature/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Kit Lewers · 23 Jan 2025</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/2025-01-23-time-series-of-land-surface-temperature/" ><p>Tutorial using Google Earth Engine with GBIF mediated occurrences</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>In this tutorial, we explored how to integrate remote sensing data with biodiversity observations to analyze the relationships between environmental factors and species occurrences. Specifically, we focused on…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Publishing data|Collections|"
+               data-authors="|marie-grosjean|" data-author-names="Marie Grosjean"
+               data-tags="|publishing|collection-descriptors|collections|institution|grscicoll|darwin-core|latimer-core|" data-tag-names="publishing|collection descriptors|collections|institution|GRSciColl|Darwin Core|Latimer core"
+               
+               data-search="making collection content discoverable when you don’t have occurrences published on gbif marie grosjean publishing collection descriptors collections institution grscicoll darwin core latimer core publishing data collections  this blog post is a tutorial on how to upload collection descriptors in the global registry of scientific collections (grscicoll).">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2024-10-01-grscicoll-collection-descriptors/NY_descriptors.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/grscicoll-collection-descriptors/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/grscicoll-collection-descriptors/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Marie Grosjean · 9 Oct 2024</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/grscicoll-collection-descriptors/" ><p>Making collection content discoverable when you don’t have occurrences published on GBIF</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>This blog post is a tutorial on how to upload collection descriptors in the Global Registry of Scientific Collections (GRSciColl).</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Collections">Collections</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="APIs and downloads|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|" data-tag-names=""
+               
+               data-search="gbif sql downloads john waller  apis and downloads  update: sql download taxonomy columns now use col xr by default. if your existing queries use gbif backbone keys, see recent changes to sql downloads. if your download...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2024-06-24-gbif-sql-downloads/images/ts.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/2024-06-24-gbif-sql-downloads/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/2024-06-24-gbif-sql-downloads/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 30 Sep 2024</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/2024-06-24-gbif-sql-downloads/" ><p>GBIF SQL Downloads</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Update: SQL download taxonomy columns now use COL XR by default. If your existing queries use GBIF Backbone keys, see recent changes to SQL downloads. If your download…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Taxonomy|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|" data-tag-names=""
+               
+               data-search="working with extinct species on gbif john waller  taxonomy  gbif users are often interested in getting occurrences of only living species or “no extinct” species. this seemingly straightforward request is often difficult to fulfill in practice. currently,...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://api.gbif.org/v1/image/cache/fit-in/500x/occurrence/418979581/media/b2fae8748e77446ef0bcd5a23e373bd6" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/2024-02-06-working-with-extinct-species-on-gbif/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/2024-02-06-working-with-extinct-species-on-gbif/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 21 May 2024</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/2024-02-06-working-with-extinct-species-on-gbif/" ><p>Working with extinct species on GBIF</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>GBIF users are often interested in getting occurrences of only living species or “no extinct” species. This seemingly straightforward request is often difficult to fulfill in practice. Currently,…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Taxonomy">Taxonomy</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Publishing data|Data quality|"
+               data-authors="|kumiko-totsu|" data-author-names="Kumiko Totsu"
+               data-tags="|publishing|data-quality|issues|occurrence|" data-tag-names="publishing|data quality|issues|occurrence"
+               
+               data-search="gbif attempts to improve identifier stability by monitoring changes of occurrenceids kumiko totsu publishing data quality issues occurrence publishing data data quality  since 2022, gbif has been monitoring changes of occurrenceids in datasets to improve the stability of gbif identifiers. we pause data ingestion when we detect more than half...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2023-11-01-improve-identifier-stability/change_of_occurrenceIDs.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/improve-identifier-stability/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/improve-identifier-stability/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Kumiko Totsu · 6 Nov 2023</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/improve-identifier-stability/" ><p>GBIF attempts to improve identifier stability by monitoring changes of occurrenceIDs</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Since 2022, GBIF has been monitoring changes of occurrenceIDs in datasets to improve the stability of GBIF identifiers. We pause data ingestion when we detect more than half…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Data+quality">Data quality</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="APIs and downloads|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|api|" data-tag-names="API"
+               
+               data-search="creating high resolution maps with rgbif john waller api apis and downloads  this article is an adapted version of the rgbif article found here. it is often useful to create a map from gbif mediated occurrences. while it is always...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2023-03-24-maps-api/images/dot_map.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/2023-03-24-maps-api/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/2023-03-24-maps-api/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 15 Sep 2023</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/2023-03-24-maps-api/" ><p>Creating high resolution maps with rgbif</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>This article is an adapted version of the rgbif article found here. It is often useful to create a map from GBIF mediated occurrences. While it is always…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Citation and data use|"
+               data-authors="|andrew-rodrigues|" data-author-names="Andrew Rodrigues"
+               data-tags="|data-use|" data-tag-names="Data Use"
+               
+               data-search="accessing gbif-mediated occurrence data to conserve edge species andrew rodrigues data use citation and data use  evolutionarily distinct and globally endangered or edge species have few close relatives on the tree of life and are often extremely unusual in the way they look, live...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2023-05-01-accessing-occurrence-data-to-conserve-edge-species/benin-edge.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/accessing-occurrence-data-to-conserve-edge-species/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/accessing-occurrence-data-to-conserve-edge-species/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Andrew Rodrigues · 2 May 2023</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/accessing-occurrence-data-to-conserve-edge-species/" ><p>Accessing GBIF-mediated occurrence data to conserve EDGE species</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Evolutionarily Distinct and Globally Endangered or EDGE species have few close relatives on the tree of life and are often extremely unusual in the way they look, live…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Citation+and+data+use">Citation and data use</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Data quality|"
+               data-authors="|joe-miller|" data-author-names="Joe Miller"
+               data-tags="|" data-tag-names=""
+               
+               data-search="exploring related records in the flowering plant genus senegalia in brazil joe miller  data quality  in 2020 gbif released a news item “new data-clustering feature aims to improve data quality and reveal cross-dataset connections.” basically, we run an algorithm across datasets shared with...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/senegalia-clustering-in-brazil/images/image001.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/senegalia-clustering-in-brazil/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/senegalia-clustering-in-brazil/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Joe Miller · 18 Jan 2023</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/senegalia-clustering-in-brazil/" ><p>Exploring Related Records in the Flowering Plant Genus Senegalia in Brazil</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>In 2020 GBIF released a news item “New data-clustering feature aims to improve data quality and reveal cross-dataset connections.” Basically, we run an algorithm across datasets shared with…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Data+quality">Data quality</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Taxonomy|Publishing data|"
+               data-authors="|marie-grosjean|" data-author-names="Marie Grosjean"
+               data-tags="|checklist|publishing|" data-tag-names="checklist|publishing"
+               
+               data-search="checklist publishing on gbif - some explanations on taxonid, scientificnameid, taxonconceptid, acceptednameusageid, nameaccordingto marie grosjean checklist publishing taxonomy publishing data  when data publishers publish checklists, they will use a a darwin core archive taxon core. and although the taxon core terms are already described here, what exactly to...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2022-12-08-some-checklist-terms-explained/fungi-revised.jpg" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/some-checklist-terms-explained/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/some-checklist-terms-explained/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Marie Grosjean · 8 Dec 2022</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/some-checklist-terms-explained/" ><p>Checklist publishing on GBIF - some explanations on taxonID, scientificNameID, taxonConceptID, acceptedNameUsageID, nameAccordingTo</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>When data publishers publish checklists, they will use a a Darwin Core Archive Taxon Core. And although the taxon core terms are already described here, what exactly to…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Taxonomy">Taxonomy</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Publishing data|"
+               data-authors="|cecilie-svenningsen|" data-author-names="Cecilie Svenningsen"
+               data-tags="|" data-tag-names=""
+               
+               data-search="which data can be shared through gbif and what cannot cecilie svenningsen  publishing data  preparing a dataset to be shared on gbif.org can be a daunting task and many publishers realize that not all their data fits in the darwin core standard...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2022-10-28-which-data-can-be-shared-through-GBIF-and-what-cannot/please-share.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/data-shareability/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/data-shareability/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Cecilie Svenningsen · 17 Nov 2022</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/data-shareability/" ><p>Which data can be shared through GBIF and what cannot</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Preparing a dataset to be shared on GBIF.org can be a daunting task and many publishers realize that not all their data fits in the Darwin Core standard…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Taxonomy|Analysis and maps|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|" data-tag-names=""
+               
+               data-search="finding data gaps in the gbif backbone taxonomy john waller  taxonomy analysis and maps  when publishers supply gbif with a scientific name, this name is sometimes not found in the gbif taxonomic backbone. in these cases, the occurrence record gets a data...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2022-03-24-reasons-why-names-don-t-match-to-the-gbif-backbone/images/reason_buckets_3.svg" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/2022-03-24-reasons-why-names-don-t-match-to-the-gbif-backbone/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/2022-03-24-reasons-why-names-don-t-match-to-the-gbif-backbone/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 25 Apr 2022</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/2022-03-24-reasons-why-names-don-t-match-to-the-gbif-backbone/" ><p>Finding data gaps in the GBIF backbone taxonomy</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>When publishers supply GBIF with a scientific name, this name is sometimes not found in the GBIF taxonomic backbone. In these cases, the occurrence record gets a data…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Taxonomy">Taxonomy</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Taxonomy|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|" data-tag-names=""
+               
+               data-search="the world checklist of vascular plants (fabaceae) john waller  taxonomy  the world checklist of vascular plants (wcvp): fabaceae is a new gbif mediated checklist that drastically increases the coverage of the family fabaceae in the gbif backbone.">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2022-02-01-the-world-checklist-of-vascular-plants-fabaceae/images/https___inaturalist-open-data.s3.amazonaws.com_photos_66470341_original.jpg" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/2022-02-01-the-world-checklist-of-vascular-plants-fabaceae/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/2022-02-01-the-world-checklist-of-vascular-plants-fabaceae/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 28 Mar 2022</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/2022-02-01-the-world-checklist-of-vascular-plants-fabaceae/" ><p>The World Checklist of Vascular Plants (Fabaceae)</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>The World Checklist of Vascular Plants (WCVP): Fabaceae is a new GBIF mediated checklist that drastically increases the coverage of the family Fabaceae in the GBIF backbone.</p>
+
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Taxonomy">Taxonomy</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="APIs and downloads|"
+               data-authors="|john-waller|carl-boettiger|" data-author-names="John Waller|Carl Boettiger"
+               data-tags="|" data-tag-names=""
+               
+               data-search="using apache arrow and parquet with gbif-mediated occurrences john waller carl boettiger  apis and downloads  as written about in a previous blog post, gbif now has database snapshots of occurrence records on aws. this allows users to access large tables of gbif-mediated occurrence...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/apache-arrow-and-parquet/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller, Carl Boettiger · 18 Feb 2022</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/apache-arrow-and-parquet/" ><p>Using Apache Arrow and Parquet with GBIF-mediated occurrences</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>As written about in a previous blog post, GBIF now has database snapshots of occurrence records on AWS. This allows users to access large tables of GBIF-mediated occurrence…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Collections|"
+               data-authors="|marie-grosjean|tim-robertson|" data-author-names="Marie Grosjean|Tim Robertson"
+               data-tags="|specimen|occurrence|" data-tag-names="specimen|occurrence"
+               
+               data-search="identifying potentially related records - how does the gbif data-clustering feature work? marie grosjean tim robertson specimen occurrence collections  note: the content of this blog post is now maintained in the technical documentation. please view this source for the most up to date information on the topic....">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2021-10-29-clustering-occurrences/example_cluster.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/clustering-occurrences/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/clustering-occurrences/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Marie Grosjean, Tim Robertson · 4 Nov 2021</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/clustering-occurrences/" ><p>Identifying potentially related records - How does the GBIF data-clustering feature work?</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>NOTE: The content of this blog post is now maintained in the technical documentation. Please view this source for the most up to date information on the topic….</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Collections">Collections</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Publishing data|Collections|"
+               data-authors="|marie-grosjean|" data-author-names="Marie Grosjean"
+               data-tags="|publishing|occurrence|sampling-event|collections|institution|grscicoll|flags|" data-tag-names="publishing|occurrence|sampling-event|collections|institution|GRSciColl|flags"
+               
+               data-search="what are the flags &quot;collection match fuzzy&quot;, &quot;collection match none&quot;, &quot;institution match fuzzy&quot;, &quot;institution match none&quot; and how to remove them? marie grosjean publishing occurrence sampling-event collections institution grscicoll flags publishing data collections  you are a data publisher of occurrence data through gbif.org, care about your data quality, and wonder what to do about the issue flags that show up on...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2021-09-24-grscicoll-flags/SANBI_ID_example.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/grscicoll-flags/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/grscicoll-flags/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Marie Grosjean · 11 Oct 2021</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/grscicoll-flags/" ><p>What are the flags “Collection match fuzzy”, “Collection match none”, “Institution match fuzzy”, “Institution match none” and how to remove them?</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>You are a data publisher of occurrence data through GBIF.org, care about your data quality, and wonder what to do about the issue flags that show up on…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Collections">Collections</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="APIs and downloads|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|api|" data-tag-names="API"
+               
+               data-search="gbif api beginners guide john waller api apis and downloads  this a gbif api beginners guide. the gbif api technical documentation might be a bit confusing if you have never used an api before. the goal of this...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/gbif-api-beginners-guide/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 7 Sep 2021</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/gbif-api-beginners-guide/" ><p>GBIF API beginners guide</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>This a GBIF API beginners guide. The GBIF API technical documentation might be a bit confusing if you have never used an API before. The goal of this…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Citation and data use|Analysis and maps|"
+               data-authors="|andrea-hahn|" data-author-names="Andrea Hahn"
+               data-tags="|release-notes|custom-metrics|spatial-filtering|user-feedback|github|tools|species-matching-tool|api|ingestion-history|registry|grscicoll|citation|doi|citethedoi|rollup-metrics|global-nodes-meeting-2021|" data-tag-names="release notes|custom metrics|spatial filtering|user feedback|GitHub|tools|species matching tool|API|ingestion history|registry|GRSciColl|citation|DOI|CiteTheDOI|rollup metrics|Global Nodes Meeting 2021"
+               
+               data-search="did you know that...? - some of the lesser known functionalities around gbif.org andrea hahn release notes custom metrics spatial filtering user feedback github tools species matching tool api ingestion history registry grscicoll citation doi citethedoi rollup metrics global nodes meeting 2021 citation and data use analysis and maps  during the first-ever virtual gbif 2021 global nodes meeting, gbifs hosted a “game show”: a one-hour “battle of nodes vs. helpdesk”. the not-so-hidden goal was to demonstrate some...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/did-you-know/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Andrea Hahn · 5 Aug 2021</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/did-you-know/" ><p>Did you know that…? - some of the lesser known functionalities around GBIF.org</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>During the first-ever virtual GBIF 2021 Global Nodes Meeting, GBIFS hosted a “game show”: a one-hour “battle of Nodes vs. helpdesk”. The not-so-hidden goal was to demonstrate some…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Citation+and+data+use">Citation and data use</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Citation and data use|Analysis and maps|"
+               data-authors="|daniel-noesgaard|" data-author-names="Daniel Noesgaard"
+               data-tags="|doi|citethedoi|derived-datasets|" data-tag-names="DOI|CiteTheDOI|Derived datasets"
+               
+               data-search="derived datasets daniel noesgaard doi citethedoi derived datasets citation and data use analysis and maps  you’ve finished an analysis using gbif-mediated data, you’re writing up your manuscript and checking all the references, but you’re unsure of how to cite gbif. if you google...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2021-05-05-derivedDatasets_files/dd_form.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/derived-datasets/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/derived-datasets/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Daniel Noesgaard · 20 May 2021</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/derived-datasets/" ><p>Derived datasets</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>You’ve finished an analysis using GBIF-mediated data, you’re writing up your manuscript and checking all the references, but you’re unsure of how to cite GBIF. If you Google…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Citation+and+data+use">Citation and data use</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="APIs and downloads|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|cloud-computing|azure|" data-tag-names="cloud computing|azure"
+               
+               data-search="gbif and apache-spark on microsoft azure tutorial john waller cloud computing azure apis and downloads  gbif now has a snapshot of 1.3 billion occurrences✝ records on microsoft azure. it is hosted by the microsoft ai for earth program, which hosts geospatial datasets that...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2021-04-22-microsoft-azure-and-gbif_files/resource_groups_screenshot.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/microsoft-azure-and-gbif/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/microsoft-azure-and-gbif/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 19 May 2021</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/microsoft-azure-and-gbif/" ><p>GBIF and Apache-Spark on Microsoft Azure tutorial</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>GBIF now has a snapshot of 1.3 billion occurrences✝ records on Microsoft Azure. It is hosted by the Microsoft AI for Earth program, which hosts geospatial datasets that…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Collections|"
+               data-authors="|marie-grosjean|" data-author-names="Marie Grosjean"
+               data-tags="|grscicoll|collections|institution|idigbio|ih|" data-tag-names="GRSciColl|collections|institution|iDigBio|IH"
+               
+               data-search="the global registry of scientific collections (grscicoll) in 2021 marie grosjean grscicoll collections institution idigbio ih collections  the global registry of scientific collections, also known as grscicoll, has been available on gbif.org since 2019 but it recently got some more attention when we connected it...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2021-02-08-grscicoll/GRSciColl.PNG" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/grscicoll-2021/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/grscicoll-2021/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Marie Grosjean · 12 Mar 2021</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/grscicoll-2021/" ><p>The Global Registry of Scientific Collections (GRSciColl) in 2021</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>The Global Registry of Scientific Collections, also known as GRSciColl, has been available on GBIF.org since 2019 but it recently got some more attention when we connected it…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Collections">Collections</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="APIs and downloads|Data quality|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|" data-tag-names=""
+               
+               data-search="common things to look out for when post-processing gbif downloads john waller  apis and downloads data quality  post was updated on april 20 2022 to accommodate changes to dwc:establishmentmeans vocabulary handling. here i present a checklist for filtering gbif downloads. in this guide, i will...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/gbif-filtering-guide/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 17 Feb 2021</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/gbif-filtering-guide/" ><p>Common things to look out for when post-processing GBIF downloads</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Post was updated on April 20 2022 to accommodate changes to dwc:establishmentMeans vocabulary handling. Here I present a checklist for filtering GBIF downloads. In this guide, I will…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Data+quality">Data quality</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Taxonomy|"
+               data-authors="|marie-grosjean|" data-author-names="Marie Grosjean"
+               data-tags="|species-matching-tool|species-api|checklist|backbone|taxon-match-none|taxon-match-higherrank|taxon-match-fuzzy|" data-tag-names="species matching tool|species api|checklist|backbone|Taxon match none|Taxon match higherrank|Taxon match fuzzy"
+               
+               data-search="(almost) everything you want to know about the gbif species api marie grosjean species matching tool species api checklist backbone taxon match none taxon match higherrank taxon match fuzzy taxonomy  today, we are talking about the gbif species api. although you might not use it directly, you probably encountered it while using the gbif web portal: typing a...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2020-11-16-species-api/search.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/gbif-species-api/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/gbif-species-api/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Marie Grosjean · 17 Nov 2020</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/gbif-species-api/" ><p>(Almost) everything you want to know about the GBIF Species API</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Today, we are talking about the GBIF Species API. Although you might not use it directly, you probably encountered it while using the GBIF web portal: Typing a…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Taxonomy">Taxonomy</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Data quality|"
+               data-authors="|leonardo-buitrago|" data-author-names="Leonardo Buitrago"
+               data-tags="|issues|flags|data-quality|" data-tag-names="issues|flags|data quality"
+               
+               data-search="gbif issues &amp; flags leonardo buitrago issues flags data quality data quality  publishers share datasets, but also manage data quality. gbif provides access to the use of biodiversity data, but also flags suspicious or missing content. users use data, but...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2020-10-09-issues-and-flags_files/workflow1.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/issues-and-flags/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/issues-and-flags/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Leonardo Buitrago · 27 Oct 2020</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/issues-and-flags/" ><p>GBIF Issues &amp; Flags</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Publishers share datasets, but also manage data quality. GBIF provides access to the use of biodiversity data, but also flags suspicious or missing content. Users use data, but…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Data+quality">Data quality</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Analysis and maps|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|statistics|gbif-regions|" data-tag-names="statistics|gbif regions"
+               
+               data-search="gbif regional statistics - 2020 john waller statistics gbif regions analysis and maps  i was asked to prepare some statistics for the gbif regional regional meetings being held virtually this year. this blog post is a companion for those meetings. you...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2020-05-11-gbif-regional-statistics-2020_files/gbif_region_map.svg" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/gbif-regional-statistics-2020/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/gbif-regional-statistics-2020/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 19 May 2020</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/gbif-regional-statistics-2020/" ><p>GBIF Regional Statistics - 2020</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>I was asked to prepare some statistics for the GBIF regional regional meetings being held virtually this year. This blog post is a companion for those meetings. You…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Publishing data|APIs and downloads|"
+               data-authors="|marie-grosjean|" data-author-names="Marie Grosjean"
+               data-tags="|publishing|installation|ipt|symbiota|api|hosting|earthcape|biocase|" data-tag-names="publishing|installation|IPT|symbiota|API|hosting|earthcape|BioCASe"
+               
+               data-search="which tools can i use to share my data on gbif? marie grosjean publishing installation ipt symbiota api hosting earthcape biocase publishing data apis and downloads  as you probably already know, gbif.org doesn’t host any data. the system relies on each data provider making their data available online in a gbif-supported format. it also...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2020-02-20-installations-and-hosting-solutions-explained/schema_entities_one_organization.jpeg" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/installations-and-hosting-solutions-explained/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/installations-and-hosting-solutions-explained/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Marie Grosjean · 2 Mar 2020</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/installations-and-hosting-solutions-explained/" ><p>Which tools can I use to share my data on GBIF?</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>As you probably already know, GBIF.org doesn’t host any data. The system relies on each data provider making their data available online in a GBIF-supported format. It also…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Data quality|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|" data-tag-names=""
+               
+               data-search="gbif occurrence license processing john waller  data quality  gbif is now processing occurrence licenses record-by-record.**inaturalist research-grade observations** previously all occurrence licenses defaulted to their dataset license (provided by the publisher).">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2020-02-21-gbif-occurrence-license-processing_files/problem-fix.jpg" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/gbif-occurrence-license-processing/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/gbif-occurrence-license-processing/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 26 Feb 2020</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/gbif-occurrence-license-processing/" ><p>GBIF occurrence license processing</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>GBIF is now processing occurrence licenses record-by-record.</p>
+
+<p><strong>iNaturalist research-grade observations</strong></p>
+
+<p>Previously all occurrence licenses defaulted to their dataset license (provided by the publisher).</p>
+
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Data+quality">Data quality</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Taxonomy|Citation and data use|"
+               data-authors="|quentin-groom|deborah-paul|" data-author-names="Quentin Groom|Deborah Paul"
+               data-tags="|wikidata|taxonomy|catalogue-of-life|lod|" data-tag-names="wikidata|taxonomy|Catalogue of Life|lod"
+               
+               data-search="does biodiversity informatics 💘 wikidata? quentin groom deborah paul wikidata taxonomy catalogue of life lod taxonomy citation and data use  open online apis are fantastic! you can use someone else’s infrastructure to create workflows, do research and create products without giving anything in return, except acknowledgement. but wait...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2020-02-21-wikidata/group.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/wikidata/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/wikidata/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Quentin Groom, Deborah Paul · 21 Feb 2020</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/wikidata/" ><p>Does Biodiversity Informatics 💘 Wikidata?</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Open online APIs are fantastic! You can use someone else’s infrastructure to create workflows, do research and create products without giving anything in return, except acknowledgement. But wait…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Taxonomy">Taxonomy</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Citation+and+data+use">Citation and data use</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Publishing data|"
+               data-authors="|andré-heughebaert|" data-author-names="André Heughebaert"
+               data-tags="|frictionless-data|" data-tag-names="Frictionless Data"
+               
+               data-search="frictionless data and darwin core andré heughebaert frictionless data publishing data  frictionless data is about removing the friction in working with data through the creation of tools, standards, and best practices for publishing data using the data package standard,...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/frictionless-data-and-darwin-core/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">André Heughebaert · 15 Jan 2020</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/frictionless-data-and-darwin-core/" ><p>Frictionless Data and Darwin Core</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Frictionless data is about removing the friction in working with data through the creation of tools, standards, and best practices for publishing data using the Data Package standard,…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Publishing data|Taxonomy|"
+               data-authors="|marie-grosjean|" data-author-names="Marie Grosjean"
+               data-tags="|publishing|checklist|occurrence|sampling-event|dataset|dataset-type|dataset-classes|metadata|" data-tag-names="publishing|checklist|occurrence|sampling-event|dataset|dataset type|dataset classes|metadata"
+               
+               data-search="how to choose a dataset class on gbif? marie grosjean publishing checklist occurrence sampling-event dataset dataset type dataset classes metadata publishing data taxonomy  if you are a (first time) publisher on gbif and you are trying to decide which type of dataset would best fit your data, this blogpost is for...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2019-12-05-choose-dataset-types/which_dataset_type_to_choose_questions.jpg" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/choose-dataset-type/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/choose-dataset-type/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Marie Grosjean · 4 Dec 2019</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/choose-dataset-type/" ><p>How to choose a dataset class on GBIF?</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>If you are a (first time) publisher on GBIF and you are trying to decide which type of dataset would best fit your data, this blogpost is for…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Taxonomy">Taxonomy</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Data quality|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|data-quality|" data-tag-names="data quality"
+               
+               data-search="understanding basis of record - a living specimen becomes a preserved specimen john waller data quality data quality  recently a user noticed that there were asian red pandas (ailuridae) occurring in north america, and wondered if someone had made a mistake. when an occurrence observation comes...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2019-09-06-living-specimen-to-preserved-specimen-understanding-basis-of-record_files/redPandaOutside.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/living-specimen-to-preserved-specimen-understanding-basis-of-record/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/living-specimen-to-preserved-specimen-understanding-basis-of-record/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 7 Oct 2019</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/living-specimen-to-preserved-specimen-understanding-basis-of-record/" ><p>Understanding basis of record - a living specimen becomes a preserved specimen</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Recently a user noticed that there were Asian Red Pandas (Ailuridae) occurring in North America, and wondered if someone had made a mistake. When an occurrence observation comes…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Data+quality">Data quality</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Citation and data use|APIs and downloads|"
+               data-authors="|daniel-noesgaard|" data-author-names="Daniel Noesgaard"
+               data-tags="|use|citation|rgbif|api|" data-tag-names="use|citation|rgbif|API"
+               
+               data-search="search, download, analyze and cite (repeat if necessary) daniel noesgaard use citation rgbif api citation and data use apis and downloads  finding and accessing data">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2019-10-04-when-and-how-to-cite-GBIF-data_files/citation_wordcloud2small.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/search-download-analyze-cite/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/search-download-analyze-cite/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Daniel Noesgaard · 4 Oct 2019</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/search-download-analyze-cite/" ><p>Search, download, analyze and cite (repeat if necessary)</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Finding and accessing data</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Citation+and+data+use">Citation and data use</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Taxonomy|"
+               data-authors="|marie-grosjean|" data-author-names="Marie Grosjean"
+               data-tags="|taxonomy|backbone|checklist|catalogue-of-life|taxon-match-none|taxon-match-higherrank|taxon-match-fuzzy|" data-tag-names="taxonomy|backbone|checklist|Catalogue of Life|Taxon match none|Taxon match higherrank|Taxon match fuzzy"
+               
+               data-search="six questions answered about the gbif backbone taxonomy marie grosjean taxonomy backbone checklist catalogue of life taxon match none taxon match higherrank taxon match fuzzy taxonomy  this past week our informatics team has been updating the backbone taxonomy on gbif.org. this is a fairly disruptive process which sometimes involves massive taxonomic changes but don’t...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2019-08-19-gbif-backbone-taxonomy/stats.september2019.001.jpeg" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/gbif-backbone-taxonomy/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/gbif-backbone-taxonomy/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Marie Grosjean · 24 Sep 2019</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/gbif-backbone-taxonomy/" ><p>Six questions answered about the GBIF Backbone Taxonomy</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>This past week our informatics team has been updating the Backbone taxonomy on GBIF.org. This is a fairly disruptive process which sometimes involves massive taxonomic changes but DON’T…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Taxonomy">Taxonomy</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="APIs and downloads|Taxonomy|"
+               data-authors="|john-waller|marie-grosjean|" data-author-names="John Waller|Marie Grosjean"
+               data-tags="|api|downloads|tree-list|" data-tag-names="API|downloads|tree list"
+               
+               data-search="downloading occurrences from a long list of species in r and python john waller marie grosjean api downloads tree list apis and downloads taxonomy  it is now possible to download up to 100,000 names on gbif! until recently it was not possible to download occurrences for more than a few hundred species...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/downloading-long-species-lists-on-gbif/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller, Marie Grosjean · 4 Sep 2019</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/downloading-long-species-lists-on-gbif/" ><p>Downloading occurrences from a long list of species in R and Python</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>It is now possible to download up to 100,000 names on GBIF! Until recently it was not possible to download occurrences for more than a few hundred species…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Taxonomy">Taxonomy</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Citizen science|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|citizen-science|" data-tag-names="citizen science"
+               
+               data-search="citizen science on gbif - 2019 john waller citizen science citizen science  citizen science datasets on gbif plotted with all other (gray) gbif datasets (&amp;gt;100k occurrences). there are many citizen science datasets with millions of occurrences (ebird, (swedish) artportalen), and...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2019-08-02-citizen-science-on-gbif-2019_files/datasetSpace.svg" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/citizen-science-on-gbif-2019/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/citizen-science-on-gbif-2019/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 2 Aug 2019</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/citizen-science-on-gbif-2019/" ><p>Citizen Science on GBIF - 2019</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Citizen Science datasets on GBIF plotted with all other (gray) GBIF datasets (&gt;100K occurrences). There are many citizen science datasets with millions of occurrences (eBird, (Swedish) Artportalen), and…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Citizen+science">Citizen science</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Analysis and maps|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|es50|data-gaps|maps|" data-tag-names="es50|data gaps|maps"
+               
+               data-search="exploring es50 for gbif john waller es50 data gaps maps analysis and maps  it has been suggested that gbif could make es50 maps similar to what organizations like obis are already doing. i decided to make one for land animals (graph...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/map_es50_300_1.jpg" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/exploring-es50-for-gbif/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/exploring-es50-for-gbif/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 10 Jul 2019</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/exploring-es50-for-gbif/" ><p>Exploring es50 for GBIF</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>It has been suggested that GBIF could make es50 maps similar to what organizations like OBIS are already doing. I decided to make one for land animals (graph…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Taxonomy|Analysis and maps|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|checklist|data-gaps|api|" data-tag-names="checklist|data gaps|API"
+               
+               data-search="big national checklists john waller checklist data gaps api taxonomy analysis and maps  ">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2019-05-15-big-national-checklists_files/europeMap.gif" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/big-national-checklists/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/big-national-checklists/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 6 Jun 2019</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/big-national-checklists/" ><p>Big National Checklists</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Taxonomy">Taxonomy</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Analysis and maps|Data quality|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|data-gaps|data-quality|checklist|" data-tag-names="data gaps|data quality|checklist"
+               
+               data-search="gbif checklist datasets and data gaps john waller data gaps data quality checklist analysis and maps data quality  a checklist dataset is a catch-all term describing any dataset that contains primarily a list of taxonomic names. the lines between a checklist dataset and an occurrence dataset...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2019-04-23-gbif-checklist-datasets-and-data-gaps_files/popularGroupsCoverageBackbone.svg" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/gbif-checklist-datasets-and-data-gaps/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/gbif-checklist-datasets-and-data-gaps/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 14 May 2019</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/gbif-checklist-datasets-and-data-gaps/" ><p>GBIF checklist datasets and data gaps</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>A checklist dataset is a catch-all term describing any dataset that contains primarily a list of taxonomic names. The lines between a checklist dataset and an occurrence dataset…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Data+quality">Data quality</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Molecular data|Data quality|"
+               data-authors="|marie-grosjean|" data-author-names="Marie Grosjean"
+               data-tags="|molecular|dna|edna|mixs|ggbn|ebi|sequence|otu|data-quality|howto|use|metagenomics|" data-tag-names="molecular|DNA|eDNA|MixS|GGBN|EBI|sequence|OTU|data quality|howto|use|metagenomics"
+               
+               data-search="sequenced-based data on gbif - what you need to know before analyzing data marie grosjean molecular dna edna mixs ggbn ebi sequence otu data quality howto use metagenomics molecular data data quality  as i mentioned in my previous post, a lot more sequence-based data has been made available on gbif this past year. mgnify alone, published 295 datasets for a...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2019-04-23-gbif-molecular-data-for-users-files/observable_specimens.jpeg" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/gbif-molecular-data-quality/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/gbif-molecular-data-quality/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Marie Grosjean · 26 Apr 2019</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/gbif-molecular-data-quality/" ><p>Sequenced-based data on GBIF - What you need to know before analyzing data</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>As I mentioned in my previous post, a lot more sequence-based data has been made available on GBIF this past year. MGnify alone, published 295 datasets for a…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Molecular+data">Molecular data</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Data+quality">Data quality</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Molecular data|Publishing data|"
+               data-authors="|marie-grosjean|" data-author-names="Marie Grosjean"
+               data-tags="|molecular|dna|edna|mixs|ggbn|ebi|sequence|otu|darwin-core|howto|publishing|" data-tag-names="molecular|DNA|eDNA|MixS|GGBN|EBI|sequence|OTU|Darwin Core|howto|publishing"
+               
+               data-search="sequence-based data on gbif - sharing your data marie grosjean molecular dna edna mixs ggbn ebi sequence otu darwin core howto publishing molecular data publishing data  [edit 2021-09-16] important: to find guidance on how to publish sequence-based data on gbif, please consult the following guide: andersson af, bissett a, finstad ag, fossøy f, grosjean...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://www.publicdomainpictures.net/pictures/40000/velka/--1359709322C31.jpg#.XLcmtPqn2pQ.link" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/gbif-molecular-data/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/gbif-molecular-data/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Marie Grosjean · 24 Apr 2019</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/gbif-molecular-data/" ><p>Sequence-based data on GBIF - Sharing your data</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>[Edit 2021-09-16] Important: To find guidance on how to publish Sequence-based data on GBIF, please consult the following guide: Andersson AF, Bissett A, Finstad AG, Fossøy F, Grosjean…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Molecular+data">Molecular data</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Analysis and maps|Data quality|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|gridded-data|data-quality|" data-tag-names="gridded data|data quality"
+               
+               data-search="gridded datasets update john waller gridded data data quality analysis and maps data quality  ">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://raw.githubusercontent.com/jhnwllr/charts/master/gridSnap.gif" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/gridded-datasets-update/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/gridded-datasets-update/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 21 Mar 2019</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/gridded-datasets-update/" ><p>Gridded Datasets Update</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Data+quality">Data quality</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Analysis and maps|Data quality|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|hunger-maps|data-gaps|data-quality|" data-tag-names="hunger maps|data gaps|data quality"
+               
+               data-search="hunger mapping john waller hunger maps data gaps data quality analysis and maps data quality  where are we missing biodiversity data? a hunger map is a map of missing biodiversity data (a biodiversity data gap). the main challenge with hunger mapping is proving...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2019-02-15-hunger-mapping_files/iNaturalistMap.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/hunger-mapping/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/hunger-mapping/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 15 Feb 2019</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/hunger-mapping/" ><p>Hunger mapping</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Where are we missing biodiversity data? A hunger map is a map of missing biodiversity data (a biodiversity data gap). The main challenge with hunger mapping is proving…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Data+quality">Data quality</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Citizen science|APIs and downloads|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|citizen-science|rstats|" data-tag-names="citizen science|rstats"
+               
+               data-search="will citizen science take over? john waller citizen science rstats citizen science apis and downloads  citizen science is scientific research conducted, in whole or in part, by amateur (or non-professional) scientists. biodiversity observations by citizen scientists have become significant in the last 10...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2018-12-10-gbif-citizen-science-data_files/growthOfCitizenScienceWeb.jpg" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/gbif-citizen-science-data/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/gbif-citizen-science-data/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 21 Jan 2019</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/gbif-citizen-science-data/" ><p>Will citizen science take over?</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Citizen science is scientific research conducted, in whole or in part, by amateur (or non-professional) scientists. Biodiversity observations by citizen scientists have become significant in the last 10…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Citizen+science">Citizen science</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="APIs and downloads|Analysis and maps|"
+               data-authors="|jan-kristoffer-legind|" data-author-names="Jan Kristoffer Legind"
+               data-tags="|rstats|maps|arctic|shapefile|" data-tag-names="rstats|maps|arctic|shapefile"
+               
+               data-search="using shapefiles on gbif data with r jan kristoffer legind rstats maps arctic shapefile apis and downloads analysis and maps  not all filters are born equal">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2018-11-22-R_shapefiles_GBIF/arcticPlot.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/shapefiles/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/shapefiles/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Jan Kristoffer Legind · 22 Nov 2018</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/shapefiles/" ><p>Using shapefiles on GBIF data with R</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Not all filters are born equal</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Multimedia|Publishing data|"
+               data-authors="|marie-grosjean|" data-author-names="Marie Grosjean"
+               data-tags="|sound|multimedia|video|dublin-core|darwin-core|howto|publishing|" data-tag-names="sound|multimedia|video|Dublin Core|Darwin Core|howto|publishing"
+               
+               data-search="sharing images, sounds and videos on gbif marie grosjean sound multimedia video dublin core darwin core howto publishing multimedia publishing data  this blog post covers the publication of multimedia on gbif. however, it is not intended to be documentation. for more information, please check the references below.">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2018-11-19-gbif-multimedia_files/example_gallery.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/gbif-multimedia/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/gbif-multimedia/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Marie Grosjean · 19 Nov 2018</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/gbif-multimedia/" ><p>Sharing images, sounds and videos on GBIF</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>This blog post covers the publication of multimedia on GBIF. However, it is not intended to be documentation. For more information, please check the references below.</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Multimedia">Multimedia</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="Citizen science|Publishing data|"
+               data-authors="|marie-grosjean|" data-author-names="Marie Grosjean"
+               data-tags="|citizen-science|dataset|api|" data-tag-names="citizen science|dataset|API"
+               
+               data-search="finding citizen science datasets on gbif marie grosjean citizen science dataset api citizen science publishing data  update (september 2026): citizen science datasets in gbif are now maintained using the datasetcategory vocabulary, where citizenscience is one of the supported categories. the category assignments are managed...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/gbif-citizen-science/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">Marie Grosjean · 9 Nov 2018</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/gbif-citizen-science/" ><p>Finding citizen science datasets on GBIF</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Update (September 2026): Citizen science datasets in GBIF are now maintained using the DatasetCategory vocabulary, where CitizenScience is one of the supported categories. The category assignments are managed…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Citizen+science">Citizen science</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="APIs and downloads|Citation and data use|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|rstats|shiny|downloads|users|" data-tag-names="rstats|shiny|downloads|users"
+               
+               data-search="gbif download trends john waller rstats shiny downloads users apis and downloads citation and data use  ">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://javiesgm.github.io/hp-data-blog/post/2018-08-14-gbif-download-trends_files/GBIF%20Download%20Trends.png" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/gbif-download-trends/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/gbif-download-trends/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 14 Aug 2018</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/gbif-download-trends/" ><p>GBIF download trends</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Citation+and+data+use">Citation and data use</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      <article class="feature"
+               data-categories="APIs and downloads|Data quality|"
+               data-authors="|john-waller|" data-author-names="John Waller"
+               data-tags="|rstats|data-quality|gridded-data|" data-tag-names="rstats|data quality|gridded data"
+               
+               data-search="finding gridded datasets john waller rstats data quality gridded data apis and downloads data quality  gridded datasets are a known problem at gbif. many datasets have equally-spaced points in a regular pattern. these datasets are usually systematic national surveys or data taken from...">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-img" style="">
+  
+    
+    <img src="https://raw.githubusercontent.com/jhnwllr/charts/master/gridSnap.gif" alt="" />
+    
+  
+  <a href="/hp-data-blog/post/finding-gridded-datasets/"  class="feature-overlay"></a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content ">
+  <div class="feature-text">
+    <a href="/hp-data-blog/post/finding-gridded-datasets/"  class="feature-overlay"></a>
+     
+    <div class="feature-pre-title">John Waller · 14 Aug 2018</div>
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <a href="/hp-data-blog/post/finding-gridded-datasets/" ><p>Finding gridded datasets</p>
+</a>
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Gridded datasets are a known problem at GBIF. Many datasets have equally-spaced points in a regular pattern. These datasets are usually systematic national surveys or data taken from…</p>
+
+  </div>
+  
+
+  
+
+  
+  
+  <div class="feature-categories">
+    <div class="tags">
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+      
+        <a class="tag is-light" href="/hp-data-blog/?category=Data+quality">Data quality</a>
+      
+    </div>
+  </div>
+  
+
+</div>
+
+
+      </article>
+    
+  </div>
+  <p class="blog-list__empty" id="blog-list-empty" hidden>No posts match. <a href="/hp-data-blog/">Show all posts</a></p>
+</div>
+
+<script src="/hp-data-blog/assets/js/blog-list.js" defer></script>
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1793626883"></script>
+
+
+<script>
+  // On the news archive page we add a very rudimentary search, 
+  // by filtering in the client on categories
+  // 
+  // Filter cards on ?category=value
+  const urlParams = new URLSearchParams(window.location.search);
+    
+  if (urlParams.has("category") && urlParams.get("category") != "") {
+    var category = urlParams.get("category"); // Will return 1st category value + decode URI
+    
+    // filter features
+    var features = document.querySelectorAll('.feature');
+    features.forEach(function(feature){
+      var cardCategories = feature.attributes['data-categories'].value.split('|').map(function(x){return x.trim();});
+      // Hide card if it does not contain the selected category
+      if (!cardCategories.includes(category)) {
+        feature.style.display = 'none';
+      }
+    });
+
+    //show filter in top
+    var filterElement = document.getElementById('archive-filter');
+    if (filterElement) {
+      filterElement.innerHTML = '<div class="tags has-addons">' + 
+        '<a href="/hp-data-blog/" class="tag is-medium">' + category + '</a>' + 
+        '<a href="/hp-data-blog/" class="tag is-medium is-delete"></a>' +
+      '</div>'
+    }
+  }
+</script>
+
+
+
+
+  </body>
+</html>

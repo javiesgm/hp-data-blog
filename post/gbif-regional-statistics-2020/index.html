@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>GBIF Regional Statistics - 2020
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1793626883">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/data-blog-logo.png" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+              
+                
+                
+                  <a href="/hp-data-blog/?category=APIs+and+downloads" class="navbar-item">
+                    APIs and downloads
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Analysis+and+maps" class="navbar-item">
+                    Analysis and maps
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citation+and+data+use" class="navbar-item">
+                    Citation and data use
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citizen+science" class="navbar-item">
+                    Citizen science
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Collections" class="navbar-item">
+                    Collections
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Data+quality" class="navbar-item">
+                    Data quality
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Molecular+data" class="navbar-item">
+                    Molecular data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Multimedia" class="navbar-item">
+                    Multimedia
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Publishing+data" class="navbar-item">
+                    Publishing data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Taxonomy" class="navbar-item">
+                    Taxonomy
+                  </a>
+                
+              
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://discourse.gbif.org/c/data-blog"
+            >
+            Community forum
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://www.gbif.org/"
+            >
+            GBIF.org
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  postHeader--withToc ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>GBIF Regional Statistics - 2020</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=john-waller" title="All posts by John Waller">John Waller</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2020-05-19">19 May 2020</time>
+        <span aria-hidden="true">·</span>
+        3 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=statistics">#statistics</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=gbif-regions">#gbif regions</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+    <div class="article--toc">
+      <div>
+        <div class="toc-wrapper  toc__removeOnMobile ">
+          <aside class="toc">
+  <div class="toc_header">
+    On this page
+  </div>
+  <div class="toc_list">
+    <ul>
+  <li><a href="#occurrence-and-species-counts"><span style="color:#509E2F"><b>Occurrence</b></span> and <span style="color:#F1AD16"><b>Species</b></span> counts</a></li>
+  <li><a href="#birds-dominate-occurrence-totals"><span style="color:#FF9326"><b>Birds</b></span> dominate occurrence totals</a></li>
+  <li><a href="#publishing-from-latin-america-oceania-asia-africa-generate-a-disproportionate-number-of-citations">Publishing from Latin America, Oceania, Asia, Africa generate a disproportionate number of citations</a></li>
+  <li><a href="#gbif-regions-gain-25-50k-new-species-every-two-years">GBIF regions gain 25-50K new species every two years</a></li>
+  <li><a href="#there-are-still-many-data-gaps">There are still many data gaps!</a></li>
+</ul>
+  </div>
+</aside>
+        </div>
+        <div class="article">
+          <div class="content">
+  <p>I was asked to prepare some statistics for the <strong>GBIF regional regional meetings</strong> being held virtually this year. This blog post is a companion for those meetings.</p>
+
+<p>You can watch a <strong>video presentation</strong> of the preparation of these meetings <a href="https://vimeo.com/413657346">here</a>. The presentation of this blog post starts <a href="https://vimeo.com/413657346#t=23m39s">here</a>.</p>
+
+<ul>
+  <li>The <a href="https://www.gbif.org/event/5iluOArQeYT29U402zDrwi/north-american-virtual-nodes-meeting-2020">North American virtual nodes meeting 2020</a> was on <strong>5 - 6 May 2020</strong></li>
+  <li>The <a href="https://www.gbif.org/event/513CFo2fc5hhww0ci9NF5z/europe-and-central-asia-virtual-nodes-meeting-2020">Europe and Central Asia-virtual nodes meeting 2020</a> was on <strong>11 - 12 May 2020</strong></li>
+  <li>The <a href="https://www.gbif.org/event/3CRkTIGOTe3qfVr3FUvjJF/latin-america-and-caribbean-virtual-nodes-meeting-2020">Latin America and Caribbean virtual nodes meeting 2020</a> will be on <strong>18 - 20 May 2020</strong></li>
+  <li>The <a href="https://www.gbif.org/event/2YqTOjAAVFLwlnGZLrujYW/africa-virtual-nodes-meeting-2020">Africa virtual nodes meeting 2020</a> will be on <strong>10 - 12 June 2020</strong></li>
+</ul>
+
+<p>GBIF introduced a regional framework across the <a href="https://www.gbif.org/the-gbif-network">GBIF Network</a> a little more than a decade ago, with groups based on clusters of national participants. Soon after the publication of <a href="https://www.nature.com/articles/sdata20167">Brooks et al. (2016)</a>, GBIF adopted their structure to provide a consistent approach to regional reporting and assessment processes <a href="https://www.nature.com/articles/sdata20167/figures/1">map</a>.</p>
+
+<p>This post will cover countries/areas with some political status and not other <a href="https://www.gbif.org/the-gbif-network/gbif-affiliates">GBIF Affiliates</a> and Antarctica.</p>
+
+<!--more-->
+
+<p><img src="/hp-data-blog/post/2020-05-11-gbif-regional-statistics-2020_files/gbif_region_map.svg" alt="" /></p>
+
+<h2 id="occurrence-and-species-counts"><span style="color:#509E2F"><b>Occurrence</b></span> and <span style="color:#F1AD16"><b>Species</b></span> counts</h2>
+
+<ul>
+  <li><strong>published records</strong> - do not necessarily occur within the region, but are published by  countries/areas within the region.</li>
+  <li><strong>about records</strong> - must occur within the region but are not necessarily published by countries/areas within the region.</li>
+</ul>
+
+<p><img src="/hp-data-blog/post/2020-05-11-gbif-regional-statistics-2020_files/gbif_regions_occ_count.svg" alt="" /></p>
+
+<p><strong>Europe &amp; Central Asia</strong> and <strong>North America</strong> have by far the most occurrences about/published in their regions. A large part of these records are from bird observations, which is reflected in the species-count graph below.</p>
+
+<p><img src="/hp-data-blog/post/2020-05-11-gbif-regional-statistics-2020_files/gbif_regions_num_species.svg" alt="" /></p>
+
+<p><strong>Latin America &amp; The Caribbean</strong> have the most species about their region, which makes sense from a <a href="https://explorer.naturemap.earth/map">species-richness perspective</a>. <strong>Europe &amp; Central Asia</strong> and <strong>North America</strong> publish the most species, which could occur in any region or in international waters.</p>
+
+<h2 id="birds-dominate-occurrence-totals"><span style="color:#FF9326"><b>Birds</b></span> dominate occurrence totals</h2>
+
+<p><img src="/hp-data-blog/post/2020-05-11-gbif-regional-statistics-2020_files/facet_stacked_num_of_occ_Global_nobirds_FALSE.svg" alt="" /></p>
+
+<p>Since the <span style="color:#FF9326"><b>bird</b></span> data makes it hard to see other groups, I plot the same graph below excluding birds and countries with less than 1 million total occurrences.</p>
+
+<p><img src="/hp-data-blog/post/2020-05-11-gbif-regional-statistics-2020_files/facet_stacked_num_of_occ_Global_nobirds_TRUE.svg" alt="" /></p>
+
+<p>A large <span style="color:#FF0040"><b>red bar</b></span> indicates that the country has many occurrences <strong>about</strong> the country that are not in the top most popular groups (<span style="color:#FF9326"><b>birds</b></span>, <span style="color:#509E2F"><b>plants</b></span>, <span style="color:#40BFFF"><b>insects</b></span>, <span style="color:#175CA1"><b>mammals</b></span>, <span style="color:#FFCCCC"><b>molluscs</b></span>, <span style="color:#FDAF02"><b>fungi</b></span>). <span style="color:#FF0040"><b>Other</b></span> records are usually fish, amphibians, or reptiles. One can search for a country (e.g. <a href="https://www.gbif.org/occurrence/taxonomy?country=US">The United States</a>) on the GBIF web interface and get a more detailed view of that country’s taxonomic breakdown.</p>
+
+<h2 id="publishing-from-latin-america-oceania-asia-africa-generate-a-disproportionate-number-of-citations">Publishing from Latin America, Oceania, Asia, Africa generate a disproportionate number of citations</h2>
+
+<p><img src="/hp-data-blog/post/2020-05-11-gbif-regional-statistics-2020_files/data_use.svg" alt="" /></p>
+
+<p>This plot shows the number of citations generated from data published from countries within a region. This type of graph is only possible when an author <a href="https://www.gbif.org/literature-tracking">cites a doi</a> associated with a GBIF download.</p>
+
+<p>Here we see that <strong>Europe &amp; Central Asia</strong> and <strong>North America</strong> have the most total citations. However, occurrences published from <strong>Latin America &amp; The Caribbean</strong>, <strong>Oceania</strong>, <strong>Asia</strong>, and <strong>Africa</strong> generate a disproportionate number of journal citations for every 10M records they publish.</p>
+
+<h2 id="gbif-regions-gain-25-50k-new-species-every-two-years">GBIF regions gain 25-50K new species every two years</h2>
+
+<p><img src="/hp-data-blog/post/2020-05-11-gbif-regional-statistics-2020_files/timeseries_num_species.svg" alt="" /></p>
+
+<p>GBIF regions gain around <strong>25-50K new species every two years</strong>. In 2022-2024 <strong>Africa</strong> will have the same number of species (with occurrences) as <strong>North America</strong> had on GBIF in 2016-2018.</p>
+
+<h2 id="there-are-still-many-data-gaps">There are still many data gaps!</h2>
+
+<p><img src="/hp-data-blog/post/2020-05-11-gbif-regional-statistics-2020_files/global_num_species.svg" alt="" /></p>
+
+<p>A plot of raw species counts from equal-area hexagons approximately the size of Iceland. This plot excludes international waters, but includes countries EEZ areas. We see here that while <strong>Iceland</strong> has <span style="color:#749DC7"><b>&gt;5K species</b></span> other areas within Amazonia, Eastern Europe, and Africa have suspiciously fewer, <strong>indicating likely data gaps</strong>.</p>
+
+</div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/installations-and-hosting-solutions-explained/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Which tools can I use to share my data on GBIF?</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/issues-and-flags/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">GBIF Issues & Flags</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1793626883"></script>
+
+
+
+
+
+  </body>
+</html>

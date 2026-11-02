@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Species Occurrence Data and Corporate Sustainability Frameworks
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1793626883">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/data-blog-logo.png" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+              
+                
+                
+                  <a href="/hp-data-blog/?category=APIs+and+downloads" class="navbar-item">
+                    APIs and downloads
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Analysis+and+maps" class="navbar-item">
+                    Analysis and maps
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citation+and+data+use" class="navbar-item">
+                    Citation and data use
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citizen+science" class="navbar-item">
+                    Citizen science
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Collections" class="navbar-item">
+                    Collections
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Data+quality" class="navbar-item">
+                    Data quality
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Molecular+data" class="navbar-item">
+                    Molecular data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Multimedia" class="navbar-item">
+                    Multimedia
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Publishing+data" class="navbar-item">
+                    Publishing data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Taxonomy" class="navbar-item">
+                    Taxonomy
+                  </a>
+                
+              
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://discourse.gbif.org/c/data-blog"
+            >
+            Community forum
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://www.gbif.org/"
+            >
+            GBIF.org
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  postHeader--withToc ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Species Occurrence Data and Corporate Sustainability Frameworks</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=andrew-rodrigues" title="All posts by Andrew Rodrigues">Andrew Rodrigues</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2025-10-28">28 October 2025</time>
+        <span aria-hidden="true">·</span>
+        9 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Citation+and+data+use">Citation and data use</a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+    <div class="article--toc">
+      <div>
+        <div class="toc-wrapper  toc__removeOnMobile ">
+          <aside class="toc">
+  <div class="toc_header">
+    On this page
+  </div>
+  <div class="toc_list">
+    <ul>
+  <li><a href="#safeguard-frameworks">Safeguard Frameworks</a>
+    <ul>
+      <li><a href="#how-financial-institutions-vet-projects">How Financial Institutions Vet Projects</a></li>
+    </ul>
+  </li>
+  <li><a href="#environmental-social-and-governance-esg-frameworks">Environmental, Social and Governance (ESG) Frameworks</a>
+    <ul>
+      <li><a href="#disclosure-frameworks">Disclosure Frameworks</a></li>
+      <li><a href="#science-based-targets-and-the-tnfd">Science-Based Targets and the TNFD</a></li>
+    </ul>
+  </li>
+  <li><a href="#how-gbif-supports-business-biodiversity-disclosures">How GBIF Supports Business Biodiversity Disclosures</a>
+    <ul>
+      <li><a href="#screening">Screening</a></li>
+      <li><a href="#biodiversity-monitoring">Biodiversity Monitoring</a></li>
+      <li><a href="#data-access">Data Access</a></li>
+    </ul>
+  </li>
+  <li><a href="#gbif-recommendations-to-improve-biodiversity-disclosure-reporting">GBIF Recommendations to Improve Biodiversity Disclosure Reporting</a></li>
+</ul>
+  </div>
+</aside>
+        </div>
+        <div class="article">
+          <div class="content">
+  <p>As the business and financial sectors increasingly look towards integrating biodiversity within their sustainability frameworks, this overview outlines the different frameworks that exist, the sectors they belong to, and how the <strong>GBIF infrastructure</strong> and the <strong>data it provides</strong> can support these sectors.</p>
+
+<!--more-->
+
+<p><img src="tree.png" alt="Corporate sustainability frameworks and biodiversity data" width="400" /></p>
+
+<p>It is important to say upfront how <strong>GBIF-mediated data</strong> fits within the wider biodiversity data landscape in order to prevent confusion on what one can, and cannot, do with the data. GBIF-mediated data provides records of <strong>where and when species have been observed or collected</strong> from data-holding organizations across the globe.</p>
+
+<p>At a minimum, data will have:</p>
+<ul>
+  <li>a <strong>species name</strong> (Latin binomial),</li>
+  <li>a <strong>timestamp</strong> of when the observation occurred, and</li>
+  <li><strong>location information</strong> (often latitude–longitude coordinates).</li>
+</ul>
+
+<p>Although not limited to these, other information from the time of collection or observation can also be shared. GBIF is the <strong>world’s largest aggregator</strong> of such data and is used as the basis for derived information products that support biodiversity disclosures such as <strong>ecological niche models</strong> and <strong>Red Lists</strong>.</p>
+
+<p>The reliability of such derived products is directly correlated to the availability of GBIF-mediated data, and GBIF-mediated data can be seen as a <strong>complementary data source</strong> for ground-truthing these derived products.</p>
+
+<h2 id="safeguard-frameworks">Safeguard Frameworks</h2>
+
+<p><strong>Multilateral Development Banks (MDBs)</strong> employ environmental and social safeguard frameworks for their financed projects—both public and private. Projects must demonstrate how they plan to mitigate environmental and social impacts of their activities.</p>
+
+<p>In the case of biodiversity, MDB standards typically require clients to follow the <strong>mitigation hierarchy</strong> when implementing projects:<br />
+<strong>Avoid → Minimise → Restore → Offset.</strong></p>
+
+<p>These standards also compel financiers to fund projects that:</p>
+<ul>
+  <li>reduce biodiversity impacts, or</li>
+  <li>commit to <em>no net loss in natural habitat</em> or <em>net gain in critical habitat.</em></li>
+</ul>
+
+<p>Below is a list of some commonly used safeguard frameworks used by MDBs:</p>
+
+<table class="table" class="table">
+  <thead>
+    <tr>
+      <th>Level</th>
+      <th>Institution / Framework</th>
+      <th>Who It Applies To</th>
+      <th>Scope &amp; Instruments</th>
+      <th>Safeguard / Framework</th>
+      <th>Biodiversity Expectations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Project-level finance (public)</td>
+      <td><strong>World Bank (IBRD/IDA)</strong></td>
+      <td>Governments (sovereign borrowers, public projects)</td>
+      <td>Loans, grants, guarantees</td>
+      <td>Environmental &amp; Social Framework (ESF) → Financed projects must meet 10 ESS*</td>
+      <td><strong>ESS6</strong> - Avoid/minimize biodiversity impacts, sustainable natural resource use; use of offsets less prescriptive; relies on national systems</td>
+    </tr>
+    <tr>
+      <td>Project-level finance (private)</td>
+      <td><strong>IFC (International Finance Corporation)</strong></td>
+      <td>Private companies, PPPs, private equity funds, banks</td>
+      <td>Loans, equity, advisory, syndicated finance</td>
+      <td>IFC Performance Standards (PSs) → Financed projects must meet 8 PSs (last update, 2012)</td>
+      <td><strong>PS6</strong> - Strong mitigation hierarchy; no net loss in natural habitats, net gain in critical habitats</td>
+    </tr>
+    <tr>
+      <td>Regional project-level (public &amp; private)**</td>
+      <td><strong>EBRD (European Bank for Reconstruction and Development)</strong></td>
+      <td>Private and public clients in EBRD region (Eastern Europe, Central Asia, Southern and Eastern Mediterranean, Northern Africa, Sub-Saharan Africa)</td>
+      <td>Loans, equity, bonds, guarantees, syndicated finance</td>
+      <td>EBRD 10 Environmental and Social Requirements (PRs) → Financed projects must meet 10 ESRs</td>
+      <td><strong>ESR6</strong> - reviewed in 2024; similar to but more up to date than IFC PS6; plus EU law compliance (Habitats/Birds Directives, Natura 2000); strict on protected areas</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>*Environmental and Social Standards<br />
+**Other regional major MDB Safeguard Frameworks include:</p>
+<ul>
+  <li><strong>ADB</strong> (Asian Development Bank): Safeguard Policy Statement (updated 2024)</li>
+  <li><strong>AfDB</strong> (African Development Bank): Integrated Safeguards System (5 Operational Safeguards)</li>
+  <li><strong>IDB</strong> (Inter-American Development Bank): Environmental and Social Policy Framework (2021, aligned with IFC PSs)</li>
+  <li><strong>IsDB</strong> (Islamic Development Bank): Environmental &amp; Social Framework</li>
+  <li><strong>EIB</strong> (European Investment Bank): Environmental and Social Standards (10 standards, EU-aligned)</li>
+</ul>
+
+<p>In addition, these MDB safeguard frameworks are extended into:</p>
+<ul>
+  <li><strong>Commercial banking</strong> via the voluntary <em>Equator Principles</em>, which require borrowers to apply IFC Performance Standards (e.g., PS6).</li>
+  <li><strong>Export credit agencies</strong> of OECD countries through <em>OECD Common Approaches</em>, which encourage benchmarking against IFC/WB standards (though biodiversity safeguards are less prescriptive).</li>
+</ul>
+
+<h3 id="how-financial-institutions-vet-projects">How Financial Institutions Vet Projects</h3>
+
+<p>Below is an outline of an idealised evaluation process outlining opportunities for GBIF-mediated data to support financial institutions in making appropriate investment decisions.</p>
+
+<table class="table" class="table">
+  <thead>
+    <tr>
+      <th>Step</th>
+      <th>Process</th>
+      <th>Role of GBIF</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Screening &amp; Categorization</strong></td>
+      <td>Bank assigns a risk category (A/B/C, or High/Medium/Low) based on environmental &amp; social risk, which determines the level of safeguard requirements. <br />Example: WB: High risk → full ESIA; IFC: Category A → significant biodiversity/habitat risks.</td>
+      <td>GBIF-mediated data can provide known presences (and, in some cases, absences) of species, including those of conservation importance (e.g., threatened or invasive species) at the proposed project.</td>
+    </tr>
+    <tr>
+      <td><strong>Environmental &amp; Social Impact Assessment (ESIA)</strong></td>
+      <td>The borrower must prepare an ESIA identifying biodiversity, habitat, and ecosystem impacts and proposing mitigation following the mitigation hierarchy.</td>
+      <td>GBIF-mediated data can help assess the <em>state of nature before the project</em>, providing known species occurrences, including those of conservation importance, to support “no net loss” or “net gain” goals. Baseline data collected should be shared publicly.</td>
+    </tr>
+    <tr>
+      <td><strong>Safeguard Action Plans</strong></td>
+      <td>If risks are found, banks require Environmental and Social Management Plans (ESMPs) or Biodiversity Action Plans (BAPs) with mitigation commitments.</td>
+      <td>GBIF-mediated data can help design biodiversity indicators for monitoring “no net loss” or “net gain” by identifying where and what needs monitoring. Publishing monitoring data via GBIF facilitates compliance checks.</td>
+    </tr>
+    <tr>
+      <td><strong>Loan/Investment Conditions</strong></td>
+      <td>Safeguard compliance is written into the loan or investment contract. Failure to comply can lead to suspension or cancellation.</td>
+      <td>GBIF-mediated data can provide evidence that clients are meeting biodiversity-related loan stipulations.</td>
+    </tr>
+    <tr>
+      <td><strong>Independent Review &amp; Due Diligence</strong></td>
+      <td>Independent check of borrower’s studies.</td>
+      <td>Independent datasets like GBIF reduce reliance on consultant-provided, opaque data.</td>
+    </tr>
+    <tr>
+      <td><strong>Monitoring &amp; Supervision</strong></td>
+      <td>Borrowers must report regularly; banks may conduct audits, site visits, or consultations.</td>
+      <td>Borrowers can share monitoring data through GBIF to facilitate audits and adaptive management.</td>
+    </tr>
+    <tr>
+      <td><strong>Grievance Mechanisms</strong></td>
+      <td>Banks (e.g., WB Inspection Panel, IFC’s CAO, EBRD’s IPAM) allow affected communities or NGOs to file complaints.</td>
+      <td>GBIF can provide a data source for validating claims, especially when project data is shared through it.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Note:</strong> To achieve <em>no net loss in natural habitats</em> and <em>net gains in critical habitats</em>, clients must assess the <strong>biodiversity baseline</strong> in the area to be affected by the project (EAAA).<br />
+That baseline assessment produces invaluable biodiversity data that should be <strong>publicly shared</strong>.</p>
+
+<h2 id="environmental-social-and-governance-esg-frameworks">Environmental, Social and Governance (ESG) Frameworks</h2>
+
+<p>MDB safeguard mechanisms ensure biodiversity is considered in project financing. Parallel to these, <strong>business ESG frameworks</strong> guide corporate sustainability performance.</p>
+
+<h3 id="disclosure-frameworks">Disclosure Frameworks</h3>
+
+<p>Disclosure frameworks set standards on how companies should report on specific ESG issues.</p>
+
+<p>The <strong>Taskforce for Nature-related Financial Disclosure (TNFD)</strong> develops the biodiversity component of these frameworks, building on the <strong>Taskforce for Climate-related Financial Disclosure (TCFD)</strong>.</p>
+
+<p>TNFD ensures that <strong>biodiversity dependencies and impacts</strong> are disclosed in a standardised manner across sectors. While voluntary, ESG disclosures are typically made through:</p>
+<ul>
+  <li>Company <strong>annual or ESG reports</strong> (e.g. <a href="https://www.nestle.com/sustainability">Nestlé’s Sustainability Report</a>)</li>
+  <li><strong>Voluntary platforms</strong>, e.g., <a href="https://www.cdp.net/en">Carbon Disclosure Project (CDP)</a>, <a href="https://www.globalreporting.org/">Global Reporting Initiative (GRI)</a></li>
+  <li><strong>Regulatory filings</strong>, e.g., under EU’s Corporate Sustainability Reporting Directive (CSRD)</li>
+  <li><strong>Best practice requirements</strong>, e.g., as required by EBRD in its <a href="https://www.ebrd.com/home/news-and-events/publications/institutional-documents/environmental-and-social-policy-2024.html">2024 Environmental and Social Policy (including the ESR6 Guidance Note)</a> and described in the <a href="https://www.ebrd.com/content/dam/ebrd_dxp/assets/pdfs/environment---sustainability/implement-performance-requirements/prs/pr6/Technical-guidance-on-uploading-biodiversity-data.pdf">technical guidance on uploading biodiversity data</a></li>
+</ul>
+
+<p>Below is an example of regulatory frameworks in different jurisdictions:</p>
+
+<table class="table" class="table">
+  <thead>
+    <tr>
+      <th>Jurisdiction</th>
+      <th>Framework / Scope</th>
+      <th>Status of Disclosures</th>
+      <th>Who Must Comply</th>
+      <th>Filing / Regulator</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>UK</strong></td>
+      <td>TCFD-aligned climate disclosure (mandatory since 2022)</td>
+      <td>Climate = mandatory; Biodiversity = voluntary (TNFD encouraged)</td>
+      <td>Premium-listed companies, large private firms, banks, insurers</td>
+      <td>FCA (Financial Conduct Authority)</td>
+    </tr>
+    <tr>
+      <td><strong>New Zealand</strong></td>
+      <td>Climate-Related Disclosures (CRD), TCFD/ISSB-aligned</td>
+      <td>Climate = mandatory; Biodiversity = not yet mandatory (TNFD next)</td>
+      <td>Large listed companies, banks, insurers, asset managers</td>
+      <td>FMA (Financial Markets Authority)</td>
+    </tr>
+    <tr>
+      <td><strong>Japan</strong></td>
+      <td>TCFD-aligned disclosure in securities reports (since 2022)</td>
+      <td>Climate = mandatory; Biodiversity = voluntary (TNFD pilots)</td>
+      <td>All companies on TSE Prime Market</td>
+      <td>FSA (Financial Services Agency)</td>
+    </tr>
+    <tr>
+      <td><strong>EU</strong></td>
+      <td>Corporate Sustainability Reporting Directive (CSRD) – mandatory ESRS</td>
+      <td>Climate = mandatory; Biodiversity = mandatory under ESRS E4</td>
+      <td>Companies with &gt;1000 employees, &gt;€50M turnover or &gt;€25M balance sheet, EU-listed</td>
+      <td>National regulators under CSRD</td>
+    </tr>
+    <tr>
+      <td><strong>USA</strong></td>
+      <td>SEC Climate Disclosure Rule (adopted 2024)</td>
+      <td>Climate = mandatory (under challenge); Biodiversity = voluntary</td>
+      <td>Public companies (registrants)</td>
+      <td>SEC</td>
+    </tr>
+    <tr>
+      <td><strong>Brazil</strong></td>
+      <td>Emerging ESG/nature disclosure rules</td>
+      <td>Biodiversity-related disclosures expanding (e.g., deforestation risk)</td>
+      <td>Banks &amp; listed companies</td>
+      <td>Banco Central, B3</td>
+    </tr>
+    <tr>
+      <td><strong>Indonesia</strong></td>
+      <td>OJK sustainability disclosure rules</td>
+      <td>Includes biodiversity aspects (forestry, palm oil, extractives)</td>
+      <td>Large listed &amp; financial institutions</td>
+      <td>OJK</td>
+    </tr>
+    <tr>
+      <td><strong>China</strong></td>
+      <td>Draft ESG/nature disclosure guidelines (2023–2024)</td>
+      <td>Biodiversity included; expected to be mandatory soon</td>
+      <td>Listed companies (esp. resource-intensive sectors)</td>
+      <td>CSRC &amp; Stock Exchanges</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="science-based-targets-and-the-tnfd">Science-Based Targets and the TNFD</h3>
+
+<p>Through the TNFD, companies are encouraged to adopt <strong>Science Based Targets for Nature (SBTN)</strong> to set <strong>measurable, science-based biodiversity goals</strong>, e.g.:</p>
+<ul>
+  <li>restore <em>X</em> hectares,</li>
+  <li>reduce water withdrawal by <em>Y%</em>, or</li>
+  <li>eliminate deforestation from supply chains.</li>
+</ul>
+
+<p>SBTN aligns with the <strong>Kunming-Montreal Global Biodiversity Framework</strong> and complements TNFD by helping companies <em>set internal goals (SBTN)</em> and <em>disclose them externally (TNFD).</em></p>
+
+<h2 id="how-gbif-supports-business-biodiversity-disclosures">How GBIF Supports Business Biodiversity Disclosures</h2>
+
+<p>Many of the uses of GBIF listed for safeguards apply equally to corporate disclosures:</p>
+
+<h3 id="screening">Screening</h3>
+<p>The spatial–temporal nature of GBIF data allows companies to determine known species presences (and, in some cases, absences), including species of conservation importance.<br />
+This enables biodiversity baseline assessments across a company’s operations, helping to <strong>avoid and minimise biodiversity impacts</strong>.</p>
+
+<h3 id="biodiversity-monitoring">Biodiversity Monitoring</h3>
+<p>Using data coverage and availability over a company’s footprint, companies can design monitoring systems to <strong>measure biodiversity impact</strong> over time and <strong>track progress</strong> towards targets.</p>
+
+<h3 id="data-access">Data Access</h3>
+<p>GBIF provides the infrastructure through which <strong>species occurrence data</strong> used in company assessments can be shared.<br />
+While not all required data will be found in GBIF, additional company-collected data can be <strong>published through GBIF</strong>, increasing <strong>transparency</strong> and supporting the broader data ecosystem.</p>
+
+<h2 id="gbif-recommendations-to-improve-biodiversity-disclosure-reporting">GBIF Recommendations to Improve Biodiversity Disclosure Reporting</h2>
+
+<p>It is encouraging that businesses recognise GBIF as a data source and infrastructure for sharing species occurrence data. To strengthen the link between business biodiversity reporting and the GBIF infrastructure, we recommend:</p>
+
+<ol>
+  <li>
+    <p><strong>Transparency across all biodiversity disclosures</strong><br />
+Biodiversity disclosures should be traceable, with sources and data clearly cited. The issuing of <strong>DOIs</strong> by GBIF provides a mechanism for traceability.</p>
+  </li>
+  <li>
+    <p><strong>Companies should acknowledge data gaps and set collection targets</strong><br />
+Address <strong>taxonomic, spatial, and temporal biases</strong> in occurrence data through targeted collection efforts. Companies can help fill data gaps that support robust science and contribute to <strong>Target 21</strong> of the Kunming-Montreal Global Biodiversity Framework.<br />
+GBIF <strong>nodes</strong> should build capacity to support company data sharing.</p>
+  </li>
+  <li>
+    <p><strong>Adherence to data licensing</strong><br />
+Though GBIF data is freely available, downstream users must <strong>adhere to GBIF data licences</strong> and respect attribution and reuse conditions.</p>
+  </li>
+  <li>
+    <p><strong>Capacity building within companies</strong><br />
+Strengthen internal capacity to <strong>use and interpret GBIF-mediated data</strong> and understand its limitations to ensure responsible use in biodiversity reporting.</p>
+  </li>
+  <li>
+    <p><strong>Accessible, standardised reports</strong><br />
+Biodiversity disclosure reports should be <strong>machine-readable</strong> (e.g., digital XML/JSON/CSV) and accessible through open repositories (e.g., <strong>Zenodo</strong>)—as mandated under frameworks like <strong>CSRD</strong>—to ensure public access to underlying data.</p>
+  </li>
+</ol>
+
+
+</div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/2025-03-26-species-accumulations-curves-with-gbif-sql-downloads/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Species accumulation curves with GBIF SQL downloads</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/2026-01-21-rule-based-annotations/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Introducing Rule-based Annotations</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1793626883"></script>
+
+
+
+
+
+  </body>
+</html>

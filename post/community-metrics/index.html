@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Community Metrics
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1793626883">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/data-blog-logo.png" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+              
+                
+                
+                  <a href="/hp-data-blog/?category=APIs+and+downloads" class="navbar-item">
+                    APIs and downloads
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Analysis+and+maps" class="navbar-item">
+                    Analysis and maps
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citation+and+data+use" class="navbar-item">
+                    Citation and data use
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citizen+science" class="navbar-item">
+                    Citizen science
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Collections" class="navbar-item">
+                    Collections
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Data+quality" class="navbar-item">
+                    Data quality
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Molecular+data" class="navbar-item">
+                    Molecular data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Multimedia" class="navbar-item">
+                    Multimedia
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Publishing+data" class="navbar-item">
+                    Publishing data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Taxonomy" class="navbar-item">
+                    Taxonomy
+                  </a>
+                
+              
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://discourse.gbif.org/c/data-blog"
+            >
+            Community forum
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://www.gbif.org/"
+            >
+            GBIF.org
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  postHeader--withToc ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Community Metrics</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=andrew-rodrigues" title="All posts by Andrew Rodrigues">Andrew Rodrigues</a>, <a href="/hp-data-blog/?author=john-waller" title="All posts by John Waller">John Waller</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2026-09-28">28 September 2026</time>
+        <span aria-hidden="true">·</span>
+        5 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Citation+and+data+use">Citation and data use</a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+    <div class="article--toc">
+      <div>
+        <div class="toc-wrapper  toc__removeOnMobile ">
+          <aside class="toc">
+  <div class="toc_header">
+    On this page
+  </div>
+  <div class="toc_list">
+    <ul>
+  <li><a href="#background">Background</a>
+    <ul>
+      <li><a href="#design-principles">Design Principles</a></li>
+    </ul>
+  </li>
+  <li><a href="#available-metrics">Available Metrics</a>
+    <ul>
+      <li><a href="#summary-metrics">Summary metrics</a></li>
+      <li><a href="#occurrence-records-over-time">Occurrence records over time</a></li>
+      <li><a href="#dataset-scatter-plot">Dataset scatter plot</a></li>
+      <li><a href="#species-accumulation-curves">Species Accumulation Curves</a></li>
+      <li><a href="#species-count-maps">Species count maps</a></li>
+      <li><a href="#summary-table">Summary Table</a></li>
+    </ul>
+  </li>
+  <li><a href="#who-are-these-aimed-for">Who are these aimed for?</a></li>
+  <li><a href="#next-steps">Next steps</a></li>
+</ul>
+  </div>
+</aside>
+        </div>
+        <div class="article">
+          <div class="content">
+  <p>Data gaps are a common topic of discussion when talking about GBIF.  Taxonomic, geographic and temporal gaps in the global dataset exist, yet we still have problems quantifying those gaps and measuring how well we are doing in filling those gaps.  GBIF already provides <a href="https://www.gbif.org/analytics/global">analytics</a> and <a href="https://analytics-files.gbif.org/country/AR/GBIF_CountryReport_AR.pdf">country reports</a> both of which provide useful information on data publishing activities but give little signal to what extent these data publishing activities are filling <strong>data gaps</strong>. With that in mind, we have started to think about  how we can provide more nuanced analytics that quantify gaps and identify where priorities for data mobilisation might start.</p>
+
+<blockquote>
+  <p><strong><a href="https://labs.gbif.org/country-metrics">Explore our proposal</a></strong></p>
+</blockquote>
+
+<!--more-->
+
+<h2 id="background">Background</h2>
+
+<p>This responds directly to <a href="https://www.cbd.int/gbf/targets/21">Target 21 of the Kunming-Montreal Global biodiversity framework on data and information</a> where the Growth in species occurrence records accessible through the Global Biodiversity Information Facility is already a complementary indicator that countries can use for reporting progress towards the target.</p>
+
+<p>We have developed an initial set of national-level metrics to help identify and quantify data gaps. Built using our <a href="https://www.gbif.org/occurrence/download/sql#about">new SQL download functionality</a>.</p>
+
+<h3 id="design-principles">Design Principles</h3>
+
+<p>These metrics were designed with the following principles in mind:</p>
+
+<ol>
+  <li>They should be easy to interpret</li>
+  <li>They should be useful</li>
+  <li>They should not require third-party data (Outside of GBIF)</li>
+</ol>
+
+<h2 id="available-metrics">Available Metrics</h2>
+
+<h3 id="summary-metrics">Summary metrics</h3>
+
+<p>Similar to what is found in country reports, these provide summary statistics of data publishing and use in terms of numbers of occurrences, publishers, datasets, species and citations.</p>
+
+<h3 id="occurrence-records-over-time">Occurrence records over time</h3>
+
+<p>Growth in the number of occurrences over time by taxonomic group.  A toggle function allows users to show the same chart but only for data publishers in the country for a comparison of growth in data from national sources versus international sources.</p>
+
+<video controls="" autoplay="" loop="" muted="" playsinline="" width="100%" onloadedmetadata="this.playbackRate = 1.5;">
+  <source src="Occurrence-Records-Over-Time.mp4" type="video/mp4" />
+  <source src="Occurrence-Records-Over-Time.webm" type="video/webm" />
+  Your browser does not support the video tag.
+</video>
+
+<h3 id="dataset-scatter-plot">Dataset scatter plot</h3>
+
+<p>Datasets are plotted by the number of occurrences by the number of species in the dataset. Datasets providing a low number of occurrences for a smaller number of species and vice versa can be easily identified.  Toggles allow for: switching between linear and log scales; switching to only datasets published in the country; and highlighting different dataset categories e.g. citizen science vs gridded data vs eDNA.</p>
+
+<video controls="" autoplay="" loop="" muted="" playsinline="" width="100%" onloadedmetadata="this.playbackRate = 1.5;">
+  <source src="Dataset-Scatter-Plot.mp4" type="video/mp4" />
+  <source src="Dataset-Scatter-Plot.webm" type="video/webm" />
+  Your browser does not support the video tag.
+</video>
+
+<h3 id="species-accumulation-curves">Species Accumulation Curves</h3>
+
+<p>Building on work in a <a href="https://data-blog.gbif.org/post/2025-03-26-species-accumulations-curves-with-gbif-sql-downloads/">previous blog post</a>, these show the cumulative number of species for which we have occurrence data over time. Without national species checklists, it will never be possible to say to what extent we are truly plateauing in terms of numbers of species but we do think there is still a signal in the data. For example, if you look at the curve for growth in Amphibian species for neighbouring Colombia and Venezuela between 1900 and 2026, there seems to be a much greater than expected discrepancy between numbers of species indicating real data gaps in Venezuela.</p>
+
+<video controls="" autoplay="" loop="" muted="" playsinline="" width="100%" onloadedmetadata="this.playbackRate = 1.5;">
+  <source src="Species Accumulation Curve.mp4" type="video/mp4" />
+  <source src="Species Accumulation Curve.webm" type="video/webm" />
+  Your browser does not support the video tag.
+</video>
+
+<h3 id="species-count-maps">Species count maps</h3>
+
+<p>Countries are gridded using ISEA3H hexagonal grids at resolution 7 and observed species richness counts are provided for each grid cell.  In this example for Australia, you can see clear delimitations between marine and terrestrial habitats and high concentrations of species richness along the eastern coast.  It is important to note that these could reflect both real differences in biological diversity between areas, undersampling in certain regions or both.</p>
+
+<video controls="" autoplay="" loop="" muted="" playsinline="" width="100%" onloadedmetadata="this.playbackRate = 1.5;">
+  <source src="Species-Count-Map.mp4" type="video/mp4" />
+  <source src="Species-Count-Map.webm" type="video/webm" />
+  Your browser does not support the video tag.
+</video>
+
+<h3 id="summary-table">Summary Table</h3>
+
+<p>A table showing both growth in occurrences and respective number of species for taxonomic groups.  The goal is to provide metrics on how data mobilisation efforts over the past year have increased coverage for different taxonomic groups using mean and median occurrences per species and occurrence and species growth.</p>
+
+<h2 id="who-are-these-aimed-for">Who are these aimed for?</h2>
+
+<p>These were originally designed with a view to supporting organisations interested in assessing data gaps at a national level or those looking to develop data mobilisation strategies that would support the filling of data gaps.  Ultimately, anybody who is interested in these kinds of analyses can use them and input in their development.</p>
+
+<h2 id="next-steps">Next steps</h2>
+
+<p>We acknowledge that these metrics are far from perfect. For example, it still remains difficult to determine true under sampling versus true differences in species richness as we still lack effective measures of sampling effort.  However we do think that these provide useful starting points for developing data mobilisation strategies and encourage you to be part of the process by <a href="https://github.com/gbif/CommunityMetrics">providing us with your feedback</a>.  We are interested in any new metrics that could be of interest, what sorts of formats this information could be provided in, and how we might turn these into time series indicators and thus something that could show how well we are doing at filling data gaps.  This will be in a demo version for the next year before we decide on its future, so please join and be part of the process!</p>
+
+
+</div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/sam-survey-where-when/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Good SAMaritans – Modelling survey location, date and time when publishing Survey and Monitoring data to GBIF</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/sql-downloads-col-xr/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Recent breaking changes to SQL downloads to support the COL XR</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1793626883"></script>
+
+
+
+
+
+  </body>
+</html>

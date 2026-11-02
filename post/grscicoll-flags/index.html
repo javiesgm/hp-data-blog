@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>What are the flags “Collection match fuzzy”, “Collection match none”, “Institution match fuzzy”, “Institution match none” and how to remove them?
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1793626883">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/data-blog-logo.png" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+              
+                
+                
+                  <a href="/hp-data-blog/?category=APIs+and+downloads" class="navbar-item">
+                    APIs and downloads
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Analysis+and+maps" class="navbar-item">
+                    Analysis and maps
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citation+and+data+use" class="navbar-item">
+                    Citation and data use
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citizen+science" class="navbar-item">
+                    Citizen science
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Collections" class="navbar-item">
+                    Collections
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Data+quality" class="navbar-item">
+                    Data quality
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Molecular+data" class="navbar-item">
+                    Molecular data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Multimedia" class="navbar-item">
+                    Multimedia
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Publishing+data" class="navbar-item">
+                    Publishing data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Taxonomy" class="navbar-item">
+                    Taxonomy
+                  </a>
+                
+              
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://discourse.gbif.org/c/data-blog"
+            >
+            Community forum
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://www.gbif.org/"
+            >
+            GBIF.org
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>What are the flags “Collection match fuzzy”, “Collection match none”, “Institution match fuzzy”, “Institution match none” and how to remove them?</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=marie-grosjean" title="All posts by Marie Grosjean">Marie Grosjean</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2021-10-11">11 October 2021</time>
+        <span aria-hidden="true">·</span>
+        5 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Collections">Collections</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=publishing">#publishing</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=occurrence">#occurrence</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=sampling-event">#sampling-event</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=collections">#collections</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=institution">#institution</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=grscicoll">#GRSciColl</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=flags">#flags</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+      <div class="article">
+        <div class="content">
+  <p>You are a data publisher of occurrence data through GBIF.org, care about your data quality, and wonder what to do about the issue flags that show up on your occurrences. You might have noticed a new type flag this year relating to collection and institution codes and identifiers. They are the result of our attempt at linking specimens records to <a href="https://www.gbif.org/grscicoll">our Registry of Scientific Collections (GRSciColl)</a>.</p>
+
+<!--more-->
+
+<p>We want to be able to group specimens and combine metrics at the collection and institution levels (which can be independant from the way there were published on GBIF).</p>
+
+<h1 id="what-is-grscicoll">What is GRSciColl?</h1>
+
+<p><a href="https://www.gbif.org/grscicoll">GRSciColl</a>, the Registry of Scientific Collections, is a community-curated clearinghouse of collections information. It includes data about physical collections such as: a high-level summary of what they contain, where they are located, who can tell you more about these collections and how to contact them. As well as their institution and associated staff members.</p>
+
+<p>GBIF.org, on the other hand, provides access to digitized data of occurrences (specimens <em>and</em> observations) from datasets that are published by institutions and organizations. One website, but two separate data stores behind it that are connected with each other at the occurrence level.</p>
+
+<p>Institutions can use GRSciColl to be more visible and advertise their collections, both digitized and undigitized. GRSciColl offers the possibility to aggregate and organize the specimen-related occurrences published through GBIF.org idependently of the way there are showing at GBIF.org. So a large GBIF dataset can be presented as several collections on GRSciColl and the other way around.
+Our editing system (https://registry.gbif.org) was designed to enable anyone to suggest changes that will then be reviewed and applied by the relevant people. Institutions can also request to be made editor so they can maintain their own entries.</p>
+
+<p>If you would like to know more about GRSciColl and learn about other ways it can be used by the community, please check <a href="https://player.vimeo.com/video/564594528?h=745ac06824">this 5 min video from June 2021</a>.</p>
+<iframe title="vimeo-player" src="https://player.vimeo.com/video/564594528?h=745ac06824" width="640" height="360" frameborder="0" allowfullscreen=""></iframe>
+
+<h1 id="how-are-specimens-occurrences-linked-to-grscicoll">How are specimens occurrences linked to GRSciColl?</h1>
+
+<p>Our system interprets every new occurrence published on GBIF. If this occurrence has a value for any of the following terms, the interpretation will attempt to link it to a GRSciColl entry by using <a href="https://www.gbif.org/developer/registry#lookup">the GRSciColl lookup service</a>:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">institutionCode</code></li>
+  <li><code class="language-plaintext highlighter-rouge">collectionCode</code></li>
+  <li><code class="language-plaintext highlighter-rouge">institutionID</code></li>
+  <li><code class="language-plaintext highlighter-rouge">collectionID</code></li>
+</ul>
+
+<p><a href="https://www.gbif.org/developer/registry#lookup">The GRSciColl lookup service</a> attempts to find which GRSciColl entries match the codes and identifiers given as input. Anyone can use this service to check institution and collection codes and identifiers in GRSciColl. During the occurrence interpretation, the system will use the publisher country to help choose a match in GRSciColl in cases where there are more than one candidate.</p>
+
+<p>The flags shown on the occurrences are the ones generated by the lookup service. Because codes aren’t necessarily unique in GRSciColl, all matches based solely on codes (without identifiers) are flagged as fuzzy matches (more information in the third part of this post).</p>
+
+<p><strong>NB</strong>: **[Edit]: **The system only links the occurrences with the basis of record: <code class="language-plaintext highlighter-rouge">Preserved Specimen</code>, <code class="language-plaintext highlighter-rouge">Fossil Specimen</code>, <code class="language-plaintext highlighter-rouge">Living Specimen</code>, <code class="language-plaintext highlighter-rouge">Material Sample</code>.</p>
+
+<h1 id="how-to-remove-the-grscicoll-related-flags-from-specimen-records-step-by-step">How to remove the GRSciColl related flags from specimen records: Step by Step</h1>
+
+<p>Each flag is decribed in the GRSciColl section of <a href="https://data-blog.gbif.org/post/issues-and-flags/">our GBIF issues and flags blog post</a>.
+In general, the way to removed those flags is to use identifiers in the <code class="language-plaintext highlighter-rouge">institutionID</code> and <code class="language-plaintext highlighter-rouge">collectionID</code> fields. Here is how to do it:</p>
+
+<ol>
+  <li>Check if your institutions and collections are on <a href="https://www.gbif.org/grscicoll">GRSciColl</a>.
+    <ul>
+      <li>If an institution or a collection is missing, you can add them by clicking on the “Suggest a new institution” or “Suggest a new collection” buttons.</li>
+    </ul>
+  </li>
+  <li>Check what kind of identifiers and codes are on your institution and collection pages.
+    <ul>
+      <li>Note that you can suggest alternative codes by clicking on the “suggest a change button”. You can also ask to add some external identifiers such as ROR and GRID identifiers to your institution and collection GRSciColl pages by contacting scientific-collections@gbif.org.</li>
+    </ul>
+  </li>
+  <li>In your dataset:
+    <ul>
+      <li>Make sure that the values in the <code class="language-plaintext highlighter-rouge">collectionCode</code> and <code class="language-plaintext highlighter-rouge">institutionCode</code> fields correspond to codes or alternative codes on your institution and collection GRSciColl pages.</li>
+      <li>Make sure that the values in the <code class="language-plaintext highlighter-rouge">collectionID</code> and <code class="language-plaintext highlighter-rouge">institutionID</code> fields correspond to the identifiers on your institution and collection GRSciColl pages.</li>
+    </ul>
+  </li>
+  <li>Don’t forget to push the changes to GBIF by publishing the changes you made in your dataset.</li>
+</ol>
+
+<p>Your GRSciColl pages might have zero or many identifiers. <strong>So which identifier should you choose?</strong> We actually have <a href="https://www.gbif.org/faq?question=how-can-i-improve-the-matching-of-occurrence-records-with-grscicoll">an FAQ answering that question</a>. Here is the relevant part:</p>
+
+<blockquote>
+  <p>There can be several identifiers to choose from, and GBIF recommends in priority order:</p>
+
+  <ol>
+    <li>
+      <p>An in-house generated LSID if available (for example: urn:lsid:biocol.org:col:34984),</p>
+    </li>
+    <li>
+      <p>A GRSciColl ID or GRSciColl URI (for example: http://grscicoll.org/institution/south-african-institute-aquatic-biodiversity)</p>
+    </li>
+    <li>
+      <p>If no others exist, please use the GBIF UUID from the page URL (for example: a90ba963-9569-4b96-8d56-452aa7b83f75 for the URL https://www.gbif.org/grscicoll/institution/a90ba963-9569-4b96-8d56-452aa7b83f75)</p>
+    </li>
+  </ol>
+</blockquote>
+
+<p>I am adding the screenshot below to illustrate where to find them.
+<img src="/hp-data-blog/post/2021-09-24-grscicoll-flags/SANBI_ID_example.png" alt="Where are the GRSciColl identifiers to choose" /></p>
+
+<p>I also made <a href="https://player.vimeo.com/video/625476118?h=e794d87abd">a silent video</a> to illustrate the steps I mentioned above:</p>
+<iframe src="https://player.vimeo.com/video/625476118?h=e794d87abd" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen=""></iframe>
+
+<p><strong>NB</strong>: The version of GRSciColl that we use to interpret the occurrence record is refreshed once a week. This means that if you made any change in GRSciColl, you will have to wait a bit before it translates into a change in the occurrence interpretation.</p>
+
+<p>Hopefully, you now have all the tools to remove the GRSciColl-related flags from your occurrences! Don’t hesitate to contact scientific-collections@gbif.org if you have any question or comment on the blogpost.</p>
+
+</div>
+      </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/gbif-api-beginners-guide/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">GBIF API beginners guide</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/clustering-occurrences/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Identifying potentially related records - How does the GBIF data-clustering feature work?</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1793626883"></script>
+
+
+
+
+
+  </body>
+</html>

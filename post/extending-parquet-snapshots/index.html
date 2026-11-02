@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Extending the Parquet data snapshots
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1793626883">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/data-blog-logo.png" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+              
+                
+                
+                  <a href="/hp-data-blog/?category=APIs+and+downloads" class="navbar-item">
+                    APIs and downloads
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Analysis+and+maps" class="navbar-item">
+                    Analysis and maps
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citation+and+data+use" class="navbar-item">
+                    Citation and data use
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citizen+science" class="navbar-item">
+                    Citizen science
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Collections" class="navbar-item">
+                    Collections
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Data+quality" class="navbar-item">
+                    Data quality
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Molecular+data" class="navbar-item">
+                    Molecular data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Multimedia" class="navbar-item">
+                    Multimedia
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Publishing+data" class="navbar-item">
+                    Publishing data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Taxonomy" class="navbar-item">
+                    Taxonomy
+                  </a>
+                
+              
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://discourse.gbif.org/c/data-blog"
+            >
+            Community forum
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://www.gbif.org/"
+            >
+            GBIF.org
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  postHeader--withToc ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Extending the Parquet data snapshots</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=matthew-blissett" title="All posts by Matthew Blissett">Matthew Blissett</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2026-10-19">19 October 2026</time>
+        <span aria-hidden="true">·</span>
+        10 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=cloud-computing">#cloud computing</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=downloads">#downloads</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=aws">#aws</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+    <div class="article--toc">
+      <div>
+        <div class="toc-wrapper  toc__removeOnMobile ">
+          <aside class="toc">
+  <div class="toc_header">
+    On this page
+  </div>
+  <div class="toc_list">
+    <ul>
+  <li><a href="#quick-example">Quick example</a></li>
+  <li><a href="#overview-of-the-data-tables">Overview of the data tables</a>
+    <ul>
+      <li><a href="#1-almost-all-columns-are-included">1. Almost all columns are included</a></li>
+      <li><a href="#2-coordinate-column-and-precalculated-grids">2. Coordinate column and precalculated grids</a></li>
+      <li><a href="#3-taxonomy-and-grid-partitions">3. Taxonomy and grid partitions</a></li>
+      <li><a href="#4-inclusion-of-verbatim-and-multimedia-tables">4. Inclusion of Verbatim and Multimedia tables</a></li>
+      <li><a href="#5-improved-compression">5. Improved compression</a></li>
+    </ul>
+  </li>
+  <li><a href="#additional-examples">Additional examples</a>
+    <ul>
+      <li><a href="#1-using-a-python-notebook-to-query-and-analyse-occurrence-data">1. Using a Python notebook to query and analyse occurrence data</a></li>
+      <li><a href="#2-create-a-small-dashboard-for-a-country">2. Create a small dashboard for a country</a></li>
+    </ul>
+  </li>
+  <li><a href="#summary">Summary</a></li>
+  <li><a href="#feedback">Feedback</a></li>
+</ul>
+  </div>
+</aside>
+        </div>
+        <div class="article">
+          <div class="content">
+  <p>In April 2021, GBIF began exporting <a href="https://www.gbif.org/occurrence-snapshots">monthly data snapshots</a> to the Microsoft Planetary Computer (Azure), as an Amazon AWS Open Dataset and as a Google Public Dataset.  These exports contain similar data columns as a <a href="https://techdocs.gbif.org/en/data-use/download-formats#simple">“Simple” format download</a>, but use the Parquet format which is better suited for use with cloud or big data tools.</p>
+
+<p>Since then, the Parquet format has gained support for geographic data types and tooling has improved to support partitioning, better compression and indexing features.  These allow for faster querying, potentially directly within websites without needing web services.  Tools such as ArcGIS and QGIS are also introducing support for working with data in Parquet format, and GBIF users have requested additional fields be added to the download format and cloud snapshots.</p>
+
+<p><strong>We are therefore seeking feedback for an expanded Parquet download format containing similar data columns to a Darwin Core Archive format download.</strong>  Previews of three possible structures are available and described here, with questions for feedback at the end.</p>
+
+<h2 id="quick-example">Quick example</h2>
+
+<p><a href="https://duckdb.org">DuckDB</a> is a command-line database tool with built-in support for querying Parquet files on cloud data systems.</p>
+
+<p><a href="https://duckdb.org/install/">Install DuckDB</a>, run it, and search for spider occurrences with CC0-licenced media – a query that is not possible through the GBIF API or website.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INSTALL parquet,
+LOAD parquet;
+INSTALL httpfs;
+LOAD httpfs;
+
+WITH spiders AS (
+  SELECT
+    gbifid,
+    datasetKey,
+    scientificName,
+    unnest(multimedia) AS multimedia
+  FROM read_parquet('s3://gbif-public-data/development/2026-08-01-DWCA/p_taxon/*/*', hive_partitioning = true)
+  WHERE taxonPartition LIKE '%Arachnida%'
+    AND classKey = 'CCQKT'
+)
+SELECT
+  gbifid,
+  datasetKey,
+  scientificName,
+  'https://api.gbif.org/v1/image/cache/occurrence/' || gbifid || '/media/' || MD5(multimedia.identifier) AS apiUrl
+FROM spiders
+WHERE multimedia.license LIKE 'http://creativecommons.org/publicdomain/zero%'
+LIMIT 1000;
+</code></pre></div></div>
+
+<h2 id="overview-of-the-data-tables">Overview of the data tables</h2>
+
+<p>Three tables are provided, containing the same data but using different structure and partitioning.  The first table (<code class="language-plaintext highlighter-rouge">p_taxon</code>) has taxon partitioning and includes verbatim and multimedia data as additional columns.  The second (<code class="language-plaintext highlighter-rouge">p_taxon_a5</code>) and third (<code class="language-plaintext highlighter-rouge">p_taxon_h3</code>) tables have a combined taxonomic and geographic partitioning, with verbatim and multimedia data as separate tables.</p>
+
+<p>In each case there are five significant changes compared to the current Parquet exports.</p>
+
+<h3 id="1-almost-all-columns-are-included">1. Almost all columns are included</h3>
+
+<p>Rather than the “simple” view, these exports contain the same columns as a Darwin Core Archive download from GBIF.</p>
+
+<h3 id="2-coordinate-column-and-precalculated-grids">2. Coordinate column and precalculated grids</h3>
+
+<p>A column <code class="language-plaintext highlighter-rouge">coordinates</code> contains the interpreted coordinates (the <code class="language-plaintext highlighter-rouge">decimalLatitude</code> and <code class="language-plaintext highlighter-rouge">decimalLongitude</code> values).</p>
+
+<p>There are also additional columns for <a href="https://a5geo.org">A5</a> or <a href="https://h3geo.org">H3</a> discrete global grids (DGGSs).</p>
+
+<p>This allows geographic functions such as <code class="language-plaintext highlighter-rouge">ST_Within</code> (see below) to be used directly, as well as faster generation of maps and some general statistical analysis, and use in GIS software.</p>
+
+<h3 id="3-taxonomy-and-grid-partitions">3. Taxonomy and grid partitions</h3>
+
+<p>The sample tables use Hive partitioning to split the data into files of very roughly equal chunks.  Taxonomy partitioning is at different ranks, since some bird families contain more occurrences than other entire kingdoms.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">p_taxon</code> table has 194 taxon partitions with names like <code class="language-plaintext highlighter-rouge">Animalia_Arthropoda_Arachnida</code>.  Use <code class="language-plaintext highlighter-rouge">SELECT DISTINCT taxonPartition FROM read_parquet('s3://gbif-public-data/development/2026-08-01-DWCA/p_taxon/*/*', hive_partitioning = true) ORDER BY taxonPartition;</code> to see them.</p>
+
+<p>Note some groups like <em>Lepidoptera</em> are partitioned into one or more lower rank groups (<code class="language-plaintext highlighter-rouge">Animalia_Arthropoda_Insecta_Lepidoptera_Geometridae</code> etc), with another partition containing all other <em>Lepidoptera</em> (<code class="language-plaintext highlighter-rouge">Animalia_Arthropoda_Insecta_Lepidoptera__PARTIAL</code>).</p>
+
+<p>Specifying the appropriate partition will save a lot of time when querying. For example, to query for foxes (<a href="https://www.gbif.org/taxon/87C5">taxonKey 87C5</a>) use <code class="language-plaintext highlighter-rouge">taxonPartition = 'Animalia_Chordata_Mammalia__PARTIAL' AND genusKey = '87C5'</code>.  The database can then completely ignore hundreds of files containing birds, insects, plants etc.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">p_taxon_a5</code> and <code class="language-plaintext highlighter-rouge">p_taxon_h3</code> tables have a smaller number of taxon partitions (<code class="language-plaintext highlighter-rouge">SELECT DISTINCT taxonPartition FROM read_parquet('s3://gbif-public-data/development/2026-08-01-DWCA/occurrence/p_taxon_a5/*/*', hive_partitioning = true) ORDER BY taxonPartition;</code>.)</p>
+
+<p>These geo-partitioned tables are also partitioned on either A5 (resolution 2) or H3 (resolution 0) cells.  For geographic queries, calculate the complete coverage in cells for your query and add this to the WHERE clause. For example, to query for occurrences in the polygon <code class="language-plaintext highlighter-rouge">'POLYGON ((-9.9 49.3, 2.8 49.3, 2.8 59.6, -9.9 59.6, -9.9 49.3))'</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INSTALL a5;
+LOAD a5;
+INSTALL spatial;
+LOAD spatial;
+
+SELECT
+  COUNT(*) AS count,
+  countryCode
+FROM read_parquet('s3://gbif-public-data/development/2026-08-01-DWCA/occurrence/p_taxon_a5/*/*/*', hive_partitioning = true, hive_types = {'a5_r2': UBIGINT})
+WHERE a5_r2 IN a5_geometry_to_cells('POLYGON ((-9.9 49.3, 2.8 49.3, 2.8 59.6, -9.9 59.6, -9.9 49.3))'::GEOMETRY, 2)
+AND ST_Within(coordinates, 'POLYGON ((-9.9 49.3, 2.8 49.3, 2.8 59.6, -9.9 59.6, -9.9 49.3))'::GEOMETRY)
+GROUP BY countryCode
+ORDER BY count DESC
+LIMIT 5;
+</code></pre></div></div>
+
+<p>This should give a similar result to <a href="https://www.gbif.org/occurrence/search?geometry=POLYGON%28%28-9.9+49.3%2C2.8+49.3%2C2.8+59.6%2C-9.9+59.6%2C-9.9+49.3%29%29&amp;view=dashboard&amp;layout=country.v-TABLE">the same polygon on www.GBIF.org</a> (counts have increased since the snapshot was taken).</p>
+
+<h3 id="4-inclusion-of-verbatim-and-multimedia-tables">4. Inclusion of Verbatim and Multimedia tables</h3>
+
+<p>In <code class="language-plaintext highlighter-rouge">p_taxon</code>, verbatim data (as provided to GBIF by the publisher) is included as a <code class="language-plaintext highlighter-rouge">struct</code> named <code class="language-plaintext highlighter-rouge">verbatim</code>, e.g. <code class="language-plaintext highlighter-rouge">verbatim.eventDate</code> to see the original value for this column.  Interpreted multimedia data is included in a struct array named <code class="language-plaintext highlighter-rouge">multimedia</code>.  (See the <a href="#quick-example">quick example above</a>.)</p>
+
+<p>In <code class="language-plaintext highlighter-rouge">p_taxon_a5</code> and <code class="language-plaintext highlighter-rouge">p_taxon_h3</code>, verbatim and multimedia data are stored as separate tables, partitioned into <code class="language-plaintext highlighter-rouge">gbifid // 1000000</code> chunks (the record with <code class="language-plaintext highlighter-rouge">gbifid = 12345678</code> will be stored in the partition with <code class="language-plaintext highlighter-rouge">gbifid_div1000000 = 12000000</code>).  Access them within DuckDB like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT occ.*, ver.*, mul.*
+  FROM read_parquet('s3://gbif-public-data/development/2026-08-01-DWCA/occurrence/p_taxon_a5/*/*/*', hive_partitioning = true, hive_types = {'a5_r2': UBIGINT}) occ
+  INNER JOIN read_parquet('s3://gbif-public-data/development/2026-08-01-DWCA/verbatim/p_gbifid1000000/*/*', hive_partitioning = true, hive_types = {'gbifid_div1000000': UBIGINT}) ver ON (occ.gbifid//1000000) = ver.gbifid_div1000000 AND occ.gbifid = ver.gbifid
+  LEFT JOIN read_parquet('s3://gbif-public-data/development/2026-08-01-DWCA/multimedia/p_gbifid1000000/*/*', hive_partitioning = true, hive_types = {'gbifid_div1000000': UBIGINT}) mul ON (occ.gbifid//1000000) = mul.gbifid_div1000000 AND occ.gbifid = mul.gbifid
+  WHERE taxonPartition LIKE '%Chordata' AND genusKey = '87C5'
+  LIMIT 10;
+</code></pre></div></div>
+
+<h3 id="5-improved-compression">5. Improved compression</h3>
+
+<p>Zstd compression is used.  The Parquet files are significantly smaller than with the previous Snappy compression.  Tools supporting Parquet should handle this change automatically.</p>
+
+<h2 id="additional-examples">Additional examples</h2>
+
+<h3 id="1-using-a-python-notebook-to-query-and-analyse-occurrence-data">1. Using a Python notebook to query and analyse occurrence data</h3>
+
+<p>This Python notebook queries for the verbatim (published) coordinates of records in Brazil and displays them on a map.  Note the mirror image copies of the country with negated or transposed coordinates.</p>
+
+<details>
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;summary style="font-style: italic"&gt;Click to expand and show setup&lt;/summary&gt;
+</code></pre></div>  </div>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">duckdb</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="c1"># Initialize DuckDB and load HTTPFS extension for S3 access
+</span><span class="n">con</span> <span class="o">=</span> <span class="n">duckdb</span><span class="p">.</span><span class="n">connect</span><span class="p">()</span>
+<span class="n">con</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"INSTALL httpfs;"</span><span class="p">)</span>
+<span class="n">con</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"LOAD httpfs;"</span><span class="p">)</span>
+
+<span class="c1"># Configure S3 for public bucket access (GBIF public data [development])
+</span><span class="n">con</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"SET s3_region='us-east-1';"</span><span class="p">)</span>
+<span class="n">con</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"SET s3_url_style='path';"</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"DuckDB initialized."</span><span class="p">)</span>
+</code></pre></div>  </div>
+
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DuckDB initialized.
+</code></pre></div>  </div>
+
+</details>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">query_heatmap</span> <span class="o">=</span> <span class="s">"""
+SELECT
+  CASE WHEN array_contains(issue, 'PRESUMED_NEGATED_LONGITUDE') THEN FLOOR(-decimalLongitude)
+       WHEN array_contains(issue, 'PRESUMED_SWAPPED_COORDINATE') THEN FLOOR(decimalLatitude)
+       ELSE FLOOR(decimalLongitude)
+  END AS lon_bin,
+  CASE WHEN array_contains(issue, 'PRESUMED_NEGATED_LATITUDE') THEN FLOOR(-decimalLatitude)
+       WHEN array_contains(issue, 'PRESUMED_SWAPPED_COORDINATE') THEN FLOOR(decimalLongitude)
+       ELSE FLOOR(decimalLatitude)
+  END AS lat_bin,
+  COUNT(*) AS record_count
+FROM read_parquet('s3://gbif-public-data/development/2026-08-01-DWCA/occurrence/p_taxon_a5/*/*/*') occ
+WHERE occ.countryCode = 'BR'
+  AND occ.decimalLatitude IS NOT NULL
+  AND occ.decimalLongitude IS NOT NULL
+GROUP BY ALL
+"""</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Executing spatial aggregation query..."</span><span class="p">)</span>
+<span class="n">df_grid</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query_heatmap</span><span class="p">).</span><span class="n">df</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">f"Aggregated into </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_grid</span><span class="p">)</span><span class="si">}</span><span class="s"> 1° grid cells."</span><span class="p">)</span>
+</code></pre></div></div>
+
+<details>
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;summary style="font-style: italic"&gt;Click to expand and show figure generation&lt;/summary&gt;
+</code></pre></div>  </div>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">LogNorm</span>
+
+<span class="c1"># 1. Download GBIF WGS84 background tiles
+</span><span class="n">url_north</span> <span class="o">=</span> <span class="s">"https://tile.gbif.org/4326/omt/0/0/0@1x.png?style=gbif-classic"</span>
+<span class="n">url_south</span> <span class="o">=</span> <span class="s">"https://tile.gbif.org/4326/omt/0/1/0@1x.png?style=gbif-classic"</span>
+
+<span class="k">with</span> <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url_north</span><span class="p">))</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+    <span class="n">img_west</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">imread</span><span class="p">(</span><span class="n">io</span><span class="p">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">read</span><span class="p">()))</span>
+<span class="k">with</span> <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url_south</span><span class="p">))</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+    <span class="n">img_east</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">imread</span><span class="p">(</span><span class="n">io</span><span class="p">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">read</span><span class="p">()))</span>
+
+<span class="c1"># 2. Prepare the raster data
+# Ensure bins are integers for numerical sorting
+</span><span class="n">df_grid</span><span class="p">[</span><span class="s">'lat_bin'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_grid</span><span class="p">[</span><span class="s">'lat_bin'</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">df_grid</span><span class="p">[</span><span class="s">'lon_bin'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_grid</span><span class="p">[</span><span class="s">'lon_bin'</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">raster_df</span> <span class="o">=</span> <span class="n">df_grid</span><span class="p">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s">'lat_bin'</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s">'lon_bin'</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s">'record_count'</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dropna</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="n">raster_df</span> <span class="o">=</span> <span class="n">raster_df</span><span class="p">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">179</span><span class="p">,</span> <span class="mi">180</span><span class="p">))</span>
+<span class="n">raster_df</span> <span class="o">=</span> <span class="n">raster_df</span><span class="p">.</span><span class="n">reindex</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">179</span><span class="p">,</span> <span class="mi">179</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Set the 'bad' color (for masked/zero values) to transparent so the map shows through
+</span><span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s">'YlOrRd'</span><span class="p">).</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">cmap</span><span class="p">.</span><span class="n">set_bad</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s">'none'</span><span class="p">)</span>  <span class="c1"># Transparent
+</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">179</span><span class="p">,</span> <span class="mi">179</span><span class="p">):</span>
+    <span class="n">raster_df</span><span class="p">.</span><span class="n">at</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">raster_df</span><span class="p">.</span><span class="n">at</span><span class="p">[</span><span class="o">-</span><span class="mi">179</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Sort index ascending so lowest latitude is at the bottom (for origin='lower')
+</span><span class="n">raster_df_sorted</span> <span class="o">=</span> <span class="n">raster_df</span><span class="p">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">max_val</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">raster_df</span><span class="p">.</span><span class="nb">max</span><span class="p">().</span><span class="nb">max</span><span class="p">())</span>
+
+<span class="c1"># 3. Plotting
+</span><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># Plot background tiles
+</span><span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_west</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">],</span> <span class="n">origin</span><span class="o">=</span><span class="s">'upper'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_east</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">0</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">],</span> <span class="n">origin</span><span class="o">=</span><span class="s">'upper'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Plot heatmap
+</span><span class="n">im</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span>
+    <span class="n">raster_df_sorted</span><span class="p">,</span>
+    <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">],</span>
+    <span class="n">origin</span><span class="o">=</span><span class="s">'lower'</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
+    <span class="n">aspect</span><span class="o">=</span><span class="s">'equal'</span><span class="p">,</span>
+    <span class="n">interpolation</span><span class="o">=</span><span class="s">'nearest'</span><span class="p">,</span> <span class="c1"># Preserves the distinct 1° pixel blocks
+</span>    <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">max_val</span><span class="p">)),</span> <span class="c1"># Prevents LogNorm error if max_val &lt;= 1
+</span>    <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span> <span class="c1"># Ensure heatmap is drawn above the map tiles
+</span><span class="p">)</span>
+
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Count of Records (Logarithmic Scale)'</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'1° Resolution Raster Heat Map of GBIF Coordinate Fixes in Brazil</span><span class="se">\n</span><span class="s">(Logarithmic Record Count)'</span><span class="p">,</span>
+          <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Longitude (°)'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Latitude (°)'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># Add a subtle grid to emphasize the 1° resolution
+</span><span class="n">plt</span><span class="p">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">181</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">181</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'white'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">'-'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div>  </div>
+
+</details>
+
+<p><img src="/hp-data-blog/post/2026-10-02-extending-parquet-snapshots/coordinate-fixes-brazil.png" alt="Heat map of GBIF coordinate fixes in Brazil" /></p>
+
+<h3 id="2-create-a-small-dashboard-for-a-country">2. Create a small dashboard for a country</h3>
+
+<p><strong>Parquet files can be used to create an interactive dashboard, without any dependency on the live GBIF APIs.</strong>  Some queries may be able to use the cloud files directly, but for better performance we can create a Parquet data cube.</p>
+
+<p>The Parquet data cube is created using DuckDB.  This stores counts of occurrences, species and the highest event date within different A5 cells for each kingdom and basis of record.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>COPY (
+  SELECT
+    a5_r6,
+    a5_r7,
+    a5_r8,
+    kingdomKey,
+    basisOfRecord,
+    MAX("year") AS max_year,
+    COUNT(*) AS occurrence_count,
+    COUNT(DISTINCT speciesKey) AS species_count
+  FROM read_parquet('s3://gbif-public-data/development/2026-08-01-DWCA/occurrence/p_taxon_a5/*/*/*', hive_partitioning = true, hive_types = {'a5_r2': UBIGINT})
+  WHERE
+    a5_r2 IN a5_geometry_to_cells('POLYGON ((-37.177734 30.145127, -5.712891 30.145127, -5.712891 44.402392, -37.177734 44.402392, -37.177734 30.145127))'::GEOMETRY, 2)
+    AND countryCode = 'PT'
+    AND NOT hasGeospatialIssues
+  GROUP BY CUBE (a5_r6, a5_r7, a5_r8, kingdomKey, basisOfRecord)
+) TO 'portugal-cube-a5.parquet' (FORMAT 'PARQUET', COMPRESSION 'ZSTD', COMPRESSION_LEVEL 8);
+</code></pre></div></div>
+
+<p>The query takes about 4 minutes to run, and the result is a 1 MB file.  This could be automated with a cronjob, GitHub action or similar to keep the dashboard up-to-date.</p>
+
+<p>An LLM-generated dashboard exposes the cube on a map, with all queries running in the user’s browser.  This could be added to any static site, without any need for APIs or web services.</p>
+
+<p><img src="/hp-data-blog/post/2026-10-02-extending-parquet-snapshots/portugal-cube.png" alt="Example dashboard for Portugal" /></p>
+
+<p><a href="https://labs.gbif.org/~mblissett/2026/10/dashboard-example.html">View the dashboard</a></p>
+
+<p>You can also <a href="https://www.parquet-viewer.com/online-parquet-viewer#v=1&amp;url=https%3A%2F%2Flabs.gbif.org%2F%7Emblissett%2F2026%2F10%2Fportugal-cube-a5.parquet">view and query the cube</a> using one of several online Parquet file viewers.</p>
+
+<h2 id="summary">Summary</h2>
+
+<p>Three snapshots are provided.  During development, they are available on an Amazon S3 bucket.  They are both derived from the <a href="https://doi.org/10.15468/dl.8yrbe7">1 August 2026 DWCA snapshot <a href="https://doi.org/10.15468/dl.8yrbe7">https://doi.org/10.15468/dl.8yrbe7</a></a>, and should be cited with that DOI if used in a publication.</p>
+
+<p><strong>The first export is partitioned by taxonomic groups</strong> at different levels, stored in a <code class="language-plaintext highlighter-rouge">taxonPartition</code> (virtual) column.  Within each partition, data are ordered by taxonomy.</p>
+
+<p><strong>The second export is partitioned by A5 almost-equal-area pentagonal grid cells</strong> at R2 level.  Data are ordered by coordinate (Hilbert curve).</p>
+
+<p><strong>The third export uses the more widely supported H3 grid cells</strong> at R0 level.  Data are ordered by coordinate (Hilbert curve).</p>
+
+<p>The second and third exports can be joined to separate verbatim and multimedia tables.  Data in these tables is ordered by <code class="language-plaintext highlighter-rouge">gbifid</code>.</p>
+
+<p>Paths for all of these:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>s3://gbif-public-data/development/2026-08-01-DWCA/p_taxon/*/*
+
+s3://gbif-public-data/development/2026-08-01-DWCA/occurrence/p_taxon_a5/*/*/*
+
+s3://gbif-public-data/development/2026-08-01-DWCA/occurrence/p_taxon_h3/*/*/*
+
+s3://gbif-public-data/development/2026-08-01-DWCA/verbatim/p_gbifid1000000/*/*
+
+s3://gbif-public-data/development/2026-08-01-DWCA/multimedia/p_gbifid1000000/*/*
+</code></pre></div></div>
+
+<p>Column names are the same as for GBIF downloads (generally Darwin Core term short names), with the addition of the partitioning columns, a <code class="language-plaintext highlighter-rouge">coordinates</code> column and columns for A5 and H3 cell identifiers.  Array, numeric and timestamp data types have been used where appropriate.</p>
+
+<h2 id="feedback">Feedback</h2>
+
+<p>Feedback on this data format is appreciated. In particular,</p>
+
+<ol>
+  <li>
+    <p>Does the partitioning suit the queries you would make, or would you suggest a different partitioning?</p>
+  </li>
+  <li>
+    <p>Are the DGGS (A5 and H3) columns useful, and do you have a preference for one or the other?</p>
+  </li>
+  <li>
+    <p>Should the verbatim Darwin Core extensions supported by GBIF be added?</p>
+  </li>
+  <li>
+    <p>Is the increased size of the combined <code class="language-plaintext highlighter-rouge">p_taxon</code> table worth not needing to join to other tables for verbatim and multimedia data?</p>
+  </li>
+</ol>
+
+</div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/sql-downloads-col-xr/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Recent breaking changes to SQL downloads to support the COL XR</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/sam-survey-protocol/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Good SAMaritans – How to model sampling protocols in Survey and Monitoring (SAM) datasets</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1793626883"></script>
+
+
+
+
+
+  </body>
+</html>

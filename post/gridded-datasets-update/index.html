@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Gridded Datasets Update
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1793626883">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/data-blog-logo.png" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+              
+                
+                
+                  <a href="/hp-data-blog/?category=APIs+and+downloads" class="navbar-item">
+                    APIs and downloads
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Analysis+and+maps" class="navbar-item">
+                    Analysis and maps
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citation+and+data+use" class="navbar-item">
+                    Citation and data use
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citizen+science" class="navbar-item">
+                    Citizen science
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Collections" class="navbar-item">
+                    Collections
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Data+quality" class="navbar-item">
+                    Data quality
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Molecular+data" class="navbar-item">
+                    Molecular data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Multimedia" class="navbar-item">
+                    Multimedia
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Publishing+data" class="navbar-item">
+                    Publishing data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Taxonomy" class="navbar-item">
+                    Taxonomy
+                  </a>
+                
+              
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://discourse.gbif.org/c/data-blog"
+            >
+            Community forum
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://www.gbif.org/"
+            >
+            GBIF.org
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Gridded Datasets Update</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=john-waller" title="All posts by John Waller">John Waller</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2019-03-21">21 March 2019</time>
+        <span aria-hidden="true">·</span>
+        3 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Data+quality">Data quality</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=gridded-data">#gridded data</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=data-quality">#data quality</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+      <div class="article">
+        <div class="content">
+  <p><img src="https://raw.githubusercontent.com/jhnwllr/charts/master/gridSnap.gif" width="60%" height="60%" style="display: block;margin-left: auto;margin-right: auto;" /></p>
+
+<!--more-->
+
+<h1 id="gridded-datasets-are-now-flagged-on-the-gbif-registry">Gridded datasets are now flagged on the GBIF registry</h1>
+
+<p>This update builds on work from a <a href="https://data-blog.gbif.org/post/finding-gridded-datasets/">previous blog post</a>.</p>
+
+<blockquote>
+  <p>Gridded datasets are broadly <strong>datasets that have low coordinate precision</strong> due to rasterized sampling or rounding. This can be a data quality issue because a user might assume an occurrence record has more precision than it actually does.</p>
+</blockquote>
+
+<h1 id="current-statistics">Current statistics</h1>
+
+<ul>
+  <li><strong>572</strong> datasets are currently flagged as gridded or rasterized on the registry.</li>
+  <li><strong>488</strong> of these are regularly spaced at 0.1 decimal degrees (around 10 km)</li>
+  <li><strong>40</strong> datasets  are regularly spaced at &gt;0.1 decimal degrees <a href="https://www.gbif.org/dataset/81c2b870-f762-11e1-a439-00145eb45e9a">example</a></li>
+</ul>
+
+<p>These <strong>final 40 datasets</strong> with very large spacing are probably of most concern to those needing precise location information.</p>
+
+<h1 id="what-datasets-were-flagged">What datasets were flagged?</h1>
+
+<ul>
+  <li>Datasets with <strong>&gt;20 unique lat-lon points</strong>.</li>
+  <li>Datasets that have <strong>&gt;30% of their unique lat-lon points with the same nearest neighbor distance</strong></li>
+  <li>Only datasets with a nearest neighbor distances <strong>&gt;0.02 decimal degrees were flagged</strong>.</li>
+  <li>WGS84 is assumed to calculate distances in decimal degrees.</li>
+  <li><strong>All unique occurrence points</strong> from each GBIF dataset have been used this time. This means I was able to flag more datasets.</li>
+</ul>
+
+<h1 id="how-can-this-information-be-used">How can this information be used?</h1>
+
+<p>The current algorithm for detecting gridded datasets relies on nearest neighbor distances between unique occurrence points. This is described in more detail in a <a href="https://data-blog.gbif.org/post/finding-gridded-datasets/">previous post</a>.</p>
+
+<p><img src="https://raw.githubusercontent.com/jhnwllr/charts/master/griddedNN.gif" width="60%" height="60%" style="display: block;margin-left: auto;margin-right: auto;" /></p>
+
+<p>This produces a simple measure of distance in decimal degrees that can be used for filtering out  datasets that might have a coordinate precision above what is expected from the study. The following api call will get all of the datasets flagged as “gridded” in the GBIF registry.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://api.gbif.org/v1/dataset?machineTagNamespace=griddedDataSet.jwaller.gbif.org&amp;limit=1000
+
+</code></pre></div></div>
+
+<p>Such an api call could be easily incorporated into R packages for data cleaning, such as <a href="https://github.com/ropensci/CoordinateCleaner">CoordinateCleaner</a>. In the meantime, I have created a simple function to extract gridded dataset keys from the registry. The following will install a package that can be used for extracting flagged datasets from the registry.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Installation</span><span class="w">
+</span><span class="n">devtools</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="s2">"jhnwllr/griddedDatasets"</span><span class="p">,</span><span class="w"> </span><span class="n">subdir</span><span class="o">=</span><span class="s2">"gbifgridded"</span><span class="p">)</span><span class="w">
+
+</span></code></pre></div></div>
+
+<p>You can now use the <code class="language-plaintext highlighter-rouge">gbifgridded::getGriddedKeys</code> function to filter out low resolution datasets.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">rgbif</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span><span class="w"> 
+
+</span><span class="c1"># taxon key for Syntrichia norvegica Weber, 1804 (a moss)</span><span class="w">
+</span><span class="n">taxonKey</span><span class="o">=</span><span class="m">2671266</span><span class="w">
+
+</span><span class="c1"># Get occurrence data for a moss occurring in SWEDEN</span><span class="w">
+</span><span class="n">occData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">occ_data</span><span class="p">(</span><span class="n">taxonKey</span><span class="o">=</span><span class="n">taxonKey</span><span class="p">,</span><span class="w">
+</span><span class="n">country</span><span class="o">=</span><span class="s2">"SE"</span><span class="p">,</span><span class="w"> </span><span class="c1"># get only from SWEDEN to limit results</span><span class="w">
+</span><span class="n">hasGeospatialIssue</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="c1"># remove those with other geospatial issues </span><span class="w">
+</span><span class="n">hasCoordinate</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="c1"># get only with coordinates</span><span class="w">
+</span><span class="n">limit</span><span class="o">=</span><span class="m">1000</span><span class="p">)</span><span class="o">$</span><span class="n">data</span><span class="w"> </span><span class="c1"># get first 1000 records</span><span class="w">
+
+</span><span class="c1"># only get dataset keys with spacing greater than around 10 km</span><span class="w">
+</span><span class="n">keysToFilter</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">gbifgridded</span><span class="o">::</span><span class="n">getGriddedKeys</span><span class="p">(</span><span class="n">minDistance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.1</span><span class="p">)</span><span class="w"> 
+
+</span><span class="n">nrow</span><span class="p">(</span><span class="n">occData</span><span class="p">)</span><span class="w">
+
+</span><span class="n">cleanData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">occData</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># should be around 140 occurrence records</span><span class="w">
+</span><span class="n">filter</span><span class="p">(</span><span class="o">!</span><span class="n">datasetKey</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="n">keysToFilter</span><span class="p">)</span><span class="w"> 
+
+</span><span class="n">nrow</span><span class="p">(</span><span class="n">cleanData</span><span class="p">)</span><span class="w"> </span><span class="c1"># should remove around 50 low resolution occurrences </span><span class="w">
+
+</span></code></pre></div></div>
+
+<p>You can also run the function with no arguments to get a list of all the datasetkeys that are gridded.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gbifgridded</span><span class="o">::</span><span class="n">getGriddedKeys</span><span class="p">()</span><span class="w">
+</span></code></pre></div></div>
+
+<!--more-->
+
+</div>
+      </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/hunger-mapping/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Hunger mapping</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/gbif-molecular-data/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Sequence-based data on GBIF - Sharing your data</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1793626883"></script>
+
+
+
+
+
+  </body>
+</html>

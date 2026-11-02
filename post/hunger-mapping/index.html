@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Hunger mapping
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1793626883">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/data-blog-logo.png" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+              
+                
+                
+                  <a href="/hp-data-blog/?category=APIs+and+downloads" class="navbar-item">
+                    APIs and downloads
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Analysis+and+maps" class="navbar-item">
+                    Analysis and maps
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citation+and+data+use" class="navbar-item">
+                    Citation and data use
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citizen+science" class="navbar-item">
+                    Citizen science
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Collections" class="navbar-item">
+                    Collections
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Data+quality" class="navbar-item">
+                    Data quality
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Molecular+data" class="navbar-item">
+                    Molecular data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Multimedia" class="navbar-item">
+                    Multimedia
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Publishing+data" class="navbar-item">
+                    Publishing data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Taxonomy" class="navbar-item">
+                    Taxonomy
+                  </a>
+                
+              
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://discourse.gbif.org/c/data-blog"
+            >
+            Community forum
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://www.gbif.org/"
+            >
+            GBIF.org
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Hunger mapping</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=john-waller" title="All posts by John Waller">John Waller</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2019-02-15">15 February 2019</time>
+        <span aria-hidden="true">·</span>
+        5 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Data+quality">Data quality</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=hunger-maps">#hunger maps</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=data-gaps">#data gaps</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=data-quality">#data quality</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+      <div class="article">
+        <div class="content">
+  <h1 id="where-are-we-missing-biodiversity-data">Where are we missing biodiversity data?</h1>
+
+<p>A <strong>hunger map</strong> is a map of missing biodiversity data (a biodiversity <strong>data gap</strong>). The main challenge with hunger mapping is proving that a species <a href="https://en.wikipedia.org/wiki/Evidence_of_absence">does not exist but should exist</a>  in a region. Hunger maps are important because they could be used to prioritize funding and digitization efforts. Currently, <a href="https://www.gbif.org/what-is-gbif">GBIF</a> has no way of telling what species are missing from where. In this blog post I review some potential ways GBIF could make global biodiversity hunger maps.</p>
+
+<!--more-->
+
+<h1 id="checklists">Checklists</h1>
+
+<p>With the checklist approach one simply compares GBIF occurrence data with <strong>a list of species that should be in the country</strong> (or area). This is the <strong>gold standard</strong> of hunger mapping and should be the preferred method <strong>if a checklist exists</strong>.</p>
+
+<p><img src="/hp-data-blog/post/2019-02-15-hunger-mapping_files/iNaturalistMap.png" alt="" /></p>
+
+<p>Here we see <a href="https://www.inaturalist.org/taxa/102661-Hetaerina-cruentata">iNaturalists approach to hunger mapping</a>. All checklists seen on <a href="https://www.inaturalist.org/home">iNauturalist</a> are <strong>user supplied</strong>, meaning that a checklist is created for a region by using the same data that the observation is based on.</p>
+
+<blockquote>
+  <p>From iNaturalists’ help page: <br /><br />
+“Every place has a default check list, and whenever an observation is made within the place’s boundaries and it has achieved research-grade status, the species observed will get automatically added to the place’s check list.” – <a href="https://www.inaturalist.org/pages/help">source</a></p>
+</blockquote>
+
+<p>Obviously GBIF would not want to count occurrences as regional checklists as <strong>GBIF would be eating its own tail.</strong> Ideally we would want a set of <strong>regional checklists</strong> that have been created <strong>without the use of pre-existing GBIF occurrence datasets</strong>. This way we can tell what species should be in a certain country and compare with what species we have lat-lon occurrence data.</p>
+
+<p>Here are some examples of some <strong>regional checklists</strong> published on GBIF:</p>
+
+<ul>
+  <li><a href="https://www.gbif.org/dataset/e09e1e1f-2460-4017-a964-e999abd2bf66">Korean Peninsula Flora</a></li>
+  <li><a href="https://www.gbif.org/dataset/2c0abc5f-bffd-471b-a932-2288a87668bb">Catalogue of Texas spiders</a></li>
+  <li><a href="https://www.gbif.org/dataset/91fecd78-0986-4713-9c36-77532846ee25">Lista de táxones de la flora vascular española</a></li>
+  <li><a href="https://www.gbif.org/dataset/2b94a042-fe01-4d9f-8995-d996c21d33cd">Checklist of Danish Fungi</a></li>
+  <li><a href="https://www.gbif.org/dataset/7a9bccd4-32fc-420e-a73b-352b92267571">Checklist of Beetles of Canada and Alaska</a></li>
+  <li><a href="https://www.gbif.org/dataset/a7350d23-6727-4eb6-ae0b-6f86fc8d6a71">Checklist of Danish Flies and Mosquitoes</a></li>
+  <li><a href="https://www.gbif.org/dataset/848271aa-6a4f-4bae-a055-7081f3e70c4b">Catalogue of the Lepidoptera of Belgium</a></li>
+</ul>
+
+<p>Currently, regional checklist data is <strong>very patchy and disorganized</strong>. And if a country is very data-poor, <strong>it is even less likely to have a regional checklist</strong>.</p>
+
+<h1 id="predictive-modelling">Predictive modelling</h1>
+
+<p>While well-curated regional checklists are the gold standard of hunger mapping, they are very hard to organize and use. Another approach would be to generate species denisty maps through statistical modelling.</p>
+
+<p><img src="/hp-data-blog/post/2019-02-15-hunger-mapping_files/Birds_all_spp.jpg" alt="" /></p>
+
+<p>For example, this bird diversity map was produced by <a href="https://biodiversitymapping.org/wordpress/index.php/home/">biodiversity mapping</a>, using a statistical modeling approach <a href="https://www.pnas.org/content/110/28/E2602.abstract">citation</a>. Such modelling approaches could be used to compare predicted versus observed species counts. Unfortunately generating global species richness maps requires fairly good global coverage.</p>
+
+<p><br />
+<img src="/hp-data-blog/post/2019-02-15-hunger-mapping_files/molDragonflies.png" alt="" />
+<br /></p>
+
+<p>And even for groups like dragonflies, generating a global species richness map can be difficult, as we can see with this <a href="https://mol.org/">map of life</a> <a href="https://mol.org/patterns/richnessrarity?taxa=dragonflies&amp;indicator=sr">species richness map</a> for dragonflies.</p>
+
+<h1 id="intuition-and-comparison">Intuition and comparison</h1>
+
+<p>Below I plot the <strong>global genus counts of animals</strong> (kingdom Animalia) by country according GBIF occurrence data. On this map the <strong>United States has more animal genera than Brazil</strong>, and <strong>Iceland has similar animal genus counts to most African countries</strong>. Obviously one can infer there are likely large <strong>data-gaps</strong> present on this map  <strong>without needing a checklist from each country</strong>.</p>
+
+<p><img src="/hp-data-blog/post/2019-02-15-hunger-mapping_files/genusCountAnimals.png" alt="" /></p>
+
+<p><br /> <a href="https://jhnwllr.github.io/charts/Animals_genusKey.html">interactive map available here</a></p>
+
+<p>Often an expert only needs taxon counts from a certain area to be able to judge if a data gap is present or not. Additionally even non-experts would be able to guess that <a href="https://www.gbif.org/country/CD/summary">DR Congo</a> should have  <strong>greater than two times</strong> the animal genus count of <a href="https://www.gbif.org/country/IS/summary">Iceland</a>.</p>
+
+<p><img src="/hp-data-blog/post/2019-02-15-hunger-mapping_files/icelandGenusCount.png" alt="" /></p>
+
+<h1 id="interactive-global-genus-count-maps">Interactive global genus count maps</h1>
+
+<p>Below I link to some interactive genus count maps. These maps should be used for illustration and comparison purposes only, since counting taxonomic units is a hard problem even at the genus level. The numbers might <strong>very much inflated by duplicates and synonyms</strong> (or other issues). In the maps above I have not run any quality controls like excluding extinct species and synonyms. Still the maps broadly highlight where the GBIF network might be hungry for data.</p>
+
+<ul>
+  <li><a href="https://jhnwllr.github.io/charts/Plants_genusKey.html">Plants – kingdom Plantae genus count map</a></li>
+  <li><a href="https://jhnwllr.github.io/charts/Animals_genusKey.html">Animals – kingodm  Animalia genus count map</a></li>
+  <li><a href="https://jhnwllr.github.io/charts/Mammalia_genusKey.html">Mammals – class Mammalia genus count map</a></li>
+  <li><a href="https://jhnwllr.github.io/charts/Amphibia_genusKey.html">Amphibians – class Amphibia genus count map</a></li>
+  <li><a href="https://jhnwllr.github.io/charts/Ants_genusKey.html">Ants –  family Formicidae genus count map</a></li>
+  <li><a href="https://jhnwllr.github.io/charts/Aves_genusKey.html">Birds – class Aves genus count map</a></li>
+  <li><a href="https://jhnwllr.github.io/charts/Butterflies_genusKey.html">Butterflies – order Lepidoptera genus count map</a></li>
+  <li><a href="https://jhnwllr.github.io/charts/Dragonflies_genusKey.html">Dragonflies – order Odonata genus count map</a></li>
+  <li><a href="https://jhnwllr.github.io/charts/Frogs_genusKey.html">Frogs – order Anura genus count map</a></li>
+  <li><a href="https://jhnwllr.github.io/charts/Fungi_genusKey.html">Fungi – kingdom Fungi genus count map</a></li>
+  <li><a href="https://jhnwllr.github.io/charts/Pinosida_genusKey.html">Conifer Trees – class Pinopsida genus count map</a></li>
+  <li><a href="https://jhnwllr.github.io/charts/Reptilia_genusKey.html">Reptiles – class Reptilia genus count map</a></li>
+</ul>
+
+<h1 id="problems-with-counting-species">Problems with counting species</h1>
+
+<p><strong>One issue that will effect any method is species counting.</strong> How to divide species will always be controversial. So even if we have a checklist or a model prediction of a species count this will need to be reconciled somehow with the GBIF backbone.</p>
+
+<blockquote>
+  <p>“We are currently working with Catalogue of Life and other partners to try to deliver a more seamless and complete working checklist of all species but, right now, our view of the available data includes hundreds of thousands of scientific names which may or may not be accepted species.” <br /> – <a href="https://www.gbif.org/about-species-counts">GBIF’s statement about species counts</a></p>
+</blockquote>
+
+<p>Even for common species like the European herring gull (Larus argentus) there are <a href="https://www.gbif.org/occurrence/gallery?taxon_key=9741811&amp;taxon_key=9741394&amp;taxon_key=9806227&amp;taxon_key=5846445&amp;taxon_key=8794868&amp;taxon_key=9493513&amp;taxon_key=8754531&amp;taxon_key=2481139&amp;taxon_key=9793385&amp;taxon_key=9250315&amp;taxon_key=8731929&amp;taxon_key=9401820&amp;taxon_key=6178140&amp;taxon_key=9132226&amp;taxon_key=9813593">15 unique names</a>. Some of these names are subspecies names but some are simply duplicates. Cleaning up names for something less common than a seagull will be even more difficult.</p>
+
+<p><img src="/hp-data-blog/post/2019-02-15-hunger-mapping_files/larusArgentus.png" alt="" /></p>
+
+<h1 id="conclusions">Conclusions</h1>
+
+<p>Hunger mapping would be greatly aided by well-curated and clean dataset of regional checklists. Unfortunately, checklists datasets are currently very disorganized. Even if a checklist for a certain group exists in one region does not mean it will exist in another region. In the future GBIF occurrence datasets may act as default checklists.</p>
+
+<p>Still with a little bit of domain knowledge and some common sense we can roughly map where we probably want to prioritize funding in the future. Looking at the animal genus counts of the countries in Asia and Africa, shows that the <a href="https://www.gbif.org/programme/82629/bifa-biodiversity-information-fund-for-asia">BIFA</a> and <a href="https://www.gbif.org/programme/82243/bid-biodiversity-information-for-development">BID</a> projects are money well spent.</p>
+
+<!--more-->
+
+</div>
+      </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/gbif-citizen-science-data/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Will citizen science take over?</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/gridded-datasets-update/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Gridded Datasets Update</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1793626883"></script>
+
+
+
+
+
+  </body>
+</html>

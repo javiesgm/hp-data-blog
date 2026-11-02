@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Accessing GBIF-mediated occurrence data to conserve EDGE species
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1793626883">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/data-blog-logo.png" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+              
+                
+                
+                  <a href="/hp-data-blog/?category=APIs+and+downloads" class="navbar-item">
+                    APIs and downloads
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Analysis+and+maps" class="navbar-item">
+                    Analysis and maps
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citation+and+data+use" class="navbar-item">
+                    Citation and data use
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citizen+science" class="navbar-item">
+                    Citizen science
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Collections" class="navbar-item">
+                    Collections
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Data+quality" class="navbar-item">
+                    Data quality
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Molecular+data" class="navbar-item">
+                    Molecular data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Multimedia" class="navbar-item">
+                    Multimedia
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Publishing+data" class="navbar-item">
+                    Publishing data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Taxonomy" class="navbar-item">
+                    Taxonomy
+                  </a>
+                
+              
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://discourse.gbif.org/c/data-blog"
+            >
+            Community forum
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://www.gbif.org/"
+            >
+            GBIF.org
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Accessing GBIF-mediated occurrence data to conserve EDGE species</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=andrew-rodrigues" title="All posts by Andrew Rodrigues">Andrew Rodrigues</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2023-05-02">2 May 2023</time>
+        <span aria-hidden="true">·</span>
+        4 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Citation+and+data+use">Citation and data use</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=data-use">#Data Use</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+      <div class="article">
+        <div class="content">
+  <blockquote>
+  <p><a href="https://www.edgeofexistence.org/">Evolutionarily Distinct and Globally Endangered</a> or <strong>EDGE species</strong> have few close relatives on the tree of life and are often extremely unusual in the way they look, live and behave, as well as in their genetic make-up. They represent a unique and irreplaceable part of the world’s natural heritage.</p>
+</blockquote>
+
+<p>After seeing an open call for projects that extend existing protected area networks for the conservation of EDGE species through the <a href="https://www.edgeofexistence.org/edge-protected-and-conserved-area-fund/#:~:text=The%20EDGE%20Protected%20and%20Conserved,across%20the%20tropics%20and%20subtropics">EDGE Protected Area and Conserved Area Fund</a>, I wanted to see what data is currently available through GBIF that could help guide decisions on conservation financing. This call will direct funds toward projects that establish or expand protected areas for EDGE species that are a) not currently protected and b) either critically endangered (CR), endangered (EN) or vulnerable (VU) EDGE species whose ranges overlap with other unprotected CR or EN species. Importantly, the call notes that <strong>recent verifiable evidence should exist for the named species occurring within the proposed site.</strong></p>
+
+<p>Given these criteria and a <a href="https://www.edgeofexistence.org/wp-content/uploads/2023/03/2023_EDGE_species_RT_call.xlsx">list of eligible critically endangered, endangered and vulnerable species</a> provided within the call, I decided to look at data availability of EDGE species in three eligible countries within the GBIF member network: <a href="https://www.gbif.org/country/BJ/about">Benin</a>, <a href="https://www.gbif.org/country/EC/about">Ecuador</a> and <a href="https://www.gbif.org/country/VN/about">Viet Nam</a>. Uses like this are particularly pertinent given the commitment agreed under the new <a href="https://www.cbd.int/article/cop15-final-text-kunming-montreal-gbf-221222">Kunming-Montreal Global Biodiversity Framework</a> to protect 30 per cent of the Earth by 2030, and I was interested to see to what extent GBIF data can already support spatial prioritization processes.</p>
+
+<h2 id="methods">Methods</h2>
+
+<p>From the list of 4,214 species identified in the call, I found a total of 45, 139 and 171 threatened EDGE species for Benin, Ecuador and Viet Nam, respectively, after matching them to the <a href="https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c">GBIF Backbone Taxonomy</a> and removing synonyms (8 spp.) and unmatched species (1 sp.). I then did an occurrence search for those species in the respective countries, limiting the results by <a href="https://docs.gbif.org/course-data-use/en/basis-of-record.html">basis of record</a> for preserved specimens, human observations, observations or machine observations.</p>
+
+<p>Given that I wanted to identify occurrences of species <em>outside</em> existing protected areas, I filtered out records with a coordinate uncertainty greater than 10,000 metres, as uncertainties greater than that would likely introduce too much uncertainty into where exactly the best location for proposed additions to a protected area would be.</p>
+
+<p>Here is the code used in the package rgbif with the example for Ecuador and using the file that I created using the GBIF species name matching tool named - “Ecuador_edge_normalized_accepted”:</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">occ_download</span><span class="p">(</span><span class="w">
+  </span><span class="n">pred_in</span><span class="p">(</span><span class="s2">"taxonKey"</span><span class="p">,</span><span class="w"> </span><span class="n">Ecuador_edge_normalized_accepted</span><span class="o">$</span><span class="n">key</span><span class="p">),</span><span class="w">
+  </span><span class="n">pred_in</span><span class="p">(</span><span class="s2">"country"</span><span class="p">,</span><span class="w"> </span><span class="s2">"EC"</span><span class="p">),</span><span class="w">
+  </span><span class="n">pred_in</span><span class="p">(</span><span class="s2">"basisOfRecord"</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'PRESERVED_SPECIMEN'</span><span class="p">,</span><span class="s1">'HUMAN_OBSERVATION'</span><span class="p">,</span><span class="s1">'OBSERVATION'</span><span class="p">,</span><span class="s1">'MACHINE_OBSERVATION'</span><span class="p">)),</span><span class="w">
+  </span><span class="n">pred</span><span class="p">(</span><span class="s2">"hasCoordinate"</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w">
+  </span><span class="n">pred</span><span class="p">(</span><span class="s2">"hasGeospatialIssue"</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">),</span><span class="w">
+  </span><span class="n">pred_or</span><span class="p">(</span><span class="w">
+    </span><span class="n">pred_lt</span><span class="p">(</span><span class="s2">"coordinateUncertaintyInMeters"</span><span class="p">,</span><span class="w"> </span><span class="m">10000</span><span class="p">),</span><span class="w">
+    </span><span class="n">pred_isnull</span><span class="p">(</span><span class="s2">"coordinateUncertaintyInMeters"</span><span class="p">)</span><span class="w">
+  </span><span class="p">),</span><span class="w">
+  </span><span class="n">format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"SIMPLE_CSV"</span><span class="p">,</span><span class="w">
+  </span><span class="n">user</span><span class="o">=</span><span class="s2">"xxxx"</span><span class="p">,</span><span class="n">pwd</span><span class="o">=</span><span class="s2">"xxxx"</span><span class="p">,</span><span class="n">email</span><span class="o">=</span><span class="s2">"xxxxxxx"</span><span class="w">
+</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Once I had all my occurrence, I performed some post-download geoprocessing in QGIS to buffer my occurrence points using coordinate uncertainty values in the <code class="language-plaintext highlighter-rouge">coordinateUncertaintyInMeters</code> field. and only keep those occurrences where the uncertainty buffers did not intersect with any existing protected area as defined using the <a href="https://www.protectedplanet.net/">Protected Planet data layers</a>.</p>
+
+<p>Occurrence maps are below with a few example areas highlighted.</p>
+
+<h2 id="results">Results</h2>
+
+<p>The majority of EDGE species listed as coming from each country had data available in GBIF: 84 per cent from Benin, 83 per cent from Ecuador and 63 per cent from Vietnam. For these “GBIF-ready” species, occurrence data is available outside of protected areas for 78, 71 and 51 per cent of them in Benin, Ecuador and Viet Nam, respectively.</p>
+
+<p>Comparing the number of records found outside of protected areas with the total number of occurrences, I found that the lower percentage of occurrence records available for threatened EDGE species outside protected areas in Benin (23 per cent), Ecuador (40 per cent) and Viet Nam (37 per cent), respectively, suggests either a sampling bias within protected areas for those species or a concentration of those species within protected areas.</p>
+
+<p>What is clear is that, <strong>for the majority of threatened EDGE species in these example countries, GBIF has data available</strong>. We would encourage projects to use the data when identifying areas to extend existing protected area networks.</p>
+
+<hr />
+
+<h3 id="benin">Benin</h3>
+
+<p><img src="/hp-data-blog/post/2023-05-01-accessing-occurrence-data-to-conserve-edge-species/benin-edge.png" alt="Benin" /></p>
+
+<p><img src="/hp-data-blog/post/2023-05-01-accessing-occurrence-data-to-conserve-edge-species/benin_table.png" alt="Benin table" /></p>
+
+<hr />
+
+<h3 id="ecuador">Ecuador</h3>
+
+<p><img src="/hp-data-blog/post/2023-05-01-accessing-occurrence-data-to-conserve-edge-species/ecuador-edge.png" alt="Ecuador" /></p>
+
+<p><img src="/hp-data-blog/post/2023-05-01-accessing-occurrence-data-to-conserve-edge-species/ecuador_table.png" alt="Ecuador table" /></p>
+
+<hr />
+
+<h3 id="viet-nam">Viet Nam</h3>
+
+<p><img src="/hp-data-blog/post/2023-05-01-accessing-occurrence-data-to-conserve-edge-species/viet_nam-edge.png" alt="Viet Nam" /></p>
+
+<p><img src="/hp-data-blog/post/2023-05-01-accessing-occurrence-data-to-conserve-edge-species/vietnam_table.png" alt="Viet Nam table" /></p>
+
+<hr />
+
+<h3 id="the-edge-alliance">The EDGE alliance</h3>
+
+<p>The EDGE Protected and Conserved Fund is a partnership between <a href="https://www.durrell.org/">Durrell Wildlife Conservation Trust</a>, <a href="https://www.ontheedge.org/">On The Edge Conservation</a>, <a href="https://www.rewild.org/">Re:wild</a>, <a href="https://www.kew.org/">Royal Botanic Gardens, Kew</a>, <a href="https://www.synchronicityearth.org/">Synchronicity Earth</a> and the <a href="https://www.zsl.org/">Zoological Society of London</a>, with funding provided by <a href="https://www.rainforesttrust.org/">Rainforest Trust</a>.</p>
+
+</div>
+      </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/senegalia-clustering-in-brazil/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Exploring Related Records in the Flowering Plant Genus Senegalia in Brazil</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/2023-03-24-maps-api/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Creating high resolution maps with rgbif</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1793626883"></script>
+
+
+
+
+
+  </body>
+</html>

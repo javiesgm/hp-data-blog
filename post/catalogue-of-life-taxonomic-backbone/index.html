@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>How to migrate from the legacy GBIF Backbone Taxonomy to Catalogue of Life Extended Release
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1793626883">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/data-blog-logo.png" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+              
+                
+                
+                  <a href="/hp-data-blog/?category=APIs+and+downloads" class="navbar-item">
+                    APIs and downloads
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Analysis+and+maps" class="navbar-item">
+                    Analysis and maps
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citation+and+data+use" class="navbar-item">
+                    Citation and data use
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citizen+science" class="navbar-item">
+                    Citizen science
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Collections" class="navbar-item">
+                    Collections
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Data+quality" class="navbar-item">
+                    Data quality
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Molecular+data" class="navbar-item">
+                    Molecular data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Multimedia" class="navbar-item">
+                    Multimedia
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Publishing+data" class="navbar-item">
+                    Publishing data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Taxonomy" class="navbar-item">
+                    Taxonomy
+                  </a>
+                
+              
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://discourse.gbif.org/c/data-blog"
+            >
+            Community forum
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://www.gbif.org/"
+            >
+            GBIF.org
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  postHeader--withToc ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>How to migrate from the legacy GBIF Backbone Taxonomy to Catalogue of Life Extended Release</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=john-waller" title="All posts by John Waller">John Waller</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2026-06-23">23 June 2026</time>
+        <span aria-hidden="true">·</span>
+        5 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Taxonomy">Taxonomy</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=api">#API</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=taxonomy">#taxonomy</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=catalogue-of-life">#Catalogue of Life</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+    <div class="article--toc">
+      <div>
+        <div class="toc-wrapper  toc__removeOnMobile ">
+          <aside class="toc">
+  <div class="toc_header">
+    On this page
+  </div>
+  <div class="toc_list">
+    <ul>
+  <li><a href="#what-happens-with-old-links-and-old-taxonkeys">What happens with old links and old taxonKeys?</a></li>
+  <li><a href="#occurrence-record-processing">Occurrence record processing</a></li>
+  <li><a href="#how-to-do-taxon-matching">How to do taxon matching</a></li>
+  <li><a href="#gbif-maps-api">GBIF Maps API</a></li>
+  <li><a href="#occurrence-downloads">Occurrence Downloads</a></li>
+  <li><a href="#rgbif-pygbif-and-rcol">rgbif, pygbif, and rcol</a></li>
+  <li><a href="#further-reading">Further reading</a></li>
+</ul>
+  </div>
+</aside>
+        </div>
+        <div class="article">
+          <div class="content">
+  <p>Recently <a href="https://www.gbif.org/occurrence/search?occurrenceStatus=present">GBIF.org</a> has updated the default taxonomy it uses to organize occurrence records to the <a href="https://www.catalogueoflife.org/building/releases">Catalogue of Life Extended Release</a> (COL XR). The <a href="https://doi.org/10.15468/39omei">GBIF backbone</a>
+was last updated in 2023, and <strong>will not be updated again</strong>. We encourage users of our APIs to <a href="https://techdocs.gbif.org/en/data-processing/taxonomy-interpretation">migrate towards</a> using the COL XR, namely by switching the <strong>checklistKey</strong> parameter to <code class="language-plaintext highlighter-rouge">checklistKey=7ddf754f-d193-4cc9-b351-99906754a03b</code>.</p>
+
+<div class="video-embed"><iframe src="https://player.vimeo.com/video/1029184370" allow="fullscreen; picture-in-picture" allowfullscreen="" loading="lazy" title="Video"></iframe></div>
+
+<!--more-->
+
+<p>The COL XR is a more up-to-date and comprehensive taxonomy than the GBIF backbone. It includes more species, more ranks, and will be updated <a href="https://www.catalogueoflife.org/building/releases">more frequently</a>. The COL XR is more maintainable and will allow GBIF to address taxonomic issues more quickly and effectively.</p>
+
+<h2 id="what-happens-with-old-links-and-old-taxonkeys">What happens with old links and old taxonKeys?</h2>
+
+<p>GBIF.org has already switched to using the COL XR as the default. So now when you search for occurrences on GBIF.org you are seeing them organized against the taxonomy from COL XR instead of the out-of-date GBIF backbone. For example, the GBIF backbone taxonKey for <strong><em>Calopteryx splendens</em> (Harris, 1780)</strong> is <strong>1427067</strong>.</p>
+
+<p>An old occurrence search link without the checklistKey parameter will return <strong>nothing</strong>: 
+https://www.gbif.org/occurrence/search?occurrenceStatus=present&amp;taxonKey=1427067</p>
+
+<p>However, if you add the checklistKey for old GBIF backbone you will get the old results:
+https://www.gbif.org/occurrence/search?occurrenceStatus=present&amp;taxonKey=1427067&amp;checklistKey=d7dddbf4-2cf0-4f39-9b2a-bb099caae36c</p>
+
+<p>If however, you use the COL XR taxonKey for <strong><em>Calopteryx splendens</em> (Harris, 1780)</strong> which is <strong>Q2M4</strong> you will get the newly organized results:
+https://www.gbif.org/occurrence/search?occurrenceStatus=present&amp;taxonKey=Q2M4</p>
+
+<p>If there is no difference between the GBIF backbone and COL XR taxonomies for a given taxon, the results will be the same.</p>
+
+<p>No checklistKey is needed here because the COL XR is now the default taxonomy on GBIF.org. If you have old links to species pages that use GBIF backbone taxonKeys, these will automatically redirect to corresponding COL XR <strong>taxon</strong> pages. For example, if you have a link that uses an old GBIF backbone taxonKey: 
+https://www.gbif.org/species/1427067</p>
+
+<p>It will redirect to the corresponding taxon page using the COL XR taxonKey:
+https://www.gbif.org/taxon/Q2M4</p>
+
+<h2 id="occurrence-record-processing">Occurrence record processing</h2>
+
+<p>All occurrence records are now organized against both the GBIF backbone taxonomy and the COL XR. The API response now has a <code class="language-plaintext highlighter-rouge">classifications</code> block including two taxonomies. You can see this on a simple occurrence API lookup: 
+https://api.gbif.org/v1/occurrence/4021395742</p>
+
+<p>To use the <strong>occurrence search API</strong> you can use the COL identifiers (<code class="language-plaintext highlighter-rouge">623RM</code>) and the COL XR checklistKey (<code class="language-plaintext highlighter-rouge">7ddf754f-d193-4cc9-b351-99906754a03b</code>):
+https://api.gbif.org/v1/occurrence/search?familykey=623RM&amp;checklistKey=7ddf754f-d193-4cc9-b351-99906754a03b</p>
+
+<p>For occurrence search API, the GBIF backbone taxonomy is still the default, so if you want to use the COL XR taxonomy you will need to add the checklistKey parameter.</p>
+
+<h2 id="how-to-do-taxon-matching">How to do taxon matching</h2>
+
+<p>If you have a list of names, the <strong>species match tool</strong> can be used to match them to the COL XR taxonomy
+https://www.gbif.org/tools/species-lookup</p>
+
+<p>To use the species match API to lookup a taxon identifier you can use:
+https://api.gbif.org/v2/species/match?scientificName=Felidae&amp;checklistKey=7ddf754f-d193-4cc9-b351-99906754a03b</p>
+
+<p>If you have an old GBIF backbone integer taxonKey and want to resolve it to the new COL XR identifier, you can use the <code class="language-plaintext highlighter-rouge">scientificNameID</code> parameter with the matching service:
+https://api.gbif.org/v2/species/match?checklistKey=7ddf754f-d193-4cc9-b351-99906754a03b&amp;scientificNameID=gbif:1427067</p>
+
+<p>This will return the corresponding COL XR taxonKey (<code class="language-plaintext highlighter-rouge">Q2M4</code>) for the old GBIF backbone taxonKey (<code class="language-plaintext highlighter-rouge">1427067</code>).</p>
+
+<p>A mapping file has also been generated that maps taxon identifiers from the legacy GBIF Backbone Taxonomy taxonKeys (integer) to their corresponding COL XR identifiers (alpha-numeric).
+https://download.checklistbank.org/col/gbif/README.html</p>
+
+<h2 id="gbif-maps-api">GBIF Maps API</h2>
+
+<p>When using the <a href="https://techdocs.gbif.org/en/openapi/v2/maps">GBIF Maps API</a> with a COL XR taxonKey (<code class="language-plaintext highlighter-rouge">taxonKey=623RM</code>) the addition of a checklistKey (<code class="language-plaintext highlighter-rouge">checklistKey=7ddf754f-d193-4cc9-b351-99906754a03b</code>) will return the COL XR map. If omitted the GBIF backbone will be used to maintain backwards compatibility, but you will also need to use the GBIF backbone (integer) taxonKey.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"https://api.gbif.org/v2/map/occurrence/density/{z}/{x}/{y}@1x.png?taxonKey=623RM&amp;checklistKey=7ddf754f-d193-4cc9-b351-99906754a03b&amp;style=purpleYellow.point"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<h2 id="occurrence-downloads">Occurrence Downloads</h2>
+
+<p>For the <a href="https://techdocs.gbif.org/en/data-processing/taxonomy-interpretation#occurrence-download-api">occurrence download services</a> you can declare the taxonomy like this:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+ </span><span class="nl">"creator"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jwaller"</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"notification_address"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"jwaller@gbif.org"</span><span class="w">
+ </span><span class="p">],</span><span class="w">
+ </span><span class="nl">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DWCA"</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"predicate"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"equals"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TAXON_KEY"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Q2M4"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"checklistKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7ddf754f-d193-4cc9-b351-99906754a03b"</span><span class="w">
+ </span><span class="p">},</span><span class="w">
+ </span><span class="nl">"checklistKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7ddf754f-d193-4cc9-b351-99906754a03b"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="rgbif-pygbif-and-rcol">rgbif, pygbif, and rcol</h2>
+
+<p>By default, <strong>rgbif</strong> and <strong>pygbif</strong> still use the old GBIF backbone taxonomy, and you will need to add the checklistKey parameter to use the COL XR taxonomy. However, both packages will likely switch to using the COL XR as the default in the near future.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">rgbif</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Species match using COL XR</span><span class="w">
+</span><span class="n">name_backbone</span><span class="p">(</span><span class="w">
+  </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Calopteryx splendens"</span><span class="p">,</span><span class="w">
+  </span><span class="n">checklistKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"7ddf754f-d193-4cc9-b351-99906754a03b"</span><span class="w">
+</span><span class="p">)</span><span class="w">
+</span><span class="c1"># Q2M4</span><span class="w">
+
+</span><span class="c1"># Occurrence search using COL XR taxon keys</span><span class="w">
+</span><span class="n">occ_search</span><span class="p">(</span><span class="w">
+  </span><span class="n">taxonKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Q2M4"</span><span class="p">,</span><span class="w">
+  </span><span class="n">checklistKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"7ddf754f-d193-4cc9-b351-99906754a03b"</span><span class="p">,</span><span class="w">
+  </span><span class="n">limit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Occurrence download using COL XR taxon keys</span><span class="w">
+</span><span class="n">occ_download</span><span class="p">(</span><span class="w">
+  </span><span class="n">pred</span><span class="p">(</span><span class="s2">"taxonKey"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Q2M4"</span><span class="p">,</span><span class="w"> 
+       </span><span class="n">checklistKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"7ddf754f-d193-4cc9-b351-99906754a03b"</span><span class="p">),</span><span class="w">
+  </span><span class="n">checklistKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"7ddf754f-d193-4cc9-b351-99906754a03b"</span><span class="w">   
+</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pygbif</span> <span class="kn">import</span> <span class="n">species</span><span class="p">,</span> <span class="n">occurrences</span>
+
+<span class="c1"># Species match using COL XR
+</span><span class="n">species</span><span class="p">.</span><span class="n">name_backbone</span><span class="p">(</span>
+  <span class="n">scientificName</span><span class="o">=</span><span class="s">"Calopteryx splendens"</span><span class="p">,</span>
+  <span class="n">checklistKey</span><span class="o">=</span><span class="s">"7ddf754f-d193-4cc9-b351-99906754a03b"</span>
+<span class="p">)</span>
+
+<span class="c1"># Occurrence search using COL XR taxon keys
+</span><span class="n">occurrences</span><span class="p">.</span><span class="n">search</span><span class="p">(</span>
+  <span class="n">taxonkey</span><span class="o">=</span><span class="s">"Q2M4"</span><span class="p">,</span>
+  <span class="n">checklistKey</span><span class="o">=</span><span class="s">"7ddf754f-d193-4cc9-b351-99906754a03b"</span><span class="p">,</span>
+  <span class="n">limit</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+
+<span class="c1"># Occurrence download using COL taxon keys
+</span><span class="n">occurrences</span><span class="p">.</span><span class="n">download</span><span class="p">(</span>
+  <span class="s">"taxonKey = Q2M4"</span><span class="p">,</span>
+  <span class="n">checklistKey</span> <span class="o">=</span> <span class="s">"7ddf754f-d193-4cc9-b351-99906754a03b"</span>
+<span class="p">)</span>
+<span class="n">query</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"type"</span><span class="p">:</span> <span class="s">"equals"</span><span class="p">,</span>
+    <span class="s">"key"</span><span class="p">:</span> <span class="s">"TAXON_KEY"</span><span class="p">,</span>
+    <span class="s">"value"</span><span class="p">:</span> <span class="s">"Q2M4"</span><span class="p">,</span>
+    <span class="s">"checklistKey"</span><span class="p">:</span> <span class="s">"7ddf754f-d193-4cc9-b351-99906754a03b"</span>  <span class="c1"># Used for filtering
+</span><span class="p">}</span>
+<span class="n">occurrences</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">checklistKey</span><span class="o">=</span><span class="s">"7ddf754f-d193-4cc9-b351-99906754a03b"</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p>Certain rgbif and pygbif functions will not return COL XR results even with a checklistKey parameter. For example, <code class="language-plaintext highlighter-rouge">name_lookup()</code>, <code class="language-plaintext highlighter-rouge">name_suggest()</code>, and <code class="language-plaintext highlighter-rouge">name_usage()</code> will only return results from the out-of-date GBIF backbone taxonomy, and will not accept a checklistKey parameter.</p>
+
+<p>A new package <a href="https://www.catalogueoflife.org/2026/06/20/rcol-r-package">rcol</a> has replacement functions for these, and will return results from the COL XR taxonomy.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">rcol</span><span class="p">)</span><span class="w">
+
+</span><span class="n">col_search</span><span class="p">(</span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Calopteryx splendens"</span><span class="p">)</span><span class="w">
+</span><span class="n">col_suggest</span><span class="p">(</span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Calopteryx splendens"</span><span class="p">)</span><span class="w">
+</span><span class="n">col_usage</span><span class="p">(</span><span class="s2">"Q2M4"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="further-reading">Further reading</h2>
+
+<ul>
+  <li><a href="https://techdocs.gbif.org/en/data-processing/taxonomy-interpretation">GBIF techdocs article on taxonomy interpretation</a></li>
+  <li><a href="https://www.catalogueoflife.org/building/releases">Catalogue of Life Extended Release</a></li>
+</ul>
+
+
+</div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/2026-01-21-rule-based-annotations/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Introducing Rule-based Annotations</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/sam-introduction/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Good SAMaritans - Introduction to best practices for publishing Survey and Monitoring (SAM) data to GBIF</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1793626883"></script>
+
+
+
+
+
+  </body>
+</html>

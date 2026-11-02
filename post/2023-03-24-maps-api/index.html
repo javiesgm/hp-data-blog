@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Creating high resolution maps with rgbif
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1793626883">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/data-blog-logo.png" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+              
+                
+                
+                  <a href="/hp-data-blog/?category=APIs+and+downloads" class="navbar-item">
+                    APIs and downloads
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Analysis+and+maps" class="navbar-item">
+                    Analysis and maps
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citation+and+data+use" class="navbar-item">
+                    Citation and data use
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citizen+science" class="navbar-item">
+                    Citizen science
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Collections" class="navbar-item">
+                    Collections
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Data+quality" class="navbar-item">
+                    Data quality
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Molecular+data" class="navbar-item">
+                    Molecular data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Multimedia" class="navbar-item">
+                    Multimedia
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Publishing+data" class="navbar-item">
+                    Publishing data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Taxonomy" class="navbar-item">
+                    Taxonomy
+                  </a>
+                
+              
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://discourse.gbif.org/c/data-blog"
+            >
+            Community forum
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://www.gbif.org/"
+            >
+            GBIF.org
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  postHeader--withToc ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Creating high resolution maps with rgbif</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=john-waller" title="All posts by John Waller">John Waller</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2023-09-15">15 September 2023</time>
+        <span aria-hidden="true">·</span>
+        6 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=api">#API</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+    <div class="article--toc">
+      <div>
+        <div class="toc-wrapper  toc__removeOnMobile ">
+          <aside class="toc">
+  <div class="toc_header">
+    On this page
+  </div>
+  <div class="toc_list">
+    <ul>
+  <li><a href="#using-rgbifmap_fetch">Using rgbif::map_fetch()</a></li>
+  <li><a href="#using-ggplot2geom_sf">Using ggplot2::geom_sf()</a></li>
+  <li><a href="#using-leaflet">Using leaflet</a></li>
+  <li><a href="#citing-maps-data">Citing maps data</a></li>
+</ul>
+  </div>
+</aside>
+        </div>
+        <div class="article">
+          <div class="content">
+  <blockquote>
+  <p>This article is an adapted version of the rgbif article found <a href="https://docs.ropensci.org/rgbif/articles/creating_maps_from_occurrences.html">here</a>.</p>
+</blockquote>
+
+<p>It is often useful to create a map from GBIF mediated occurrences. While it is always possible to take a screenshot of map on <a href="https://www.gbif.org/occurrence/map?occurrence_status=present">gbif.org</a>, sometimes a publication quality map is needed.</p>
+
+<!--more-->
+
+<p>Additionally, large downloads of millions of lat-lon points can be difficult to plot using <code class="language-plaintext highlighter-rouge">ggplot2</code> or base R graphics. In these cases, using the <a href="https://www.gbif.org/developer/maps">GBIF maps API</a> with <code class="language-plaintext highlighter-rouge">rgbif::map_fetch()</code> can be a good option.</p>
+
+<h2 id="using-rgbifmap_fetch">Using rgbif::map_fetch()</h2>
+
+<p><a href="https://docs.ropensci.org/rgbif/index.html">rgbif</a> has a function called <code class="language-plaintext highlighter-rouge">map_fetch()</code>, which interfaces directly with the GBIF <a href="https://www.gbif.org/developer/maps">maps API</a>. Running <code class="language-plaintext highlighter-rouge">map_fetch()</code> will return the default GBIF pixel map of all GBIF mediated occurrences.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">rgbif</span><span class="p">)</span><span class="w">
+</span><span class="n">map_fetch</span><span class="p">()</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="images/dot_map.png" alt="" width="70%" /></p>
+
+<p>It is possible to make static maps that look like default <a href="https://www.gbif.org/occurrence/map?taxon_key=212">occurrence search</a> maps. See the maps api page for <a href="https://tile.gbif.org/ui/">available styles</a>.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">map_fetch</span><span class="p">(</span><span class="n">taxonKey</span><span class="o">=</span><span class="m">212</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s2">"scaled.circles"</span><span class="p">,</span><span class="n">base_sytle</span><span class="o">=</span><span class="s2">"gbif-light"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="images/gbif-light-scaled-circles-birds.png" alt="" width="70%" /></p>
+
+<p>For “poly” styles you can set the <code class="language-plaintext highlighter-rouge">hexPerTile</code> parameter, so that the binned occurrence data is essentially shown at a higher resolution. A tile is an individual <code class="language-plaintext highlighter-rouge">png</code> image that is fetch from the API in order to make a map. The default settings of <code class="language-plaintext highlighter-rouge">map_fetch()</code> will fetch two images (hemispheres), so the image below has 400 hexagons across the width of map.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">map_fetch</span><span class="p">(</span><span class="n">hexPerTile</span><span class="o">=</span><span class="m">200</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s2">"green.poly"</span><span class="p">,</span><span class="n">base_style</span><span class="o">=</span><span class="s2">"gbif-dark"</span><span class="p">,</span><span class="n">bin</span><span class="o">=</span><span class="s2">"hex"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="images/hexpertile.png" alt="" width="70%" /></p>
+
+<p>There is the option to plot with polar or arctic projections. For example, penguin records.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">map_fetch</span><span class="p">(</span><span class="n">srs</span><span class="o">=</span><span class="s1">'EPSG:3031'</span><span class="p">,</span><span class="n">taxonKey</span><span class="o">=</span><span class="m">7190978</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s1">'glacier.point'</span><span class="p">,</span><span class="w"> </span><span class="n">base_style</span><span class="o">=</span><span class="s2">"gbif-dark"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="images/artic-peguins-glacier-point-gbif-dark.png" alt="" width="70%" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">map_fetch()</code> allows for views other than just the global map, by zooming in and selecting only certain map tiles with <code class="language-plaintext highlighter-rouge">z</code>, <code class="language-plaintext highlighter-rouge">x</code>, <code class="language-plaintext highlighter-rouge">y</code>.</p>
+
+<p>Selecting tiles can be tricky to get right, but with a little trial-and-error, you can usually get close to the map you want to have. One trick for getting the right tiles, is to look at this <a href="https://api.gbif.org/v2/map/demo13.html#map=3/0/0/0">demo page</a>, where the <code class="language-plaintext highlighter-rouge">z,x,y</code> values are printed on the center of each tile.</p>
+
+<p>For example, you can see what the tile values for a zoomed in map of Australia would be <a href="https://api.gbif.org/v2/map/demo13.html#map=5/134.01/-21.64/0">here</a>.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">map_fetch</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="m">3</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="m">13</span><span class="o">:</span><span class="m">14</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="m">4</span><span class="o">:</span><span class="m">5</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="images/AU-zoom.png" alt="" width="70%" /></p>
+
+<p>Be aware that selecting many tiles will create a large image, and might crash your R session. You can control the resolution of your final image with <code class="language-plaintext highlighter-rouge">format</code>, with  <code class="language-plaintext highlighter-rouge">format="@4x.png"</code> being the highest possible value.</p>
+
+<p>Below are some plotted areas to give you an idea of how <code class="language-plaintext highlighter-rouge">z</code>,<code class="language-plaintext highlighter-rouge">x</code>,<code class="language-plaintext highlighter-rouge">y</code> it are working.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Europe</span><span class="w">
+</span><span class="n">map_fetch</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="m">3</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="m">7</span><span class="o">:</span><span class="m">9</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="m">0</span><span class="o">:</span><span class="m">2</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p><img src="images/europe_zoom.png" alt="" width="70%" /></p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Africa</span><span class="w">
+</span><span class="n">map_fetch</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="m">3</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="m">7</span><span class="o">:</span><span class="m">10</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="m">2</span><span class="o">:</span><span class="m">5</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="images/africa.png" alt="" width="70%" /></p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># I will leave it to you to plot these. </span><span class="w">
+</span><span class="c1"># Hawaii</span><span class="w">
+</span><span class="n">map_fetch</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="m">6</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="m">6</span><span class="o">:</span><span class="m">9</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="m">23</span><span class="o">:</span><span class="m">25</span><span class="p">)</span><span class="w">
+</span><span class="c1"># South Africa </span><span class="w">
+</span><span class="n">map_fetch</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="m">34</span><span class="o">:</span><span class="m">38</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="m">19</span><span class="o">:</span><span class="m">22</span><span class="p">)</span><span class="w">
+</span><span class="c1"># Ukraine </span><span class="w">
+</span><span class="n">map_fetch</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="m">6</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="m">70</span><span class="o">:</span><span class="m">78</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="m">13</span><span class="o">:</span><span class="m">16</span><span class="p">)</span><span class="w">
+</span><span class="c1"># Iceland</span><span class="w">
+</span><span class="n">map_fetch</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="m">6</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="m">55</span><span class="o">:</span><span class="m">59</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="m">8</span><span class="o">:</span><span class="m">9</span><span class="p">)</span><span class="w">
+</span><span class="c1"># Capri Is. </span><span class="w">
+</span><span class="n">map_fetch</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="m">12</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="m">4419</span><span class="o">:</span><span class="m">4420</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="m">1124</span><span class="o">:</span><span class="m">1125</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>I suggest using this <a href="https://api.gbif.org/v2/map/demo13.html#map=3/0/0/0">interactive page</a> for getting the tile numbers.</p>
+
+<p>Keep in mind that the the GBIF maps API wasn’t designed to make high quality static maps, like it is being used for in <code class="language-plaintext highlighter-rouge">map_fetch()</code>. It was designed for interactive use on the <a href="https://www.gbif.org/occurrence/map?">GBIF website</a>, so the API design reflects this reality. This means that not all parameter and style choices are going to make nice looking maps. That said, <code class="language-plaintext highlighter-rouge">map_fetch()</code> will try to prevent you from making bad style choices, but sometimes you might end up with a ugly map.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ugly map</span><span class="w">
+</span><span class="n">map_fetch</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="n">gadm_gid</span><span class="o">=</span><span class="s2">"USA"</span><span class="p">,</span><span class="n">source</span><span class="o">=</span><span class="s2">"adhoc"</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s2">"classic.point"</span><span class="p">)</span><span class="w">  
+</span></code></pre></div></div>
+
+<p><img src="images/ugly.png" alt="" width="70%" /></p>
+
+<p>When making maps, the <strong>named parameters</strong>, <code class="language-plaintext highlighter-rouge">taxonKey</code>, <code class="language-plaintext highlighter-rouge">datasetKey</code>, <code class="language-plaintext highlighter-rouge">country</code>, <code class="language-plaintext highlighter-rouge">publishingOrg</code>,  <code class="language-plaintext highlighter-rouge">publishingCountry</code>, <code class="language-plaintext highlighter-rouge">year</code>, and <code class="language-plaintext highlighter-rouge">basisOfRecord</code> are going to be the easiest to use.  However, It is possible to make “any” map (any <a href="https://www.gbif.org/occurrence/map?recorded_by=John%20Waller&amp;advanced=1&amp;occurrence_status=present">search filter</a>) using <code class="language-plaintext highlighter-rouge">source=adhoc</code>.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># all occurrences with iucn status critically endangered </span><span class="w">
+</span><span class="n">map_fetch</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="m">0</span><span class="o">:</span><span class="m">3</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="m">0</span><span class="o">:</span><span class="m">1</span><span class="p">,</span><span class="n">source</span><span class="o">=</span><span class="s2">"adhoc"</span><span class="p">,</span><span class="n">iucn_red_list_category</span><span class="o">=</span><span class="s2">"CR"</span><span class="p">,</span><span class="w">
+          </span><span class="n">style</span><span class="o">=</span><span class="s2">"iNaturalist.poly"</span><span class="p">,</span><span class="n">base_style</span><span class="o">=</span><span class="s1">'osm-bright'</span><span class="p">,</span><span class="n">bin</span><span class="o">=</span><span class="s2">"hex"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="images/adhoc-iucn.png" alt="" width="70%" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">map_fetch()</code> can also tell when you have used a parameter that is not a default parameter and automatically switch to <code class="language-plaintext highlighter-rouge">source="adhoc"</code> for you. I have found that point style don’t work well with <code class="language-plaintext highlighter-rouge">source="adhoc"</code>, so <code class="language-plaintext highlighter-rouge">map_fetch()</code> will give a warning if you try to use a point style with <code class="language-plaintext highlighter-rouge">source="adhoc"</code>.</p>
+
+<p>Here are some examples of maps with different parameters and styles.</p>
+
+<p><code class="language-plaintext highlighter-rouge">adhoc</code> is needed here  because <code class="language-plaintext highlighter-rouge">recordedBy</code> isn’t one of the named parameters. <code class="language-plaintext highlighter-rouge">map_fetch()</code> automatically detects this and switches source to “adhoc”. Note the default style for the adhoc interface is <code class="language-plaintext highlighter-rouge">scaled.circles</code> and base map style <code class="language-plaintext highlighter-rouge">gbif-light</code>.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">map_fetch</span><span class="p">(</span><span class="n">recordedBy</span><span class="o">=</span><span class="s2">"John Waller"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="images/john_waller.png" alt="" width="70%" /></p>
+
+<p>Occurrences in the OBIS network. Note that <code class="language-plaintext highlighter-rouge">squareSize</code> only works with <code class="language-plaintext highlighter-rouge">bin="square"</code>. Also notice that the map only returns one tile since we didn’t set <code class="language-plaintext highlighter-rouge">x</code> or <code class="language-plaintext highlighter-rouge">y</code> values.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">map_fetch</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="n">source</span><span class="o">=</span><span class="s2">"adhoc"</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s2">"green.poly"</span><span class="p">,</span><span class="n">squareSize</span><span class="o">=</span><span class="m">64</span><span class="p">,</span><span class="n">bin</span><span class="o">=</span><span class="s2">"square"</span><span class="p">,</span><span class="n">network_key</span><span class="o">=</span><span class="s2">"2b7c7b4f-4d4f-40d3-94de-c28b6fa054a6"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="images/obis_map.png" alt="" width="70%" /></p>
+
+<p>Map of Texas using the <code class="language-plaintext highlighter-rouge">gadm</code> filter. I looked up the <code class="language-plaintext highlighter-rouge">gadm_gid</code> code using the GBIF <a href="https://www.gbif.org/occurrence/map?gadm_gid=USA.44_1">web interface</a>.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">map_fetch</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="m">4</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="m">6</span><span class="o">:</span><span class="m">7</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="m">4</span><span class="o">:</span><span class="m">5</span><span class="p">,</span><span class="n">gadm_gid</span><span class="o">=</span><span class="s2">"USA.44_1"</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s2">"blue.marker"</span><span class="p">)</span><span class="w"> 
+</span></code></pre></div></div>
+
+<p><img src="images/texas.png" alt="" width="50%" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">map_fetch()</code> is generally forgiving and will give you back at least some map with warnings or blank images when the parameters don’t work. You can see in the image below that there are three blank images stitched together.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">map_fetch</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">)</span><span class="w"> </span><span class="c1"># no tiles exist past 2, so blank images are returned</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="images/blank.png" alt="" width="70%" /></p>
+
+<p>All specimen bird records from the year 2000.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">map_fetch</span><span class="p">(</span><span class="n">taxonKey</span><span class="o">=</span><span class="m">212</span><span class="p">,</span><span class="w"> </span><span class="n">basisOfRecord</span><span class="o">=</span><span class="s2">"PRESERVED_SPECIMEN"</span><span class="p">,</span><span class="w"> </span><span class="n">year</span><span class="o">=</span><span class="m">2000</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s2">"classic-noborder.poly"</span><span class="p">)</span><span class="w">  
+</span></code></pre></div></div>
+
+<p><img src="images/eBird.png" alt="" width="70%" /></p>
+
+<p>Map of all country centroid locations.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">map_fetch</span><span class="p">(</span><span class="n">distanceFromCentroidInMeters</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="n">base_style</span><span class="o">=</span><span class="s2">"osm-bright"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="images/centroids.png" alt="" width="70%" /></p>
+
+<p>In general, adhoc maps are harder to make look nice, but usually picking a non-point style and tuning <code class="language-plaintext highlighter-rouge">hexPerTile</code> and perhaps also <code class="language-plaintext highlighter-rouge">squareSize</code>, will make a nice map.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">map_fetch</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s2">"adhoc"</span><span class="p">,</span><span class="n">project_id</span><span class="o">=</span><span class="s2">"BID-AF2015-0134-REG"</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s2">"green2.poly"</span><span class="p">,</span><span class="n">hexPerTile</span><span class="o">=</span><span class="m">50</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="images/bid_project_hex.png" alt="" width="70%" /></p>
+
+<p>A tip for getting the un-named adhoc parameters is to pull them from the occurrence search URL after looking them up via the <a href="https://www.gbif.org/occurrence/map?advanced=1&amp;project_id=BID-AF2015-0134-REG">web interface</a>.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># https://www.gbif.org/occurrence/map?advanced=1&amp;project_id=BID-AF2015-0134-REG</span><span class="w">
+</span><span class="n">map_fetch</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s2">"adhoc"</span><span class="p">,</span><span class="n">project_id</span><span class="o">=</span><span class="s2">"BID-AF2015-0134-REG"</span><span class="p">)</span><span class="w"> 
+</span></code></pre></div></div>
+
+<p>You can read more about <code class="language-plaintext highlighter-rouge">map_fetch()</code> on the rgbif documentation website <a href="https://docs.ropensci.org/rgbif/reference/map_fetch.html">here</a>.</p>
+
+<h2 id="using-ggplot2geom_sf">Using ggplot2::geom_sf()</h2>
+
+<p>The GBIF maps API is powerful and useful, but can be frustrating if your plot needs a some custom styling or legends. If you don’t have a <strong>large</strong> dataset, then using <code class="language-plaintext highlighter-rouge">ggplot::geom_sf()</code> can be a good option.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">rgbif</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">sf</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">rnaturalearth</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># occ_download(pred_default(),pred(taxonKey,"1427067"),format="SIMPLE_CSV")</span><span class="w">
+
+</span><span class="n">worldmap</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ne_countries</span><span class="p">(</span><span class="n">scale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'medium'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'map_units'</span><span class="p">,</span><span class="n">returnclass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'sf'</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># a download I made of all Calopteryx splendens occurrences </span><span class="w">
+</span><span class="n">d</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">occ_download_get</span><span class="p">(</span><span class="s1">'0001707-230810091245214'</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">occ_download_import</span><span class="p">()</span><span class="w">
+
+</span><span class="n">d_sf</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sf</span><span class="o">::</span><span class="n">st_as_sf</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">coords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"decimalLongitude"</span><span class="p">,</span><span class="w"> </span><span class="s2">"decimalLatitude"</span><span class="p">),</span><span class="w">
+        </span><span class="n">crs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"+proj=longlat +datum=WGS84"</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># color occurrences by basisOfRecord</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_sf</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">worldmap</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_sf</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d_sf</span><span class="p">,</span><span class="n">aes</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">basisOfRecord</span><span class="p">))</span><span class="w">
+   
+</span></code></pre></div></div>
+
+<p><img src="images/geom_sf.png" alt="" /></p>
+
+<p>See <a href="https://ggplot2.tidyverse.org/reference/ggsf.html">ggplot2</a> docs for more.</p>
+
+<h2 id="using-leaflet">Using leaflet</h2>
+
+<p>Since the GBIF maps API was designed to work as an interactive map, it can be used with <a href="https://rstudio.github.io/leaflet/">leaflet</a>.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">leaflet</span><span class="p">)</span><span class="w">
+
+</span><span class="n">leaflet</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">addTiles</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">addTiles</span><span class="p">(</span><span class="n">urlTemplate</span><span class="o">=</span><span class="s1">'https://api.gbif.org/v2/map/occurrence/density/{z}/{x}/{y}@1x.png?style=scaled.circles&amp;taxonKey=5219404'</span><span class="p">)</span><span class="w"> 
+
+</span></code></pre></div></div>
+
+<p>See <a href="https://ggplot2.tidyverse.org/reference/ggsf.html">leaflet</a> docs for more.</p>
+
+<h2 id="citing-maps-data">Citing maps data</h2>
+
+<p>If you generate a map that you will use in a publication, it is good practice to cite the underlying data. This can be done by generating a download using the same filters you used in your map.</p>
+
+<p>See articles :</p>
+
+<ul>
+  <li><a href="https://docs.ropensci.org/rgbif/articles/gbif_citations.html">rgbif Citation Article</a></li>
+  <li><a href="https://www.gbif.org/citation-guidelines">GBIF Citation Guidelines</a></li>
+</ul>
+
+<p>You might also want to cite <strong>Open Street Map</strong>, if you use a base map that uses their data.</p>
+
+<ul>
+  <li>https://tile.gbif.org/ui/</li>
+  <li>https://wiki.openstreetmap.org/wiki/Researcher_Information</li>
+</ul>
+
+
+</div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/accessing-occurrence-data-to-conserve-edge-species/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Accessing GBIF-mediated occurrence data to conserve EDGE species</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/improve-identifier-stability/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">GBIF attempts to improve identifier stability by monitoring changes of occurrenceIDs</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1793626883"></script>
+
+
+
+
+
+  </body>
+</html>

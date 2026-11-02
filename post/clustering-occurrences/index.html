@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Identifying potentially related records - How does the GBIF data-clustering feature work?
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1793626883">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/data-blog-logo.png" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+              
+                
+                
+                  <a href="/hp-data-blog/?category=APIs+and+downloads" class="navbar-item">
+                    APIs and downloads
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Analysis+and+maps" class="navbar-item">
+                    Analysis and maps
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citation+and+data+use" class="navbar-item">
+                    Citation and data use
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citizen+science" class="navbar-item">
+                    Citizen science
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Collections" class="navbar-item">
+                    Collections
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Data+quality" class="navbar-item">
+                    Data quality
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Molecular+data" class="navbar-item">
+                    Molecular data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Multimedia" class="navbar-item">
+                    Multimedia
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Publishing+data" class="navbar-item">
+                    Publishing data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Taxonomy" class="navbar-item">
+                    Taxonomy
+                  </a>
+                
+              
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://discourse.gbif.org/c/data-blog"
+            >
+            Community forum
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://www.gbif.org/"
+            >
+            GBIF.org
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Identifying potentially related records - How does the GBIF data-clustering feature work?</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=marie-grosjean" title="All posts by Marie Grosjean">Marie Grosjean</a>, <a href="/hp-data-blog/?author=tim-robertson" title="All posts by Tim Robertson">Tim Robertson</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2021-11-04">4 November 2021</time>
+        <span aria-hidden="true">·</span>
+        6 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Collections">Collections</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=specimen">#specimen</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=occurrence">#occurrence</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+      <div class="article">
+        <div class="content">
+  <blockquote>
+  <p><strong>NOTE</strong>:
+The content of this blog post is now maintained in the technical documentation. Please view <a href="https://techdocs.gbif.org/en/data-processing/clustering-occurrences">this source</a> for the most up to date information on the topic.</p>
+</blockquote>
+
+<p>Many data users may suspect they’ve discovered duplicated records in the GBIF index. You download data from GBIF, analyze them and realize that some records have the same date, scientific name, catalogue number and location but come from two different publishers or have slightly different attributes.</p>
+
+<p>There are many valid reasons why these duplicates appear on GBIF. Sometimes <a href="https://discourse.gbif.org/t/duplicate-observations-across-datasets/3069">an observation was recorded in two different systems</a>, sometimes several records correspond to herbaria duplicates (you can check <a href="https://www.gbif.org/news/4n8ZCfuK3zxseKAHRMcfA8/award-winner-uses-data-mining-and-machine-learning-to-identify-collectors-and-duplicated-herbarium-specimens">the work of Nicky Nicolson on the topic</a>), sometimes a specimen was digitized twice, sometimes a record has been enriched with genetic information and republished via a different platform…</p>
+
+<p>This is why last year, we released an experimental data-clustering feature aiming to identify potentially related records on GBIF.
+The goal was not only to detect potential duplicates but to also find interesting relationships, such as between typification records or records originating from Natural History collections, DNA-derived sequences and citations of materials examined when publishing taxonomic treatments in journal articles.</p>
+
+<p>Records that have been included in a cluster can be found with the “is in cluster” filter in <a href="https://www.gbif.org/occurrence/search?advanced=1&amp;occurrence_status=present&amp;is_in_cluster=true">the occurrence search</a>. Each occurrence page belonging to a cluster will have a “CLUSTER” tab displaying the potentially related records (see a screenshot of <a href="https://www.gbif.org/occurrence/2871636339/cluster">this example</a> below).</p>
+
+<p><img src="/hp-data-blog/post/2021-10-29-clustering-occurrences/example_cluster.png" alt="Example of cluster" /></p>
+
+<p>You can read <a href="https://www.gbif.org/news/4U1dz8LygQvqIywiRIRpAU/new-data-clustering-feature-aims-to-improve-data-quality-and-reveal-cross-dataset-connections">this news item</a> for more information and some exciting examples.</p>
+
+<h1 id="how-does-the-gbif-data-clustering-feature-work">How does the GBIF data-clustering feature work?</h1>
+
+<h2 id="step-1-select-candidates">Step 1: Select candidates</h2>
+
+<p>Comparing nearly 2 billions records with each other is very resource intensive and quite impractical, so the first step of the data-clustering process is to select and group candidate records to compare.</p>
+
+<p>To help avoid dubious connections, only records matched to a species or a more specific rank in the taxonomic backbone are eligible for clustering. Similarly, records flagged as being matched to a higher taxon are excluded.</p>
+
+<p>For the remaining eligible records the system first creates a series of “hashes” based on specified fields. All records sharing a hash are candidates to compare against each other.</p>
+
+<p>For example, one of the “hashes” used is based on the species key, rounded coordinates, year, month and day. This means that the records that share the same values for those fields will be grouped together in the candidate table for further inspection.</p>
+
+<p>The fields used to identify and group the candidates are a subset of what is used later on for comparing them (see the table below).
+See <a href="https://github.com/gbif/pipelines/tree/master/gbif/ingestion/clustering-gbif">this link</a> to check the details.</p>
+
+<h2 id="step-2-compare-candidates-with-each-other-and-assess-whether-they-are-potentially-related">Step 2: Compare candidates with each other and assess whether they are potentially related</h2>
+
+<p>In this second phase, the system will compare all records in the candidate set to each other and generate assertions. The assertions are inspected and the algorithms decides if there is enough evidence in the assertions to create a relationship between them.
+In the table below, I summarize how those assertions are made but if you would like more details, you can check the code available <a href="https://github.com/gbif/clustering/blob/dev/src/main/java/org/gbif/clustering/parsers/OccurrenceRelationships.java#L44">here</a>.</p>
+
+<p>[Edit 2022-06-23 : the table below has updated to reflect some changes in the clustering function https://github.com/gbif/pipelines/issues/733]</p>
+
+<table class="table" class="table">
+  <thead>
+    <tr>
+      <th style="text-align: left">Assertion</th>
+      <th style="text-align: left">fields checked</th>
+      <th style="text-align: left">condition checked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Same specimen</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">taxonKey</code>, <code class="language-plaintext highlighter-rouge">typeSatus</code></td>
+      <td style="text-align: left">same taxonKey between records and type status = Holotype for both records</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Typification relation</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">scientificName</code>, <code class="language-plaintext highlighter-rouge">typeStatus</code></td>
+      <td style="text-align: left">same between records</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Same accepted species</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">speciesKey</code></td>
+      <td style="text-align: left">same between records</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Same date</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">eventDate</code> or <code class="language-plaintext highlighter-rouge">day</code>, <code class="language-plaintext highlighter-rouge">month</code>, <code class="language-plaintext highlighter-rouge">year</code></td>
+      <td style="text-align: left">same between records</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Approximate date</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">day</code>, <code class="language-plaintext highlighter-rouge">month</code>, <code class="language-plaintext highlighter-rouge">year</code></td>
+      <td style="text-align: left">dates one day apart</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Different date</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">eventDate</code></td>
+      <td style="text-align: left">differs between records</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Non conflicting date</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">eventDate</code>, <code class="language-plaintext highlighter-rouge">day</code>, <code class="language-plaintext highlighter-rouge">month</code>, <code class="language-plaintext highlighter-rouge">year</code></td>
+      <td style="text-align: left">no date on either record</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Same recorder name</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">recordedBy</code></td>
+      <td style="text-align: left">same between records</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Same coordinates</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">decimalLatitude</code>, <code class="language-plaintext highlighter-rouge">decimalLongitude</code></td>
+      <td style="text-align: left">same between records</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Non conflicting Coordinates</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">decimalLatitude</code>, <code class="language-plaintext highlighter-rouge">decimalLongitude</code></td>
+      <td style="text-align: left">no coordinate on one or both sides</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Within 200 m</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">decimalLatitude</code>, <code class="language-plaintext highlighter-rouge">decimalLongitude</code></td>
+      <td style="text-align: left">distance &lt;= 0.200</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Within 2 km</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">decimalLatitude</code>, <code class="language-plaintext highlighter-rouge">decimalLongitude</code></td>
+      <td style="text-align: left">distance &lt;= 2.00</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Same country</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">countryCode</code></td>
+      <td style="text-align: left">same between records</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Non conflicting country</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">countryCode</code></td>
+      <td style="text-align: left">country only on one record</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Different country</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">countryCode</code></td>
+      <td style="text-align: left">differs between records</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Identifiers overlap</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">occurrenceID</code>, <code class="language-plaintext highlighter-rouge">fieldNumber</code>, <code class="language-plaintext highlighter-rouge">recordNumber</code>, <code class="language-plaintext highlighter-rouge">otherCatalogueNumber</code>, grouped(<code class="language-plaintext highlighter-rouge">institutionCode</code>:<code class="language-plaintext highlighter-rouge">collectionCode</code>:<code class="language-plaintext highlighter-rouge">catalogueNumber</code>),<br /> grouped(<code class="language-plaintext highlighter-rouge">institutionCode</code>:<code class="language-plaintext highlighter-rouge">catalogueNumber</code>)</td>
+      <td style="text-align: left">checks any overlap of identifiers between records</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Other catalogue number overlap</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">otherCatalogueNumber</code>,grouped(<code class="language-plaintext highlighter-rouge">institutionCode</code>, <code class="language-plaintext highlighter-rouge">collectionCode</code>, <code class="language-plaintext highlighter-rouge">catalogueNumber</code>) with any separator	checks if the other catalogue number correspond to the institution code, collection code and catalogue number from another record</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Is from sequence repository</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">datasetKey</code></td>
+      <td style="text-align: left">checks if one of the datasetKey corresponds to one of the sequence repository datasets: INSDC sequences, INSDC host organisms, INSDC environmental samples, iBOL (see keys <code class="language-plaintext highlighter-rouge">d8cd16ba-bb74-4420-821e-083f2bac17c2</code>, <code class="language-plaintext highlighter-rouge">393b8c26-e4e0-4dd0-a218-93fc074ebf4e</code>, <code class="language-plaintext highlighter-rouge">583d91fe-bbc0-4b4a-afe1-801f88263016</code> and <code class="language-plaintext highlighter-rouge">040c5662-da76-4782-a48e-cdea1892d14c</code>)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Are specimens</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">basisOfRecord</code></td>
+      <td style="text-align: left">checks if the basis of record for both records are one of the following: <code class="language-plaintext highlighter-rouge">PRESERVED_SPECIMEN</code>, <code class="language-plaintext highlighter-rouge">LIVING_SPECIMEN</code>, <code class="language-plaintext highlighter-rouge">FOSSIL_SPECIMEN</code>, <code class="language-plaintext highlighter-rouge">MATERIAL_CITATION</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The table below summarises the combinations of assertions that are sufficient to link the records in a cluster. If a group of occurrences share the combinations of assertions for any given column, they will be clustered together. [Edit 2022-03-11: The table below has been updated to reflect some changes in the clustering function: https://www.gbif.org/release-notes#11mar22]
+[Edit 2022-06-23 : the table below has updated to reflect some changes in the clustering function https://github.com/gbif/pipelines/issues/733]</p>
+
+<p><img src="/hp-data-blog/post/2021-10-29-clustering-occurrences/table_2.png" alt="Combination of assersiton conditions to create cluster" /></p>
+
+<blockquote>
+  <p><strong>NOTE</strong>:
+Any group of occurrences associated with the assertion <code class="language-plaintext highlighter-rouge">Different date</code> or <code class="language-plaintext highlighter-rouge">Different country</code> will not be clustered together.</p>
+</blockquote>
+
+<h1 id="why-some-occurrences-are-not-clustered">Why some occurrences are not clustered</h1>
+
+<p>It is possible that some occurrences check one of the combinations of assertions but aren’t shown as clustered yet. This could be the case for several reasons:</p>
+
+<ol>
+  <li>The occurrences are newly published. Right now, the clustering process is quite resource intensive and doesn’t run automatically. We need to trigger it manually. This means that it can take a few weeks before newly published occurrences get clustered.</li>
+  <li>The “duplicates” come from the same dataset. The clustering algorithm only compares occurrences across datasets, not within datasets.</li>
+  <li>There can be a delay between the moment the occurrences are clustered and the moment they become searchable with the “is in cluster” filter (this is due to some technical reasons a bit too long to explain in this post, but relate to updating the search indexes separately from the clustering table)</li>
+</ol>
+
+<p>There could be other unforeseen reasons, and if in doubt, please contact us at helpdesk@gbif.org.</p>
+
+<h1 id="what-can-you-do-to-improve-linkage-with-other-occurrences">What can you do to improve linkage with other occurrences?</h1>
+
+<p>If for one reason or another, you need to publish on GBIF occurrences for observations or specimens that you know are already on GBIF, how best to do it?</p>
+
+<ol>
+  <li>Make sure that you reuse the same identifiers as much as possible, including the formating. Same catalogue numbers, occurrenceID, etc.</li>
+  <li>Use the <a href="https://dwc.tdwg.org/terms/#dwc:associatedOccurrences">associatedOccurrences</a> and <a href="https://rs.gbif.org/extension/dwc/resource_relation_2018_01_18.xml">resource relationship extension</a>. These are not used during the clustering today, but are expected to be in the future, and are the correct way to communicate relationships within Darwin Core.</li>
+</ol>
+
+<h1 id="where-to-send-suggestions-and-ask-questions">Where to send suggestions and ask questions</h1>
+
+<p>If you have suggestions to improve the clustering feature or questions on how it works, you are very welcome to:</p>
+
+<ul>
+  <li>leave a comment under this post</li>
+  <li>or log an issue in our <a href="https://github.com/gbif/portal-feedback/issues">GitHub repository</a> or via the GBIF feedback system</li>
+  <li>or contact us at <a href="mailto:helpdesk@gbif.org">helpdesk@gbif.org</a>.</li>
+</ul>
+
+</div>
+      </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/grscicoll-flags/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">What are the flags "Collection match fuzzy", "Collection match none", "Institution match fuzzy", "Institution match none" and how to remove them?</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/apache-arrow-and-parquet/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Using Apache Arrow and Parquet with GBIF-mediated occurrences</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1793626883"></script>
+
+
+
+
+
+  </body>
+</html>

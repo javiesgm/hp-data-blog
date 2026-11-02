@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Good SAMaritans – Modelling survey location, date and time when publishing Survey and Monitoring data to GBIF
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1793626883">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/data-blog-logo.png" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+              
+                
+                
+                  <a href="/hp-data-blog/?category=APIs+and+downloads" class="navbar-item">
+                    APIs and downloads
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Analysis+and+maps" class="navbar-item">
+                    Analysis and maps
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citation+and+data+use" class="navbar-item">
+                    Citation and data use
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Citizen+science" class="navbar-item">
+                    Citizen science
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Collections" class="navbar-item">
+                    Collections
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Data+quality" class="navbar-item">
+                    Data quality
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Molecular+data" class="navbar-item">
+                    Molecular data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Multimedia" class="navbar-item">
+                    Multimedia
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Publishing+data" class="navbar-item">
+                    Publishing data
+                  </a>
+                
+                  <a href="/hp-data-blog/?category=Taxonomy" class="navbar-item">
+                    Taxonomy
+                  </a>
+                
+              
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://discourse.gbif.org/c/data-blog"
+            >
+            Community forum
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="https://www.gbif.org/"
+            >
+            GBIF.org
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Good SAMaritans – Modelling survey location, date and time when publishing Survey and Monitoring data to GBIF</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=marie-grosjean" title="All posts by Marie Grosjean">Marie Grosjean</a>, <a href="/hp-data-blog/?author=kate-ingenloff" title="All posts by Kate Ingenloff">Kate Ingenloff</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2026-09-07">7 September 2026</time>
+        <span aria-hidden="true">·</span>
+        6 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=sam">#SAM</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=humboldt">#Humboldt</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=dwc-dp">#DwC-DP</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=darwin-core">#Darwin Core</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=dwc-a">#DwC-A</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=publishing">#publishing</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=site">#site</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=date">#date</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=location">#location</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=time">#time</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+      <div class="article">
+        <div class="content">
+  <p>If you are new here, this post is the third installment in a series about modelling and sharing survey and monitoring (SAM) data on GBIF. My name is Marie, I am a Data Administrator at the GBIF Secretariat, and I am learning how to work with SAM data.</p>
+
+<p>In my quest to improve my SAM data literacy skills, I am accompanied by the wise <a href="https://orcid.org/0000-0001-5942-9053"><strong>Kate Ingenloff</strong></a>, our SAM data modelling expert as well as Sam the Secretary Bird, our silly mascot. You can get to know Sam in <a href="https://data-blog.gbif.org/tags/sam/">our first two blog posts</a>.</p>
+
+<p>This series is meant to be a fun and entertaining introduction to sharing SAM data. If you prefer a comprehensive, straight to the point approach to the topic, Kate wrote an <a href="https://doi.org/10.35035/doc-ynvs-eh84">excellent guide</a> although the guide is not yet updated with guidance for the Darwin Core Data Package.</p>
+
+<p>Now, today we are going to talk about space and time!</p>
+
+<p><img align="center" src="/hp-data-blog/post/2026-09-07-sam-survey-where-when/Sam_meets_TARDIS.png" alt="Sam meets the TARDIS" /></p>
+
+<p>Those of you who are sci-fi/pop-culture enthusiasts might recognize the TARDIS from Doctor Who, a time and space travelling machine. I just put it there for the joke (and for fellow Dr Who fans). We aren’t going to talk about time travel today. Mostly because we can only time travel forward and also because I wouldn’t know how to model time-travel surveys in the Darwin Core Data Standard.</p>
+
+<p>What we are going to talk about are survey sites and temporal scope. In other words:</p>
+
+<blockquote>
+  <p>A survey site refers to the location at which observations are made or samples and/or measurements are taken (https://docs.gbif.org/guide-publishing-survey-data/en/#survey-site).</p>
+</blockquote>
+
+<blockquote>
+  <p>Temporal scope refers to the date and time of a survey, and how long the survey lasted (https://docs.gbif.org/guide-publishing-survey-data/en/#survey-date-and-time).</p>
+</blockquote>
+
+<p>I used to think that all field ecologists needed to report was a set of coordinates for the area they surveyed and the date they conducted the survey. But I have since realized the error of my ways. Coordinates are great (and we need them) but they don’t tell the whole story.</p>
+
+<p>Maps and biogeographic layers can help researchers infer the types of habitats surveyed, but it isn’t enough. For example, depending on the time of the year, the  day and the protocols used, one set of coordinates can correspond to very different habitats surveyed and information collected.</p>
+
+<p><img align="center" src="/hp-data-blog/post/2026-09-07-sam-survey-where-when/same_location_different_habitats.png" alt="Same location, different habitats" /></p>
+
+<p>If you have been following our series, you know that our mascot, Sam, is conducting a butterfly survey. Luckily for that squirrel, Sam’s protocol doesn’t involve any gut sampling (it does involve sucking all flying insects with a doomsday vacuum called the LepiPro Proton Pack). But whether Sam surveys a large spring meadow or a small decaying log will significantly change the likelihood of catching the target species.</p>
+
+<p>So, what information should be reported when it comes to sites surveyed?</p>
+
+<p>You can start by reporting the <strong>sites locality</strong>. In other words, the location on the map: the <strong>country</strong>, <strong>locality</strong> name and ideally <strong>coordinates</strong> (decimal latitude and longitude). Each locality should be identified with a unique identifier, when possible (<strong>locationID</strong>), this is especially helpful when locations are surveyed multiple times. Here is the map of Sam’s survey sites:</p>
+
+<p><img align="center" src="/hp-data-blog/post/2026-09-07-sam-survey-where-when/localities_surveyed.png" alt="Map of localities surveyed" width="300" /></p>
+
+<p>You should also <strong>describe</strong> each site, this includes reporting:</p>
+
+<ul>
+  <li><strong>habitat</strong></li>
+  <li><strong>weather</strong></li>
+  <li><strong>extreme conditions</strong></li>
+</ul>
+
+<p>Sam has in fact attempted to survey a site during a snowstorm and didn’t find any butterflies. Reporting the information helps assess whether the absence of the species can be inferred.</p>
+
+<p><img align="center" src="/hp-data-blog/post/2026-07-15-sam-intoduction/sam_snow.PNG" alt="Bad weather for butterfly catching" width="300" /></p>
+
+<p>The <strong>size</strong> of the <strong>area</strong> sampled should also be reported. How much ground (or volume) was surveyed? There are several ways to report this depending on the type of survey and methods useds: transect length, volume of water filtered, etc.</p>
+
+<p>Consider Sam’s surveys. For all but the very first one, Sam surveyed each one square kilometer plot (about 10,763 square feet) three times, which means that the total area surveyed was three times the size of the original plots (3 km2).</p>
+
+<p><img align="center" src="/hp-data-blog/post/2026-09-07-sam-survey-where-when/area_scope_vs_total_survey.png" alt="Total area surveyed" /></p>
+
+<p>It’s also important to report the geospatial scope of the survey (if it’s available). This scope indicates the whole area of interest and can be helpful to data users in understanding the whole story of your data.</p>
+
+<p>For example, Sam is surveying five sites on a small island with an area of 23 km2 called Survey Island. These sites are meant to understand the biodiversity on the island as a whole. So, Survey Island itself is the geographic scope of Sam’s survey. This is reported as an area (23 km2) in Sam’s data. 
+In other words, these five square kilometers represent the sampling of the larger 23 sq km area of interest.</p>
+
+<p><img align="center" src="/hp-data-blog/post/2026-09-07-sam-survey-where-when/localities_surveyed.png" alt="Map of localities surveyed" width="300" /></p>
+
+<p>When possible, it is helpful to report vegetation cover. There are several methods for reporting <strong>vegetation cover</strong> (more information is available at the end of the post).</p>
+
+<p>Rocky terrains with almost zero vegetation cover might not be the best place to survey butterflies.</p>
+
+<p><img align="center" src="/hp-data-blog/post/2026-09-07-sam-survey-where-when/rocky_terrain.png" alt="Sam rocks" /></p>
+
+<p>Of course, the information about <strong>when</strong> the sites were surveyed is essential!</p>
+
+<p>The survey <strong>date</strong>, <strong>time</strong> and <strong>duration</strong> should also be reported.</p>
+
+<p>As for our previous posts, I have prepared a <a href="https://gbif.box.com/s/xyh5jj0x5yxpyqoveg7wfma75qsylybp">printable cheat sheet</a> for you.</p>
+
+<p><img align="center" src="/hp-data-blog/post/2026-09-07-sam-survey-where-when/sam_survey_where_when.png" alt="Sam's cheatsheet - when &amp; where" /></p>
+
+<p>In a <strong>Darwin Core Archive</strong> (DwC-A), modelling the survey site information requires a combination of event core and Humbolt extension fields. Please see <a href="https://docs.gbif.org/guide-publishing-survey-data/en/#survey-site">this chapter</a> in Kate’s guide for more details.</p>
+
+<p>In the <strong>event</strong> table, you will be able to map the following information:</p>
+
+<ul>
+  <li><strong>Locality</strong>: <a href="https://dwc.tdwg.org/terms/#dwc:locationID">locationID</a>, <a href="https://dwc.tdwg.org/terms/#dwc:countryCode">countryCode</a>, coordinates (<a href="https://dwc.tdwg.org/terms/#dwc:decimalLatitude">decimalLatitude</a>, <a href="https://dwc.tdwg.org/terms/#dwc:decimalLongitude">decimalLongitude</a>, <a href="https://dwc.tdwg.org/terms/#dwc:geodeticDatum">geodeticDatum</a>), <a href="https://dwc.tdwg.org/terms/#dwc:locality">locality</a> (you can enrich the information such as the geometry of the site with the <a href="https://dwc.tdwg.org/terms/#location">location-related terms</a>).</li>
+  <li><strong>Habitat</strong>: <a href="https://dwc.tdwg.org/terms/#dwc:habitat">habitat</a></li>
+  <li><strong>Event date and time</strong>: <a href="https://rs.tdwg.org/dwc/terms/eventDate">eventDate</a> and <a href="https://dwc.tdwg.org/list/#dwc_eventTime">eventTime</a></li>
+</ul>
+
+<p>In the <strong>Humboldt extension</strong> table, you can map the following:</p>
+<ul>
+  <li><strong>Weather</strong>: <a href="https://eco.tdwg.org/list/#eco_reportedWeather">reportedWeather</a></li>
+  <li><strong>Extreme conditions</strong>: <a href="https://rs.tdwg.org/eco/terms/reportedExtremeConditions">reportedExtremeConditions</a></li>
+  <li><strong>Geospatial scope</strong>: <a href="https://rs.tdwg.org/eco/terms/geospatialScopeAreaValue">geospatialScopeAreaValue</a> and <a href="https://rs.tdwg.org/eco/terms/geospatialScopeAreaUnit">geospatialScopeAreaUnit</a></li>
+  <li><strong>Total area sampled</strong>: <a href="https://rs.tdwg.org/eco/terms/totalAreaSampledValue">totalAreaSampledValue</a> and <a href="https://rs.tdwg.org/eco/terms/totalAreaSampledUnit">totalAreaSampledUnit</a></li>
+  <li><strong>Event duration</strong>: <a href="https://rs.tdwg.org/eco/terms/eventDurationValue">eventDurationValue</a> and <a href="https://rs.tdwg.org/eco/terms/eventDurationUnit">eventDurationUnit</a></li>
+</ul>
+
+<p>If you intend to report vegetation cover, you can do so with the <a href="https://rs.tdwg.org/eco/terms/verbatimSiteDescriptions">verbatimSiteDescriptions</a> term in the Humboldt extension or in another extension such as <a href="https://rs.gbif.org/extension/dwc/measurements_or_facts_2025-07-10.xml">measurmentOrFacts</a> or <a href="https://docs.gbif.org/guide-publishing-survey-data/en/#relevé-extension">relevé</a>. See <a href="https://docs.gbif.org/guide-publishing-survey-data/en/#vegetation-cover">this chapter</a> in Kate’s guide for more information.</p>
+
+<p>In the <strong>Darwin Core Data Package</strong> (DwC-DP), you will also need at least two tables: the <a href="https://gbif.github.io/dwc-dp/qrg/#Event"><strong>event</strong></a> and the <a href="https://gbif.github.io/dwc-dp/qrg/#Survey"><strong>survey</strong></a> table. In this instance, the mapping is the same as with DwC-A as the event tables in both models contain the same terms and the survey table includes the Humbolt extension terms.</p>
+
+<p>Kate modelled Sam’s data for us both in DwC-A and DwC-DP, thank you Kate!</p>
+
+<p>Here is how the Survey Island sites were modelled in DwC-A:</p>
+
+<p><img align="center" src="/hp-data-blog/post/2026-09-07-sam-survey-where-when/sites_in_DwCA.png" alt="Locations in DwC-A" /></p>
+
+<p>(See it bigger <a href="https://github.com/gbif/data-blog/blob/master/content/post/2026-09-07-sam-survey-where-when/sites_in_DwCA.png">here</a>)</p>
+
+<p>Here is how the Survey sites were modelled in DwC-DP:</p>
+
+<p><img align="center" src="/hp-data-blog/post/2026-09-07-sam-survey-where-when/sites_in_DwCDP.png" alt="Locations in DwC-DP" /></p>
+
+<p>(See it bigger <a href="https://github.com/gbif/data-blog/blob/master/content/post/2026-09-07-sam-survey-where-when/sites_in_DwCDP.png">here</a>)</p>
+
+<p>And here is how is the date and duration part of the data both in DwC-A and DwC-DP:</p>
+
+<p><img align="center" src="/hp-data-blog/post/2026-09-07-sam-survey-where-when/date_in_DwCA_and_DwCDP.png" alt="Dates and time in DwC-A and DwC-DP" /></p>
+
+<p>(See it bigger <a href="https://github.com/gbif/data-blog/blob/master/content/post/2026-09-07-sam-survey-where-when/date_in_DwCA_and_DwCDP.png">here</a>)</p>
+
+<p>The next installment in the series will be about survey protocols, I hope you are looking forward to it!</p>
+
+</div>
+      </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+  
+  
+  <section class="post-series">
+    <div class="container">
+      <div class="article">
+        <aside class="post-series__box" aria-label="Series: Good SAMaritans">
+          <p class="post-series__title">Part of the series <strong>Good SAMaritans</strong></p>
+          <ol>
+            
+              <li><a href="/hp-data-blog/post/sam-introduction/">Good SAMaritans - Introduction to best practices for publishing Survey and Monitoring (SAM) data to GBIF</a></li>
+            
+              <li><a href="/hp-data-blog/post/sam-survey-scope/">Good SAMaritans – How to model survey targets in Survey and Monitoring (SAM) datasets</a></li>
+            
+              <li><span aria-current="page">Good SAMaritans – Modelling survey location, date and time when publishing Survey and Monitoring data to GBIF</span></li>
+            
+              <li><a href="/hp-data-blog/post/sam-survey-protocol/">Good SAMaritans – How to model sampling protocols in Survey and Monitoring (SAM) datasets</a></li>
+            
+          </ol>
+        </aside>
+      </div>
+    </div>
+  </section>
+  
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/rgbif-colxr-preparation/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Preparing for rgbif v3.9.0 and pygbif v0.7.0 Moving to COL Extended Release</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/community-metrics/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Community Metrics</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1793626883"></script>
+
+
+
+
+
+  </body>
+</html>
