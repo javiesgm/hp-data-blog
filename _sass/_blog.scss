@@ -1,22 +1,122 @@
 // GBIF Data Blog additions on top of the hosted-portal theme.
 // Kept small on purpose: the look comes from the theme so the blog stays part of the portal family.
 
-$blog-muted: #5d6a63;
-$blog-line: #e2e8e1;
-$blog-wash: #eef6ec;
+$blog-muted: #7b7979;        // text-muted (ink-60): meta lines, 14px+
+$blog-line: #e9e8e8;         // border-subtle (ink-10)
+$blog-wash: #edf5ea;         // brand-soft (green-10): the only fill behind green text
+
+// ---------- GBIF brand, from the GBIF.org Design System ----------
+// Editorial scale (2022 boards): Bitter SemiBold headings, Rubik body. Colours, radii and
+// shadows use the design system's token values; names are in the comments.
+// Fonts are self-hosted in /assets/fonts (SIL Open Font License). This stylesheet is served
+// from /assets/theme/css/, hence the ../../ paths.
+@font-face { font-family: "Bitter"; src: url("../../fonts/bitter-var.woff") format("woff"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Bitter"; src: url("../../fonts/bitter-italic-var.woff") format("woff"); font-weight: 100 900; font-style: italic; font-display: swap; }
+@font-face { font-family: "Rubik"; src: url("../../fonts/rubik-var.woff") format("woff"); font-weight: 300 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Rubik"; src: url("../../fonts/rubik-italic-var.woff") format("woff"); font-weight: 300 900; font-style: italic; font-display: swap; }
+
+$gbif-head: "Bitter", Georgia, "Times New Roman", serif;
+$gbif-body: "Rubik", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+$gbif-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+$gbif-ink: #4f4c4d;          // text (ink-80): body and headings, 8.5:1 on white
+$gbif-ink-2: #575757;        // ink-strong: card titles, top-nav labels
+$gbif-green: #4c9c2e;        // brand (green-100): actions, links, selected states, focus ring
+$gbif-green-ink: #4c9c2e;    // brand: links are always underlined (3.44:1 on white)
+$gbif-green-dark: #499134;   // green-stroke: outlines of green tags, hover
+$gbif-surface-2: #f8f7f7;    // paper: quiet sections, code
+
+html, body, button, input, select, textarea,
+.navbar, .navbar-item, .navbar-link, .content, .feature, .tag, .button, .input, .footer {
+  font-family: $gbif-body;
+}
+body { color: $gbif-ink; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4,
+.title, .feature-title, .postHeader .feature-title,
+.blog-intro__title, .post-end__title, .post-end__comments-title,
+.content h1, .content h2, .content h3, .content h4 {
+  font-family: $gbif-head;
+  color: $gbif-ink;
+  letter-spacing: -0.005em;
+}
+.feature-title, .postHeader .feature-title, .blog-intro__title { font-weight: 600; }   // serif-h1…h5 are SemiBold
+.content h2, .content h3 { font-weight: 600; }
+.content h4 { font-weight: 700; }                                                    // serif-h6: Bold 16
+
+// Links: GBIF green with a soft underline in post text
+a { color: $gbif-green-ink; }
+a:hover { color: $gbif-green-dark; }
+// scoped to post text (.article): the theme @extends .content onto cards, which would underline card titles
+.article .content a:not(.button):not(.tag) {
+  color: $gbif-green-ink;
+  text-decoration: underline;
+  text-decoration-color: rgba(76, 156, 46, .45);
+  text-underline-offset: 2px;
+  &:hover { color: $gbif-green-dark; text-decoration-color: currentColor; }
+}
+:focus-visible { outline: 2px solid $gbif-green; outline-offset: 2px; }   // focus-ring
+::selection { background: #dbebd5; color: #231f20; }                    // green-20, ink-100
+
+// Navigation
+.navbar-item, .navbar-link { color: $gbif-ink-2; font-weight: 500; }   // nav: ink-strong, Medium
+a.navbar-item:hover, .navbar-link:hover { color: $gbif-green-dark; }
+
+// Table of contents: green marker for the current section (theme uses sky blue)
+.toc a.active, .toc .active { border-left-color: $gbif-green !important; color: $gbif-ink; }
+.toc a:hover { color: $gbif-green-dark; }
+
+// Topic chips: green wash instead of grey
+.tags .tag:not(.is-delete), .tags .tag.is-light,
+.tag:not(.is-delete) {
+  background-color: $blog-wash;          // brand-soft
+  color: #3d7d25;                        // green text darkened to 4.5:1 on brand-soft at 12px
+  font-weight: 500;
+  border: 1px solid transparent;
+  border-radius: 2px;                    // radius-xs: tags
+}
+.tags a.tag:not(.is-delete):hover,
+a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; text-decoration: none; }
+
+// Cards: titles in Bitter, byline in Rubik
+.feature .feature-title a { color: $gbif-ink; text-decoration: none; }
+.feature .feature-title a:hover { color: $gbif-green-ink; }
+.feature-description { color: $gbif-ink-2; }
+
+// Search box
+.blog-search .input { border-radius: 4px; border-color: #d3d2d2; box-shadow: 0 1px 1.5px rgba(0,0,0,0.16); }   // radius-sm, border, shadow-report
+.blog-search .input:focus { border-color: $gbif-green; box-shadow: 0 0 0 2px rgba(76, 156, 46, .25); }
+
+// Code: light, bordered, readable
+.content code {
+  font-family: $gbif-mono; font-size: .86em; background: $gbif-surface-2;
+  color: #231f20; padding: .12em .38em; border-radius: 2px; border: 1px solid $blog-line;
+}
+.content pre, .content .highlight pre {
+  font-family: $gbif-mono; font-size: 14px; line-height: 1.55;
+  background: $gbif-surface-2; color: $gbif-ink;
+  border: 1px solid $blog-line; border-radius: 4px; padding: 16px;              // paper, radius-sm, space-4
+}
+.content pre code { background: none; border: 0; padding: 0; font-size: inherit; color: inherit; }
+
+// Blockquotes as green callouts
+.content blockquote {
+  border-left: 3px solid $gbif-green; background: #f8f7f7; color: $gbif-ink;
+  border-radius: 0 4px 4px 0;
+}
 
 // ---------- Post list (home and /post/) ----------
 .blog-intro {
   padding: 3rem 0 1rem;
   .container { max-width: 1000px; padding: 0 1rem; }
 }
-.blog-intro__title { font-size: 2.5rem; font-weight: 700; line-height: 1.15; margin-bottom: .5rem; }
+.blog-intro__title { font-size: 2.5rem; font-weight: 600; line-height: 1.15; margin-bottom: .5rem; }
+.blog-intro__title::after { content: ""; display: block; width: 36px; height: 3px; background: $gbif-green; margin-top: 12px; }   // Divider
 .blog-intro__lede { font-size: 1.2rem; color: $blog-muted; max-width: 40rem; margin-bottom: 1.5rem; }
 .blog-search { max-width: 40rem; margin-bottom: 1rem; }
 .blog-search__status { font-size: .9rem; color: $blog-muted; min-height: 1.4em; margin-top: .35rem; }
 .blog-topics { margin-bottom: .5rem; }
 .blog-topics .tag { text-decoration: none; }
 .blog-topics__count { margin-left: .35em; opacity: .6; font-size: .85em; }
+.features.blog-list { background-color: #efefef; }   // surface-sunken: band behind the cards
 .blog-list .feature-cards { max-width: 1200px; } // room for 3 cards per row (theme: 360px + gaps)
 .blog-list .feature.is-search-hidden { display: none !important; }
 .blog-list__empty { text-align: center; color: $blog-muted; padding: 2rem 1rem 4rem; }
@@ -34,11 +134,12 @@ $blog-wash: #eef6ec;
 
 .post-series { margin-top: -1.5rem; }
 .post-series__box {
-  border: 1px solid $blog-line; border-left: 4px solid $primary; border-radius: 8px;
+  border: 1px solid #d3d2d2; border-radius: 4px; background: #f8f7f7;   // border, radius-sm, paper
   padding: 1rem 1.25rem; margin-bottom: 2rem;
   ol { margin: .5rem 0 0 1.25rem; }
   li { margin: .35rem 0; line-height: 1.4; }
   [aria-current] { font-weight: 600; }
+  a { text-decoration: underline; text-decoration-color: rgba(76, 156, 46, .45); text-underline-offset: 2px; }   // green links are underlined
 }
 .post-series__title { color: $blog-muted; }
 
@@ -46,13 +147,13 @@ $blog-wash: #eef6ec;
 .post-end__disclaimer { font-style: italic; color: $blog-muted; font-size: .95rem; border-top: 1px solid $blog-line; padding-top: 1.25rem; }
 .post-end__nav { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin: 1.25rem 0 2.5rem; }
 .post-end__link {
-  display: block; border: 1px solid $blog-line; border-radius: 8px; padding: .9rem 1rem; color: inherit;
+  display: block; border: 1px solid #d3d2d2; border-radius: 4px; padding: 16px; color: inherit; box-shadow: 1px 1px 3px rgba(0,0,0,0.16);   // shadow-card
   &:hover { border-color: $primary; }
 }
 .post-end__link--next { text-align: right; grid-column: 2; }
 .post-end__label { display: block; font-size: .85rem; color: $blog-muted; }
 .post-end__title { display: block; font-weight: 600; line-height: 1.3; }
-.post-end__comments-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; }
+.post-end__comments-title { font-size: 1.4rem; font-weight: 600; margin-bottom: 1rem; }
 @media (max-width: 640px) {
   .post-end__nav { grid-template-columns: 1fr; }
   .post-end__link--next { grid-column: 1; }
@@ -60,7 +161,7 @@ $blog-wash: #eef6ec;
 
 // Videos converted from Hugo shortcodes
 .video-embed { position: relative; padding-bottom: 56.25%; height: 0; margin: 1.5rem 0; }
-.video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; border-radius: 6px; }
+.video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; border-radius: 4px; }
 
 // Long code lines scroll instead of breaking the layout
 .article .content pre { overflow-x: auto; }
