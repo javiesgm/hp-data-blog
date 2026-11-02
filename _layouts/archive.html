@@ -1,11 +1,13 @@
 ---
 layout: base
-description: Blog post list with search and topic filter (overrides the theme's archive layout)
+description: Blog post list with search, filters (topic, author, tag, series) and a cards/list switch. Overrides the theme's archive layout.
 ---
 {% comment %}
-  Lists every post that is not excluded from the archive.
-  The theme's footer script filters cards on ?category=..., and assets/js/blog-search.js
-  filters them by the search box. Both work on the same .feature cards.
+  Every post that is not excluded from the archive is rendered once, as a theme card.
+  assets/js/blog-list.js then filters the cards on the URL:
+    ?category=Topic%20name   ?author=john-waller   ?tag=rgbif   ?series=good-samaritans   ?q=free+text
+  and switches between the card grid and a compact list (remembered per browser).
+  No Jekyll plugins are needed, so the site still builds with the hosted-portal Gemfile.
 {% endcomment %}
 {% assign posts = site.posts | where_exp: "post", "post.excludeFromArchive != true" %}
 {% assign cats = site.categories | sort %}
@@ -19,7 +21,6 @@ description: Blog post list with search and topic filter (overrides the theme's 
       <label for="blog-search-input" class="is-sr-only">Search posts</label>
       <input id="blog-search-input" class="input is-medium" type="search" autocomplete="off"
              placeholder="Search {{ posts.size }} posts by title, author or topic…">
-      <p class="blog-search__status" id="blog-search-status" aria-live="polite"></p>
     </div>
 
     <div class="blog-topics tags" aria-label="Topics">
@@ -27,28 +28,48 @@ description: Blog post list with search and topic filter (overrides the theme's 
         <a class="tag is-medium" href="{{ site.algae.archive_permalink | relative_url }}?category={{ cat[0] | url_encode }}">{{ cat[0] }} <span class="blog-topics__count">{{ cat[1].size }}</span></a>
       {% endfor %}
     </div>
-
-    <div id="archive-filter" class="archive-filter"></div>
+    <p class="blog-browse">
+      Browse by <a href="{{ '/series/' | relative_url }}">series</a> or <a href="{{ '/authors/' | relative_url }}">author</a>.
+    </p>
   </div>
 </section>
 
-<div class="features blog-list">
+<div class="features blog-list" id="blog-list">
+  <div class="blog-toolbar">
+    <div class="blog-toolbar__filter" id="blog-filter" aria-live="polite"></div>
+    <div class="blog-toolbar__view" role="group" aria-label="Layout">
+      <button type="button" class="blog-view-btn" data-view="cards" aria-pressed="true" title="Cards">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1"/></svg>
+        <span>Cards</span>
+      </button>
+      <button type="button" class="blog-view-btn" data-view="list" aria-pressed="false" title="List">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="3" rx="1"/><rect x="3" y="10.5" width="18" height="3" rx="1"/><rect x="3" y="17" width="18" height="3" rx="1"/></svg>
+        <span>List</span>
+      </button>
+    </div>
+  </div>
+
   <div class="feature-cards has-{{ posts.size }}-elements">
     {% for post in posts %}
-      {% capture authors %}{% if post.author.first %}{{ post.author | join: ", " }}{% else %}{{ post.author }}{% endif %}{% endcapture %}
-      {% capture preTitle %}{{ authors | strip }}{% if authors != "" %} · {% endif %}{{ post.date | date: "%-d %b %Y" }}{% endcapture %}
+      {% if post.author.first %}{% assign authorList = post.author %}{% elsif post.author %}{% assign authorList = post.author | split: "|" %}{% else %}{% assign authorList = "" | split: "|" %}{% endif %}
+      {% capture authorSlugs %}{% for a in authorList %}|{{ a | slugify }}{% endfor %}|{% endcapture %}
+      {% capture tagSlugs %}{% for t in post.tags %}|{{ t | slugify }}{% endfor %}|{% endcapture %}
+      {% capture preTitle %}{{ authorList | join: ", " }}{% if authorList.size > 0 %} · {% endif %}{{ post.date | date: "%-d %b %Y" }}{% endcapture %}
       {% assign description = post.excerpt | strip_html | truncatewords: 28 %}
       {% assign href = post.url | relative_url %}
       {% assign background = post.thumbnail | default: post.background %}
-      {% capture searchText %}{{ post.title }} {{ authors }} {{ post.tags | join: " " }} {{ post.categories | join: " " }} {{ description }}{% endcapture %}
+      {% capture searchText %}{{ post.title }} {{ authorList | join: " " }} {{ post.tags | join: " " }} {{ post.categories | join: " " }} {{ post.series }} {{ description }}{% endcapture %}
       <article class="feature"
                data-categories="{% for category in post.categories %}{{ category | strip }}|{% endfor %}"
+               data-authors="{{ authorSlugs }}" data-author-names="{{ authorList | join: '|' | escape }}"
+               data-tags="{{ tagSlugs }}" data-tag-names="{{ post.tags | join: '|' | escape }}"
+               {% if post.series %}data-series="{{ post.series | slugify }}" data-series-name="{{ post.series | escape }}"{% endif %}
                data-search="{{ searchText | strip_newlines | downcase | escape }}">
         {% include blocks/parts/feature.html content=post preTitle=preTitle description=description href=href background=background imageLicense=false ignoreThumbor=true %}
       </article>
     {% endfor %}
   </div>
-  <p class="blog-list__empty" id="blog-list-empty" hidden>No posts match your search.</p>
+  <p class="blog-list__empty" id="blog-list-empty" hidden>No posts match. <a href="{{ site.algae.archive_permalink | relative_url }}">Show all posts</a></p>
 </div>
 
-<script src="{{ '/assets/js/blog-search.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/blog-list.js' | relative_url }}" defer></script>

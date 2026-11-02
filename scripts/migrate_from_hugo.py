@@ -104,15 +104,17 @@ def split_authors(a):
     return [p for p in parts if p]
 
 def first_image(body, url):
-    m = re.search(r"!\[[^\]]*\]\(([^)\s]+)|<img[^>]+src=[\"']([^\"']+)", body)
-    if not m:
-        return None
-    src = m.group(1) or m.group(2)
-    if src.startswith(("http://", "https://", "data:")):
+    """First real image in the post (skips map-tile templates such as .../{z}/{x}/{y}.png)."""
+    for m in re.finditer(r"!\[[^\]]*\]\(([^)\s]+)|<img[^>]+src=[\"']([^\"']+)", body):
+        src = m.group(1) or m.group(2)
+        if "{" in src or src.startswith("data:"):
+            continue
+        if src.startswith(("http://", "https://")):
+            return src
+        if not src.startswith("/"):
+            src = url + src.lstrip("./")
         return src
-    if not src.startswith("/"):
-        src = url + src.lstrip("./")
-    return src
+    return None
 
 # --------------------------------------------------------------------------
 posts = sorted(list(POSTS_IN.glob("*.md")) + list(POSTS_IN.glob("*/index*.md")))
@@ -155,7 +157,8 @@ for f in posts:
     new = {"title": fm.get("title")}
     if fm.get("description"):
         new["description"] = fm["description"]
-    new["author"] = authors[0] if len(authors) == 1 else authors
+    if authors:
+        new["author"] = authors[0] if len(authors) == 1 else authors
     new["date"] = date
     if fm.get("lastmod"):
         new["last_modified_at"] = str(fm["lastmod"])

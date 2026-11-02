@@ -1,0 +1,48 @@
+---
+layout: base
+description: Everyone who has written for the blog, most posts first, each linking to their posts.
+---
+{% assign posts = site.posts | where_exp: "post", "post.excludeFromArchive != true" %}
+{% comment %} Collect unique author names (author is a name or a list of names) {% endcomment %}
+{% assign names = "" %}
+{% for post in posts %}
+  {% if post.author.first %}{% for a in post.author %}{% assign names = names | append: a | append: "|" %}{% endfor %}
+  {% elsif post.author %}{% assign names = names | append: post.author | append: "|" %}{% endif %}
+{% endfor %}
+{% assign names = names | split: "|" | uniq %}
+{% comment %} Sort by number of posts: prefix each name with (1000 - count) so a plain sort puts the busiest first {% endcomment %}
+{% assign keyed = "" %}
+{% for n in names %}
+  {% assign count = 0 %}
+  {% for post in posts %}{% if post.author == n or post.author contains n %}{% assign count = count | plus: 1 %}{% endif %}{% endfor %}
+  {% assign key = 1000 | minus: count %}
+  {% assign keyed = keyed | append: key | append: "~" | append: n | append: "|" %}
+{% endfor %}
+{% assign keyed = keyed | split: "|" | sort %}
+{% assign listUrl = site.algae.archive_permalink | relative_url %}
+
+<section class="blog-intro">
+  <div class="container">
+    <h1 class="blog-intro__title">{{ page.title }}</h1>
+    <p class="blog-intro__lede">{{ names.size }} people have written for the GBIF Data Blog. Pick one to see their posts.</p>
+  </div>
+</section>
+
+<section class="blog-page">
+  <div class="container">
+    <ul class="author-list">
+      {% for k in keyed %}
+        {% assign parts = k | split: "~" %}
+        {% assign n = parts[1] %}
+        {% assign count = 1000 | minus: parts[0] %}
+        {% assign latest = nil %}
+        {% for post in posts %}{% if post.author == n or post.author contains n %}{% assign latest = post %}{% break %}{% endif %}{% endfor %}
+        <li class="author-list__item">
+          <a class="author-list__name" href="{{ listUrl }}?author={{ n | slugify }}">{{ n }}</a>
+          <span class="author-list__count">{{ count }} {% if count == 1 %}post{% else %}posts{% endif %}</span>
+          {% if latest %}<span class="author-list__latest">Latest: <a href="{{ latest.url | relative_url }}">{{ latest.title }}</a> · {{ latest.date | date: "%b %Y" }}</span>{% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>

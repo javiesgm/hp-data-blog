@@ -11,7 +11,6 @@ tags:
 - API
 - taxonomy
 - catalogue-of-life
-thumbnail: https://api.gbif.org/v2/map/occurrence/density/{z}/{x}/{y}@1x.png?taxonKey=623RM&checklistKey=7ddf754f-d193-4cc9-b351-99906754a03b&style=purpleYellow.point
 toc: true
 excerpt_separator: <!--more-->
 ---
