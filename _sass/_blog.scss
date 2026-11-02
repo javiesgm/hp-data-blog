@@ -43,7 +43,8 @@ h1, h2, h3, h4,
 // Links: GBIF green with a soft underline in post text
 a { color: $gbif-green-ink; }
 a:hover { color: $gbif-green-dark; }
-.content a:not(.button):not(.tag) {
+// scoped to post text (.article): the theme @extends .content onto cards, which would underline card titles
+.article .content a:not(.button):not(.tag) {
   color: $gbif-green-ink;
   text-decoration: underline;
   text-decoration-color: rgba(46, 122, 42, .35);
@@ -73,10 +74,8 @@ a.navbar-item:hover, .navbar-link:hover { color: $gbif-green-dark; }
 a.tag:not(.is-delete):hover { border-color: $gbif-green; color: $gbif-green-dark; text-decoration: none; }
 
 // Cards: titles in Bitter, byline in Rubik
-.feature .feature-title a,
-.content .feature .feature-title a:not(.button):not(.tag) { color: $gbif-ink; text-decoration: none; }
-.feature .feature-title a:hover,
-.content .feature .feature-title a:not(.button):not(.tag):hover { color: $gbif-green-ink; }
+.feature .feature-title a { color: $gbif-ink; text-decoration: none; }
+.feature .feature-title a:hover { color: $gbif-green-ink; }
 .feature-description { color: $gbif-ink-2; }
 
 // Search box
