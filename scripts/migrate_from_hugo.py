@@ -164,6 +164,8 @@ for f in posts:
         new["permalink"] = url          # keep the exact old address
     new["categories"] = categories_for(tags, str(fm.get("title") or ""))
     new["tags"] = tags
+    if not fm.get("series") and url_slug.startswith("sam-"):
+        fm["series"] = "Good SAMaritans"   # the SAM posts are a series; Hugo had no field for it
     if fm.get("series"):
         new["series"] = fm["series"][0] if isinstance(fm["series"], list) else fm["series"]
     img = first_image(body, url)

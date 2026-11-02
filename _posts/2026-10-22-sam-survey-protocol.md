@@ -16,6 +16,7 @@ tags:
 - DwC-A
 - publish
 - protocols
+series: Good SAMaritans
 thumbnail: /post/2026-10-22-sam-survey-protocol/spooky_protocol_feet.png
 ---
 Welcome back to our series of post where [Kate Ingenloff](https://orcid.org/0000-0001-5942-9053) and I teach you how to model and share Survey and Monitoring (SAM) data using Darwin Core with the goal of publishing the data to GBIF.

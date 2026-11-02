@@ -15,6 +15,7 @@ tags:
 - Darwin Core
 - DwC-A
 - publish
+series: Good SAMaritans
 thumbnail: /post/2026-07-15-sam-intoduction/intro_sam.PNG
 ---
 Perhaps, like me, you don’t know much about publishing Survey and Monitoring data(“SAM data” ). Maybe you have heard about event cores and Humboldt extensions, and you aren’t quite sure how to fit data into these.

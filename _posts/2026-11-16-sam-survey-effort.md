@@ -18,6 +18,7 @@ tags:
 - sampling efforts
 - survey efforts
 - effort
+series: Good SAMaritans
 thumbnail: /post/2026-11-16-sam-survey-effort/sam_efforts.png
 excludeFromArchive: true
 published: false

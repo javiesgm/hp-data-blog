@@ -19,6 +19,7 @@ tags:
 - date
 - location
 - time
+series: Good SAMaritans
 thumbnail: /post/2026-09-07-sam-survey-where-when/Sam_meets_TARDIS.png
 ---
 If you are new here, this post is the third installment in a series about modelling and sharing survey and monitoring (SAM) data on GBIF. My name is Marie, I am a Data Administrator at the GBIF Secretariat, and I am learning how to work with SAM data.

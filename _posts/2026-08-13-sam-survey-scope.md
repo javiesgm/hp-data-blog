@@ -17,6 +17,7 @@ tags:
 - publish
 - sope
 - target
+series: Good SAMaritans
 thumbnail: /post/2026-08-13-sam-survey-scope/expectationVSreality.PNG
 ---
 Welcome to the second installment of our series on publishing Survey and Monitoring (“SAM”) data to GBIF where I’m simultaneously learning how to do it and teaching you at the same time. I am still supervised by [**Kate Ingenloff**](https://orcid.org/0000-0001-5942-9053), our survey data mapping expert.
