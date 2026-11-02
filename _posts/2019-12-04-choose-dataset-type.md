@@ -8,7 +8,7 @@ categories:
 - Publishing data
 - Taxonomy
 tags:
-- publish
+- publishing
 - checklist
 - occurrence
 - sampling-event

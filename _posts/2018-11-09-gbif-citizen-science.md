@@ -8,7 +8,7 @@ categories:
 - Citizen science
 - Publishing data
 tags:
-- citizen
+- citizen science
 - dataset
 - API
 excerpt_separator: <!--more-->

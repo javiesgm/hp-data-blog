@@ -9,14 +9,12 @@ categories:
 - Publishing data
 tags:
 - sound
-- image
-- video
 - multimedia
-- media
+- video
 - Dublin Core
 - Darwin Core
 - howto
-- publish
+- publishing
 thumbnail: /post/2018-11-19-gbif-multimedia_files/example_gallery.png
 toc: true
 ---

@@ -8,12 +8,12 @@ categories:
 - Publishing data
 - Collections
 tags:
-- publish
+- publishing
 - collection descriptors
 - collections
 - institution
 - GRSciColl
-- Darwin core
+- Darwin Core
 - Latimer core
 thumbnail: /post/2024-10-01-grscicoll-collection-descriptors/NY_descriptors.png
 ---

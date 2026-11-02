@@ -8,7 +8,7 @@ categories:
 - Publishing data
 - Collections
 tags:
-- publish
+- publishing
 - occurrence
 - sampling-event
 - collections

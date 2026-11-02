@@ -11,7 +11,6 @@ tags:
 - backbone
 - checklist
 - Catalogue of Life
-- Col
 - Taxon match none
 - Taxon match higherrank
 - Taxon match fuzzy

@@ -1,0 +1,41 @@
+---
+layout: base
+description: "All topics and tags, with how many posts use each. Topics come from a post's categories, tags from its tags."
+---
+{% comment %} Built from site.categories and site.tags on every build: new topics and tags appear by themselves. {% endcomment %}
+{% assign listUrl = site.algae.archive_permalink | relative_url %}
+{% assign cats = site.categories | sort %}
+{% comment %} Sort tags by number of posts: prefix (1000 - count) so a plain sort puts the most used first {% endcomment %}
+{% assign keyed = "" %}
+{% for t in site.tags %}
+  {% assign key = 1000 | minus: t[1].size %}
+  {% assign keyed = keyed | append: key | append: "~" | append: t[0] | append: "|" %}
+{% endfor %}
+{% assign keyed = keyed | split: "|" | sort %}
+
+<section class="blog-intro">
+  <div class="container">
+    <h1 class="blog-intro__title">{{ page.title }}</h1>
+    <p class="blog-intro__lede">Topics group the posts into a few broad areas. Tags are the finer keywords authors add to each post.</p>
+  </div>
+</section>
+
+<section class="blog-page">
+  <div class="container">
+    <h2 class="terms-heading">Topics <span class="terms-heading__count">{{ cats.size }}</span></h2>
+    <div class="tags terms-list">
+      {% for cat in cats %}
+        <a class="tag is-medium" href="{{ listUrl }}?category={{ cat[0] | url_encode }}">{{ cat[0] }} <span class="blog-topics__count">{{ cat[1].size }}</span></a>
+      {% endfor %}
+    </div>
+
+    <h2 class="terms-heading">Tags <span class="terms-heading__count">{{ site.tags.size }}</span></h2>
+    <div class="tags terms-list terms-list--tags">
+      {% for k in keyed %}
+        {% assign parts = k | split: "~" %}
+        {% assign n = 1000 | minus: parts[0] %}
+        <a class="tag post-meta__tag" href="{{ listUrl }}?tag={{ parts[1] | slugify }}">#{{ parts[1] }} <span class="blog-topics__count">{{ n }}</span></a>
+      {% endfor %}
+    </div>
+  </div>
+</section>

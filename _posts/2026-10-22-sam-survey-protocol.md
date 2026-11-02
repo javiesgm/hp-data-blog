@@ -14,7 +14,7 @@ tags:
 - DwC-DP
 - Darwin Core
 - DwC-A
-- publish
+- publishing
 - protocols
 series: Good SAMaritans
 thumbnail: /post/2026-10-22-sam-survey-protocol/spooky_protocol_feet.png

@@ -14,7 +14,7 @@ tags:
 - DwC-DP
 - Darwin Core
 - DwC-A
-- publish
+- publishing
 series: Good SAMaritans
 thumbnail: /post/2026-07-15-sam-intoduction/intro_sam.PNG
 ---

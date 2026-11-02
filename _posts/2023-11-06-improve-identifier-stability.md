@@ -8,7 +8,7 @@ categories:
 - Publishing data
 - Data quality
 tags:
-- publish
+- publishing
 - data quality
 - issues
 - occurrence
