@@ -2,8 +2,29 @@
 - text: Posts
   href: /
 - text: Topics
-  autoMenu: categories   # filled automatically with every topic (category) used by the posts
-  menu:                  # extra items shown after the topics
+  # Curated by hand on purpose: a new category in a post does NOT appear here until it is added below.
+  # It does appear on the home page topic chips and on /tags/ automatically.
+  menu:
+  - text: APIs and downloads
+    href: /?category=APIs%20and%20downloads
+  - text: Publishing data
+    href: /?category=Publishing%20data
+  - text: Analysis and maps
+    href: /?category=Analysis%20and%20maps
+  - text: Taxonomy
+    href: /?category=Taxonomy
+  - text: Data quality
+    href: /?category=Data%20quality
+  - text: Citation and data use
+    href: /?category=Citation%20and%20data%20use
+  - text: Collections
+    href: /?category=Collections
+  - text: Citizen science
+    href: /?category=Citizen%20science
+  - text: Molecular data
+    href: /?category=Molecular%20data
+  - text: Multimedia
+    href: /?category=Multimedia
   - text: "---"
   - text: All topics and tags
     href: /tags/
