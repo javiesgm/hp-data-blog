@@ -5,6 +5,93 @@ $blog-muted: #5d6a63;
 $blog-line: #e2e8e1;
 $blog-wash: #eef6ec;
 
+// ---------- GBIF brand: Bitter for headings, Rubik for text, GBIF green ----------
+// Fonts are self-hosted in /assets/fonts (SIL Open Font License). This stylesheet is served
+// from /assets/theme/css/, hence the ../../ paths.
+@font-face { font-family: "Bitter"; src: url("../../fonts/bitter-var.woff") format("woff"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Bitter"; src: url("../../fonts/bitter-italic-var.woff") format("woff"); font-weight: 100 900; font-style: italic; font-display: swap; }
+@font-face { font-family: "Rubik"; src: url("../../fonts/rubik-var.woff") format("woff"); font-weight: 300 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Rubik"; src: url("../../fonts/rubik-italic-var.woff") format("woff"); font-weight: 300 900; font-style: italic; font-display: swap; }
+
+$gbif-head: "Bitter", Georgia, "Times New Roman", serif;
+$gbif-body: "Rubik", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+$gbif-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+$gbif-ink: #1f2a24;          // body text
+$gbif-ink-2: #3b4741;        // secondary text
+$gbif-green: #4b9e46;        // logo green: accents, focus
+$gbif-green-ink: #2e7a2a;    // links on white (WCAG AA)
+$gbif-green-dark: #1f5a1c;   // hover
+$gbif-surface-2: #f6f8f5;    // code, boxes
+
+html, body, button, input, select, textarea,
+.navbar, .navbar-item, .navbar-link, .content, .feature, .tag, .button, .input, .footer {
+  font-family: $gbif-body;
+}
+body { color: $gbif-ink; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4,
+.title, .feature-title, .postHeader .feature-title,
+.blog-intro__title, .post-end__title, .post-end__comments-title,
+.content h1, .content h2, .content h3, .content h4 {
+  font-family: $gbif-head;
+  color: $gbif-ink;
+  letter-spacing: -0.005em;
+}
+.feature-title, .postHeader .feature-title, .blog-intro__title { font-weight: 700; }
+.content h2 { font-weight: 700; }
+.content h3, .content h4 { font-weight: 650; }
+
+// Links: GBIF green with a soft underline in post text
+a { color: $gbif-green-ink; }
+a:hover { color: $gbif-green-dark; }
+.content a:not(.button):not(.tag) {
+  color: $gbif-green-ink;
+  text-decoration: underline;
+  text-decoration-color: rgba(46, 122, 42, .35);
+  text-underline-offset: 2px;
+  &:hover { color: $gbif-green-dark; text-decoration-color: currentColor; }
+}
+:focus-visible { outline: 3px solid $gbif-green; outline-offset: 2px; }
+::selection { background: #cfe8cb; color: $gbif-ink; }
+
+// Navigation
+.navbar-item, .navbar-link { color: $gbif-ink-2; font-weight: 500; }
+a.navbar-item:hover, .navbar-link:hover { color: $gbif-green-dark; }
+
+// Topic chips: green wash instead of grey
+.tag:not(.is-delete) {
+  background-color: $blog-wash;
+  color: $gbif-green-dark;
+  font-weight: 500;
+  border: 1px solid transparent;
+}
+a.tag:not(.is-delete):hover { border-color: $gbif-green; color: $gbif-green-dark; text-decoration: none; }
+
+// Cards: titles in Bitter, byline in Rubik
+.feature-title a { color: $gbif-ink; }
+.feature-title a:hover { color: $gbif-green-ink; }
+.feature-description { color: $gbif-ink-2; }
+
+// Search box
+.blog-search .input:focus { border-color: $gbif-green; box-shadow: 0 0 0 3px rgba(75, 158, 70, .18); }
+
+// Code: light, bordered, readable
+.content code {
+  font-family: $gbif-mono; font-size: .86em; background: $gbif-surface-2;
+  color: #1d4f1b; padding: .12em .38em; border-radius: 4px; border: 1px solid $blog-line;
+}
+.content pre, .content .highlight pre {
+  font-family: $gbif-mono; font-size: 14px; line-height: 1.55;
+  background: $gbif-surface-2; color: $gbif-ink;
+  border: 1px solid $blog-line; border-radius: 10px; padding: 14px 16px;
+}
+.content pre code { background: none; border: 0; padding: 0; font-size: inherit; color: inherit; }
+
+// Blockquotes as green callouts
+.content blockquote {
+  border-left: 4px solid $gbif-green; background: $blog-wash; color: $gbif-ink-2;
+  border-radius: 0 10px 10px 0;
+}
+
 // ---------- Post list (home and /post/) ----------
 .blog-intro {
   padding: 3rem 0 1rem;
