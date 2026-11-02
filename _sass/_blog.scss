@@ -116,6 +116,7 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
 .blog-topics { margin-bottom: .5rem; }
 .blog-topics .tag { text-decoration: none; }
 .blog-topics__count { margin-left: .35em; opacity: .6; font-size: .85em; }
+.features.blog-list { background-color: #efefef; }   // surface-sunken: band behind the cards
 .blog-list .feature-cards { max-width: 1200px; } // room for 3 cards per row (theme: 360px + gaps)
 .blog-list .feature.is-search-hidden { display: none !important; }
 .blog-list__empty { text-align: center; color: $blog-muted; padding: 2rem 1rem 4rem; }
@@ -138,6 +139,7 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
   ol { margin: .5rem 0 0 1.25rem; }
   li { margin: .35rem 0; line-height: 1.4; }
   [aria-current] { font-weight: 600; }
+  a { text-decoration: underline; text-decoration-color: rgba(76, 156, 46, .45); text-underline-offset: 2px; }   // green links are underlined
 }
 .post-series__title { color: $blog-muted; }
 
