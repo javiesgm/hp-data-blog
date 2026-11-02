@@ -21,6 +21,10 @@
     href: /?category=Citizen%20science
   - text: Molecular data
     href: /?category=Molecular%20data
+- text: Series
+  href: /series/
+- text: Authors
+  href: /authors/
 - text: About
   href: /about/
 - text: Community forum

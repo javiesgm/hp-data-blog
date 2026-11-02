@@ -1,0 +1,38 @@
+---
+layout: base
+description: Posts that belong together, grouped by series. A post joins a series with `series: Name` in its front matter.
+---
+{% assign posts = site.posts | where_exp: "post", "post.excludeFromArchive != true" | where_exp: "post", "post.series" %}
+{% assign groups = posts | group_by: "series" %}
+{% assign listUrl = site.algae.archive_permalink | relative_url %}
+
+<section class="blog-intro">
+  <div class="container">
+    <h1 class="blog-intro__title">{{ page.title }}</h1>
+    <p class="blog-intro__lede">{{ page.description }}</p>
+  </div>
+</section>
+
+<section class="blog-page">
+  <div class="container">
+    {% for g in groups %}
+      {% assign parts = g.items | sort: "date" %}
+      {% assign first = parts | first %}
+      {% assign last = parts | last %}
+      <article class="series-group">
+        <div class="series-group__head">
+          <h2 class="series-group__title"><a href="{{ listUrl }}?series={{ g.name | slugify }}">{{ g.name }}</a></h2>
+          <p class="series-group__meta">{{ g.items.size }} parts · {{ first.date | date: "%b %Y" }} – {{ last.date | date: "%b %Y" }}</p>
+        </div>
+        {% if first.thumbnail %}<a class="series-group__image" href="{{ first.url | relative_url }}" tabindex="-1" aria-hidden="true"><img src="{{ first.thumbnail | relative_url }}" alt="" loading="lazy"></a>{% endif %}
+        <ol class="series-group__parts">
+          {% for p in parts %}
+            <li><a href="{{ p.url | relative_url }}">{{ p.title }}</a> <span class="series-group__date">{{ p.date | date: "%-d %b %Y" }}</span></li>
+          {% endfor %}
+        </ol>
+      </article>
+    {% else %}
+      <p>No series yet.</p>
+    {% endfor %}
+  </div>
+</section>

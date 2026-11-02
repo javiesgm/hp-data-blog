@@ -10,6 +10,17 @@ addresses (`/post/<slug>/`) and the RSS feed (`/index.xml`).
 **Preview:** built automatically to GitHub Pages on every push (see `.github/workflows/preview.yml`).
 The preview is marked as a test site, has no comments and is hidden from search engines.
 
+## How readers find posts
+
+- **Home** (`/`, also `/post/`): every post as cards or as a compact list (switch at the top right,
+  remembered per browser), a search box and the topic chips.
+- **Filtered lists** use the same page: `/?category=Taxonomy`, `/?author=john-waller`, `/?tag=rgbif`,
+  `/?series=good-samaritans`. Author names and tags on a post link there.
+- **Series** (`/series/`) and **Authors** (`/authors/`) are built automatically from the posts' front matter.
+- Old Hugo addresses such as `/author/john-waller/` or `/tags/rgbif/` redirect to the matching filtered list.
+
+No Jekyll plugins are involved, so the site builds with the standard hosted-portal Gemfile.
+
 ## Writing a post
 
 1. Create `_posts/YYYY-MM-DD-your-post.md`.
