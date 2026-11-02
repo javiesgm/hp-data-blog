@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write  # TEMPORARY for the ci-render branch; back to read once Pages is on
+  contents: read
   pages: write
   id-token: write
 
@@ -46,18 +46,6 @@ jobs:
           fi
           # Keep the preview out of search engines.
           printf 'User-agent: *\nDisallow: /\n' > _site/robots.txt
-
-      # TEMPORARY: publish the rendered pages (without the large post media, which are already
-      # in the repo) to the ci-render branch so they can be reviewed before Pages is switched on.
-      - name: Push rendered pages to ci-render branch
-        if: github.event_name == 'pull_request'
-        run: |
-          mkdir -p /tmp/render && rsync -a --exclude 'post/**/*.png' --exclude 'post/**/*.jpg' --exclude 'post/**/*.jpeg' \
-            --exclude 'post/**/*.gif' --exclude 'post/**/*.tsv' --exclude 'post/**/*.csv' --exclude 'post/**/*.zip' \
-            --exclude 'post/**/*.webm' --exclude 'post/**/*.mp4' --exclude 'post/**/*_files/**' _site/ /tmp/render/
-          cd /tmp/render && git init -q -b ci-render && git add -A
-          git -c user.name=ci -c user.email=ci@localhost commit -qm "Rendered site for review"
-          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" ci-render
 
       - uses: actions/upload-pages-artifact@v3
         with:

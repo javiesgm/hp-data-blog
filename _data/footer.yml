@@ -25,8 +25,8 @@ columns:
 
   - name: Contact
     description: |
-      GBIF Secretariat
-      Universitetsparken 15
-      DK-2100 Copenhagen Ø
+      GBIF Secretariat<br>
+      Universitetsparken 15<br>
+      DK-2100 Copenhagen Ø<br>
       Denmark
     connectIcons: true

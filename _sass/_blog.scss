@@ -64,4 +64,5 @@ $blog-wash: #eef6ec;
 
 // Long code lines scroll instead of breaking the layout
 .article .content pre { overflow-x: auto; }
+.article .content .highlighter-rouge, .article .content > pre { margin-bottom: 1.25rem; }
 .article .content img { height: auto; }
