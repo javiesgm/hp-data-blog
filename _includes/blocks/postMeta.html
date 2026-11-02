@@ -1,0 +1,23 @@
+{% comment %} Byline under the post title: authors · date · reading time, then topics {% endcomment %}
+{% assign words = page.content | strip_html | number_of_words %}
+{% assign minutes = words | divided_by: 200 | plus: 1 %}
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        {% if page.author.first %}{{ page.author | join: ", " }}{% else %}{{ page.author }}{% endif %}
+        <span aria-hidden="true">·</span>
+        <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%-d %B %Y" }}</time>
+        <span aria-hidden="true">·</span>
+        {{ minutes }} min read
+      </p>
+      {% if page.categories.size > 0 %}
+      <div class="tags post-meta__topics">
+        {% for category in page.categories %}
+          <a class="tag is-light" href="{{ site.algae.archive_permalink | relative_url }}?category={{ category | url_encode }}">{{ category }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

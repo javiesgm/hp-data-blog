@@ -1,10 +1,6 @@
 ---
-lang-ref: archive
 layout: archive
-title: News
-description: News and events
-permalink: /news/
+title: All posts
+description: Tutorials, analyses and news about GBIF data.
+permalink: /post/
 ---
-{% comment %}
-  No content here. The layout will insert a card for each post in your _posts folder
-{% endcomment %}

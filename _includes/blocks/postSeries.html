@@ -1,0 +1,20 @@
+{% comment %} Lists every part of a series, oldest first. Add `series: Series name` to a post's front matter. {% endcomment %}
+{% if page.series %}
+  {% assign parts = site.posts | where: "series", page.series | sort: "date" %}
+  {% if parts.size > 1 %}
+  <section class="post-series">
+    <div class="container">
+      <div class="article">
+        <aside class="post-series__box" aria-label="Series: {{ page.series }}">
+          <p class="post-series__title">Part of the series <strong>{{ page.series }}</strong></p>
+          <ol>
+            {% for part in parts %}
+              <li>{% if part.url == page.url %}<span aria-current="page">{{ part.title }}</span>{% else %}<a href="{{ part.url | relative_url }}">{{ part.title }}</a>{% endif %}</li>
+            {% endfor %}
+          </ol>
+        </aside>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+{% endif %}

@@ -19,26 +19,17 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Template_site # the title of your site should go here
-email: your-email@example.com
-description: >- # this means to ignore newlines (until baseurl:)
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+title: GBIF Data Blog
+description: Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://template_site.hp.gbif.org/" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://data-blog.gbif.org" # the base hostname & protocol for your site, e.g. http://example.com
 
 # SOCIAL PROFILES that will show in the footer
-email: info@gbif.org                                      # Social icon in footer
-twitter_username: yourname # if you have an account you want to link to. Else comment this line out
-github_username:  yourname # if you have an account you want to link to. Else comment this line out
-bluesky_username: yourname.org                            # Social icon in footer
-youtube_username: yourname                              # Social icon in footer
-facebook_username: yourname                             # Social icon in footer
-flickr_username: yourname                               # Social icon in footer
-instagram_username: yourname                              # Social icon in footer
-mastodon_url: https://something.goes/@here                # Social icon in footer
-linkedin_url: https://www.linkedin.com/company/yourname # Social icon in footer
+email: info@gbif.org
+github_username: gbif
+bluesky_username: gbif.org
+linkedin_url: https://www.linkedin.com/company/gbif
+youtube_url: https://www.youtube.com/@GBIFvideo                                      # Social icon in footer
 
 # Build settings
 theme: minima
@@ -50,14 +41,17 @@ remote_theme: gbif/jekyll-hp-base-theme
 
 algae:
   rootLang: en
+  logo: assets/images/data-blog-logo.png  # Logo in navbar, 28px high
+  logoAndTitle: false
+  latestPostLimit: 3
   # latestPostLimit: 2
   # logo: /assets/images/fungi.svg  # Logo in navbar, will be displayed with 28px height
   # logoAndTitle: false           # include the title next to the logo
-  archive_permalink: /news/       # Permalink of page using archive.html layout, required when using post categories
+  archive_permalink: /       # Permalink of page using archive.html layout, required when using post categories
   style:
     # square: false               # Should corners be square or rounded
     colors:
-      primary: "#fa5e97"          # Primary color of your brand. Use HEX code. Used for buttons and links
+      primary: "#2e7a2a"          # Primary color of your brand. Use HEX code. Used for buttons and links
       # links: "#fa5e97"          # What color should links have. Use a HEX code. DEfault is primary color. 
     coloredHeadlineLinks: false   # If a headline is a link, then use the link color. Default is true. 
   navbar:                         # RELATED TO NAVIGATION BAR
@@ -94,6 +88,8 @@ exclude:
   - en/data/disabled/
   - README.md
   - /**/README.md  # exclude all README.md files in any folder
+  - scripts/
+  - _config_preview.yml
 
 permalink: pretty # will strip extensions like .html from urls
 
@@ -107,7 +103,7 @@ defaults:
       path: "_posts" # an empty string here means all files in the project
     values:
       layout: "post"
-      permalink: "/post/:year/:slug/"   # Use /post/yyyy/{filename}/ as permalink for all posts
+      permalink: "/post/:slug/"   # Same addresses as the old Hugo blog: /post/{slug}/
   
   - scope:
       path: "es/" # For anything in the "es" folder the default is to set the lang frontMatter property to "es" . this should be deleted or adapted to your site if you support other languages
@@ -208,3 +204,13 @@ defaults:
       layout: "post"
       permalink: "/da/post/:year/:slug/"
       lang: da
+# --------------------------------------------------------------------------
+# GBIF Data Blog settings
+# --------------------------------------------------------------------------
+feed:
+  path: index.xml          # keep the old Hugo RSS address so subscribers keep working
+excerpt_separator: "\n\n"  # first paragraph; a post can use <!--more--> instead (excerpt_separator in its front matter)
+discourse_comments: true    # Discourse only allows embedding on data-blog.gbif.org
+plausible:                  # same Plausible site as the current blog
+  enabled: true
+  dataDomain: "data-blog.gbif.org,gbif.org"

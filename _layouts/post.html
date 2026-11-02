@@ -1,0 +1,13 @@
+---
+layout: base
+description: Blog post (overrides the theme's post layout) - title, byline, content, series, comments
+composition:
+  - type: postHeader
+  - type: postMeta
+  - type: pageMarkdown
+  - type: postSeries
+  - type: postFooter
+---
+
+{% assign composition = page.composition | default: layout.composition %}
+{% include composition.html composition=composition %}
