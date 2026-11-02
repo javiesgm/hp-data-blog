@@ -57,18 +57,26 @@ a:hover { color: $gbif-green-dark; }
 .navbar-item, .navbar-link { color: $gbif-ink-2; font-weight: 500; }
 a.navbar-item:hover, .navbar-link:hover { color: $gbif-green-dark; }
 
+// Table of contents: green marker for the current section (theme uses sky blue)
+.toc a.active, .toc .active { border-left-color: $gbif-green !important; color: $gbif-ink; }
+.toc a:hover { color: $gbif-green-dark; }
+
 // Topic chips: green wash instead of grey
+.tags .tag:not(.is-delete), .tags .tag.is-light,
 .tag:not(.is-delete) {
   background-color: $blog-wash;
   color: $gbif-green-dark;
   font-weight: 500;
   border: 1px solid transparent;
 }
+.tags a.tag:not(.is-delete):hover,
 a.tag:not(.is-delete):hover { border-color: $gbif-green; color: $gbif-green-dark; text-decoration: none; }
 
 // Cards: titles in Bitter, byline in Rubik
-.feature-title a { color: $gbif-ink; }
-.feature-title a:hover { color: $gbif-green-ink; }
+.feature .feature-title a,
+.content .feature .feature-title a:not(.button):not(.tag) { color: $gbif-ink; text-decoration: none; }
+.feature .feature-title a:hover,
+.content .feature .feature-title a:not(.button):not(.tag):hover { color: $gbif-green-ink; }
 .feature-description { color: $gbif-ink-2; }
 
 // Search box
