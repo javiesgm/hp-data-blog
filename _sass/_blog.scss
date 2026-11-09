@@ -3,6 +3,9 @@
 
 $blog-muted: #7b7979;        // text-muted (ink-60): meta lines, 14px+
 $blog-line: #e9e8e8;         // border-subtle (ink-10)
+// Width of the post list column: intro, toolbar, cards and list rows (images included).
+// 840px keeps list summaries at about 12–15 words per line.
+$blog-column: 840px;
 $blog-wash: #edf5ea;         // brand-soft (green-10): the only fill behind green text
 
 // ---------- GBIF brand, from the GBIF.org Design System ----------
@@ -109,7 +112,7 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
 // ---------- Post list (home and /post/) ----------
 .blog-intro {
   padding: 3rem 0 1rem;
-  .container { max-width: 1000px; padding: 0 1rem; }
+  .container { max-width: $blog-column + 24px; padding: 0 12px; }   // same column as the post list
 }
 .blog-intro__title { font-size: 2.5rem; font-weight: 600; line-height: 1.15; margin-bottom: .5rem; }
 .blog-intro__title::after { content: ""; display: block; width: 36px; height: 3px; background: $gbif-green; margin-top: 12px; }   // Divider
@@ -175,7 +178,7 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
 .blog-browse a { text-decoration: underline; text-decoration-color: rgba(76, 156, 46, .45); text-underline-offset: 2px; }
 .blog-search__status { display: none; }
 .blog-toolbar {
-  max-width: 1176px; margin: -1rem auto 1.5rem; padding: 0 12px;   // same column as the cards and list
+  max-width: $blog-column + 24px; margin: -1rem auto 1.5rem; padding: 0 12px;   // same column as the cards and list
   display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
 }
 .blog-toolbar__filter { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-height: 2.25rem; }
@@ -194,11 +197,10 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
 // ---------- One column for toolbar, cards and list ----------
 // The toolbar, the card grid and the list share the same width and edges at every screen size,
 // so switching views never moves the toolbar. The theme's fixed-width flex cards are replaced by
-// a grid that fills the column (3 columns on desktop, 2 on tablets, 1 on phones).
-$blog-column: 1176px;
+// a grid that fills the column (2 columns on desktop and tablets, 1 on phones).
 .blog-list .feature-cards {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px;
-  max-width: $blog-column; margin: 0 auto; padding: 0 12px;
+  max-width: $blog-column + 24px; margin: 0 auto; padding: 0 12px;
 }
 .blog-list .feature-cards .feature {
   flex: none !important; width: auto !important; max-width: none !important; margin: 0 !important;   // beat the theme's card widths
