@@ -56,7 +56,10 @@ a:hover { color: $gbif-green-dark; }
 :focus-visible { outline: 2px solid $gbif-green; outline-offset: 2px; }   // focus-ring
 ::selection { background: #dbebd5; color: #231f20; }                    // green-20, ink-100
 
-// Navigation
+// Navigation: menu aligned to the right on desktop (the burger menu on mobile is unchanged)
+@media screen and (min-width: 1024px) {
+  #mainNavbar .navbar-start { margin-left: auto; margin-right: 0; }
+}
 .navbar-item, .navbar-link { color: $gbif-ink-2; font-weight: 500; }   // nav: ink-strong, Medium
 a.navbar-item:hover, .navbar-link:hover { color: $gbif-green-dark; }
 

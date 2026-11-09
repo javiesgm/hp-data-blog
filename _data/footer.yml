@@ -14,6 +14,8 @@ columns:
 
   - name: GBIF
     links:
+    - text: GBIF.org
+      href: https://www.gbif.org/
     - text: What is GBIF?
       href: https://www.gbif.org/what-is-gbif
     - text: API documentation
