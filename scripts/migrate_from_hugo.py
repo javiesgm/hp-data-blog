@@ -111,7 +111,8 @@ def split_authors(a):
 
 def first_image(body, url):
     """First real image in the post (skips map-tile templates such as .../{z}/{x}/{y}.png)."""
-    for m in re.finditer(r"!\[[^\]]*\]\(([^)\s]+)|<img[^>]+src=[\"']([^\"']+)", body):
+    # the Markdown URL may contain one level of balanced parentheses, e.g. images/plot%20(1).jpg
+    for m in re.finditer(r"!\[[^\]]*\]\(((?:[^()\s]|\([^()\s]*\))+)|<img[^>]+src=[\"']([^\"']+)", body):
         src = m.group(1) or m.group(2)
         if "{" in src or src.startswith("data:"):
             continue

@@ -8,7 +8,7 @@ categories:
 - Analysis and maps
 - APIs and downloads
 tags: []
-thumbnail: /post/2025-01-23-time-series-of-land-surface-temperature/images/download%20(1
+thumbnail: /post/2025-01-23-time-series-of-land-surface-temperature/images/download%20(1).png
 excerpt_separator: <!--more-->
 ---
 <iframe src="https://www.loom.com/embed/ac617862ef8d4e978684c561d93e9950?sid=409893b6-ae8b-43dc-bcf4-ee6425507788"
