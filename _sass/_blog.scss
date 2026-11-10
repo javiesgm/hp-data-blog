@@ -3,6 +3,11 @@
 
 $blog-muted: #7b7979;        // text-muted (ink-60): meta lines, 14px+
 $blog-line: #e9e8e8;         // border-subtle (ink-10)
+// Post list widths
+// - $blog-cards-width: the card grid, and the fixed width of the intro and toolbar in both views
+// - $blog-column: list rows (images included); 840px keeps summaries at about 12–15 words per line
+$blog-cards-width: 1176px;
+$blog-column: 840px;
 $blog-wash: #edf5ea;         // brand-soft (green-10): the only fill behind green text
 
 // ---------- GBIF brand, from the GBIF.org Design System ----------
@@ -109,7 +114,7 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
 // ---------- Post list (home and /post/) ----------
 .blog-intro {
   padding: 3rem 0 1rem;
-  .container { max-width: 1000px; padding: 0 1rem; }
+  .container { max-width: $blog-cards-width; padding: 0 12px; }   // same width as the card grid
 }
 .blog-intro__title { font-size: 2.5rem; font-weight: 600; line-height: 1.15; margin-bottom: .5rem; }
 .blog-intro__title::after { content: ""; display: block; width: 36px; height: 3px; background: $gbif-green; margin-top: 12px; }   // Divider
@@ -120,7 +125,6 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
 .blog-topics .tag { text-decoration: none; }
 .blog-topics__count { margin-left: .35em; opacity: .6; font-size: .85em; }
 .features.blog-list { background-color: #efefef; }   // surface-sunken: band behind the cards
-.blog-list .feature-cards { max-width: 1200px; } // room for 3 cards per row (theme: 360px + gaps)
 .blog-list .feature.is-search-hidden { display: none !important; }
 .blog-list__empty { text-align: center; color: $blog-muted; padding: 2rem 1rem 4rem; }
 .blog-list .feature-pre-title { text-transform: none; letter-spacing: 0; }
@@ -176,7 +180,7 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
 .blog-browse a { text-decoration: underline; text-decoration-color: rgba(76, 156, 46, .45); text-underline-offset: 2px; }
 .blog-search__status { display: none; }
 .blog-toolbar {
-  max-width: 1176px; margin: -1rem auto 1.5rem; padding: 0 12px;
+  max-width: $blog-cards-width; margin: -1rem auto 1.5rem; padding: 0 12px;   // fixed at the card grid width in both views
   display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
 }
 .blog-toolbar__filter { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-height: 2.25rem; }
@@ -192,14 +196,26 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
   &:not([aria-pressed="true"]):hover { background: #edf5ea; }
 }
 
+// ---------- Post list widths ----------
+// The intro and the toolbar (post count, filter, Cards/List switch) keep the card grid's width
+// whichever view is on. The list is narrower (840px) and centred below the toolbar. The theme's fixed-width flex cards are replaced
+// by a grid that fills its row (3 columns on desktop, 2 on tablets, 1 on phones).
+.blog-list .feature-cards {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px;
+  max-width: $blog-cards-width; margin: 0 auto; padding: 0 12px;
+}
+.blog-list.is-list .feature-cards { max-width: $blog-column + 24px; }
+.blog-list .feature-cards .feature {
+  flex: none !important; width: auto !important; max-width: none !important; margin: 0 !important;   // beat the theme's card widths
+}
+@media (max-width: 640px) { .blog-list .feature-cards { grid-template-columns: 1fr; gap: 16px; } }
+
 // ---------- List view ----------
-.blog-list.is-list .blog-toolbar { max-width: 944px; }   // line up with the narrower list
 .blog-list.is-list {
-  .feature-cards { display: block; max-width: 920px; margin: 0 auto; }
+  .feature-cards { display: block; }
   .feature {
     display: flex; flex-direction: row; align-items: stretch;
-    flex: none !important; width: auto !important; max-width: none !important;   // beat the theme's double-width rule
-    margin: 0 12px 12px;
+    margin: 0 0 12px !important;
   }
   .feature .feature-img {
     flex: 0 0 200px !important; height: auto !important; min-height: 132px; padding-bottom: 0 !important;
