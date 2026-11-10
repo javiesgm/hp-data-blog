@@ -2,6 +2,7 @@
 title: About the GBIF Data Blog
 permalink: /about/
 height: 40vh
+background: /assets/images/about-header.svg
 ---
 
 ## What is it?
