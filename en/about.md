@@ -1,6 +1,5 @@
 ---
 title: About the GBIF Data Blog
-description: A place for GBIF staff and guest bloggers to share statistics, graphs, tutorials, ideas and opinions.
 permalink: /about/
 ---
 
