@@ -13,10 +13,10 @@ $blog-wash: #edf5ea;         // brand-soft (green-10): the only fill behind gree
 
 // ---------- Cards: one style for every card on the blog ----------
 // GBIF.org card, as the design system's NewsCard: 1px green-stroke outline, radius-sm corners,
-// flat at rest and lifted with shadow-hover when hovered or focused. Content padding space-5 (20px).
+// flat at rest and lifted with a soft shadow (shadow-panel) when hovered or focused. Content padding space-5 (20px).
 $card-border: 1px solid #499134;          // green-stroke
 $card-radius: 4px;                        // radius-sm
-$card-shadow-hover: 5px 10px 10px rgba(0, 0, 0, 0.16);   // shadow-hover
+$card-shadow-hover: 0 3px 3px rgba(0, 0, 0, 0.16);       // shadow-panel: subtler than shadow-hover (5px 10px 10px)
 $card-padding: 20px;                      // space-5
 @mixin gbif-card($interactive: true) {
   background: #fff; border: $card-border; border-radius: $card-radius; box-shadow: none; overflow: hidden;
