@@ -146,15 +146,6 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
 .post-meta__topics { justify-content: center; }
 
 .post-series { margin-top: -1.5rem; }
-.post-series__box {
-  border: 1px solid #d3d2d2; border-radius: 4px; background: #f8f7f7;   // border, radius-sm, paper
-  padding: 1rem 1.25rem; margin-bottom: 2rem;
-  ol { margin: .5rem 0 0 1.25rem; }
-  li { margin: .35rem 0; line-height: 1.4; }
-  [aria-current] { font-weight: 600; }
-  a { text-decoration: underline; text-decoration-color: rgba(76, 156, 46, .45); text-underline-offset: 2px; }   // green links are underlined
-}
-.post-series__title { color: $blog-muted; }
 
 .post-end { margin-bottom: 4rem; }
 .post-end__disclaimer { font-style: italic; color: $blog-muted; font-size: .95rem; border-top: 1px solid $blog-line; padding-top: 1.25rem; }
@@ -271,29 +262,77 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
 .author-list__latest { color: $blog-muted; font-size: .9rem; line-height: 1.4; }
 .author-list__latest a { color: $gbif-ink; }
 
-.series-group {
-  display: grid; grid-template-columns: 1fr 220px; gap: 8px 24px; align-items: start;
-  border: 1px solid #d3d2d2; border-radius: 4px; background: #fff; padding: 20px; margin-bottom: 20px;
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.16);
-}
-.series-group__head { grid-column: 1; }
-.series-group__title { font-size: 1.5rem; font-weight: 600; margin: 0 0 .25rem !important; }
-.series-group__title a { color: $gbif-ink; }
-.series-group__title a:hover { color: $gbif-green; }
-.series-group__meta { color: $blog-muted; margin: 0; }
-.series-group__image { grid-column: 2; grid-row: 1 / span 2; display: block; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 4px; border: 1px solid #e9e8e8; }
-.series-group__image img { width: 100%; height: 100%; object-fit: cover; }
-.series-group__parts { grid-column: 1; margin: .5rem 0 0 1.25rem; }
-.series-group__parts li { margin: .4rem 0; line-height: 1.4; }
-.series-group__parts a { text-decoration: underline; text-decoration-color: rgba(76, 156, 46, .45); text-underline-offset: 2px; }
-.series-group__date { color: $blog-muted; font-size: .85rem; white-space: nowrap; margin-left: .25rem; }
-@media (max-width: 640px) {
-  .series-group { grid-template-columns: 1fr; }
-  .series-group__image { grid-column: 1; grid-row: auto; }
-}
+
 
 // ---------- Topics and tags page ----------
 .terms-heading { font-size: 1.5rem; font-weight: 600; margin: 1.5rem 0 .75rem !important; }
 .terms-heading__count { font: 500 .9rem $gbif-body; color: $blog-muted; margin-left: .35rem; }
 .terms-list { gap: 0; }
 .terms-list--tags .tag { font-size: .85rem; }
+
+// ---------- Series card (Series page and end of posts) ----------
+// Built on the design system's ResultCard: white, radius-xs, shadow-card, space-4 padding,
+// TypeLabel caps label, 169x120 thumbnail, CountTag-style chips and an outline Button in the footer.
+.series-card {
+  background: #fff; border-radius: 2px; box-shadow: 1px 1px 3px rgba(0,0,0,0.16);   // radius-xs, shadow-card
+  padding: 16px 16px 0; margin-bottom: 16px;                                         // space-4
+  color: $gbif-ink;
+}
+.series-card__main { display: flex; gap: 20px; padding-bottom: 16px; }               // space-5
+.series-card__text { flex: 1; min-width: 0; display: grid; gap: 8px; align-content: start; }
+.series-card__label {                                                                 // TypeLabel / label style
+  justify-self: start; color: $gbif-green; font: 500 12px/16px $gbif-body; text-transform: uppercase; letter-spacing: .02em;
+}
+.series-card__title { font: 600 20px/30px $gbif-head !important; margin: 0 !important; }   // serif-h5
+.series-card__title a { color: #575757; text-decoration: none; }                       // ink-strong
+.series-card__title a:hover { color: $gbif-green; text-decoration: underline; text-underline-offset: 2px; }
+.series-card__meta { margin: 0; font-size: 14px; line-height: 22px; color: $blog-muted; }   // body-2, text-muted
+.series-card__img { flex: none; width: 169px; height: 120px; border-radius: 2px; overflow: hidden; display: block; }
+.series-card__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.series-card__footer {                                                                // ResultCard footer
+  display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 8px;
+  padding: 12px 0; border-top: 1px solid #e9e8e8;                                     // space-3, border-subtle
+}
+.series-card__count {                                                                 // CountTag
+  display: inline-flex; align-items: center; height: 24px; padding: 0 8px;
+  border: 1px solid $gbif-green; border-radius: 2px; color: $gbif-green; font: 500 12px/1 $gbif-body;
+}
+.series-card__start {                                                                 // Button, outline, size S
+  display: inline-flex; align-items: center; height: 25px; padding: 0 12px;
+  border: 1px solid $gbif-green-dark; border-radius: 4px; color: $gbif-green; font: 700 14px/1 $gbif-body;
+  text-decoration: none;
+  &:hover { background: $blog-wash; color: $gbif-green; }
+}
+
+// Numbered parts list
+.series-parts { list-style: none; margin: 0 !important; padding: 0 !important; border-top: 1px solid #e9e8e8; }
+.series-parts__item {
+  display: grid; grid-template-columns: 24px 1fr auto; gap: 12px; align-items: baseline;
+  padding: 10px 0; border-bottom: 1px solid #e9e8e8; margin: 0 !important;
+  &:last-child { border-bottom: 0; }
+}
+.series-parts__num {                                                                  // CountTag-style number
+  display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; align-self: start;
+  border: 1px solid $gbif-green; border-radius: 2px; color: $gbif-green; font: 500 12px/1 $gbif-body;
+}
+.series-parts__title { font-size: 15px; line-height: 1.45; color: $gbif-ink; }
+a.series-parts__title { text-decoration: none; }
+a.series-parts__title:hover { color: $gbif-green; text-decoration: underline; text-underline-offset: 2px; }
+.series-parts__date { font-size: 13px; color: $blog-muted; white-space: nowrap; }
+.series-parts__item.is-current {
+  .series-parts__num { background: $gbif-green; color: #fff; }
+  .series-parts__title { font-weight: 600; color: #575757; }
+}
+.series-parts__here { font: 500 11px/1 $gbif-body; text-transform: uppercase; color: $gbif-green; margin-left: 6px; white-space: nowrap; }
+
+// In a post: same card, compact, no shadow-heavy look
+.series-card--in-post { padding-bottom: 4px; margin: 0 0 2rem; display: grid; gap: 6px; }
+.series-card--in-post .series-parts { margin-top: 8px !important; }
+.series-card__title--small { font: 600 18px/26px $gbif-head !important; }
+
+@media (max-width: 640px) {
+  .series-card__main { flex-direction: column-reverse; }
+  .series-card__img { width: 100%; height: auto; aspect-ratio: 16 / 9; }
+  .series-parts__item { grid-template-columns: 24px 1fr; }
+  .series-parts__date { grid-column: 2; }
+}

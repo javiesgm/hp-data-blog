@@ -19,17 +19,28 @@ description: "Posts that belong together, grouped by series. A post joins a seri
       {% assign parts = g.items | sort: "date" %}
       {% assign first = parts | first %}
       {% assign last = parts | last %}
-      <article class="series-group">
-        <div class="series-group__head">
-          <h2 class="series-group__title"><a href="{{ listUrl }}?series={{ g.name | slugify }}">{{ g.name }}</a></h2>
-          <p class="series-group__meta">{{ g.items.size }} parts · {{ first.date | date: "%b %Y" }} – {{ last.date | date: "%b %Y" }}</p>
+      {% comment %} Everyone who wrote a part, in order of first appearance {% endcomment %}
+      {% assign authorStr = "" %}
+      {% for p in parts %}
+        {% if p.author.first %}{% assign pa = p.author %}{% elsif p.author %}{% assign pa = p.author | split: "|" %}{% else %}{% assign pa = "" | split: "|" %}{% endif %}
+        {% for a in pa %}{% assign key = "|" | append: a | append: "|" %}{% assign probe = "|" | append: authorStr %}{% unless probe contains key %}{% assign authorStr = authorStr | append: a | append: "|" %}{% endunless %}{% endfor %}
+      {% endfor %}
+      {% assign seriesAuthors = authorStr | split: "|" %}
+      {% capture range %}{{ first.date | date: "%b %Y" }}{% assign endRange = last.date | date: "%b %Y" %}{% assign startRange = first.date | date: "%b %Y" %}{% if endRange != startRange %} – {{ endRange }}{% endif %}{% endcapture %}
+      <article class="series-card">
+        <div class="series-card__main">
+          <div class="series-card__text">
+            <span class="series-card__label">Series</span>
+            <h2 class="series-card__title"><a href="{{ listUrl }}?series={{ g.name | slugify }}">{{ g.name }}</a></h2>
+            <p class="series-card__meta">{% if seriesAuthors.size > 0 %}By {{ seriesAuthors | join: ", " }} · {% endif %}{{ range }}</p>
+          </div>
+          {% if first.thumbnail %}<a class="series-card__img" href="{{ first.url | relative_url }}" tabindex="-1" aria-hidden="true"><img src="{{ first.thumbnail | relative_url }}" alt="" loading="lazy"></a>{% endif %}
         </div>
-        {% if first.thumbnail %}<a class="series-group__image" href="{{ first.url | relative_url }}" tabindex="-1" aria-hidden="true"><img src="{{ first.thumbnail | relative_url }}" alt="" loading="lazy"></a>{% endif %}
-        <ol class="series-group__parts">
-          {% for p in parts %}
-            <li><a href="{{ p.url | relative_url }}">{{ p.title }}</a> <span class="series-group__date">{{ p.date | date: "%-d %b %Y" }}</span></li>
-          {% endfor %}
-        </ol>
+        {% include series-parts.html parts=parts %}
+        <footer class="series-card__footer">
+          <span class="series-card__count">{{ parts.size }} parts</span>
+          <a class="series-card__start" href="{{ first.url | relative_url }}">Start with part 1</a>
+        </footer>
       </article>
     {% else %}
       <p>No series yet.</p>

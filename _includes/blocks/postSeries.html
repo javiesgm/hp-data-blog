@@ -5,13 +5,10 @@
   <section class="post-series">
     <div class="container">
       <div class="article">
-        <aside class="post-series__box" aria-label="Series: {{ page.series }}">
-          <p class="post-series__title">Part of the series <strong>{{ page.series }}</strong></p>
-          <ol>
-            {% for part in parts %}
-              <li>{% if part.url == page.url %}<span aria-current="page">{{ part.title }}</span>{% else %}<a href="{{ part.url | relative_url }}">{{ part.title }}</a>{% endif %}</li>
-            {% endfor %}
-          </ol>
+        <aside class="series-card series-card--in-post" aria-label="Series: {{ page.series }}">
+          <span class="series-card__label">Series · {{ parts.size }} parts</span>
+          <p class="series-card__title series-card__title--small"><a href="{{ site.algae.archive_permalink | relative_url }}?series={{ page.series | slugify }}">{{ page.series }}</a></p>
+          {% include series-parts.html parts=parts current=page.url %}
         </aside>
       </div>
     </div>

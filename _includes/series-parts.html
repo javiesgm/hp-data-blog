@@ -1,0 +1,17 @@
+{% comment %}
+  Numbered list of a series' parts, oldest first. Used on the Series page and at the end of each post.
+  Pass parts= (sorted by date) and optionally current= (the URL of the post being read).
+{% endcomment %}
+<ol class="series-parts">
+  {% for p in include.parts %}
+    <li class="series-parts__item{% if p.url == include.current %} is-current{% endif %}">
+      <span class="series-parts__num" aria-hidden="true">{{ forloop.index }}</span>
+      {% if p.url == include.current %}
+        <span class="series-parts__title" aria-current="page">{{ p.title }} <span class="series-parts__here">You are here</span></span>
+      {% else %}
+        <a class="series-parts__title" href="{{ p.url | relative_url }}">{{ p.title }}</a>
+      {% endif %}
+      <time class="series-parts__date" datetime="{{ p.date | date: '%Y-%m-%d' }}">{{ p.date | date: "%-d %b %Y" }}</time>
+    </li>
+  {% endfor %}
+</ol>
