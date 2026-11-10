@@ -416,7 +416,7 @@ $code-lineno: #918f8f;     // ink-50, decorative
 // Cell borders stay as the theme draws them. Code blocks also use a <table> for their line numbers;
 // their rules above keep them transparent and full size.
 .article .content table {
-  font-size: .8em;
+  font-size: 14px;                    // body-2 size
   tbody tr:nth-child(even) { background-color: $gbif-surface-2; }   // paper
   th { font-weight: 600; }
 }
