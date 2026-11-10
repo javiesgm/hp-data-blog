@@ -55,7 +55,7 @@ The GEE Python API provides programmatic access to the platform, enabling automa
 
 -   Install the GEE Python API:
 
-```         
+```shell
 pip install earthengine-api
 ```
 

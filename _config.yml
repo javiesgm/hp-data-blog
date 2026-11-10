@@ -216,3 +216,13 @@ discourse_comments: true    # Discourse only allows embedding on data-blog.gbif.
 plausible:                  # same Plausible site as the current blog
   enabled: true
   dataDomain: "data-blog.gbif.org,gbif.org"
+
+# Code blocks: line numbers, and every block highlighted (unlabelled ones as plain text) so they
+# all get the same frame, label and Copy button (assets/js/code-blocks.js, _sass/_blog.scss).
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    default_lang: plaintext
+    block:
+      line_numbers: true

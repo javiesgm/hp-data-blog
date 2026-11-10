@@ -353,3 +353,61 @@ a.series-parts__title:hover { color: $gbif-green; text-decoration: underline; te
   .series-parts__item { grid-template-columns: 24px 1fr; }
   .series-parts__date { grid-column: 2; }
 }
+
+// ---------- Code blocks: frame, header, line numbers, GBIF colours ----------
+// Jekyll/Rouge writes <div class="language-x highlighter-rouge"><div class="highlight"><pre><code>
+// <table class="rouge-table"> with a line-number column and a code column. code-blocks.js adds the header.
+// Colours come from the design system ramps, darkened where needed to reach 4.5:1 on paper (#f8f7f7).
+$code-ink: #4f4c4d;        // text (ink-80), 7.9:1
+$code-muted: #656262;      // ink-70, 5.7:1: comments, operators
+$code-keyword: #38751f;    // brand green-100 darkened, 5.3:1
+$code-string: #0078b4;     // ocean-100, 4.5:1
+$code-number: #75549d;     // purple-90, 5.6:1
+$code-function: #b0406f;   // pink-100 darkened, 5.2:1
+$code-lineno: #918f8f;     // ink-50, decorative
+
+.article .content div.highlighter-rouge {
+  background: $gbif-surface-2; border: 1px solid $blog-line; border-radius: $card-radius;   // paper, border-subtle, radius-sm
+  margin: 1.25rem 0 1.5rem; overflow: hidden;
+  .highlight { margin: 0; background: transparent; }
+  pre, pre.highlight {
+    margin: 0; border: 0; border-radius: 0; background: transparent !important; padding: 0;
+    font: 14px/1.6 $gbif-mono; color: $code-ink; overflow: visible;
+  }
+  pre.highlight { padding: 12px 0; overflow-x: auto; }
+  code { background: none; border: 0; padding: 0; font: inherit; color: inherit; }
+  // the theme adds Bulma's .table class (white background, cell padding) to every table, this one included
+  table, table.table { display: table; width: auto; margin: 0; border: 0; border-collapse: collapse; font-size: inherit; background: transparent; }
+  table td, table.table td { border: 0 !important; padding: 0; vertical-align: top; background: transparent; }
+  table tr:hover, table.table tr:hover { background: transparent; }
+  .rouge-gutter pre { color: $code-lineno; text-align: right; padding: 0 12px 0 16px; user-select: none; -webkit-user-select: none; }
+  .rouge-code pre { padding: 0 16px 0 4px; white-space: pre; }
+}
+.code-header {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 6px 8px 6px 16px; border-bottom: 1px solid $blog-line; background: #fff;
+}
+.code-header__lang { font: 500 12px/16px $gbif-body; text-transform: uppercase; letter-spacing: .02em; color: $code-muted; }   // label style
+.code-header__copy {
+  display: inline-flex; align-items: center; gap: 6px; height: 25px; padding: 0 10px;                     // Button size S
+  border: 1px solid transparent; border-radius: 4px; background: transparent; cursor: pointer;
+  font: 500 13px/1 $gbif-body; color: $gbif-green;
+  svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
+  &:hover { background: $blog-wash; }
+  &:focus-visible { outline: 2px solid $gbif-green; outline-offset: 1px; }
+  &.is-done { color: $code-ink; }
+}
+
+// Syntax colours (Rouge uses the Pygments class names). Prefixed to beat the theme's palette.
+.article .content .highlight {
+  .c, .c1, .cm, .cs, .cp, .ch, .cd, .cpf { color: $code-muted; font-style: italic; font-weight: 400; }
+  .k, .kd, .kn, .kp, .kr, .kt, .kv, .ow { color: $code-keyword; font-weight: 500; }
+  .kc { color: $code-number; font-weight: 500; }                                        // TRUE, NULL, None
+  .s, .s1, .s2, .sb, .sc, .sd, .se, .sh, .si, .sx, .sr, .ss, .dl, .sa { color: $code-string; }
+  .m, .mi, .mf, .mh, .mo, .il, .mb, .mx { color: $code-number; }
+  .nf, .nb, .bp, .fm, .nc { color: $code-function; }
+  .na, .nt { color: $code-keyword; }                                                    // JSON keys, HTML tags
+  .o, .p { color: $code-muted; font-weight: 400; }
+  .n, .nv, .vi, .vg, .nx, .nn, .ni, .no, .nl, .w, .err { color: $code-ink; background: none; border: 0; font-weight: 400; }
+  .gp, .go { color: $code-muted; }
+}

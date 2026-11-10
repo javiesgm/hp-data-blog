@@ -160,7 +160,7 @@ If you need only commonly used occurrence columns and simple filters, most of th
 
 Keep in mind that if you only need species counts for one dimension, then [facet queries](https://api.gbif.org/v1/occurrence/search?facet=specieskey) are usually going to be a much faster option (although you won't receive a DOI). Some examples below:
 
-```         
+```text
 http://api.gbif.org/v1/occurrence/search?facet=speciesKey&country=US
 http://api.gbif.org/v1/occurrence/search?facet=speciesKey&country=US&year=1800,1900
 http://api.gbif.org/v1/occurrence/search?facet=speciesKey&country=US&year=1800,1900&basisOfRecord=HUMAN_OBSERVATION

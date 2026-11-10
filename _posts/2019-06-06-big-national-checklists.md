@@ -146,7 +146,7 @@ I have also tagged any dataset that has filled in the distribution extension or 
 
 All of the datasets presented in the map above are now tagged in the registry. The following api call will get you all datasets tagged with a country code. 
 
-```
+```text
 http://api.gbif.org/v1/dataset?machineTagNamespace=checklistCountryCode.jwaller.gbif.org&limit=600
 
 ```

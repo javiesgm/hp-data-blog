@@ -50,7 +50,7 @@ style="display: block;margin-left: auto;margin-right: auto;"/>
 
 This produces a simple measure of distance in decimal degrees that can be used for filtering out  datasets that might have a coordinate precision above what is expected from the study. The following api call will get all of the datasets flagged as "gridded" in the GBIF registry. 
 
-```
+```text
 http://api.gbif.org/v1/dataset?machineTagNamespace=griddedDataSet.jwaller.gbif.org&limit=1000
 
 ```

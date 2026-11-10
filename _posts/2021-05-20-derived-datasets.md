@@ -26,7 +26,7 @@ To overcome this problem and any other situation in which a user wishes to assig
 
 As a minimum you'll need two things: 1) a GBIF.org account and 2) a list of contributing (parent) datasets with record counts—i.e. how many records did each dataset contribute. If your data contains all available fields from GBIF, you'll need to summarize it based on the `datasetKey` field ([What if you don't have this field?](#noDatasetKey)). There are numerous ways of doing this in R, using Excel, datamash, and other similar tools. But in the end you'll want to have a list like this:
 
-```
+```text
 <datasetKey 1>	<# records>
 <datasetKey 2>	<# records>
 <datasetKey 3>	<# records>
@@ -64,7 +64,7 @@ If your data does **not** have this field, you may be able to use the occurrence
 
 get value of the field `datasetKey`, e.g.,
 
-```
+```json
 "datasetKey": "cd6e21c8-9e8a-493a-8a76-fbf7862069e5"
 ``` 
 

@@ -238,4 +238,8 @@ for p in (HUGO_OUT / "post").rglob("*"):
     copied += 1
 
 print(f"{len(posts)} posts, {copied} asset files")
+
+# Give unlabelled code blocks a language (colours, line numbers, label)
+import subprocess
+subprocess.run([sys.executable, str(DEST / "scripts" / "label_code_blocks.py")], check=True)
 print("\n".join(report) or "no warnings")

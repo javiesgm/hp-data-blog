@@ -122,7 +122,7 @@ After this step, our example would still be the same.
 I tried using the translation function in Textblob and it worked! For about an hour. After that the Google API didn't respond any more so I gave up. If anyone has a better method to deal with multi-language analysis, please leave a comment. I would be very grateful.
 
 This is the language distribution for the GBIF datasets (excluding PLAZI and PANGAEA's):
-```
+```text
 eng    6591
 spa    1757
 fra    1114
@@ -171,7 +171,7 @@ The proper way to do this is to use a double loop cross-validation but I don't h
 
 The resulting list of informative words varies in length depending on the random selection but the most important ones are fairly consistent.
 In my latest iteration, the resulting list of features was the following:
-```
+```text
 na              3
 select          3
 professional    3
@@ -202,7 +202,7 @@ I chose a decision tree model this time, because it is easier to interpret and i
 
 This is the resulting truncated tree written as pseudo-code:
 
-```
+```text
 if contains(citizen) == False: 
   if contains(volunteer) == False: 
     if contains(organised) == False: 
@@ -221,7 +221,7 @@ I tested this tree on the testing set (which was never used for the feature sele
 This testing set contained 21 CS and 121 non-CS.
 
 The performance on this test set was:
-```
+```text
 Performance on testing set
 
 True positive:	 9.86 %

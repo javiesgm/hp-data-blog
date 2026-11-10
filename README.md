@@ -72,6 +72,8 @@ if it should be there.
 ### Things that differ from the Hugo blog
 
 - No need to paste the long Hugo header. Only `title`, `author`, `date` and `categories` matter.
+- Name the language after the opening backticks (```` ```r ````, ```` ```python ````, ```` ```sql ````, ```` ```shell ````,
+  ```` ```json ````; ```` ```text ```` for output) so the code gets colours and the right label. Line numbers and a Copy button are added automatically.
 - Code that contains `{{` or `{%` (R glue strings, templates): add `render_with_liquid: false` to the header.
 - Leave a blank line before a table.
 - Markdown inside `<details>` needs `<details markdown="1">`.

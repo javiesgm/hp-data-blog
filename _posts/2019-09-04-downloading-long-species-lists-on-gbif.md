@@ -89,7 +89,7 @@ In the example below, I download all **tree species** which are
 * Has no gbif geospatial issues `pred("hasGeospatialIssue", FALSE)`
 * Is greater than or equal to the year 1990 `pred_gte("year", 1990)`
 
-```
+```r
 # use matched gbif_taxon_keys from above 
 occ_download(
 pred_in("taxonKey", gbif_taxon_keys),
