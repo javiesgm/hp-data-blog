@@ -1,6 +1,11 @@
 ---
 title: About the GBIF Data Blog
 permalink: /about/
+# Same simple title header as the posts, instead of the theme's full-window heroBox
+# (the default for the "page" layout, which needs a background image).
+composition:
+  - type: postHeader
+  - type: pageMarkdown
 ---
 
 ## What is it? 
