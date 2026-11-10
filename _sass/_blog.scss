@@ -125,7 +125,7 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
 .blog-intro__title { font-size: 2.5rem; font-weight: 600; line-height: 1.15; margin-bottom: .5rem; }
 .blog-intro__title::after { content: ""; display: block; width: 36px; height: 3px; background: $gbif-green; margin-top: 12px; }   // Divider
 .blog-intro__lede { font-size: 1.2rem; color: $blog-muted; max-width: 40rem; margin-bottom: 1.5rem; }
-.blog-search { max-width: 40rem; margin-bottom: 1rem; }
+.blog-search { margin-bottom: 1rem; }   // full width of the 840px header column
 .blog-search__status { font-size: .9rem; color: $blog-muted; min-height: 1.4em; margin-top: .35rem; }
 .blog-topics { margin-bottom: .5rem; }
 .blog-topics .tag { text-decoration: none; }
