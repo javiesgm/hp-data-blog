@@ -411,3 +411,13 @@ $code-lineno: #918f8f;     // ink-50, decorative
   .n, .nv, .vi, .vg, .nx, .nn, .ni, .no, .nl, .w, .err { color: $code-ink; background: none; border: 0; font-weight: 400; }
   .gp, .go { color: $code-muted; }
 }
+
+// ---------- Tables in posts: smaller text, zebra rows ----------
+// Cell borders stay as the theme draws them. Code blocks also use a <table> for their line numbers;
+// their rules above keep them transparent and full size.
+.article .content table {
+  font-size: .8em;
+  tbody tr:nth-child(even) { background-color: $gbif-surface-2; }   // paper
+  th { font-weight: 600; }
+}
+.article .content div.highlighter-rouge table tr { background-color: transparent !important; }
