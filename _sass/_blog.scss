@@ -304,7 +304,7 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
 .series-card__title a { color: #575757; text-decoration: none; }                       // ink-strong
 .series-card__title a:hover { color: $gbif-green; text-decoration: underline; text-underline-offset: 2px; }
 .series-card__meta { margin: 0; font-size: 14px; line-height: 22px; color: $blog-muted; }   // body-2, text-muted
-.series-card__img { flex: none; width: 169px; height: 120px; border-radius: 2px; overflow: hidden; display: block; }
+.series-card__img { flex: none; width: 254px; height: 180px; border-radius: 2px; overflow: hidden; display: block; }   // 1.5x the 169x120 result thumbnail
 .series-card__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .series-card__footer {                                                                // ResultCard footer
   display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 8px;
@@ -343,7 +343,7 @@ a.series-parts__title:hover { color: $gbif-green; text-decoration: underline; te
 .series-parts__here { font: 500 11px/1 $gbif-body; text-transform: uppercase; color: $gbif-green; margin-left: 6px; white-space: nowrap; }
 
 // In a post: same card, compact, no shadow-heavy look
-.series-card--in-post { padding-bottom: 4px; margin: 0 0 2rem; display: grid; gap: 6px; &:hover, &:focus-within { box-shadow: none; } }   // not a link: no lift
+.series-card--in-post { padding-bottom: 4px; margin: 0 0 2rem; display: grid; gap: 6px; }
 .series-card--in-post .series-parts { margin-top: 8px !important; }
 .series-card__title--small { font: 600 18px/26px $gbif-head !important; }
 
