@@ -41,11 +41,9 @@ remote_theme: gbif/jekyll-hp-base-theme
 
 algae:
   rootLang: en
-<<<<<<< HEAD
-  logo: /assets/images/datablog-logo.svg  # Logo in navbar, 28px high
-=======
+  
   logo: /assets/images/data-blog-logo.svg  # Logo in navbar, 40px high (set in _sass/_blog.scss)
->>>>>>> eb34e54a7197e02f534b4b621bcda89f93262c34
+
   logoAndTitle: false
   latestPostLimit: 3
   # latestPostLimit: 2
