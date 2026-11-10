@@ -1,8 +1,7 @@
 ---
 title: About the GBIF Data Blog
 permalink: /about/
-height: 40vh
-background: /assets/images/about-header.svg
+layout: blog-page   # same header as the post list, Series, Authors and Topics pages
 ---
 
 ## What is it?

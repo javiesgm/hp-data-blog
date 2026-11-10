@@ -51,7 +51,8 @@ h1, h2, h3, h4,
 a { color: $gbif-green-ink; }
 a:hover { color: $gbif-green-dark; }
 // scoped to post text (.article): the theme @extends .content onto cards, which would underline card titles
-.article .content a:not(.button):not(.tag) {
+.article .content a:not(.button):not(.tag),
+.blog-prose .content a:not(.button):not(.tag) {
   color: $gbif-green-ink;
   text-decoration: underline;
   text-decoration-color: rgba(76, 156, 46, .45);
@@ -241,7 +242,15 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
 .tags a.tag.post-meta__tag:hover { border-color: $gbif-green; color: $gbif-green; }
 
 // ---------- Authors and Series pages ----------
-.blog-page { padding: 1rem 0 4rem; .container { max-width: 1000px; padding: 0 1rem; } }
+.blog-page { padding: 1rem 0 4rem; .container { max-width: $blog-cards-width; padding: 0 12px; } }   // lines up with the page title
+
+// Text pages (layout: blog-page, e.g. About): prose in a readable column under the title
+.blog-prose .content {
+  max-width: 45rem;                         // same reading width as a post
+  font-size: 1.05rem; line-height: 1.7; color: $gbif-ink;
+  h2 { font-size: 1.5rem; margin: 2rem 0 .5rem; }
+  h2:first-child { margin-top: 0; }
+}
 .author-list {
   list-style: none; margin: 0; padding: 0;
   display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px;

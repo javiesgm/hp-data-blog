@@ -1,0 +1,18 @@
+---
+layout: base
+description: "A plain text page with the same header as the post list, Series, Authors and Topics pages: title, green divider, optional description. Use layout: blog-page in a page's front matter."
+---
+<section class="blog-intro">
+  <div class="container">
+    <h1 class="blog-intro__title">{{ page.title }}</h1>
+    {% if page.description %}<p class="blog-intro__lede">{{ page.description }}</p>{% endif %}
+  </div>
+</section>
+
+<section class="blog-page blog-prose">
+  <div class="container">
+    <div class="content">
+      {{ content }}
+    </div>
+  </div>
+</section>
