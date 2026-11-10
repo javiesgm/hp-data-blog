@@ -8,7 +8,7 @@
 # For technical reasons, this file is *NOT* reloaded automatically when you use
 # 'bundle exec jekyll serve'. If you change this file, please restart the server process.
 #
-# If you need help with YAML syntax, here are some quick references for you: 
+# If you need help with YAML syntax, here are some quick references for you:
 # https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
 # https://learnxinyminutes.com/docs/yaml/
 # You should also look at https://theme.hp.gbif-staging.org/documentation-intro for options
@@ -41,7 +41,7 @@ remote_theme: gbif/jekyll-hp-base-theme
 
 algae:
   rootLang: en
-  logo: assets/images/data-blog-logo.png  # Logo in navbar, 28px high
+  logo: assets/images/data-blog-logo.svg  # Logo in navbar, 28px high
   logoAndTitle: false
   latestPostLimit: 3
   # latestPostLimit: 2
@@ -52,8 +52,8 @@ algae:
     # square: false               # Should corners be square or rounded
     colors:
       primary: "#4c9c2e"          # GBIF.org Design System: brand (green-100). Used for buttons and links
-      # links: "#fa5e97"          # What color should links have. Use a HEX code. DEfault is primary color. 
-    coloredHeadlineLinks: false   # If a headline is a link, then use the link color. Default is true. 
+      # links: "#fa5e97"          # What color should links have. Use a HEX code. DEfault is primary color.
+    coloredHeadlineLinks: false   # If a headline is a link, then use the link color. Default is true.
   navbar:                         # RELATED TO NAVIGATION BAR
     # brandBackground: yellow     # Define a custom background for the logo/title in the top navigation bar
     # color: "tomato"             # What color should the navbar be?
@@ -104,7 +104,7 @@ defaults:
     values:
       layout: "post"
       permalink: "/post/:slug/"   # Same addresses as the old Hugo blog: /post/{slug}/
-  
+
   - scope:
       path: "es/" # For anything in the "es" folder the default is to set the lang frontMatter property to "es" . this should be deleted or adapted to your site if you support other languages
     values:
@@ -115,7 +115,7 @@ defaults:
       layout: "post"
       permalink: "/es/post/:year/:slug/"   # Use /es/post/yyyy/{filename}/ as permalink for all posts
       lang: es # And have the default language in that folder be spanish
-  
+
   - scope:
       path: "fr/"
     values:
@@ -137,7 +137,7 @@ defaults:
       layout: "post"
       permalink: "/ar/post/:year/:slug/"
       lang: ar
-  
+
   - scope:
       path: "ja/"
     values:
@@ -171,7 +171,7 @@ defaults:
       permalink: "/zh/post/:year/:slug/"
       lang: zh
 
-      
+
   - scope:
       path: "zh-tw/"
     values:
