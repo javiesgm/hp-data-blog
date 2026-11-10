@@ -238,7 +238,7 @@ clean_download(d)
 clean_download(d, project_id = 1)
 ```
 
-```
+```text
 ── Cleaning Summary ──────────────────────────────────────────────────────────────────────────────
 • Records in original download: 720,217
 ✖ Suspicious records removed: 14 (0.0019%)

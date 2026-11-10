@@ -183,7 +183,7 @@ export_df.show()
 ```
 The result should be a table like this: 
 
-```
+```text
 +-----------+------+
 |countrycode| count|
 +-----------+------+

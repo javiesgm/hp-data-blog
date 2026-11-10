@@ -25,7 +25,7 @@ Since then, the Parquet format has gained support for geographic data types and 
 
 [Install DuckDB](https://duckdb.org/install/), run it, and search for spider occurrences with CC0-licenced media – a query that is not possible through the GBIF API or website.
 
-```
+```sql
 INSTALL parquet,
 LOAD parquet;
 INSTALL httpfs;
@@ -83,7 +83,7 @@ The `p_taxon_a5` and `p_taxon_h3` tables have a smaller number of taxon partitio
 
 These geo-partitioned tables are also partitioned on either A5 (resolution 2) or H3 (resolution 0) cells.  For geographic queries, calculate the complete coverage in cells for your query and add this to the WHERE clause. For example, to query for occurrences in the polygon `'POLYGON ((-9.9 49.3, 2.8 49.3, 2.8 59.6, -9.9 59.6, -9.9 49.3))'`:
 
-```
+```sql
 INSTALL a5;
 LOAD a5;
 INSTALL spatial;
@@ -108,7 +108,7 @@ In `p_taxon`, verbatim data (as provided to GBIF by the publisher) is included a
 
 In `p_taxon_a5` and `p_taxon_h3`, verbatim and multimedia data are stored as separate tables, partitioned into `gbifid // 1000000` chunks (the record with `gbifid = 12345678` will be stored in the partition with `gbifid_div1000000 = 12000000`).  Access them within DuckDB like this:
 
-```
+```sql
 SELECT occ.*, ver.*, mul.*
   FROM read_parquet('s3://gbif-public-data/development/2026-08-01-DWCA/occurrence/p_taxon_a5/*/*/*', hive_partitioning = true, hive_types = {'a5_r2': UBIGINT}) occ
   INNER JOIN read_parquet('s3://gbif-public-data/development/2026-08-01-DWCA/verbatim/p_gbifid1000000/*/*', hive_partitioning = true, hive_types = {'gbifid_div1000000': UBIGINT}) ver ON (occ.gbifid//1000000) = ver.gbifid_div1000000 AND occ.gbifid = ver.gbifid
@@ -264,7 +264,7 @@ plt.show()
 
 The Parquet data cube is created using DuckDB.  This stores counts of occurrences, species and the highest event date within different A5 cells for each kingdom and basis of record.
 
-```
+```sql
 COPY (
   SELECT
     a5_r6,
@@ -308,7 +308,7 @@ The second and third exports can be joined to separate verbatim and multimedia t
 
 Paths for all of these:
 
-```
+```text
 s3://gbif-public-data/development/2026-08-01-DWCA/p_taxon/*/*
 
 s3://gbif-public-data/development/2026-08-01-DWCA/occurrence/p_taxon_a5/*/*/*

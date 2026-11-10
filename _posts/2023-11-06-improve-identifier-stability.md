@@ -73,7 +73,7 @@ There are cases that identifier issues can be ignored. For example, when the num
 
 For migrating GBIF identifiers, a list of the relationship between the old `occurrenceID`s and the new `occurrenceID`s is required. The file has no header in a comma delimited format, and it should contain the old occurrenceIDs in the first column, followed by the new `occurrenceID`s in the second column.  For example, like this:
 
-```
+```text
 old_id_00001,new_id_00001
 old_id_00002,new_id_00002
 old_id_00003,new_id_00003

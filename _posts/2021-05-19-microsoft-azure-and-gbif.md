@@ -104,7 +104,7 @@ export_df.show()
 
 The resulting `export_df` should look like this. 
 
-```
+```text
 +-----------+------+
 |countrycode| count|
 +-----------+------+
@@ -192,7 +192,7 @@ az storage account keys list -g gbif-resource-group -n gbifblobstorage
 
 The **secret key** (`sas_key` in next section) you want is under `value`. 
 
-```
+```json
 {
 "keyName": "key1",
 "permissions": "FULL",
@@ -202,7 +202,7 @@ The **secret key** (`sas_key` in next section) you want is under `value`.
 
 Now that the set up is over, you can **export a dataframe** as a csv file. The **save path** has the following form: 
 
-```
+```text
 wasbs://container_name@storage_name.blob.core.windows.net/file_name.csv
 ```
 
@@ -254,7 +254,7 @@ export_df\
 
 You can now download the `export_df.csv` from the azure **web interface**. The file will not be a single csv file but a directory named **export_df**. Within this directory you will find several files. The one you are interested in will be something looking like this: 
 
-```
+```text
 export_df.csv/part-00000-tid-54059299456474431-7c74a0a3-2332-423c-89ed-2d1a98427a01-449-1-c000.csv
 ```
 

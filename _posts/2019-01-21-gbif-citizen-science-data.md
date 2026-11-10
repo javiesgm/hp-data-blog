@@ -104,7 +104,7 @@ While citizen scientists have observed over **50% of GBIF records** (500 Million
 
 You too can get a list of the citizen science datasets using the gbif api. Paste the following link into a web browser and get a list of citizen science datasets via the GBIF api. 
 
-```
+```text
 http://api.gbif.org/v1/dataset?machineTagNamespace=citizenScience.mgrosjean.gbif.org&limit=500
 
 ```
