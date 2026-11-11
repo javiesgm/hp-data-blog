@@ -7,6 +7,7 @@ date: '2026-09-07'
 last_modified_at: '2026-09-07'
 slug: sam-survey-where-when
 categories:
+- Survey and monitoring
 - Publishing data
 tags:
 - SAM

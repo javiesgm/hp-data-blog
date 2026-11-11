@@ -7,6 +7,7 @@ date: '2026-07-15'
 last_modified_at: '2026-07-15'
 slug: sam-introduction
 categories:
+- Survey and monitoring
 - Publishing data
 tags:
 - SAM

@@ -7,6 +7,7 @@ date: '2026-11-16'
 last_modified_at: '2026-09-07'
 slug: sam-survey-effort
 categories:
+- Survey and monitoring
 - Publishing data
 tags:
 - SAM
