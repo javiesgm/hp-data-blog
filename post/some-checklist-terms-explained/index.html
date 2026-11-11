@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Checklist publishing on GBIF - some explanations on taxonID, scientificNameID, taxonConceptID, acceptedNameUsageID, nameAccordingTo
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1794391499">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/datablog-logo.svg" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=APIs%20and%20downloads"
+                    class="navbar-item "
+                  >
+                    APIs and downloads
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Publishing%20data"
+                    class="navbar-item "
+                  >
+                    Publishing data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Analysis%20and%20maps"
+                    class="navbar-item "
+                  >
+                    Analysis and maps
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Taxonomy"
+                    class="navbar-item "
+                  >
+                    Taxonomy
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Data%20quality"
+                    class="navbar-item "
+                  >
+                    Data quality
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citation%20and%20data%20use"
+                    class="navbar-item "
+                  >
+                    Citation and data use
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Collections"
+                    class="navbar-item "
+                  >
+                    Collections
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citizen%20science"
+                    class="navbar-item "
+                  >
+                    Citizen science
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Survey%20and%20monitoring"
+                    class="navbar-item "
+                  >
+                    Survey and monitoring
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Molecular%20data"
+                    class="navbar-item "
+                  >
+                    Molecular data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Multimedia"
+                    class="navbar-item "
+                  >
+                    Multimedia
+                  </a>
+                
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Checklist publishing on GBIF - some explanations on taxonID, scientificNameID, taxonConceptID, acceptedNameUsageID, nameAccordingTo</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=marie-grosjean" title="All posts by Marie Grosjean">Marie Grosjean</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2022-12-08">8 December 2022</time>
+        <span aria-hidden="true">·</span>
+        5 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Taxonomy">Taxonomy</a>
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=checklist">#checklist</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=publishing">#publishing</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+      <div class="article">
+        <div class="content">
+  <p>When data publishers publish checklists, they will use a a Darwin Core Archive <code class="language-plaintext highlighter-rouge">Taxon Core</code>. And although the taxon core terms are already described <a href="https://dwc.tdwg.org/terms/#taxon">here</a>, what exactly to put in which field can sometimes be confusing. And there is a lot to read, like here https://github.com/tdwg/tnc/issues/1</p>
+
+<p>Here I am sharing a summary of an email conversation we had with some data publishers on Helpdesk concerning some of the Taxon Core fields. I hope this can be useful for others.</p>
+
+<h2 id="general-considerations">General considerations</h2>
+
+<p>The <strong>dwc:taxonID</strong> field contains the identifier used to establish relationships between entries <em>within</em> a checklist. The <strong>dwc:taxonID</strong> field can be understood as a “nameUsageID”, that is, an identifier for a name as used in a specific context, here: the context of the checklist (it isn’t called like that for historical reasons but this would match the concept better).
+This means the <strong>dwc:acceptedNameUsageID</strong> field must refer to identifiers used in the <strong>dwc:taxonID</strong> field. For example, to signify that <em>Caretta nasuta</em> is a synonym of <em>Caretta caretta</em> you could have a checklist like this:</p>
+
+<table class="table" class="table">
+  <thead>
+    <tr>
+      <th>taxonID</th>
+      <th>scientificName</th>
+      <th>acceptedNameUsageID</th>
+      <th>taxonomicStatus</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ID1</td>
+      <td>Caretta caretta (Linnaeus, 1758)</td>
+      <td> </td>
+      <td>ACCEPTED</td>
+    </tr>
+    <tr>
+      <td>ID2</td>
+      <td>Caretta nasuta Rafinesque, 1814</td>
+      <td><strong>ID1</strong></td>
+      <td>SYNONYM</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Other fields such as <strong><a href="https://dwc.tdwg.org/terms/#dwc:parentNameUsageID">dwc:parentNameUsageID</a></strong> link to <strong>dwc:taxonID</strong>s.</p>
+
+<p>However, this doesn’t have to be the case for the <strong>scientificNameID</strong> and <strong>taxonConceptID</strong> fields</p>
+
+<p>The <strong>dwc:scientificNameID</strong> is meant to identify the name alone and ideally uses an identifier from a nomenclator such as IPNI or ZooBank, but can also be a name identifier specific for the dataset. Our system doesn’t really interpret this field. [<strong>Edit 2023-11-09:</strong> the scientificNameID is now intepreted in specific contexts, if you want to know more, please read: https://github.com/gbif/pipelines/issues/217]</p>
+
+<p>The <strong>dwc:taxonConceptID</strong> on the other hand is meant to identify the taxon concept regardless of which name is being used. <a href="https://avibase.bsc-eoc.org/avibase.jsp">Avibase</a>IDs (like <code class="language-plaintext highlighter-rouge">D3A260BCA65503C6</code> for https://avibase.ca/D3A260BC) are a perfect fit for example. Even though we do not make use of them much, they could be used to identify identical concepts.</p>
+
+<p><strong>NB:</strong> The values in the <strong>dwc:taxonID</strong> field for the <a href="https://doi.org/10.15468/39omei">GBIF Backbone taxonomy checklist</a> correspond to the GBIF taxon keys used in species pages (like <code class="language-plaintext highlighter-rouge">https://www.gbif.org/species/2433753</code>) and to filter for GBIF occurrences (like <code class="language-plaintext highlighter-rouge">https://www.gbif.org/occurrence/search?taxon_key=2433753</code>). For any other checklist, the <strong>dwc:taxonID</strong> are likely to be different and unrelated to GBIF taxon keys. You can use any identifier in your own checklist.</p>
+
+<h2 id="relationship-between-those-fields-in-two-specific-cases-circumscriptions-and-misapplied-names">Relationship between those fields in two specific cases: circumscriptions and misapplied names</h2>
+
+<h3 id="for-capturing-possible-circumscriptions">For capturing possible circumscriptions:</h3>
+
+<p>For those of us who need a little reminder:</p>
+<blockquote>
+  <p>In <a href="https://en.wikipedia.org/wiki/Taxonomy_(biology)">biological taxonomy</a>, <strong>circumscription</strong> is the content of a <a href="https://en.wikipedia.org/wiki/Taxon">taxon</a>, that is, the delimitation of which subordinate taxa are parts of that taxon. If we determine that species X, Y, and Z belong in Genus A, and species T, U, V, and W belong in Genus B, those are our circumscriptions of those two genera. Another systematist might determine that T, U, V, W, X, Y, and Z all belong in genus A. Agreement on circumscriptions is not governed by the Codes of <a href="https://en.wikipedia.org/wiki/International_Code_of_Zoological_Nomenclature">Zoological</a> or <a href="https://en.wikipedia.org/wiki/International_Code_of_Botanical_Nomenclature">Botanical</a> Nomenclature, and must be reached by scientific consensus.</p>
+</blockquote>
+
+<p>See: https://en.wikipedia.org/wiki/Circumscription_(taxonomy)</p>
+
+<p>How this would be translated into a checklist:</p>
+<ol>
+  <li>each entry in the checklist dataset will have its own <strong>dwc:taxonID</strong></li>
+  <li>multiple entries of the accepted name corresponding to the different circumscriptions would have the same <strong>dwc:scientificNameID</strong></li>
+  <li>but each would have a distinct <strong>dwc:taxonConceptID</strong></li>
+  <li>use <strong>dwc:nameAccordingTo</strong> to refer to the source of the circumscription.</li>
+</ol>
+
+<p>In practice, how that this look like?</p>
+
+<p>Let’s try to apply this to the genus <em>Cortinarius</em> (Pers.) Gray. According to Liimatainen, K., Kim, J.T., Pokorny, L. <em>et al.</em> (https://doi.org/10.1007/s13225-022-00499-9), the family <em>Cortinariaceae</em>  should be split into ten genera. Following that assessment, the concept associated with the name <em>Cortinarius</em> became more narrow as many species have been moved to different genera like <em>Calonarius callochrous</em> (Pers.) Niskanen &amp; Liimat., 2022.</p>
+
+<table class="table" class="table">
+  <tbody>
+    <tr>
+      <td>![Fig. 3 From: Taming the beast: a revised classification of Cortinariaceae based on genomic data</td>
+      <td>373x500](/post/2022-12-08-some-checklist-terms-explained/fungi-revised.jpg)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>So if I want to model this idea in a checklist, I could do as following (here I am using the <a href="http://www.indexfungorum.org/Names/NamesRecord.asp?RecordID=17391">identifier from Index Fungorum</a> as scientificNameID):</p>
+
+<table class="table" class="table">
+  <thead>
+    <tr>
+      <th>taxonID</th>
+      <th>scientificName</th>
+      <th>dwc:nameAccordingTo</th>
+      <th>scientificNameID</th>
+      <th>dwc:taxonConceptID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ID1</td>
+      <td>Cortinarius (Pers.) Gray</td>
+      <td> </td>
+      <td>urn:lsid:indexfungorum.org:names:17391</td>
+      <td>conceptID-1</td>
+    </tr>
+    <tr>
+      <td>ID2</td>
+      <td>Cortinarius (Pers.) Gray</td>
+      <td>Niskanen &amp; Liimat., 2022</td>
+      <td>urn:lsid:indexfungorum.org:names:17391</td>
+      <td>conceptID-2</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Note that we could also include the sensu/sec information in the <strong>dwc:scientificName</strong>. So the scientific name for the ID2 entry could also be <code class="language-plaintext highlighter-rouge">Cortinarius (Pers.) Gray. sec. Liimatainen, K., Kim, J.T., Pokorny, L. et al.</code> or <code class="language-plaintext highlighter-rouge">Cortinarius (Pers.) Gray. sensu Liimatainen, K., Kim, J.T., Pokorny, L. et al.</code>.</p>
+
+<p>We could do something similar for <em>Tyrannausorus rex</em> which had many different circumscriptions over the years as many specimens originally identified as separate species were later thought to be juvenile T. rex. For example, Holtz identified <em>Aublysodon mirandus</em> as a young T. rex in 2004.</p>
+
+<table class="table" class="table">
+  <thead>
+    <tr>
+      <th>taxonID</th>
+      <th>scientificName</th>
+      <th>dwc:nameAccordingTo</th>
+      <th>scientificNameID</th>
+      <th>dwc:taxonConceptID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ID1</td>
+      <td><em>Tyranosaurus rex</em> Osborn, 1905</td>
+      <td>Rauhut 2003</td>
+      <td><code class="language-plaintext highlighter-rouge">https://paleobiodb.org/classic/checkTaxonInfo?taxon_no=54833</code></td>
+      <td>conceptID-16</td>
+    </tr>
+    <tr>
+      <td>ID2</td>
+      <td><em>Tyranosaurus rex</em> Osborn, 1905</td>
+      <td>Holtz 2004</td>
+      <td><code class="language-plaintext highlighter-rouge">https://paleobiodb.org/classic/checkTaxonInfo?taxon_no=54833</code></td>
+      <td>conceptID-18</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="for-misapplied-names">For misapplied names:</h3>
+
+<blockquote>
+  <p>A misapplied  name  is when  the  name  of  one  taxon  is  erroneously  applied  to  a  different  taxon.</p>
+</blockquote>
+
+<p>(From: https://doi.org/10.7560/740440-015)</p>
+
+<p>How this would be translated into a checklist:</p>
+<ol>
+  <li>the entry for the misapplied name would have a unique <strong>dwc:taxonID</strong>,</li>
+  <li>the <strong>dwc:taxonomicStatus</strong> would be <code class="language-plaintext highlighter-rouge">misapplied</code>,</li>
+  <li>the <strong>dwc:nameAccordingTo</strong> would be used to specify the source being the author of the misapplication of the name,</li>
+  <li>the field <strong>dwc:acceptedNameUsageID</strong> would contain the ID of the currently accepted name in the dataset for the actual taxonomic entity corresponding to the correct identification.</li>
+</ol>
+
+<p>For example:</p>
+
+<table class="table" class="table">
+  <thead>
+    <tr>
+      <th>taxonID</th>
+      <th>scientificName</th>
+      <th>dwc:nameAccordingTo</th>
+      <th>dwc:taxonomicStatus</th>
+      <th>dwc: acceptedNameUsageID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ID1</td>
+      <td><em>Ficus exasperata</em> Vahl</td>
+      <td>Vahl. (1805). In: Enum. Pl. 2: 197.</td>
+      <td>ACCEPTED</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>ID2</td>
+      <td><em>Ficus exasperata</em></td>
+      <td>De Wildeman &amp; Durand in Ann. Mus. Congo Belge, B, Bot., ser. 2, 1: 54. 1899</td>
+      <td>MISAPPLIED</td>
+      <td>ID1</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>I hope this post is useful. If you would like us to cover more checklist cases and examples, please leave us a comment letting us know what you would like to see.</p>
+
+</div>
+      </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/data-shareability/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Which data can be shared through GBIF and what cannot</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/senegalia-clustering-in-brazil/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Exploring Related Records in the Flowering Plant Genus Senegalia in Brazil</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+<script src="/hp-data-blog/assets/js/code-blocks.js" defer></script>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/">GBIF.org</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1794391499"></script>
+
+
+
+
+
+  </body>
+</html>

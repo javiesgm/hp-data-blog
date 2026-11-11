@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Species accumulation curves with GBIF SQL downloads
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1794391499">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/datablog-logo.svg" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=APIs%20and%20downloads"
+                    class="navbar-item "
+                  >
+                    APIs and downloads
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Publishing%20data"
+                    class="navbar-item "
+                  >
+                    Publishing data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Analysis%20and%20maps"
+                    class="navbar-item "
+                  >
+                    Analysis and maps
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Taxonomy"
+                    class="navbar-item "
+                  >
+                    Taxonomy
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Data%20quality"
+                    class="navbar-item "
+                  >
+                    Data quality
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citation%20and%20data%20use"
+                    class="navbar-item "
+                  >
+                    Citation and data use
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Collections"
+                    class="navbar-item "
+                  >
+                    Collections
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citizen%20science"
+                    class="navbar-item "
+                  >
+                    Citizen science
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Survey%20and%20monitoring"
+                    class="navbar-item "
+                  >
+                    Survey and monitoring
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Molecular%20data"
+                    class="navbar-item "
+                  >
+                    Molecular data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Multimedia"
+                    class="navbar-item "
+                  >
+                    Multimedia
+                  </a>
+                
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Species accumulation curves with GBIF SQL downloads</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=john-waller" title="All posts by John Waller">John Waller</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2025-04-22">22 April 2025</time>
+        <span aria-hidden="true">·</span>
+        7 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+      <div class="article">
+        <div class="content">
+  <blockquote>
+  <p><strong>Update:</strong> GBIF SQL downloads now use COL XR taxonomy by default. If you maintain SQL queries that use GBIF Backbone keys, see <a href="/hp-data-blog/post/sql-downloads-col-xr/">recent changes to SQL downloads</a>.</p>
+</blockquote>
+
+<p>With GBIF’s new SQL downloads feature, it is now possible to easily create useful custom metrics. In this post, I will create species accumulation curves for various countries/areas using <a href="https://techdocs.gbif.org/en/data-use/api-sql-downloads">GBIF SQL downloads</a> and R.</p>
+
+<blockquote>
+  <p>GBIF now has a new <a href="https://github.com/gbif/CommunityMetrics">repository</a>, <strong>Community Metrics</strong>, for collecting input from the GBIF community on the creation of data products derived from GBIF-mediated data that can complement those already provided through GBIF’s <a href="https://www.gbif.org/analytics/global">data analytics</a>. The goal of this work is to produce new or further develop existing metrics, indicators and time series (trend) data products to support decision making.</p>
+</blockquote>
+
+<p>A <strong>species accumulation curve</strong> is a plot of the total cumulative running total species in a region. These curves are useful for assessing whether more sampling is likely to yield more knowledge of a region. For example, if the curve is increasing rapidly, it is likely that the region is undersampled for the group, and there could be data gaps. Conversely, if the curve is flattening out, it is likely that the region is well sampled for the group.</p>
+
+<!--more-->
+
+<p>In this post, I will focus on the group <strong>Amphibia</strong>.</p>
+
+<p>Here below is a basic species accumulation curve for <strong>Amphibia</strong> in <strong>Sweden</strong> (SE). Here we see that since around 1980, the total number of species has been fairly constant, suggesting that the group is well sampled in Sweden, and therefore it is very unlikely for there to be any <strong>data gaps</strong> for Amphibia is Sweden. This, of course, does not imply that continued monitoring is not useful for other reasons.</p>
+
+<p>The total number of occurrences for Amphibia are also plotted as variably-sized circles. We can see that the rate of increase is less than 1 species “discovered” species per year.</p>
+
+<p><img src="images/SE.svg" alt="" /></p>
+
+<p>Below I will show how I created this curve using GBIF SQL downloads and R.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre></td><td class="rouge-code"><pre><span class="n">library</span><span class="p">(</span><span class="n">rgbif</span><span class="p">)</span><span class="w">
+
+</span><span class="n">occ_download_sql</span><span class="p">(</span><span class="s2">"
+SELECT 
+    \"year\", 
+    countrycode,
+    speciesKey,
+    scientificname,
+    COUNT(*) AS occ_count
+FROM occurrence
+WHERE \"year\" &gt; 1969 AND \"year\" &lt; 2025
+  AND hasCoordinate = TRUE
+  AND hasgeospatialissues = FALSE
+  AND speciesKey IS NOT NULL
+  AND countryCode IS NOT NULL
+  AND classKey = 131
+  AND basisOfRecord != 'FOSSIL_SPECIMEN'
+  AND taxonrank = 'SPECIES'
+GROUP BY 
+speciesKey,
+scientificname, 
+\"year\",
+countrycode;
+"</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Short explanation of the SQL above:</p>
+
+<ul>
+  <li>We select the columns we want from the big +400 column <code class="language-plaintext highlighter-rouge">occurrence</code> table</li>
+  <li>We filter the data to only include records from 1970 to 2024</li>
+  <li><code class="language-plaintext highlighter-rouge">131</code> is the classKey for <strong>Amphibia</strong></li>
+  <li>We remove fossils</li>
+</ul>
+
+<p>This will return of a table with occurrence counts the columns <code class="language-plaintext highlighter-rouge">year</code>, <code class="language-plaintext highlighter-rouge">countrycode</code>, <code class="language-plaintext highlighter-rouge">speciesKey</code>, <code class="language-plaintext highlighter-rouge">scientificname</code>, and <code class="language-plaintext highlighter-rouge">occ_count</code>.</p>
+
+<p>Note that the below query will <strong>not</strong> work in the current GBIF SQL downloads implementation:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre>    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">speciesKey</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span>
+        <span class="k">ORDER</span> <span class="k">BY</span> <span class="nv">"year"</span>
+        <span class="k">ROWS</span> <span class="k">BETWEEN</span> <span class="n">UNBOUNDED</span> <span class="n">PRECEDING</span> <span class="k">AND</span> <span class="k">CURRENT</span> <span class="k">ROW</span>
+    <span class="p">)</span> <span class="k">AS</span> <span class="n">cumulative_species_count</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>As we cannot do the cumulative aggregation in the GBIF SQL downloads, it is necessary to do this in R.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="rouge-code"><pre><span class="n">library</span><span class="p">(</span><span class="n">rgbif</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span><span class="w">
+
+</span><span class="n">d</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">occ_download_get</span><span class="p">(</span><span class="s2">"0000317-250325103851331"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">    
+    </span><span class="n">occ_download_import</span><span class="p">()</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> 
+    </span><span class="n">filter</span><span class="p">(</span><span class="n">countrycode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"SE"</span><span class="p">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w">
+    </span><span class="n">arrange</span><span class="p">(</span><span class="n">year</span><span class="p">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w">
+    </span><span class="n">mutate</span><span class="p">(</span><span class="n">cumulative_species_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">cumsum</span><span class="p">(</span><span class="o">!</span><span class="n">duplicated</span><span class="p">(</span><span class="n">specieskey</span><span class="p">)))</span><span class="w"> </span><span class="o">|&gt;</span><span class="w">
+    </span><span class="n">group_by</span><span class="p">(</span><span class="n">year</span><span class="p">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w">
+    </span><span class="n">summarise</span><span class="p">(</span><span class="n">cumulative_species_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">cumulative_species_count</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w">
+    </span><span class="n">occ_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">occ_count</span><span class="p">))</span><span class="w"> </span><span class="o">|&gt;</span><span class="w">
+    </span><span class="n">ungroup</span><span class="p">()</span><span class="w"> 
+
+</span><span class="n">p</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ggplot</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">year</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cumulative_species_count</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">geom_line</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">geom_point</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">occ_count</span><span class="p">),</span><span class="n">shape</span><span class="o">=</span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">geom_point</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">0.5</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"cumulative sp count by year - Amphibia"</span><span class="p">,</span><span class="w">
+         </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"total occ count for year: "</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">theme_minimal</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"top"</span><span class="p">)</span><span class="w">
+</span><span class="n">p</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>We can also compare other countries together on the same graphic to see differences species accumulation. Here we see that <strong>Australia</strong> (AU) has a much flatter curve than <strong>China</strong> (CN), which implies that continued sampling is unlikely increase our knowledge of Amphibians in Australia. Whereas in China, the curve is still increasing, suggesting that there are potential data gaps. This could be useful information for conservation funding and future mobilization efforts. Of course continued sampling, even in well known regions, is still useful for other reasons.</p>
+
+<p><img src="images/CN-AU.svg" alt="" /></p>
+
+<p><strong>Severe undersampling</strong> can also create a pattern that looks like a flatter curve. Here we see that <strong>Botswana</strong> (BW) has a somewhat flat curve, but this like is due to a low amount of sampling for Amphibians (~20 occurrences per year).</p>
+
+<p><img src="images/BW.svg" alt="" /></p>
+
+<p>The species accumulation curve for <strong>Brazil</strong> (BR) is interesting, as the country has a fair amount of sampling per year (~5000 occ per year), but still appears to be gaining new species knowledge each year.</p>
+
+<p><img src="images/BR.png" alt="" /></p>
+
+<p><strong>Saudi Arabia</strong> (SA) is not expected to be rich in Amphibian species and has a fairly flat curve, which probably wouldn’t steepen much with increased sampling, but increased sampling effort might be good for monitoring the existing species.</p>
+
+<p><img src="images/SA.png" alt="" /></p>
+
+<h2 id="using-grids">Using grids</h2>
+
+<p>GBIF SQL downloads also allows for occurrences to be linked to grid cells. Supposed we wanted to map slopes for the last 10 years for each grid cell, attempting to reveal potential data gaps. A “high” slope for a small grid cell might be less than one species per year, but any cut off point will be somewhat arbitrary.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre></td><td class="rouge-code"><pre><span class="n">occ_download_sql</span><span class="p">(</span><span class="s2">"
+SELECT 
+  GBIF_MGRSCode(
+    10000, 
+    decimalLatitude,
+    decimalLongitude,
+    0
+  ) AS gridcode,
+    \"year\", 
+    countrycode,
+    speciesKey,
+    scientificname,
+    COUNT(*) AS occ_count
+FROM occurrence
+WHERE \"year\" &gt; 1969 AND \"year\" &lt; 2025
+  AND hasCoordinate = TRUE
+  AND hasgeospatialissues = FALSE
+  AND speciesKey IS NOT NULL
+  AND countryCode IS NOT NULL
+  AND classKey = 131
+  AND basisOfRecord != 'FOSSIL_SPECIMEN'
+  AND taxonrank = 'SPECIES'
+GROUP BY 
+speciesKey,
+scientificname, 
+\"year\",
+countrycode,
+gridcode;
+"</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>You can download the combined shapefile I used for this example here: <a href="https://github.com/jhnwllr/mgrs-grid">https://github.com/jhnwllr/mgrs-grid</a></p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+</pre></td><td class="rouge-code"><pre><span class="n">library</span><span class="p">(</span><span class="n">rgbif</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">purrr</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">sf</span><span class="p">)</span><span class="w">
+
+</span><span class="n">d</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">occ_download_get</span><span class="p">(</span><span class="s2">"0005222-250325103851331"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">    
+    </span><span class="n">occ_download_import</span><span class="p">()</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> 
+    </span><span class="n">glimpse</span><span class="p">()</span><span class="w">
+
+</span><span class="n">dd</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> 
+    </span><span class="n">arrange</span><span class="p">(</span><span class="n">gridcode</span><span class="p">,</span><span class="n">year</span><span class="p">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w">
+    </span><span class="n">mutate</span><span class="p">(</span><span class="n">cumulative_species_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">cumsum</span><span class="p">(</span><span class="o">!</span><span class="n">duplicated</span><span class="p">(</span><span class="n">specieskey</span><span class="p">)))</span><span class="w"> </span><span class="o">|&gt;</span><span class="w">
+    </span><span class="n">filter</span><span class="p">(</span><span class="n">year</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">2015</span><span class="p">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="c1"># only get for the last 10 years </span><span class="w">
+    </span><span class="n">na.omit</span><span class="p">()</span><span class="w"> </span><span class="o">|&gt;</span><span class="w">
+    </span><span class="n">group_by</span><span class="p">(</span><span class="n">gridcode</span><span class="p">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w">
+    </span><span class="n">summarize</span><span class="p">(</span><span class="n">slope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coef</span><span class="p">(</span><span class="n">lm</span><span class="p">(</span><span class="n">cumulative_species_count</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">year</span><span class="p">))[</span><span class="m">2</span><span class="p">],</span><span class="w"> 
+              </span><span class="n">occ_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">occ_count</span><span class="p">,</span><span class="w"> </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="w"> </span><span class="o">|&gt;</span><span class="w">
+    </span><span class="n">ungroup</span><span class="p">()</span><span class="w"> </span><span class="o">|&gt;</span><span class="w">
+    </span><span class="n">select</span><span class="p">(</span><span class="n">MGRS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gridcode</span><span class="p">,</span><span class="w"> </span><span class="n">slope</span><span class="p">,</span><span class="w"> </span><span class="n">occ_count</span><span class="p">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w">
+    </span><span class="n">glimpse</span><span class="p">()</span><span class="w"> 
+
+</span><span class="n">mgrs_grid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">st_layers</span><span class="p">(</span><span class="s2">"mgrs-grid/"</span><span class="p">)</span><span class="o">$</span><span class="n">name</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+</span><span class="n">map</span><span class="p">(</span><span class="o">~</span><span class="w"> </span><span class="n">st_read</span><span class="p">(</span><span class="s2">"mgrs-grid/"</span><span class="p">,</span><span class="w"> </span><span class="n">layer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">.</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">st_transform</span><span class="p">(</span><span class="m">4326</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+</span><span class="n">dplyr</span><span class="o">::</span><span class="n">bind_rows</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+</span><span class="n">left_join</span><span class="p">(</span><span class="n">dd</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"MGRS"</span><span class="p">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="w">
+    </span><span class="n">slope_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">case_when</span><span class="p">(</span><span class="w">
+      </span><span class="n">slope</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="s2">"no gap (&lt;0.1)"</span><span class="p">,</span><span class="w">
+      </span><span class="n">slope</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="s2">"potential gap (&gt;0.1)"</span><span class="p">,</span><span class="w">
+      </span><span class="n">occ_count</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">1000</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="s2">"low sampling (&lt;1000 occ)"</span><span class="p">,</span><span class="w">
+      </span><span class="kc">TRUE</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="s2">"no data"</span><span class="w"> 
+    </span><span class="p">)</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+
+
+</span><span class="n">p</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ggplot</span><span class="p">(</span><span class="n">mgrs_grid</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">geom_sf</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">slope_category</span><span class="p">),</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_fill_manual</span><span class="p">(</span><span class="w">
+    </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"no gap (&lt;0.1)"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"blue"</span><span class="p">,</span><span class="w"> 
+    </span><span class="s2">"potential gap (&gt;0.1)"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"red"</span><span class="p">,</span><span class="w"> 
+    </span><span class="s2">"low sampling (&lt;1000 occ)"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"lightgrey"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"no data"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"bisque"</span><span class="p">),</span><span class="w">  
+    </span><span class="n">na.value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"white"</span><span class="w">  
+  </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">theme_minimal</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+</span><span class="n">theme</span><span class="p">(</span><span class="w">
+  </span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"top"</span><span class="p">,</span><span class="w">
+  </span><span class="n">legend.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_blank</span><span class="p">(),</span><span class="w">
+  </span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">hjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.5</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="images/map.png" alt="" /></p>
+
+<blockquote>
+  <p>Note, there is an open issue with the MGRS grid where certain codes are missing from the shapefile near Austrailia. <a href="https://github.com/ngageoint/mgrs-java/issues/4">https://github.com/ngageoint/mgrs-java/issues/4</a></p>
+</blockquote>
+
+<p>Here we can see that a few areas with likely data gaps for Amphibians. By only including areas where there have been more than 1000 occurrence records for Amphibians in the last 10 years, I have somewhat accounted for flat curves due to low sampling effort. Of course one should not interpret every grid-cell completely literally because data quality issues, such as a few mis-indentifications, could create a high slope artificially. However, clusters of grid-cells with red gaps are likely to be more indicative of real data gaps in GBIF mediated data.</p>
+
+<p>##</p>
+
+</div>
+      </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/2025-01-29-understanding-google-earth-engine-gee-and-its-python-api-a-primer-for-gbif-users/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Understanding Google Earth Engine (GEE) and Its Python API</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/2025-10-28-species-occurrence-data-and-corporate-sustainability-frameworks/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Species Occurrence Data and Corporate Sustainability Frameworks</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+<script src="/hp-data-blog/assets/js/code-blocks.js" defer></script>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/">GBIF.org</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1794391499"></script>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Big National Checklists
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1794391499">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/datablog-logo.svg" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=APIs%20and%20downloads"
+                    class="navbar-item "
+                  >
+                    APIs and downloads
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Publishing%20data"
+                    class="navbar-item "
+                  >
+                    Publishing data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Analysis%20and%20maps"
+                    class="navbar-item "
+                  >
+                    Analysis and maps
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Taxonomy"
+                    class="navbar-item "
+                  >
+                    Taxonomy
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Data%20quality"
+                    class="navbar-item "
+                  >
+                    Data quality
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citation%20and%20data%20use"
+                    class="navbar-item "
+                  >
+                    Citation and data use
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Collections"
+                    class="navbar-item "
+                  >
+                    Collections
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citizen%20science"
+                    class="navbar-item "
+                  >
+                    Citizen science
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Survey%20and%20monitoring"
+                    class="navbar-item "
+                  >
+                    Survey and monitoring
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Molecular%20data"
+                    class="navbar-item "
+                  >
+                    Molecular data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Multimedia"
+                    class="navbar-item "
+                  >
+                    Multimedia
+                  </a>
+                
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Big National Checklists</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=john-waller" title="All posts by John Waller">John Waller</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2019-06-06">6 June 2019</time>
+        <span aria-hidden="true">·</span>
+        5 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Taxonomy">Taxonomy</a>
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=checklist">#checklist</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=data-gaps">#data gaps</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=api">#API</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+      <div class="article">
+        <div class="content">
+  <p><img src="/hp-data-blog/post/2019-05-15-big-national-checklists_files/europeMap.gif" alt="" width="586px" /></p>
+
+<!--more-->
+
+<p><a href="/hp-data-blog/post/2019-05-15-big-national-checklists_files/checklistMap.html">link to interactive map</a></p>
+
+<ul>
+  <li><b><span style="color:#bd0026">Big</span></b> 15-300K total names</li>
+  <li><b><span style="color:#fd8d3c">Medium</span></b> 5-15K total names</li>
+  <li><b><span style="color:#ffffcc; -webkit-text-stroke: 1px #898989">Small</span></b> 0-5K total names</li>
+</ul>
+
+<p><a href="/hp-data-blog/post/2019-05-15-big-national-checklists_files/checklistMap.html">Here</a> I plot the <strong>total names in checklists</strong> published on GBIF linked to a single country. A <strong>checklist dataset</strong> is a term for any dataset that contains primarily a list of taxonomic names. <strong>National species checklists</strong> are lists of species recorded from a country usually through some organized effort. GBIF has published a <a href="https://assets.ctfassets.net/uo17ejk9rkwj/62uueQ2eNGyUyu0yeoEc8i/a9736e0554edff75fdc129f11d031181/gbif_national_checklists_best_practice_guide_en_v1.0.pdf">guide</a> on best practices for making national checklist datasets, which advises making national checklists <strong>as big as possible</strong>.</p>
+
+<h1 id="big-national-lists"><b><span style="color:#bd0026">Big</span></b> national lists</h1>
+
+<p><img src="/hp-data-blog/post/2019-05-15-big-national-checklists_files/worldMap.jpg" alt="" /></p>
+
+<p><a href="/hp-data-blog/post/2019-05-15-big-national-checklists_files/checklistMap.html">link to interactive map</a></p>
+
+<p>Only a few countries have large national checklists over 15,000 names.</p>
+
+<table class="table" class="table">
+  <tr>
+    <td><b>1. <a href="https://www.gbif.org/dataset/0e61f8fe-7d25-4f81-ada7-d970bbb2c6d6">France</a> <b />&lt;/td&gt;
+    <td> <b>250</b>k </td> 
+  &lt;/tr&gt;
+  <tr>
+    <td><b>2. <a href="https://www.gbif.org/dataset/de8934f4-a136-481c-a87a-b0b202b80a31">Sweden<a /> <b />&lt;/td&gt;
+    <td> <b>100</b>k </td> 
+  &lt;/tr&gt;
+  <tr>
+    <td><b>3. <a href="https://www.gbif.org/dataset/a6c6cead-b5ce-4a4e-8cf5-1542ba708dec">Norway</a> <b />&lt;/td&gt;
+    <td> <b>100</b>k </td> 
+  &lt;/tr&gt;
+  <tr>
+    <td><b>4. <a href="">Columbia</a> <b />&lt;/td&gt;
+    <td> <b>73</b>k† </td> 
+  &lt;/tr&gt;
+  <tr>
+    <td><b>5. <a href="https://www.gbif.org/dataset/4dd32523-a3a3-43b7-84df-4cda02f15cf7">Netherlands</a> &nbsp; &nbsp; <b />&lt;/td&gt;
+    <td> <b>65</b>k </td> 
+  &lt;/tr&gt;
+  <tr>
+    <td><b>6. <a href="https://www.gbif.org/dataset/aacd816d-662c-49d2-ad1a-97e66e2a2908">Brazil</a> <b />&lt;/td&gt;
+    <td> <b>64</b>k  </td> 
+  &lt;/tr&gt;
+  <tr>
+    <td><b>7. <a href="https://www.gbif.org/publisher/a2fa5b68-3ebf-4845-abc5-f456d251386f">China</a> <b />&lt;/td&gt;
+    <td> <b>76</b>k </td> 
+  &lt;/tr&gt;
+  <tr>
+    <td><b>8. <a href="https://www.gbif.org/dataset/1ec61203-14fa-4fbd-8ee5-a4a80257b45a">Taiwan</a> <b />&lt;/td&gt;
+    <td> <b>66</b>k </td> 
+  &lt;/tr&gt;
+  <tr>
+    <td><b>10. <a href="https://www.gbif.org/dataset/search?type=CHECKLIST&amp;publishing_org=0674aea0-a7e1-11d8-9534-b8a03c50a862">Germany</a>   <b />&lt;/td&gt;
+    <td> <b>67</b>k† </td> 
+  &lt;/tr&gt;
+  <tr>
+    <td><b> 11. <a href="https://www.gbif.org/dataset/39653f3e-8d6b-4a94-a202-859359c164c5">Belgium</a>  <b />&lt;/td&gt;
+    <td> <b>52</b>k </td> 
+  &lt;/tr&gt;
+  <tr>
+    <td><b> 12. <a href="">Canada</a> <b />&lt;/td&gt;
+    <td> <b>29</b>k† </td> 
+  &lt;/tr&gt;
+  <tr>
+    <td><b> 13. <a href="">Togo</a> <b />&lt;/td&gt;
+    <td> <b>17</b>k† </td> 
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+<sub>†published in mulitple checklists</sub>
+
+# No big checklists in **USA**, **Australia**, **Great Britain**...
+
+<!-- <img src="/hp-data-blog/post/2019-05-15-big-national-checklists_files/usaChecklist.png" alt="drawing" width="586px"/> -->
+
+Even though the **USA**, **Australia**, and **Great Britain** share with GBIF [massive amounts](https://www.gbif.org/occurrence/search?country=GB&amp;country=US&amp;country=AU) of occurrence records (&gt;600M records combined), they do not seem to publish many checklists. 
+
+This could be for multiple reasons:
+
+1. Perhaps checklists exist but are **simply not published on GBIF**. 
+2. Alternatively, the "checklists" in these countries could be included in **occurrence datasets**. 
+3. Or the countries feel that occurrence datasets are **superior and sufficient**. 
+4. Or I have missed the checklist. (You can comment if you think I have missed a checklist)
+
+**Austrailia** does not publish anything classified as a checklist on GBIF, but the [Atlas of Living of Austrailia](https://www.gbif.org/publisher/3c5e4331-7f2f-4a8d-aa56-81ece7014fc8) serves as default checklist of Austrailia. 
+
+&gt; The Atlas of Living Australia (Atlas) contains information **on all the known species in Australia** aggregated from a wide range of data providers: museums, herbaria, community groups, government departments, individuals and universities. 
+
+The **United States** does not have any large checklists on GBIF, but it does publish many occurrence datasets with wide [taxonomic coverage](https://www.gbif.org/dataset/search?offset=0&amp;type=OCCURRENCE&amp;publishing_country=US).
+ 
+**South Africa's** large plant dataset [BODATSA](https://www.gbif.org/dataset/d0963cee-1a29-47a2-b9bf-fb0e7690077c) is published as an occurrence dataset but could probably used as a **very good checklist** of South African plants. 
+
+**Switzerland** publishes several [occurrence datasets](https://www.gbif.org/dataset/82ad4e4e-f762-11e1-a439-00145eb45e9a) that could probably be used as checklists. 
+
+**New Zealand** also publishes a [national checklist](https://www.gbif.org/dataset/1329753c-0537-451c-92a1-cddaa4534736), but (as of the writing of this post) the names have never be been ingested into GBIF.  
+
+<a href="https://www.gbif.org/occurrence/download">
+<img src="/hp-data-blog/post/2019-05-15-big-national-checklists_files/speciesList.png" alt="drawing" width="586px" /></a>
+
+GBIF has recently implemented a [species download utility](https://www.gbif.org/occurrence/download), so generating "a national checklist" derived from occurrences is now very easy. **Although this is probably not the best way to make a checklist**. 
+
+# Not many checklists where we might want them the most
+
+Most of Asia is occurrence and checklist-poor. 
+
+<img src="/hp-data-blog/post/2019-05-15-big-national-checklists_files/lowRegions.gif" alt="drawing" />
+
+[link to interactive map](/post/2019-05-15-big-national-checklists_files/checklistMap.html)
+
+# Will occurrence datasets become the default checklists? 
+
+Creating national checklists is a big job. They are valuable, but governments and foundations with limited budgets might find creating and curating **occurrence datasets** more worthwhile. I personally fear the cost/benefit of checklists might make them too expensive to create for the places where we might want to have them the most. 
+
+## Manual tagging of checklist data
+
+GBIF currently has 27,000 things it calls [checklist datasets](https://www.gbif.org/dataset/search?q=benin&amp;type=CHECKLIST). Even after filtering out 200 datasets from  global publishers, this still leaves a large amount of datasets needing to be tied to a region. 
+
+Checklists are not always tied to any region in a consistent way. There is a standard way to link a checklist to a country code or region that I did not know about before starting this post. It is through the distribution [extension](http://rs.gbif.org/extension/gbif/1.0/distribution.xml), which has a `countryCode` field. **64%** of the checklists I tagged have **filled in the extension**. The remaining untagged datasets have not filled in this extension. 
+
+In order to reduce the size of the tagging job, I decided only to tag datasets with more than 500-1000 species names. I have only tagged checklist so far that are tied to one country and ignored checklists that might be regional like [Fauna Europaea](https://www.gbif.org/en/dataset/90d9e8a6-0ce1-472d-b682-3451095dbc5a). **Fauna Europaea** incidentally has very good [polygon-linked data](https://fauna-eu.org/cdm_dataportal/taxon/ae31893a-2421-4871-8cb4-984587702100). Unfortunately, Fauna Europaea **has not filled in the distribution extension**. 
+
+<img src="/hp-data-blog/post/2019-05-15-big-national-checklists_files/faunaEuropea.png" alt="drawing" />
+
+&gt;Using this biggest-first stategy, I have been able to tag around **85% of total names in checklists** (not in global lists), tagging around 600 datasets with country codes. 
+
+I have also tagged any dataset that has filled in the distribution extension or geographic scope information in the meta-data. What has been left un-tagged are a large amount small checklists extracted by **plazi.org**. These untagged datasets are usually newly discovered species lists from the plazi [taxonomic treatments database](https://www.gbif.org/en/publisher/7ce8aef0-9e92-11dc-8738-b8a03c50a862). 
+
+All of the datasets presented in the map above are now tagged in the registry. The following api call will get you all datasets tagged with a country code. 
+
+```text
+http://api.gbif.org/v1/dataset?machineTagNamespace=checklistCountryCode.jwaller.gbif.org&amp;limit=600
+
+```
+
+
+
+<!--more-->
+</b></td></tr></b></td></tr></b></td></tr></b></td></tr></b></td></tr></b></td></tr></b></td></tr></b></td></tr></b></td></tr></b></td></tr></a></b></td></tr></b></td></tr></table>
+
+</div>
+      </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/gbif-checklist-datasets-and-data-gaps/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">GBIF checklist datasets and data gaps</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/exploring-es50-for-gbif/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Exploring es50 for GBIF</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+<script src="/hp-data-blog/assets/js/code-blocks.js" defer></script>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/">GBIF.org</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1794391499"></script>
+
+
+
+
+
+  </body>
+</html>

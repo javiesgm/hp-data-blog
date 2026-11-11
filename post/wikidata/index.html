@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Does Biodiversity Informatics 💘 Wikidata?
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Does Biodiversity Informatics love Wikidata?">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1794391499">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/datablog-logo.svg" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=APIs%20and%20downloads"
+                    class="navbar-item "
+                  >
+                    APIs and downloads
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Publishing%20data"
+                    class="navbar-item "
+                  >
+                    Publishing data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Analysis%20and%20maps"
+                    class="navbar-item "
+                  >
+                    Analysis and maps
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Taxonomy"
+                    class="navbar-item "
+                  >
+                    Taxonomy
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Data%20quality"
+                    class="navbar-item "
+                  >
+                    Data quality
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citation%20and%20data%20use"
+                    class="navbar-item "
+                  >
+                    Citation and data use
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Collections"
+                    class="navbar-item "
+                  >
+                    Collections
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citizen%20science"
+                    class="navbar-item "
+                  >
+                    Citizen science
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Survey%20and%20monitoring"
+                    class="navbar-item "
+                  >
+                    Survey and monitoring
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Molecular%20data"
+                    class="navbar-item "
+                  >
+                    Molecular data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Multimedia"
+                    class="navbar-item "
+                  >
+                    Multimedia
+                  </a>
+                
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  postHeader--withToc ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Does Biodiversity Informatics 💘 Wikidata?</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+  <div class="feature-description">
+    <p>Does Biodiversity Informatics love Wikidata?</p>
+
+  </div>
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=quentin-groom" title="All posts by Quentin Groom">Quentin Groom</a>, <a href="/hp-data-blog/?author=deborah-paul" title="All posts by Deborah Paul">Deborah Paul</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2020-02-21">21 February 2020</time>
+        <span aria-hidden="true">·</span>
+        4 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Taxonomy">Taxonomy</a>
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Citation+and+data+use">Citation and data use</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=wikidata">#wikidata</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=taxonomy">#taxonomy</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=catalogue-of-life">#Catalogue of Life</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=lod">#lod</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+    <div class="article--toc">
+      <div>
+        <div class="toc-wrapper  toc__removeOnMobile ">
+          <aside class="toc">
+  <div class="toc_header">
+    On this page
+  </div>
+  <div class="toc_list">
+    <ul>
+  <li><a href="#is-there-a-third-way">Is there a third way?</a></li>
+  <li><a href="#the-conclusion-of-the-taxonomy-team-was-that-taxonomy-is-hard">The conclusion of the Taxonomy team was that <em>taxonomy is hard</em>.</a></li>
+  <li><a href="#acknowledgements">Acknowledgements</a></li>
+</ul>
+  </div>
+</aside>
+        </div>
+        <div class="article">
+          <div class="content">
+  <p>Open online APIs are fantastic! You can use someone else’s infrastructure to create workflows, do research and create products without giving anything in return, except acknowledgement. But wait a minute! Why is everyone not using them? Why do we create our own data sources and suck up the costs in time and money? Not to mention the duplication of effort.</p>
+
+<!--more-->
+
+<p>One of the reasons is that we can’t fix someone else’s data. If we’re lucky we can email them a list of the errors and hope for a response, but this is not a viable solution for a process that we would hope to be automated. So what if we all go local? Then we don’t benefit from the latest data and the curation of experts in their domain and we all have to repeat the same work everywhere that the data are needed, particularly for people names, locality data, taxonomic names and concepts.</p>
+
+<h2 id="is-there-a-third-way">Is there a third way?</h2>
+<p>What about <a href="https://www.wikidata.org/wiki/Wikidata:Main_Page">Wikidata</a>? It’s open, readable and writable to machine and human, curated by an avid and active group of people globally and, most importantly if you find errors you can fix them.</p>
+
+<p><img src="/hp-data-blog/post/2020-02-21-wikidata/group.png" alt="" />
+By Andrawaag - Own work, CC0, https://commons.wikimedia.org/w/index.php?curid=87171699</p>
+
+<p>In February 2020 a group of Wikidata enthusiasts got together in Warsaw Poland to discuss how biodiversity informatics could make the most of the opportunities of Wikidata. We’ve seen how <a href="https://tools.wmflabs.org/scholia/">Scholia</a> has pushed the boundaries of <a href="https://doi.org/10.1007/978-3-319-70407-4_36">scientometrics using Wikidata</a>, and <a href="https://doi.org/10.1093/database/baw015">GeneWiki</a> is opening up information on human genomics, and now  biodiversity informaticians want a piece of the action.</p>
+
+<p>The group divided into teams to tackle three live issues with Wikidata. A team worked on the primary issue of taxonomy, another on people, and a third on the “Big Picture”.</p>
+
+<h2 id="the-conclusion-of-the-taxonomy-team-was-that-taxonomy-is-hard">The conclusion of the Taxonomy team was that <em>taxonomy is hard</em>.</h2>
+
+<p>Wikidata has somewhat lost its way with taxonomy and it can be seen from the data that users do not understand the intricacies of taxonomic names versus taxonomic concepts. Unfortunately, the underlying data model is not fit for purpose and although alternatives are possible they might not be suitable for the average Wikipedian to understand. Nevertheless, undaunted by this conclusion the team members have a plan of how to model taxonomy in Wikibase and will test it out as a first step.</p>
+
+<p>Taxonomic concepts are hard to model, because they are based on opinion and there is no global consensus.  The <a href="https://www.tdwg.org/community/tnc/">Taxonomic Names and Concepts</a> Interest Group of the Biodiversity Information Standards are also looking into ways to galvanize and empower the taxonomic community around sharing, publication, visualization, and community management of taxon concepts. Furthermore, <a href="https://www.dissco.eu/">DiSSCo</a> and <a href="https://www.catalogueoflife.org/">CoL</a> are investigating how to enable the taxonomic experts to collectively curate these data.</p>
+
+<p>The People Team reported back much more enthusiastically. People are a natural bridge that connects the body of their works, whether that is scientific literature, specimens, institutions and their collaborations. People are well modelled in Wikidata and apart from the addition of a few properties the People Team could see a great future for Wikidata’s people data.</p>
+
+<p>The Big Picture team were tasked with foreseeing the future of how we might engage with Wikidata and where the priorities lie. They also saw opportunities in geography, literature, events, organizations etc, but they also saw people-based data as a high impact, lower-effort input area for exploitation. This team’s next step is presenting their ideas at the <a href="http://www.spnhc-icomnathist2020.com/">SPNHC &amp; ICOM NATHIST 2020</a> meeting in June. They will use the opportunity to reach out to the collections community to engage with Wikidata. This will not be the only Wikimedia event being held there. There are already <a href="http://www.spnhc-icomnathist2020.com/workshops/">workshops</a> on people and collection data.</p>
+
+<p>Wikidata will continue to grow and evolve, whether or not biodiversity science engages with it. There are clearly opportunities and challenges ahead. The teams have homework to do, but the meeting has already spawned a large number of side projects and wherever we go from here it is likely to get interesting!</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Wikipedia:Meetup/Cost_MOBILISE_Wikidata_Workshop/">Read More About It</a> and also see <a href="https://medium.com/@andra_97224/wikidata-is-just-a-matter-of-facts-334ec1eae66f">Wikidata is just a matter of facts</a></p>
+
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>This workshop was supported by COST (European Cooperation in Science and Technology) as part of the Mobilise Action CA17106 on Mobilising Data, Experts and Policies in Scientific Collections. Deborah Paul acknowledges funding from iDigBio, funded by grants from the National Science Foundation’s Advancing Digitization of Biodiversity Collections Program [DBI-1115210 (2011-2018) and DBI-1547229 (2016-2021)]. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation. Quentin Groom acknowledges SYNTHESYS+ a Research and Innovation action in the H2020-EU.1.4.1.2. Programme.  Donat Agosti acknowledges funding from the Arcadia Fund.</p>
+
+
+</div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/frictionless-data-and-darwin-core/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Frictionless Data and Darwin Core</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/gbif-occurrence-license-processing/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">GBIF occurrence license processing</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+<script src="/hp-data-blog/assets/js/code-blocks.js" defer></script>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/">GBIF.org</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1794391499"></script>
+
+
+
+
+
+  </body>
+</html>

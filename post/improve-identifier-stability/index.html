@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>GBIF attempts to improve identifier stability by monitoring changes of occurrenceIDs
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1794391499">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/datablog-logo.svg" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=APIs%20and%20downloads"
+                    class="navbar-item "
+                  >
+                    APIs and downloads
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Publishing%20data"
+                    class="navbar-item "
+                  >
+                    Publishing data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Analysis%20and%20maps"
+                    class="navbar-item "
+                  >
+                    Analysis and maps
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Taxonomy"
+                    class="navbar-item "
+                  >
+                    Taxonomy
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Data%20quality"
+                    class="navbar-item "
+                  >
+                    Data quality
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citation%20and%20data%20use"
+                    class="navbar-item "
+                  >
+                    Citation and data use
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Collections"
+                    class="navbar-item "
+                  >
+                    Collections
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citizen%20science"
+                    class="navbar-item "
+                  >
+                    Citizen science
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Survey%20and%20monitoring"
+                    class="navbar-item "
+                  >
+                    Survey and monitoring
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Molecular%20data"
+                    class="navbar-item "
+                  >
+                    Molecular data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Multimedia"
+                    class="navbar-item "
+                  >
+                    Multimedia
+                  </a>
+                
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  postHeader--withToc ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>GBIF attempts to improve identifier stability by monitoring changes of occurrenceIDs</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=kumiko-totsu" title="All posts by Kumiko Totsu">Kumiko Totsu</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2023-11-06">6 November 2023</time>
+        <span aria-hidden="true">·</span>
+        7 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Data+quality">Data quality</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=publishing">#publishing</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=data-quality">#data quality</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=issues">#issues</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=occurrence">#occurrence</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+    <div class="article--toc">
+      <div>
+        <div class="toc-wrapper  toc__removeOnMobile ">
+          <aside class="toc">
+  <div class="toc_header">
+    On this page
+  </div>
+  <div class="toc_list">
+    <ul>
+  <li><a href="#what-are-gbif-identifiers-why-is-it-important-to-keep-them">What are GBIF identifiers? Why is it important to keep them?</a></li>
+  <li><a href="#gbif-identifier-management-depends-on-occurrenceids">GBIF identifier management depends on occurrenceIDs</a></li>
+  <li><a href="#three-options-to-deal-with-identifier-issues">Three options to deal with identifier issues</a></li>
+  <li><a href="#requirements-for-identifier-migrations">Requirements for identifier migrations</a></li>
+  <li><a href="#more-information-for-publishers-how-to-detect-identifier-issues-on-the-gbif-registry">More information for publishers: how to detect identifier issues on the GBIF registry.</a></li>
+  <li><a href="#links-related-about-the-identifier-stability">Links related about the identifier stability</a></li>
+</ul>
+  </div>
+</aside>
+        </div>
+        <div class="article">
+          <div class="content">
+  <p>Since 2022, GBIF has been monitoring <strong>changes of <code class="language-plaintext highlighter-rouge">occurrenceID</code>s</strong> in datasets to improve the stability of GBIF identifiers. We pause data ingestion when we detect more than half of occurrence records in the latest version have different <code class="language-plaintext highlighter-rouge">occurrenceID</code>s from the previous version (live on GBIF.org). This identifier validation process automatically creates issues on GitHub and GBIF helpdesk will contact the publishers to verify the changes of <code class="language-plaintext highlighter-rouge">occurrenceID</code>s.</p>
+
+<p>Our aim in this process is to minimize the changes of GBIF identifiers and to support the needs for citations and data linking. In this blog post, we explain some background information on identifier stability, how we manage GBIF identifiers by <code class="language-plaintext highlighter-rouge">occurrenceID</code>s and what options we can take for identifier issues.</p>
+
+<h2 id="what-are-gbif-identifiers-why-is-it-important-to-keep-them">What are GBIF identifiers? Why is it important to keep them?</h2>
+
+<p>Once datasets are registered to GBIF, a unique <strong>gbifID</strong> (numeric string such as <code class="language-plaintext highlighter-rouge">1676099845</code>) is assigned to each occurrence record to create a <strong>URL</strong> like <code class="language-plaintext highlighter-rouge">https://www.gbif.org/occurrence/1676099845</code>. Even though these identifiers are not designed to offer persistent identifiers in the first place, these URLs are used for citing individual specimen or observation records outside GBIF services, for example in <a href="https://bionomia.net/">Bionomia</a>. We would like to prevent loss of links as much as we can, to support citations. More details on demands towards GBIF identifiers are introduced in <a href="https://www.gbif.org/news/2M3n65fHOhvq4ek5oVOskc/new-processing-routine-improves-stability-of-gbif-occurrence-ids">this news item</a>. Thanks to efforts and collaboration with publishers toward this project, the percentage of <code class="language-plaintext highlighter-rouge">occurrenceID</code>s that changed in specimen records has dropped from 3.75% (2021-2022) to 1.39% (2022-2023) as reported in the 30th meeting of GBIF Governing Board (GB30).</p>
+
+<h2 id="gbif-identifier-management-depends-on-occurrenceids">GBIF identifier management depends on occurrenceIDs</h2>
+
+<p>GBIF identifiers (i.e. gbifIDs) are automatically created by our system, using <strong><code class="language-plaintext highlighter-rouge">occurrenceID</code>s</strong> provided by publishers. <code class="language-plaintext highlighter-rouge">occurrenceID</code>s are the keys for the relationship between the existing records available on GBIF.org and the updated records in the latest version on the hosting web services. This means that if <code class="language-plaintext highlighter-rouge">occurrenceID</code>s change, we won’t be able to relate them. When a record has a new <code class="language-plaintext highlighter-rouge">occurrenceID</code>, we treat the record as a “new” record and assign a new GBIF identifier. The record with the old <code class="language-plaintext highlighter-rouge">occurrenceID</code> (that exists on GBIF.org but not in the latest version on the hosting web services) will be considered deleted from the dataset, so the URL of the record will be deprecated like <a href="https://www.gbif.org/occurrence/1252968762">this occurrence</a>.</p>
+
+<p>See the figure below which is an example of updating a dataset (such as a change of catalogue numbering system).</p>
+<ul>
+  <li>Top example (no changes of <code class="language-plaintext highlighter-rouge">occurrenceID</code>s): The URL of the occurrence will remain the same.</li>
+  <li>Bottom example (changes of <code class="language-plaintext highlighter-rouge">occurrenceID</code>s): A new URL will be issued for the updated data and the old URL will be deprecated.</li>
+</ul>
+
+<p><img src="/hp-data-blog/post/2023-11-01-improve-identifier-stability/change_of_occurrenceIDs.png" alt="Fig.1 The URL remains if the occurrenceID did not change. The URL is deprecated and a new URL is issued if the occurrenceID changed." /></p>
+
+<p>The example above uses a so-called “triplet”, the combination of the <strong><code class="language-plaintext highlighter-rouge">institutionCode</code></strong>, <strong><code class="language-plaintext highlighter-rouge">collectionCode</code></strong> and <strong><code class="language-plaintext highlighter-rouge">catalogNumber</code></strong> for <code class="language-plaintext highlighter-rouge">occurrenceID</code>s (such as <code class="language-plaintext highlighter-rouge">urn:catalog:UWBM:Bird:89776</code>). However, using meaningless string or integer values is generally recommended for IDs. Currently there are no strict rules for <code class="language-plaintext highlighter-rouge">occurrenceID</code>s aside from the uniqueness within a dataset. After the discussions with our community (such as <a href="https://github.com/tdwg/dwc/issues/491">this GitHub issue</a>), GBIF has moved towards recommending meaningless <code class="language-plaintext highlighter-rouge">occurrenceID</code>s to promote <strong>persistent identifiers</strong>. A globally unique identifier such as UUID (e.g. <code class="language-plaintext highlighter-rouge">000866d2-c177-4648-a200-ead4007051b9</code>) can be one of the best practices as recommended by <a href="http://rs.tdwg.org/dwc/terms/occurrenceID">TDWG here</a>.</p>
+
+<p>Please do not worry if you have already used the triplet or other meaningful content for <code class="language-plaintext highlighter-rouge">occurrenceID</code>s in your published datasets. In case you change <code class="language-plaintext highlighter-rouge">occurrenceID</code>s, there is a way to migrate gbifIDs and URLs from old <code class="language-plaintext highlighter-rouge">occurrenceID</code>s to new <code class="language-plaintext highlighter-rouge">occurrenceID</code>s which will be more explained in the following sections.</p>
+
+<blockquote>
+  <p>Note: If you change <code class="language-plaintext highlighter-rouge">catalogNumber</code>, the former <code class="language-plaintext highlighter-rouge">catalogNumber</code> can be filled out in <code class="language-plaintext highlighter-rouge">otherCatalogNumbers</code> which is used for data-clustering (see <a href="https://data-blog.gbif.org/post/clustering-occurrences/">this blog post</a>).</p>
+</blockquote>
+
+<h2 id="three-options-to-deal-with-identifier-issues">Three options to deal with identifier issues</h2>
+
+<p>Data ingestion initiates after publishers update and publish a dataset on hosting web services. During the identifier validation, the system counts occurrence records and checks the portion of new <code class="language-plaintext highlighter-rouge">occurrenceID</code>s. If this exceeds 50% of the record count, the data ingestion will be paused creating an issue on <a href="https://github.com/gbif/ingestion-management/issues">GitHub</a> on a per-dataset basis.</p>
+
+<p>We offer three options to deal with the identifier issues.</p>
+
+<table class="table" class="table">
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th>Option</th>
+      <th>Who can do this</th>
+      <th>What happens after</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Resume the data ingestion by allowing changes of <code class="language-plaintext highlighter-rouge">occurrenceID</code>s</td>
+      <td>GBIF helpdesk</td>
+      <td>GBIF identifiers under old <code class="language-plaintext highlighter-rouge">occurrenceID</code>s will be deprecated and new GBIF identifiers will be given for new <code class="language-plaintext highlighter-rouge">occurrenceID</code>s.</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Change back <code class="language-plaintext highlighter-rouge">occurrenceID</code>s (i.e. restore the old <code class="language-plaintext highlighter-rouge">occurrenceID</code>s)</td>
+      <td>Publishers</td>
+      <td>Data ingestion will be automatically resumed after publication and GBIF identifiers remain the same.</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Migrate GBIF identifiers from old <code class="language-plaintext highlighter-rouge">occurrenceID</code>s to new <code class="language-plaintext highlighter-rouge">occurrenceID</code>s</td>
+      <td>GBIF helpdesk *</td>
+      <td>Data ingestion will be manually resumed and GBIF identifiers remain the same.</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>* Publishers need to provide a list</p>
+</blockquote>
+
+<p>GBIF helpdesk consults with publishers to decide which option suits the dataset best. Option 2 and Option 3 could prevent losing the URLs of occurrences, while Option 1 leads to the loss of the URLs.</p>
+
+<p>Firstly, we ask whether the change is on purpose or unintentional errors. If the changes of <code class="language-plaintext highlighter-rouge">occurrenceID</code>s are errors, Option 2 can be a candidate solution. What publishers need to do here is to change back from the new <code class="language-plaintext highlighter-rouge">occurrenceID</code>s to the old occurrenceIDs and to publish the datasets on the hosting web services.</p>
+
+<p>Secondly, we suggest Option 3, if publishers can provide us with the relationship between the old <code class="language-plaintext highlighter-rouge">occurrenceID</code>s and the new <code class="language-plaintext highlighter-rouge">occurrenceID</code>s. Using the list of <code class="language-plaintext highlighter-rouge">occurrenceID</code>s, we can migrate GBIF identifiers and keep the URLs (see the figure below).</p>
+
+<p><img src="/hp-data-blog/post/2023-11-01-improve-identifier-stability/occurrenceID_migration.png" alt="Fig.2 The URL remains the same after the migration of GBIF identifiers." /></p>
+
+<p>Once we know that both Option 2 and Option 3 are not feasible, we will take Option 1 to resume the ingestion.</p>
+
+<p>Please be aware that we may take Option 1 if we don’t hear back from the publishers for more than two months after the first contact. We are happy to extend this timeframe on request.</p>
+
+<p>There are cases that identifier issues can be ignored. For example, when the number of occurrence records changes massively, the portion of new <code class="language-plaintext highlighter-rouge">occurrenceID</code>s may reach the threshold. If we can tell an increase of records (like doubled or tripled) by looking at hosting web services such as IPTs, we take Option 1 without notification. Another example is the datasets from observation data aggregators in which <code class="language-plaintext highlighter-rouge">occurrenceID</code>s always change. In this case, we set a flag to skip <code class="language-plaintext highlighter-rouge">occurrenceID</code> checks for these datasets, and data ingestion will not be paused during the identifier validation anymore.</p>
+
+<h2 id="requirements-for-identifier-migrations">Requirements for identifier migrations</h2>
+
+<p>For migrating GBIF identifiers, a list of the relationship between the old <code class="language-plaintext highlighter-rouge">occurrenceID</code>s and the new <code class="language-plaintext highlighter-rouge">occurrenceID</code>s is required. The file has no header in a comma delimited format, and it should contain the old occurrenceIDs in the first column, followed by the new <code class="language-plaintext highlighter-rouge">occurrenceID</code>s in the second column.  For example, like this:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre>old_id_00001,new_id_00001
+old_id_00002,new_id_00002
+old_id_00003,new_id_00003
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>If publishers can send a list to GBIF helpdesk (helpdesk@gbif.org), we can run an identifier migration for you. This can be done even before publishers update datasets on hosting web services. If you know <code class="language-plaintext highlighter-rouge">occurrenceID</code>s change in the next update, please do not hesitate to contact us.</p>
+
+<p>Another important note here is that migration can be done between datasets. If you are planning to republish occurrence records in new datasets by removing the records from the previous datasets or deleting the datasets themselves, this approach will help maintain the GBIF identifiers for the records. The URLs in the previous datasets can be used in the new datasets by identifier migrations anytime.</p>
+
+<h2 id="more-information-for-publishers-how-to-detect-identifier-issues-on-the-gbif-registry">More information for publishers: how to detect identifier issues on the GBIF registry.</h2>
+
+<p>GBIF helpdesk will contact the publishers when identifiers validation fails, but you are welcome to check the GBIF registry on your own.</p>
+
+<p>You can access the registry from your dataset page on GBIF.org.</p>
+
+<p>Look for <code class="language-plaintext highlighter-rouge">GBIF Registry</code> link in the GBIF registration section.</p>
+
+<p>On the registry page, Click <code class="language-plaintext highlighter-rouge">Ingestion history</code> under the <code class="language-plaintext highlighter-rouge">Datasets</code> in the side menu.</p>
+
+<p>If <code class="language-plaintext highlighter-rouge">VERBATIM_TO_IDENTIFIER : More than one metric</code> is in red characters, this means that the identifier validation failed (a big portion of new <code class="language-plaintext highlighter-rouge">occurrenceID</code>s were detected).</p>
+
+<p><img src="/hp-data-blog/post/2023-11-01-improve-identifier-stability/registry_ingestion_history.jpg" alt="Fig.3 GBIF registry: ingestion history" /></p>
+
+<p>If you hover on <code class="language-plaintext highlighter-rouge">VERBATIM_TO_IDENTIFIER : More than one metric</code>, you can see a record count in the metrics.</p>
+
+<p>The record count for new <code class="language-plaintext highlighter-rouge">occurrenceID</code>s is shown in the <code class="language-plaintext highlighter-rouge">absent gbif id count</code>.</p>
+
+<p><img src="/hp-data-blog/post/2023-11-01-improve-identifier-stability/registry_record_count.jpg" alt="Fig.4 GBIF registry: ingestion history - occurrence count" /></p>
+
+<p>You can also check whether your dataset has identifier issues on <a href="https://github.com/gbif/ingestion-management/issues">GitHub</a> searching by the dataset title.</p>
+
+<h2 id="links-related-about-the-identifier-stability">Links related about the identifier stability</h2>
+<ul>
+  <li><a href="https://www.gbif.org/news/2M3n65fHOhvq4ek5oVOskc/new-processing-routine-improves-stability-of-gbif-occurrence-ids">News item: New processing routine improves stability of GBIF occurrence IDs</a></li>
+  <li><a href="https://discourse.gbif.org/t/occurrenceid-stability-gbif-technical-support-hour-for-nodes/4158/5">GBIF community forum for the technical support hour for GBIF nodes: GBIF and occurrenceID stability</a></li>
+  <li><a href="https://github.com/gbif/ingestion-management">GitHub: ingestion-management</a></li>
+</ul>
+
+</div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/2023-03-24-maps-api/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Creating high resolution maps with rgbif</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/2024-02-06-working-with-extinct-species-on-gbif/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Working with extinct species on GBIF</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+<script src="/hp-data-blog/assets/js/code-blocks.js" defer></script>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/">GBIF.org</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1794391499"></script>
+
+
+
+
+
+  </body>
+</html>

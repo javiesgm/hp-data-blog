@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Exploring es50 for GBIF
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1794391499">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/datablog-logo.svg" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=APIs%20and%20downloads"
+                    class="navbar-item "
+                  >
+                    APIs and downloads
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Publishing%20data"
+                    class="navbar-item "
+                  >
+                    Publishing data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Analysis%20and%20maps"
+                    class="navbar-item "
+                  >
+                    Analysis and maps
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Taxonomy"
+                    class="navbar-item "
+                  >
+                    Taxonomy
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Data%20quality"
+                    class="navbar-item "
+                  >
+                    Data quality
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citation%20and%20data%20use"
+                    class="navbar-item "
+                  >
+                    Citation and data use
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Collections"
+                    class="navbar-item "
+                  >
+                    Collections
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citizen%20science"
+                    class="navbar-item "
+                  >
+                    Citizen science
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Survey%20and%20monitoring"
+                    class="navbar-item "
+                  >
+                    Survey and monitoring
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Molecular%20data"
+                    class="navbar-item "
+                  >
+                    Molecular data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Multimedia"
+                    class="navbar-item "
+                  >
+                    Multimedia
+                  </a>
+                
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Exploring es50 for GBIF</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=john-waller" title="All posts by John Waller">John Waller</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2019-07-10">10 July 2019</time>
+        <span aria-hidden="true">·</span>
+        5 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=es50">#es50</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=data-gaps">#data gaps</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=maps">#maps</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+      <div class="article">
+        <div class="content">
+  <p><img src="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/map_es50_300_1.jpg" alt="" /></p>
+
+<p>It has been <a href="https://discourse.gbif.org/t/hunger-mapping-gbif-data-blog/607/3">suggested</a> that GBIF could make <strong>es50</strong> maps similar to what organizations like <strong>OBIS</strong> are <br /><a href="https://www.researchgate.net/figure/Hurlberts-index-ES50-calculated-on-a-grid-of-5x5-degrees-ES50-is-the-expected_fig4_242783847">already doing</a>. I decided to make one for <strong>land animals</strong> (graph above). <a href="https://github.com/jhnwllr/es50">link to code</a></p>
+
+<!--more-->
+
+<blockquote>
+  <p><strong>es50 (Hulbert index)</strong> is the statistically expected number of unique species in a random sample of 50 occurrence records, and is an indicator of biodiversity richness. The score can be computed without random sampling, but the mean of infinite random sampling will produce the same result. <br /><br /> <a href="https://obis.org/indicators/documentation/">Obis Definition here</a></p>
+</blockquote>
+
+<p>Here I plot a global es50 map for <strong>animal genera</strong> on GBIF. Each es50 score represent the expected number of unique animal genera from a sample of 50 occurrence records. I chose to use genus here for efficiency and to avoid naming issues, since I did not do any extensive quality control. Each hexagon is about 480 km across and of equal area, as you can see some distortion towards the poles. <br /> <a href="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/wireframe.jpg">link to grid</a></p>
+
+<p>You might be thinking, why do this strange statistical exercise? Why not just use species counts? Well, one of the main advantages of es50 is that it somewhat corrects for <strong>sampling bias</strong>.</p>
+
+<h1 id="species-richness-is-correlated-with-effort">Species <b>richness</b> is correlated with <b>effort</b></h1>
+
+<!-- ![](/post/2019-06-25-exploring-es50-for-gbif_files/effortAndSpeciesCounts.svg)  -->
+<p><img width="100%" src="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/effortAndSpeciesCounts.svg" />&lt;/img&gt;</p>
+
+<p>Here I plot the unique animal genus counts versus the number occurrence records for a global grid equal area hexagons (on land). The amount of occurrence records in a region has is highly predictive of the number of unique animal species that region will have. According to raw GBIF records, <strong>Belgium</strong>, <strong>Sweden</strong>, and parts of the <strong>USA</strong> are more biodiverse than <strong>Brazil</strong> and <strong>Madagascar</strong>. And <strong>Iceland</strong> is nearly as species rich as parts of <strong>Brazil</strong>. If GBIF were to plot raw species count maps, it would obviously be non-sense because of <strong>sampling bias</strong>.</p>
+
+<blockquote>
+  <p>Without some correction for sampling bias we might want to turn <strong>all of Belgium</strong> into a Nature reserve.</p>
+</blockquote>
+
+<h1 id="occurrence-records-are-highly-biased-to-the-north">Occurrence records are highly biased to the <span style="color:#D53E4F"><b>north</b></span></h1>
+
+<p><img src="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/globalOccurrenceCounts_1.svg" alt="" /></p>
+
+<p>Records in North America, Europe, Austrailia, and South Africa make up close to 85% of all occurrence records collected by the GBIF network. And <a href="https://www.gbif.org/occurrence/search?has_coordinate=true&amp;has_geospatial_issue=false&amp;geometry=POLYGON((-180%2035,180%2035,180%2090,-180%2090,-180%2035))">70%</a> of all occurrence records are found north of 35°. This heavy sampling bias, means most groups will have their center of diversity shifted to the north.</p>
+
+<h1 id="most-raw-species-count-maps-will-mirror-occurrence-count-maps">Most raw species-count maps will mirror occurrence-count maps</h1>
+
+<p><img src="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/globalSpeciesCounts_1.svg" alt="" /></p>
+
+<p>Here is the raw genus count map for animals. It is not hard to see that it simply <strong>mirrors sampling effort</strong>. Unfortunatly most groups (with the exception of birds) will probably have maps that look this way.</p>
+
+<h1 id="low-species-counts-in-a-known-hotspot"><span style="color:#3288BD"><b><u>Low</u></b></span> species counts in a known hotspot</h1>
+
+<p><img width="100%" src="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/miniMapSpCount_1.svg" />&lt;/img&gt;</p>
+
+<p>This a raw animal genus count map of <strong>South East Asia</strong> shows <span style="color:#3288BD"><b><u>low</u></b></span>-to-<span style="color:#ABDDA4"><b><u>medium</u></b></span> animal diversity even though this region is a known <a href="https://discourse.gbif.org/t/hunger-mapping-gbif-data-blog/607/">biodiversity hotspot</a>. The sampling effort in this region is <a href="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/miniMapOccCounts_1.svg">here</a>.</p>
+
+<h1 id="high-es50-scores-in-a-known-hotspot"><span style="color:#D53E4F"><b><u>High</u></b></span> es50 scores in a known hotspot</h1>
+
+<p><img width="100%" src="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/miniMapEs501.svg" />&lt;/img&gt;</p>
+
+<p>Our <strong>es50</strong> plot shows most of South East Asia as having medium to high diversity. Although there is still some noise and the result might not be transparent as a simple count map, es50 is able to highlight actual regions of high biodiversity.</p>
+
+<p><img width="100%" src="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/latGraphs_1.svg" />&lt;/img&gt;</p>
+
+<p>Here I plot latitude curves for <span style="color:#D54355"><b>es50</b></span> and <span style="color:#3487BD"><b>genus counts</b></span> for animal genera. While the es50 curve seems to be <strong>still slightly biased near 50°N</strong>, the curve obviously is much closer to capturing relative diversity than our genus count curve, which is <strong>total bi-modal nonsense</strong> and only really shows us effort.</p>
+
+<h1 id="es50-fail-cases">es50 fail cases</h1>
+
+<p><strong>es50</strong> does sometimes produce nicer looking maps (see fail cases below), but it does not give us what most people want - <strong>species counts</strong>. Unfortunately very few  taxonomic groups (i.e. probably only birds) are well-sampled enough globally to produce species-count maps that are not mirrored occurrence count graphs. Another drawback of es50 is that your group needs to have a reasonable expectation of having &gt;50 species within a given grid cell (although <strong>50 is a somewhat arbitrary choice</strong>).</p>
+
+<blockquote>
+  <p><a href="https://obis.org/indicators/documentation/">OBIS Warning</a>: ES50 assumes that individuals are randomly distributed, the <strong>sample size</strong> is sufficiently <strong>large</strong>, the samples are taxonomically similar, and that all of the samples have been taken in the <strong>same manner</strong>.</p>
+</blockquote>
+
+<h3 id="es50-for-frogs---few-places-with-50-species-sample-size-violation">es50 for frogs - few places with &gt;50 species (sample size violation)</h3>
+<p><img src="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/map_es50_300_952.svg" alt="" /></p>
+
+<p>In this map there are <strong>many places where there are fewer than 50 frog species</strong> even though I use fairly large hexagons. In these cases, GBIF might want to change the threshold from 50 species to something smaller.</p>
+
+<h3 id="es50-for-insects---biased-sampling-same-manner-violoation">es50 for insects - biased sampling (same manner violoation)</h3>
+
+<p><img src="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/map_es50_300_216.svg" alt="" /></p>
+
+<p>In this map, the insect data seems to be too highly biased to produce a reasonable es50 result. Perhaps due to malaise trap proejcts, such as the <a href="https://www.gbif.org/en/dataset/38c1351d-9cfe-42c0-97da-02d2c8be141c">Swedish Malaise Trap Project</a>. There could also be other high-effort inventory projects in the USA and Europe that violate the <strong>same manner</strong> assumption.</p>
+
+<h1 id="es50-maps-for-other-groups">es50 maps for other groups</h1>
+
+<p>All of the plots below are based equally-spaced (480 km apart) and equal-area hexagons. I generated the grids using <a href="https://cran.r-project.org/web/packages/dggridR/vignettes/dggridR.html">dggridR</a>. I also removed fossils and livinig specimens from the occurrence records.</p>
+
+<h3 id="es50-map-links">es50 map links:</h3>
+
+<ul>
+  <li>
+    <table class="table" class="table">
+      <tbody>
+        <tr>
+          <td><strong>Mammals</strong> <a href="post/2019-06-25-exploring-es50-for-gbif_files/map_es50_300_359.jpg">jpg</a></td>
+          <td><a href="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/map_es50_300_359.pdf">pdf</a></td>
+          <td><a href="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/map_es50_300_359.svg">svg</a> (based on species counts)</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table class="table" class="table">
+      <tbody>
+        <tr>
+          <td><strong>Birds</strong> <a href="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/map_es50_300_212.jpg">jpg</a></td>
+          <td><a href="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/map_es50_300_212.pdf">pdf</a></td>
+          <td><a href="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/map_es50_300_212.svg">svg</a> (based on species counts)</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table class="table" class="table">
+      <tbody>
+        <tr>
+          <td><strong>Frogs</strong> <a href="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/map_es50_300_952.jpg">jpg</a></td>
+          <td><a href="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/map_es50_300_952.pdf">pdf</a></td>
+          <td><a href="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/map_es50_300_952.svg">svg</a> (based on species counts)</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table class="table" class="table">
+      <tbody>
+        <tr>
+          <td><strong>Vascular Plants</strong> <a href="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/map_es50_300_7707728.jpg">jpg</a></td>
+          <td><a href="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/map_es50_300_7707728.pdf">pdf</a></td>
+          <td><a href="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/map_es50_300_7707728.svg">svg</a> (based on genus counts)</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table class="table" class="table">
+      <tbody>
+        <tr>
+          <td><strong>Insects</strong> <a href="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/map_es50_300_216.jpg">jpg</a></td>
+          <td><a href="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/map_es50_300_216.pdf">pdf</a></td>
+          <td><a href="/hp-data-blog/post/2019-06-25-exploring-es50-for-gbif_files/map_es50_300_216.svg">svg</a> (based on genus counts)</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+<!--more-->
+
+</div>
+      </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/big-national-checklists/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Big National Checklists</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/citizen-science-on-gbif-2019/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Citizen Science on GBIF - 2019</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+<script src="/hp-data-blog/assets/js/code-blocks.js" defer></script>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/">GBIF.org</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1794391499"></script>
+
+
+
+
+
+  </body>
+</html>

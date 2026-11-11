@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Working with extinct species on GBIF
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1794391499">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/datablog-logo.svg" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=APIs%20and%20downloads"
+                    class="navbar-item "
+                  >
+                    APIs and downloads
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Publishing%20data"
+                    class="navbar-item "
+                  >
+                    Publishing data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Analysis%20and%20maps"
+                    class="navbar-item "
+                  >
+                    Analysis and maps
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Taxonomy"
+                    class="navbar-item "
+                  >
+                    Taxonomy
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Data%20quality"
+                    class="navbar-item "
+                  >
+                    Data quality
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citation%20and%20data%20use"
+                    class="navbar-item "
+                  >
+                    Citation and data use
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Collections"
+                    class="navbar-item "
+                  >
+                    Collections
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citizen%20science"
+                    class="navbar-item "
+                  >
+                    Citizen science
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Survey%20and%20monitoring"
+                    class="navbar-item "
+                  >
+                    Survey and monitoring
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Molecular%20data"
+                    class="navbar-item "
+                  >
+                    Molecular data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Multimedia"
+                    class="navbar-item "
+                  >
+                    Multimedia
+                  </a>
+                
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  postHeader--withToc ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Working with extinct species on GBIF</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=john-waller" title="All posts by John Waller">John Waller</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2024-05-21">21 May 2024</time>
+        <span aria-hidden="true">·</span>
+        4 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Taxonomy">Taxonomy</a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+    <div class="article--toc">
+      <div>
+        <div class="toc-wrapper  toc__removeOnMobile ">
+          <aside class="toc">
+  <div class="toc_header">
+    On this page
+  </div>
+  <div class="toc_list">
+    <ul>
+  <li><a href="#isextinct">isExtinct</a></li>
+  <li><a href="#checklistbank">Checklistbank</a></li>
+  <li><a href="#iucn-threat-status">IUCN Threat Status</a></li>
+  <li><a href="#fossil-occurrences">fossil occurrences</a></li>
+</ul>
+  </div>
+</aside>
+        </div>
+        <div class="article">
+          <div class="content">
+  <p>GBIF users are often interested in getting occurrences of only living species or “no extinct” species. This seemingly straightforward request is often difficult to fulfill in practice.</p>
+
+<p>Currently, there is no occurrence level filter for removing extinct species from an occurrence search. Additionally, there is no authoritative global extinct species list available from GBIF. This article discusses the difficulties and complexities of working with extinct species and some possible solutions.</p>
+
+<!--more-->
+
+<p><img src="https://api.gbif.org/v1/image/cache/fit-in/500x/occurrence/418979581/media/b2fae8748e77446ef0bcd5a23e373bd6" width="500" /></p>
+
+<p><small> Meganeura selysii (Brongniart, 1894) <a href="https://www.gbif.org/occurrence/418979581">collected</a> in France (licensed under http://creativecommons.org/licenses/by/4.0/) </small></p>
+
+<h2 id="isextinct">isExtinct</h2>
+
+<p>GBIF has a <strong>species search</strong> term called <code class="language-plaintext highlighter-rouge">isExtinct</code>. This term is (as of the writing of this blog post) is not visible on the <a href="https://www.gbif.org/species/search">web UI</a>, but it is available when using the <a href="https://api.gbif.org/v1/species/search?rank=SPECIES&amp;isExtinct=true">API</a> or <a href="https://docs.ropensci.org/rgbif/reference/name_lookup.html">rgbif</a>/<a href="https://pygbif.readthedocs.io/en/latest/modules/species.html#pygbif.species.name_lookup">pygbif</a>.</p>
+
+<p>This search term will tell you whether a taxon was marked as “extinct” by the source checklist of the name. The <code class="language-plaintext highlighter-rouge">isExtinct</code> designation on the GBIF API is harvested from the Catalogue Of Life (COL) <a href="https://www.catalogueoflife.org/data/source-datasets">source datasets</a> and from the other GBIF backbone <a href="https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c/constituents">constituent datasets</a> of the GBIF backbone.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">name_lookup</span><span class="p">(</span><span class="n">isExtinct</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="n">limit</span><span class="o">=</span><span class="m">1000</span><span class="p">,</span><span class="n">offset</span><span class="o">=</span><span class="m">0</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">species</span><span class="p">.</span><span class="n">name_lookup</span><span class="p">(</span><span class="n">isExtinct</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>https://api.gbif.org/v1/species/search?rank<span class="o">=</span>SPECIES&amp;isExtinct<span class="o">=</span><span class="nb">true</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Most checklist constituents in the GBIF backbone do not publish any extinct taxa, meaning either that there are no extinct species within the group or the checklist simply doesn’t publish that information.</p>
+
+<p>Around 35K species-ranked names are labeled as <code class="language-plaintext highlighter-rouge">isExtinct</code> in the <a href="https://api.gbif.org/v1/species/search?rank=SPECIES&amp;isExtinct=true&amp;limit=1000&amp;datasetKey=d7dddbf4-2cf0-4f39-9b2a-bb099caae36c">GBIF backbone</a>. Unfortunately, there is no efficient way to extract all 35K <code class="language-plaintext highlighter-rouge">isExtinct</code> species (+400K names) using the GBIF species API. The current limit for any species search is <code class="language-plaintext highlighter-rouge">limit=1000</code>. Therefore, one can only extract the first 1000 records from any search. However, one can use the <code class="language-plaintext highlighter-rouge">offset</code> parameter to page through the results, but this will be slow and inefficient (offset is also limited to 100,000). See <strong>Chechlistbank</strong> section below for a likely better solution.</p>
+
+<p><img src="images/extinct_ds.svg" alt="" /></p>
+
+<h2 id="checklistbank">Checklistbank</h2>
+
+<p><a href="https://www.checklistbank.org/">Checklistbank</a> is a somewhat new service which stores checklist datasets that make of the GBIF backbone and the COL checklist (and other checklists too). It is now possible to download all taxa marked <code class="language-plaintext highlighter-rouge">isExtinct</code> in the COL checklist dataset using the checklistbank UI.</p>
+
+<p><img src="image.png" alt="alt text" /></p>
+
+<p><a href="https://www.checklistbank.org/dataset/294826/names?extinct=true&amp;facet=rank&amp;facet=issue&amp;facet=status&amp;facet=nomStatus&amp;facet=nomCode&amp;facet=nameType&amp;facet=field&amp;facet=authorship&amp;facet=authorshipYear&amp;facet=extinct&amp;facet=environment&amp;facet=origin&amp;facet=sectorMode&amp;facet=secondarySourceGroup&amp;facet=sectorDatasetKey&amp;facet=group&amp;limit=50&amp;offset=0&amp;sortBy=taxonomic">link here</a></p>
+
+<p>Alternatively, one can also extract all of the <code class="language-plaintext highlighter-rouge">isExtinct</code> names from the COL checklist dataset, using the  Checklistbank API.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="c"># export all extinct names </span>
+http://api.checklistbank.org/dataset/3LR/export.txt?extinct<span class="o">=</span><span class="nb">true</span>
+<span class="c"># export from a certain group </span>
+<span class="c">## Trilobites taxonID=TRL</span>
+http://api.checklistbank.org/dataset/COL2022/export.txt?taxonID<span class="o">=</span>TRL&amp;extinct<span class="o">=</span><span class="nb">true</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>You can look up other COL <code class="language-plaintext highlighter-rouge">taxonID</code> values on the <a href="https://www.catalogueoflife.org/">COL website</a>, just copy the last part of the URL after searching for the group you want.</p>
+
+<ul>
+  <li>Odonata (B6LCL) https://www.catalogueoflife.org/data/taxon/B6LCL</li>
+  <li>Trilobites (TRL) https://www.catalogueoflife.org/data/taxon/TRL</li>
+  <li>Birds (V2) https://www.catalogueoflife.org/data/taxon/V2</li>
+</ul>
+
+<p>When using the <code class="language-plaintext highlighter-rouge">isExtinct</code> term, one should keep in mind that the coverage and reliability of this term can vary between taxonomic groups and COL source datasets. This basic fact also explains why the <code class="language-plaintext highlighter-rouge">isExtinct</code> term is not more visible on the GBIF web portal.</p>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">isExtinct</code> on GBIF is only updated when the GBIF backbone is updated, so source datasets may be more up-to-date or disagree with the output of the GBIF API.</p>
+</blockquote>
+
+<p><a href="https://github.com/CatalogueOfLife/backend/blob/master/API.md">checklistbank API docs</a></p>
+
+<h2 id="iucn-threat-status">IUCN Threat Status</h2>
+
+<p>The term <code class="language-plaintext highlighter-rouge">isExtinct</code> is not always reliable for more <strong>recently extinct</strong> species. For more recently extinct species, <code class="language-plaintext highlighter-rouge">iucnRedListCategory</code> tends to work better. For example, no adult <a href="https://www.gbif.org/species/2422444">Golden Toads</a> have been seen since May 15, 1989. While GBIF lists <code class="language-plaintext highlighter-rouge">isExtinct=false</code> for the Golden Toad, the <code class="language-plaintext highlighter-rouge">iucnRedListCategory</code> lists the Golden Toad correctly as <a href="https://api.gbif.org/v1/species/2422444/iucnRedListCategory">“EXTINCT”</a>.</p>
+
+<p>Here are some examples of how to use <code class="language-plaintext highlighter-rouge">iucnRedListCategory</code> to search for extinct species and occurrences with <strong>rgbif</strong> and the API:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="n">occ_search</span><span class="p">(</span><span class="n">taxonKey</span><span class="o">=</span><span class="m">2422444</span><span class="p">,</span><span class="n">iucnRedListCategory</span><span class="o">=</span><span class="s2">"EX"</span><span class="p">)</span><span class="w">
+</span><span class="n">name_usage</span><span class="p">(</span><span class="m">2422444</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="s2">"iucnRedListCategory"</span><span class="p">)</span><span class="w">
+</span><span class="c1"># occ_download(pred(iucnRedListCategory,"EX"))</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>https://api.gbif.org/v1/species/2422444/iucnRedListCategory
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">iucnRedListCategory</code> is also available as a web UI search : 
+https://www.gbif.org/occurrence/search?iucn_red_list_category=EX</p>
+
+<h2 id="fossil-occurrences">fossil occurrences</h2>
+
+<p>Finally, one might want to consider occurrences marked with the basis of record “FOSSIL SPECIMENS”. While fossil specimens may not always be extinct taxa, it is often useful for filtering out or cross-referencing potentially extinct occurrences.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="c1"># rgbif has a useful default function for removing fossil occurrences and other</span><span class="w">
+</span><span class="c1"># often filtered data, such as living specimens. </span><span class="w">
+</span><span class="n">occ_download</span><span class="p">(</span><span class="n">pred_default</span><span class="p">())</span><span class="w">
+</span><span class="n">occ_download</span><span class="p">(</span><span class="n">pred_not</span><span class="p">(</span><span class="n">pred</span><span class="p">(</span><span class="s2">"basisOfRecord"</span><span class="p">,</span><span class="s2">"FOSSIL_SPECIMEN"</span><span class="p">)))</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">pygbif</span> <span class="kn">import</span> <span class="n">occurrences</span> <span class="k">as</span> <span class="n">occ</span>
+<span class="n">occ</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">'basisOfRecord !in ["FOSSIL_SPECIMEN"]'</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Working with extinct taxa can be challenging, but hopefully you have found some solutions here. As always, if you haven’t found what you are looking for, you can always contact us at helpdesk@gbif.org.</p>
+
+
+</div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/improve-identifier-stability/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">GBIF attempts to improve identifier stability by monitoring changes of occurrenceIDs</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/aws-and-gbif/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">GBIF and Apache-Spark on AWS tutorial</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+<script src="/hp-data-blog/assets/js/code-blocks.js" defer></script>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/">GBIF.org</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1794391499"></script>
+
+
+
+
+
+  </body>
+</html>

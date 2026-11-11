@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Good SAMaritans - Introduction to best practices for publishing Survey and Monitoring (SAM) data to GBIF
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1794391499">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/datablog-logo.svg" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=APIs%20and%20downloads"
+                    class="navbar-item "
+                  >
+                    APIs and downloads
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Publishing%20data"
+                    class="navbar-item "
+                  >
+                    Publishing data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Analysis%20and%20maps"
+                    class="navbar-item "
+                  >
+                    Analysis and maps
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Taxonomy"
+                    class="navbar-item "
+                  >
+                    Taxonomy
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Data%20quality"
+                    class="navbar-item "
+                  >
+                    Data quality
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citation%20and%20data%20use"
+                    class="navbar-item "
+                  >
+                    Citation and data use
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Collections"
+                    class="navbar-item "
+                  >
+                    Collections
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citizen%20science"
+                    class="navbar-item "
+                  >
+                    Citizen science
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Survey%20and%20monitoring"
+                    class="navbar-item "
+                  >
+                    Survey and monitoring
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Molecular%20data"
+                    class="navbar-item "
+                  >
+                    Molecular data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Multimedia"
+                    class="navbar-item "
+                  >
+                    Multimedia
+                  </a>
+                
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Good SAMaritans - Introduction to best practices for publishing Survey and Monitoring (SAM) data to GBIF</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=marie-grosjean" title="All posts by Marie Grosjean">Marie Grosjean</a>, <a href="/hp-data-blog/?author=kate-ingenloff" title="All posts by Kate Ingenloff">Kate Ingenloff</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2026-07-15">15 July 2026</time>
+        <span aria-hidden="true">·</span>
+        4 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Survey+and+monitoring">Survey and monitoring</a>
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=sam">#SAM</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=humboldt">#Humboldt</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=dwc-dp">#DwC-DP</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=darwin-core">#Darwin Core</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=dwc-a">#DwC-A</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=publishing">#publishing</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+      <div class="article">
+        <div class="content">
+  <p>Perhaps, like me, you don’t know much about publishing Survey and Monitoring data(“SAM data” ). Maybe you have heard about event cores and Humboldt extensions, and you aren’t quite sure how to fit data into these.
+Trust me, this is about to change!</p>
+
+<p>I am on a mission to learn everything there is to know about publishing SAM data and spread the word. Don’t worry, I am under the guidance of our survey data mapping expert, Kate Ingenloff (who also happens to be in the office next door), so we are in good hands.</p>
+
+<p>Before we get started, here is a little disclaimer: I am trying to make this series of post somewhat entertaining.
+If you are the type of person who doesn’t enjoy fluffy writing and goofy doodles, this post isn’t for you. Kate wrote an excellent comprehensive guide here (<a href="https://doi.org/10.35035/doc-ynvs-eh84">https://doi.org/10.35035/doc-ynvs-eh84</a>). I highly recommend you read it as it is the basis for most of what is written here (but straight to the point).</p>
+
+<p><img align="right" style="padding: 15px" src="/hp-data-blog/post/2026-07-15-sam-intoduction/intro_sam.PNG" alt="SAM the Secretary bird" width="300" /></p>
+
+<p>For everyone else, let me introduce you to our new SAM data mascot: Sam the Secretary bird. Sam is here to illustrate some points in my post and to bring joy into the world. If you like having Sam here, let me know (I have a lot of fun creating drawings).</p>
+
+<p><strong>Today is a short introduction to survey and monitoring data and why they matter.</strong></p>
+
+<p>Mapping and sharing SAM data takes time and resources, so why it is it important? Is having events and Humboldt files much better than just occurrences?</p>
+
+<p>Yes, and here is an example.</p>
+
+<p>Many users come to GBIF to download data about a specific taxon with the goal of making a distribution map. Knowing where a species occurs is very helpful for work in research, conservation, policy making and finding good mushroom spots.</p>
+
+<p>Imagine that you come to GBIF.org to map the distribution of a butterfly. (You may or may not decide to put that map on t-shirts for your butterfly-loving club, the FlyGuys).</p>
+
+<p>You find three occurrences for this species in GBIF. How would you draw a map?</p>
+
+<p><img align="center" src="/hp-data-blog/post/2026-07-15-sam-intoduction/tentative_maps.PNG" alt="Which distribution map to draw?" width="300" /></p>
+
+<p>But you discover that these three occurrences are the result of Sam’s work, and Sam surveyed two more locations and didn’t find any butterflies there.</p>
+
+<p><img align="center" src="/hp-data-blog/post/2026-07-15-sam-intoduction/additional_sampling.PNG" alt="Additional sampling location" width="300" /></p>
+
+<p>In fact, Sam was looking for imagos (a fancy word for adult or fully mature butterflies) belonging to that specific species (along with another species of butterfly) and didn’t find a specimen.</p>
+
+<p><img align="left" style="padding: 15px" src="/hp-data-blog/post/2026-07-15-sam-intoduction/sam_butterfly_net.PNG" alt="First survey protocol" width="300" /></p>
+
+<p>For one of the additional locations surveyed, Sam only had a small net and five minutes to survey 1,000 square meters (about 10,763 square feet). Perhaps it comes as no surprise that this terrible protocol resulted in no specimens being collected.</p>
+
+<p>For the next location, Sam knew better and finally convinced their supervisors to get proper equipment. They were able to use a machine to catch all butterflies and had two eight hour days to survey the same area three times.</p>
+
+<p><img align="center" src="/hp-data-blog/post/2026-07-15-sam-intoduction/sam_doom_machine.PNG" alt="Second sampling protocol" /></p>
+
+<p>Happy with this new, updated protocol, Sam came back to the previous location to re-survey the areas. Unfortunately, the weather wasn’t on Sam’s side and once again, no butterflies were found.</p>
+
+<p><img align="center" src="/hp-data-blog/post/2026-07-15-sam-intoduction/sam_snow.PNG" alt="Bad weather for butterfly catching" width="300" /></p>
+
+<p>If you only had access to the occurrences, you wouldn’t be able to differentiate between absences and lack of sampling. The documented protocol and efforts also give you more context for quantitative analysis and comparison across studies.</p>
+
+<p>At last, thanks to all that additional SAM data, you can make a refined map and no-one (not even the vice chair of the FlyGuys) will be able to deny your contribution to the club.</p>
+
+<p><img align="center" src="/hp-data-blog/post/2026-07-15-sam-intoduction/final_map.PNG" alt="Final map" width="300" /></p>
+
+<p>The good news is that any bit of data provided is already helping a lot! Data publishers don’t need to map everything all at once.</p>
+
+<p>If you are a data provider, you can start by making a list of what type of information you already have based on the information we would consider including with a SAM dataset. What type of information, you ask? We can adapt the 5 W’s of journalism to for mapping SAM data. The questions become:</p>
+
+<blockquote>
+  <p>Who did what, when, where, how, and to what extent (how much)?</p>
+</blockquote>
+
+<p>I made an example using Sam’s work. You can too; I even made a little <a href="https://github.com/gbif/data-blog/blob/master/content/post/2026-07-15-sam-intoduction/your_cheatsheet_PDF.pdf">printable PDF</a> to get you started.</p>
+
+<p>In the next posts, we will focus on specific aspects of mapping SAM data. Now that the Darwin Core Data Package (DwC-DP) is ratified and optimized to support complex SAM data, we will cover both Darwin Core data models: DwC-A Event core with Humboldt extension and the DwC-DP.</p>
+
+<p>By the end of this series, I (and by extension, you) should be fluent in both the DwC Archives Event core and the DwC Data Package for SAM data.</p>
+
+<p>Until then, I will leave you with Sam’s cheat sheet so you can get started!</p>
+
+<p><img src="/hp-data-blog/post/2026-07-15-sam-intoduction/sam_cheatsheet.PNG" alt="Sam's cheatsheet" /></p>
+
+
+</div>
+      </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+  
+  
+  <section class="post-series">
+    <div class="container">
+      <div class="article">
+        <aside class="series-card series-card--in-post" aria-label="Series: Good SAMaritans">
+          <span class="series-card__label">Series · 4 parts</span>
+          <p class="series-card__title series-card__title--small"><a href="/hp-data-blog/?series=good-samaritans">Good SAMaritans</a></p>
+          
+<ol class="series-parts">
+  
+    <li class="series-parts__item is-current">
+      <span class="series-parts__num" aria-hidden="true">1</span>
+      
+        <span class="series-parts__title" aria-current="page">Good SAMaritans - Introduction to best practices for publishing Survey and Monitoring (SAM) data to GBIF <span class="series-parts__here">You are here</span></span>
+      
+      <time class="series-parts__date" datetime="2026-07-15">15 Jul 2026</time>
+    </li>
+  
+    <li class="series-parts__item">
+      <span class="series-parts__num" aria-hidden="true">2</span>
+      
+        <a class="series-parts__title" href="/hp-data-blog/post/sam-survey-scope/">Good SAMaritans – How to model survey targets in Survey and Monitoring (SAM) datasets</a>
+      
+      <time class="series-parts__date" datetime="2026-08-13">13 Aug 2026</time>
+    </li>
+  
+    <li class="series-parts__item">
+      <span class="series-parts__num" aria-hidden="true">3</span>
+      
+        <a class="series-parts__title" href="/hp-data-blog/post/sam-survey-where-when/">Good SAMaritans – Modelling survey location, date and time when publishing Survey and Monitoring data to GBIF</a>
+      
+      <time class="series-parts__date" datetime="2026-09-07">7 Sep 2026</time>
+    </li>
+  
+    <li class="series-parts__item">
+      <span class="series-parts__num" aria-hidden="true">4</span>
+      
+        <a class="series-parts__title" href="/hp-data-blog/post/sam-survey-protocol/">Good SAMaritans – How to model sampling protocols in Survey and Monitoring (SAM) datasets</a>
+      
+      <time class="series-parts__date" datetime="2026-10-22">22 Oct 2026</time>
+    </li>
+  
+</ol>
+
+        </aside>
+      </div>
+    </div>
+  </section>
+  
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/catalogue-of-life-taxonomic-backbone/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">How to migrate from the legacy GBIF Backbone Taxonomy to Catalogue of Life Extended Release</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/sam-survey-scope/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Good SAMaritans – How to model survey targets in Survey and Monitoring (SAM) datasets</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+<script src="/hp-data-blog/assets/js/code-blocks.js" defer></script>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/">GBIF.org</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1794391499"></script>
+
+
+
+
+
+  </body>
+</html>

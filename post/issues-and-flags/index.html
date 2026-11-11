@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>GBIF Issues &amp;amp; Flags
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1794391499">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/datablog-logo.svg" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=APIs%20and%20downloads"
+                    class="navbar-item "
+                  >
+                    APIs and downloads
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Publishing%20data"
+                    class="navbar-item "
+                  >
+                    Publishing data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Analysis%20and%20maps"
+                    class="navbar-item "
+                  >
+                    Analysis and maps
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Taxonomy"
+                    class="navbar-item "
+                  >
+                    Taxonomy
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Data%20quality"
+                    class="navbar-item "
+                  >
+                    Data quality
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citation%20and%20data%20use"
+                    class="navbar-item "
+                  >
+                    Citation and data use
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Collections"
+                    class="navbar-item "
+                  >
+                    Collections
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citizen%20science"
+                    class="navbar-item "
+                  >
+                    Citizen science
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Survey%20and%20monitoring"
+                    class="navbar-item "
+                  >
+                    Survey and monitoring
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Molecular%20data"
+                    class="navbar-item "
+                  >
+                    Molecular data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Multimedia"
+                    class="navbar-item "
+                  >
+                    Multimedia
+                  </a>
+                
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  postHeader--withToc ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>GBIF Issues &amp; Flags</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=leonardo-buitrago" title="All posts by Leonardo Buitrago">Leonardo Buitrago</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2020-10-27">27 October 2020</time>
+        <span aria-hidden="true">·</span>
+        22 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Data+quality">Data quality</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=issues">#issues</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=flags">#flags</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=data-quality">#data quality</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+    <div class="article--toc">
+      <div>
+        <div class="toc-wrapper  toc__removeOnMobile ">
+          <aside class="toc">
+  <div class="toc_header">
+    On this page
+  </div>
+  <div class="toc_list">
+    <ul>
+  <li><a href="#what-are-gbif-issues-and-flags">What are GBIF issues and flags?</a></li>
+  <li><a href="#definitions">Definitions</a></li>
+  <li><a href="#checklists-issues-and-flags-edit-from-2023-01-19">Checklists issues and flags [Edit from 2023-01-19]</a></li>
+</ul>
+  </div>
+</aside>
+        </div>
+        <div class="article">
+          <div class="content">
+  <p><strong>Publishers</strong> share datasets, but also manage data quality.  <strong>GBIF</strong> provides <strong>access</strong> to the use of biodiversity data, but also <strong>flags</strong> suspicious or missing content. <strong>Users</strong> use data, but also clean and remove records. Each play an important role in managing and improving data quality..</p>
+
+<!--more-->
+
+<p><img src="/hp-data-blog/post/2020-10-09-issues-and-flags_files/workflow1.png" alt="" /></p>
+
+<h2 id="what-are-gbif-issues-and-flags">What are GBIF issues and flags?</h2>
+
+<p>The GBIF network publishes datasets, integrating them into a common access system. Here users can retrieve data through common search and download services. During the indexation process over the raw data, GBIF adds <strong>issues</strong> and <strong>flags</strong> to records with common data quality problems.</p>
+
+<!--
+During **interpretation** GBIF performs additional checks and conversion routines. This **interpretation** is to ensure that data are interoperable and useful.
+
+-->
+
+<p><img src="/hp-data-blog/post/2020-10-09-issues-and-flags_files/workflow2.png" alt="" /></p>
+
+<!--
+
+* Flags help users to filter or be aware of possible inconsistencies in the data.
+* Flags help data providers detect different quality issues that can be fixed in the published dataset/records.
+
+-->
+
+<!--
+
+![](/post/2020-10-09-issues-and-flags_files/issues&flags_main.png)
+
+ Write your comments here 
+
+Thinking on how publishers and users can deal with the issues/flags identified by GBIF.org is important to recognize the most common problems that this mechanism can help to improve the data quality:
+
+- Lack in the use of controlled vocabularies (e.g. basisOfRecord)
+- Inconsistent data (e.g. country ≠ countryCode)
+- Using appropriate standardized formats, like ISO codes (e.g. countryCode, eventDate)
+- Using valid values to interpret/index numeric data (e.g. individualCount, coordinateUncertaintyInMeters)
+- Values between the correct numeric range laid in the right columns (e.g. elevation/depth swapped)
+- Inappropriate use of zero (0) to document empty or missing values (e.g. decimal Lat/Long = 0)
+- Using correct characters to build lists (e.g. references, url)
+
+-->
+
+<p><strong>Excluding all records</strong> with a particular issue is <strong>not</strong> currently possible with the search interface. It is possible to filter all records you are not interested in <strong>with issues</strong> by selecting the particular issue and hitting the <strong>reverse button</strong>. However, reversing will still only give you all other flagged occurrences and <strong>not</strong> issue-free records. This is something that GBIF is working to improve. (at <a href="https://www.gbif.org/occurrence/search">occurrence search</a>)</p>
+
+<p><img src="/hp-data-blog/post/2020-10-09-issues-and-flags_files/filtering.png" alt="" /></p>
+
+<p><strong>Remarks</strong> are shown on the individual occurrence pages to explain the process done after interpretation:</p>
+
+<ol>
+  <li><strong>Excluded</strong> means the original data couldn’t be interpreted, so is excluded in the interpreted fields.</li>
+  <li><strong>Altered</strong> means the original data is modified in the interpretation process to be indexed in GBIF.org.</li>
+  <li><strong>Inferred</strong> means the Using other record information the data indexed is inferred, if the original is empty.</li>
+</ol>
+
+<p><img src="/hp-data-blog/post/2020-10-09-issues-and-flags_files/excluded.png" alt="" /></p>
+
+<p><img src="/hp-data-blog/post/2020-10-09-issues-and-flags_files/altered.png" alt="" /></p>
+
+<p><img src="/hp-data-blog/post/2020-10-09-issues-and-flags_files/inferred.png" alt="" /></p>
+
+<!--
+
+### For Data providers (“publishers”)
+
+A list of issues & flags is also available for each dataset at the dataset page metrics (e.g. https://www.gbif.org/dataset/4fa7b334-ce0d-4e88-aaae-2e0c138d049e/metrics). This helps publishers to identify what data quality issues to tackle.
+
+![](/post/2020-10-09-issues-and-flags_files/dataset.png)
+
+## How to improve data quality using issues and flags?
+
+-->
+
+<p>The following table highlights some common geospatial issues and instructs how to fix them.</p>
+
+<style>
+#issues {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#issues td, #issues th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#issues tr:nth-child(even){background-color: #f2f2f2;}
+
+#issues tr:hover {background-color: #ddd;}
+
+#issues th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4B9E46;
+  color: white;
+}
+
+</style>
+
+<table class="table" class="table" id="issues">
+<thead>
+<tr>
+<th align="left"><strong>Issue &amp; flag</strong></th>
+<th align="left"><strong>Action to take</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Country derived from coordinates</td>
+<td align="left">Fill in the columns <strong>countryCode</strong> and <strong>country</strong> with the country information where the record was registered, following the officially ISO 3166-1-alpha-2 country code</td>
+</tr>
+<tr>
+<td align="left">Recorded date invalid</td>
+<td align="left">Use existing valid dates in the columns <strong>eventDate</strong>, <strong>year</strong>, <strong>month</strong>, <strong>day</strong>, following the format ISO 8601-1:2019 (YYYY-MM-DD)</td>
+</tr>
+<tr>
+<td align="left">Basis of record invalid</td>
+<td align="left">Use a valid Basis of Record in the column <strong>basisOfRecord</strong>, according to the nature of the record. Follow the controlled vocabulary present on this list <a href="https://rs.gbif.org/vocabulary/dwc/basis_of_record.xml">https://rs.gbif.org/vocabulary/dwc/basis_of_record.xml</a></td>
+</tr>
+<tr>
+<td align="left">Country coordinate mismatch</td>
+<td align="left">Make sure coordinates (<strong>decimalLatitude</strong><strong>decimalLongitude</strong>), fall inside the indicated country (i.e. country countryCode). The country and countryCode must match and be documented following the officially ISO 3166-1-alpha-2.</td>
+</tr>
+<tr>
+<td align="left">Zero coordinate</td>
+<td align="left">Leave <strong>decimalLatitude</strong> and <strong>decimalLongitude</strong> blank if the coordinates are missing. Don't use "0" as a coordinate value in both columns unless your record be present there (Null Island <a href="https://en.wikipedia.org/wiki/Null_Island">https://en.wikipedia.org/wiki/Null_Island</a>).</td>
+</tr>
+<tr>
+<td align="left">Coordinate invalid</td>
+<td align="left">Make sure coordinates are valid numeric decimal values. <strong>decimalLatitude</strong>: legal values lie between -90 and 90, inclusive. and <strong>decimalLongitude</strong>: legal values lie between -180 and 180, inclusive. Also, <strong>verbatimCoordinates</strong> have to be valid values for coordinates in decimal degrees, degrees decimal minutes, degrees minutes second</td>
+</tr>
+</tbody>
+</table>
+
+<p><br />
+<br /></p>
+<h2 id="definitions">Definitions</h2>
+
+<p>More than <strong>50 issues and flags</strong> have been created to deal with common data quality problems. The following <strong>long</strong> section compiles all of them and offers a more clear description of each one. This section is intended to serve as a placeholder until more formal documentation can be written.</p>
+
+<p><big><strong>Geospatial Issues</strong></big></p>
+
+<hr />
+
+<p><strong>Zero coordinate</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=ZERO_COORDINATE">example</a></small><br />Coordinates are exactly 0/0, often indicating an actual null coordinate.<br /><small><strong>Terms</strong>: dwc:decimalLatitude, dwc:decimalLongitude</small><br /></p>
+
+<p><strong>Country coordinate mismatch</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=COUNTRY_COORDINATE_MISMATCH">example</a></small><br />The interpreted occurrence coordinates fall outside of the indicated country.<br /><small><strong>Terms</strong>: dwc:countryCode, dwc:country, dwc:decimalLatitude, dwc:decimalLongitude</small><br /></p>
+
+<p><strong>Coordinate invalid</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=COORDINATE_INVALID">example</a></small><br />A coordinate value is given in some form, but GBIF is unable to interpret it. Possible reasons include, i.a., coordinates that fall out of range (larger/lower than 90/-90 or 180/-180, depending) or text values that cannot be interpreted.<br /><small><strong>Terms</strong>: dwc:decimalLatitude, dwc:decimalLongitude, dwc:verbatimCoordinates, dwc:verbatimLatitude, dwc:verbatimLongitude</small><br /></p>
+
+<p><strong>Coordinate out of range</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=COORDINATE_OUT_OF_RANGE">example</a></small><br />The supplied coordinates lie outside of the range for decimal lat/lon values (-90/90, -180/180).<br /><small><strong>Terms</strong>: dwc:decimalLatitude, dwc:decimalLongitude, dwc:verbatimCoordinates, dwc:verbatimLatitude, dwc:verbatimLongitude</small><br /></p>
+
+<p>These 4 issues are removed by default when <strong>including coordinates</strong> and <strong>not</strong> clicking the check box:</p>
+
+<p><img src="/hp-data-blog/post/2020-10-09-issues-and-flags_files/suspicious.png" alt="HTML tutorial" style="width:50%;" /></p>
+
+<hr />
+
+<p><strong>Geodetic datum assumed WGS84</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=GEODETIC_DATUM_ASSUMED_WGS84">example</a></small><br />If the datum is null, data interpretation assumes the record coordinates are in WGS84.<br /><small><strong>Terms</strong>: dwc:geodeticDatum</small><br /></p>
+
+<p><strong>Geodetic datum invalid</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=GEODETIC_DATUM_INVALID">example</a></small><br />The geodetic datum could not be interpreted, because the supplied term cannot be matched against the vocabulary of known values.<br /><small><strong>Terms</strong>: dwc:geodeticDatum</small><br /></p>
+
+<p><strong>Country mismatch</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=COUNTRY_MISMATCH">example</a></small><br />Interpreted Country and Country code contradict each other.<br /><small><strong>Terms</strong>: dwc:countryCode, dwc:country</small><br /></p>
+
+<p><strong>Country derived from coordinates</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=COUNTRY_DERIVED_FROM_COORDINATES">example</a></small><br />If the country and country code are not supplied or cannot be matched to known values, data interpretation derives their content from the decimal coordinates through a <a href="https://github.com/gbif/geocode">lookup service</a>.<br /><small><strong>Terms</strong>: dwc:countryCode, dwc:country, dwc:decimalLatitude, dwc:decimalLongitude</small><br /></p>
+
+<p><strong>Country invalid</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=COUNTRY_INVALID">example</a></small><br />The country or countryCode given cannot be matched to the vocabulary for country names.<br /><small><strong>Terms</strong>: dwc:country</small><br /></p>
+
+<p><strong>Continent invalid</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=CONTINENT_INVALID">example</a></small><br />The continent given cannot be matched to the vocabulary for continent names<br /><small><strong>Terms</strong>: dwc:continent</small><br /></p>
+
+<p><strong>Coordinate rounded</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=COORDINATE_ROUNDED">example</a></small><br />In the data interpretation the original coordinates are rounded to 6 decimals (~1m precision).<br /><small><strong>Terms</strong>: dwc:decimalLatitude, dwc:decimalLongitude</small><br /></p>
+
+<p><strong>Coordinate reprojected</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=COORDINATE_REPROJECTED">example</a></small><br />The original coordinates were successfully reprojected from a different geodetic datum to WGS84.<br /><small><strong>Terms</strong>: dwc:geodeticDatum</small><br /></p>
+
+<p><strong>Coordinate reprojection suspicious</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=COORDINATE_REPROJECTION_SUSPICIOUS">example</a></small><br />Indicates successful coordinate reprojection according to provided datum, but which results in a datum shift larger than 0.1 decimal degrees.<br /><small><strong>Terms</strong>: dwc:geodeticDatum, dwc:decimalLatitude, dwc:decimalLongitude</small><br /></p>
+
+<p><strong>Coordinate reprojection failed</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=COORDINATE_REPROJECTION_FAILED">example</a></small><br />The given decimal latitude and longitude could not be reprojected to WGS84 based on the provided datum.<br /><small><strong>Terms</strong>: dwc:geodeticDatum, dwc:decimalLatitude, dwc:decimalLongitude</small><br /></p>
+
+<p><strong>Coordinate uncertainty meters invalid</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=COORDINATE_UNCERTAINTY_METERS_INVALID">example</a></small><br />The value given for Coordinate uncertainty in meters, indicating the radius of uncertainty around the given decimal coordinates, is not a valid number, or lies outside a plausible range.<br /><small><strong>Terms</strong>: dwc:coordinateUncertaintyInMeters</small><br /></p>
+
+<p><strong>Coordinate precision invalid</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=COORDINATE_PRECISION_INVALID">example</a></small><br />Indicates an invalid or very unlikely coordinates precision. The value is not a decimal number as expected, or it has an unusually low or high for a margin of uncertainty.<br /><small><strong>Terms</strong>: dwc:coordinatePrecision</small><br /></p>
+
+<p><strong>Presumed negated longitude</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=PRESUMED_NEGATED_LONGITUDE">example</a></small><br />The supplied longitude value places the coordinates outside of the indicated country. Negating the longitude value would result in a country match.<br /><small><strong>Terms</strong>: dwc:decimalLongitude</small><br /></p>
+
+<p><strong>Presumed negated latitude</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=PRESUMED_NEGATED_LATITUDE">example</a></small><br />The supplied latitude value places the coordinates outside of the indicated country. Negating the latitude value would result in a country match.<br /><small><strong>Terms</strong>: dwc:decimalLatitude</small><br /></p>
+
+<p><strong>Presumed swapped coordinate</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=PRESUMED_SWAPPED_COORDINATE">example</a></small><br />Coordinates seem to be swapped when testing against the interpreted country.<br /><small><strong>Terms</strong>: dwc:decimalLatitude, dwc:decimalLongitude, dwc:country</small><br /></p>
+
+<p><strong>Depth min max swapped</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=DEPTH_MIN_MAX_SWAPPED">example</a></small><br />The values for minimum and maximum depth appear to the swapped.<br /><small><strong>Terms</strong>: dwc:minimumDepthInMeters, dwc:maximumDepthInMeters</small><br /></p>
+
+<p><strong>Depth non numeric</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=DEPTH_NON_NUMERIC">example</a></small><br />The values for minimum and maximum depth are non-numeric values and cannot be interpreted.<br /><small><strong>Terms</strong>: dwc:minimumDepthInMeters, dwc:maximumDepthInMeters</small><br /></p>
+
+<p><strong>Depth unlikely</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=DEPTH_UNLIKELY">example</a></small><br />The values for minimum and maximum depth are negative or higher than 11000 (Mariana Trench depth in meters).<br /><small><strong>Terms</strong>: dwc:minimumDepthInMeters, dwc:maximumDepthInMeters</small><br /></p>
+
+<p><strong>Depth not metric</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=DEPTH_NOT_METRIC">example</a></small><br />Set if supplied depth is not given in the metric system, for example using feet instead of meters.<br /><small><strong>Terms</strong>: dwc:minimumDepthInMeters, dwc:maximumDepthInMeters</small><br /></p>
+
+<p><strong>Elevation non numeric</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=ELEVATION_NON_NUMERIC">example</a></small><br />The values for minimum and maximum elevation are non-numeric values and cannot be interpreted.<br /><small><strong>Terms</strong>: dwc:minimumElevationInMeters, dwc:maximumElevationMeters</small><br /></p>
+
+<p><strong>Elevation min max swapped</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=ELEVATION_MIN_MAX_SWAPPED">example</a></small><br />The values for minimum and maximum elevation appear to the swapped.<br /><small><strong>Terms</strong>: dwc:minimumElevationInMeters, dwc:maximumElevationInMeters</small><br /></p>
+
+<p><strong>Elevation not metric</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=ELEVATION_NOT_METRIC">example</a></small><br />Set if supplied elevation is not given in the metric system, for example using feet instead of meters.<br /><small><strong>Terms</strong>: dwc:minimumElevationInMeters, dwc:maximumElevationInMeters</small><br /></p>
+
+<hr />
+
+<p><strong>Zero</strong> occurrence records are flagged with the following <strong>geospatial issues</strong> on GBIF as of the writing of this post.</p>
+
+<p><strong>Elevation unlikely</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=ELEVATION_UNLIKELY">example</a></small><br />The values for minimum and maximum elevation are above the troposphere (17000 m) or below Mariana Trench (11000 m).<br /><small><strong>Terms</strong>: dwc:minimumElevationInMeters, dwc:maximumElevationInMeters</small><br /></p>
+
+<p><strong>Continent country mismatch</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=CONTINENT_COUNTRY_MISMATCH">example</a></small><br />The interpreted continent and country do not match up.<br /><small><strong>Terms</strong>: dwc:continent, dwc:countryCode, dwc:country</small><br /></p>
+
+<p><strong>Continent derived from coordinates</strong> <small>(geospatial)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=CONTINENT_DERIVED_FROM_COORDINATES">example</a></small><br />If no value is supplied for the continent or if the values cannot be matched against a known vocabulary, data interpretation derives the continent from the decimal coordinates.<br /><small><strong>Terms</strong>: dwc:continent, dwc:decimalLatitude, dwc:decimal Longitude</small><br /></p>
+
+<!-- maybe do not we need deprecated issues -->
+<!-- **Coordinate accuracy invalid** <small>(geospatial)</small> <small>[example](https://www.gbif.org/occurrence/search?issue=COORDINATE_ACCURACY_INVALID)</small><br>Deprecated.<br><small>**Terms**: NA</small><br> -->
+
+<!-- **Coordinate precision uncertainty mismatch** <small>(geospatial)</small> <small>[example](https://www.gbif.org/occurrence/search?issue=COORDINATE_PRECISION_UNCERTAINTY_MISMATCH)</small><br>Deprecated.<br><small>**Terms**: NA</small><br> -->
+
+<p><br />
+<big><strong>Taxonomic Issues</strong></big></p>
+
+<hr />
+
+<p><strong>Taxon match higherrank</strong> <small>(taxonomic)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=TAXON_MATCH_HIGHERRANK">example</a></small><br />The record can be matched to the GBIF taxonomic backbone at a higher rank, but not with the scientific name given.<br /><small><strong>Terms</strong>: dwc:scientificName,dwc:kingdom,dwc:phylum, dwc:class, dwc:order, dwc:family, dwc:genus, dwc:subgenus, dwc:specificEpithet, dwc:infraspecificEpithet, dwc:taxonRank</small><br /><br /> 
+Reasons include:<br />- The name is new, and not available in the taxonomic datasets yet<br />- The name is missing in the backbone’s taxonomic sources for others reasons<br />- Formatting or spelling of the scientific name caused interpretation errors</p>
+
+<p><strong>Taxon match none</strong> <small>(taxonomic)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=TAXON_MATCH_NONE">example</a></small><br />Matching to the taxonomic backbone cannot be done cause there was no match at all or several matches with too little information to keep them apart (homonyms).<br /><small><strong>Terms</strong>: dwc:scientificName,dwc:kingdom,dwc:phylum, dwc:class, dwc:order, dwc:family, dwc:genus, dwc:subgenus, dwc:specificEpithet, dwc:infraspecificEpithet, dwc:taxonRank</small><br /></p>
+
+<p><strong>Taxon match fuzzy</strong> <small>(taxonomic)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=TAXON_MATCH_FUZZY">example</a></small><br />Matching to the taxonomic backbone can only be done using a fuzzy, non exact match.<br /><small><strong>Terms</strong>: dwc:scientificName,dwc:kingdom,dwc:phylum, dwc:class, dwc:order, dwc:family, dwc:genus, dwc:subgenus, dwc:specificEpithet, dwc:infraspecificEpithet, dwc:taxonRank</small><br /></p>
+
+<p>[<strong>Edit</strong> 2023-09-21 New flags added]</p>
+
+<p><strong>Scientific name and ID inconsistent</strong> <small>(taxonomic)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=SCIENTIFIC_NAME_AND_ID_INCONSISTENT">example</a></small><br />The scientificName provided in the occurrence record does not precisely match the name in the registered checklist when using the scientificNameID, taxonID or taxonConceptID to look it up. Publishers are advised to check the IDs are correct, or update the formatting of the names on their records.<br /><small><strong>Terms</strong>: dwc:scientificName,dwc:scientificNameID,dwc:taxonID,dwc:taxonConceptID</small><br /></p>
+
+<p><strong>Taxon match name and ID ambiguous</strong> <small>(taxonomic)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=TAXON_MATCH_NAME_AND_ID_AMBIGUOUS">example</a></small><br />The GBIF Backbone concept was found using the scientificNameID, taxonID or taxonConceptID, but it differs from what would have been found if the classification names on the record were used. This may indicate a gap in the GBIF backbone, a poor mapping between the checklist and the backbone, or a mismatch between the classification names and the declared IDs (scientificNameID or taxonConceptID) on the occurrence record itself.<br /><small><strong>Terms</strong>: dwc:scientificName,dwc:scientificNameID,dwc:taxonID,dwc:taxonConceptID</small><br /></p>
+
+<p><strong>Scientific name ID not found</strong> <small>(taxonomic)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=SCIENTIFIC_NAME_ID_NOT_FOUND">example</a></small><br />The scientificNameID matched a known pattern, but it was not found in the associated checklist. The backbone lookup was performed using either the names or a different ID field from the record. This may indicate a poorly formatted identifier or may be caused by a newly created ID that isn’t yet known in the version of the published checklist.<br /><small><strong>Terms</strong>: dwc:scientificNameID</small><br /></p>
+
+<p><strong>Taxon concept ID not found</strong> <small>(taxonomic)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=TAXON_CONCEPT_ID_NOT_FOUND">example</a></small><br />The taxonConceptID matched a known pattern, but it was not found in the associated checklist. The backbone lookup was performed using either the names or a different ID field from the record. This may indicate a poorly formatted identifier or may be caused by a newly created ID that isn’t yet known in the version of the published checklist.<br /><small><strong>Terms</strong>: dwc:taxonConceptID</small><br /></p>
+
+<p><strong>Taxon ID not found</strong> <small>(taxonomic)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=TAXON_ID_NOT_FOUND">example</a></small><br />The  taxonID found matched a known pattern, but it was not found in the associated checklist. The backbone lookup was performed using either the names or a different ID field from the record. This may indicate a poorly formatted identifier or may be caused by a newly created ID that isn’t yet known in the version of the published checklist.<br /><small><strong>Terms</strong>: dwc:taxonID</small><br /></p>
+
+<p><strong>Taxon match scientific name ID ignored</strong> <small>(taxonomic)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=TAXON_MATCH_SCIENTIFIC_NAME_ID_IGNORED">example</a></small><br />The scientificNameID was not used when mapping the record to the GBIF backbone. This may indicate one of: (1) The ID uses a pattern not configured for use by GBIF (2) The ID did not uniquely identify a concept in the checklist (3) The ID found a concept in the checklist that did not map to the backbone (4) A different ID was used, or the record names were used, as no ID lookup successfully linked to the backbone<br /><small><strong>Terms</strong>: dwc:scientificNameID</small><br /></p>
+
+<p><strong>Taxon match taxon concept ID ignored</strong> <small>(taxonomic)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=TAXON_MATCH_TAXON_CONCEPT_ID_IGNORED">example</a></small><br />The taxonConceptID was not used when mapping the record to the GBIF backbone. This may indicate one of: (1) The ID uses a pattern not configured for use by GBIF (2) The ID did not uniquely identify a concept in the checklist (3) The ID found a concept in the checklist that did not map to the backbone (4) A different ID was used, or the record names were used, as no ID lookup successfully linked to the backbone<br /><small><strong>Terms</strong>: dwc:taxonConceptID</small><br /></p>
+
+<p><strong>Taxon match taxon ID ignored</strong> <small>(taxonomic)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=TAXON_MATCH_TAXON_ID_IGNORED">example</a></small><br />The taxonID was not used when mapping the record to the GBIF backbone. This may indicate one of: (1) The ID uses a pattern not configured for use by GBIF (2) The ID did not uniquely identify a concept in the checklist (3) The ID found a concept in the checklist that did not map to the backbone (4) A different ID was used, or the record names were used, as no ID lookup successfully linked to the backbone<br /><small><strong>Terms</strong>: dwc:taxonID</small><br /></p>
+
+<p><br />
+<big><strong>Date Issues</strong></big></p>
+
+<hr />
+
+<p><strong>Recorded date invalid</strong> <small>(date)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=RECORDED_DATE_INVALID">example</a></small><br />The recording date given cannot be intrepreted because is invalid.<br /><small><strong>Terms</strong>: dwc:eventDate, dwc:year, dwc:month, dwc:day</small><br /><br /> Reasons include:<br />- A non-existing date (e.g “1995-04-34”)<br />- Missing date parts (e.g. Event date without year).<br />- The date format does not follow the ISO 8601 standard (YYYY-MM-DD)<br /></p>
+
+<p><strong>Recorded date mismatch</strong> <small>(date)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=RECORDED_DATE_MISMATCH">example</a></small><br />The recording date specified as the eventDate string and the individual year, month, day are contradicting.<br /><small><strong>Terms</strong>: dwc:eventDate, dwc:year, dwc:month, dwc:day</small><br /></p>
+
+<p><strong>Identified date unlikely</strong> <small>(date)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=IDENTIFIED_DATE_UNLIKELY">example</a></small><br />The identification date is in the future or before Linnean times (1700).<br /><small><strong>Terms</strong>: dwc:dateIdentified</small><br /></p>
+
+<p><strong>Recorded Date Unlikely</strong> <small>(date)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=RECORDED_DATE_UNLIKELY">example</a></small><br />The recording date is highly unlikely, falling either into the future or representing a very old date before 1600 that predates modern taxonomy.<br /><small><strong>Terms</strong>: dwc:eventDate, dwc:year, dwc:month, dwc:day</small><br /></p>
+
+<p><strong>Multimedia date invalid</strong> <small>(date)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=MULTIMEDIA_DATE_INVALID">example</a></small><br />The creation date given cannot be intrepreted because is invalid.<br /><small><strong>Terms</strong>: dc:created</small><br /><br /> Reasons include:<br />- A non-existing date (e.g “1995-04-34”)<br />- Missing date parts (e.g. Event date without year).<br />- The date format does not follow the ISO 8601 standard (YYYY-MM-DD)</p>
+
+<p><strong>Identified date invalid</strong> <small>(date)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=IDENTIFIED_DATE_INVALID">example</a></small><br />The identification date given cannot be intrepreted because is invalid.<br /><small><strong>Terms</strong>: dwc:dateIdentified</small><br /><br />Reasons include:<br />- A non-existing date (e.g “1995-04-34”)<br />- Missing date parts (e.g. without year).<br />- The date format does not follow the ISO 8601 standard (YYYY-MM-DD)<br /></p>
+
+<p><strong>Modified date invalid</strong> <small>(date)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=MODIFIED_DATE_INVALID">example</a></small><br />A (partial) invalid modified date is given.<br /><small><strong>Terms</strong>: dc:modified</small><br /><br />Reasons include:<br />- A non-existing date (e.g “1995-04-34”)<br />- Missing date parts (e.g. without year).<br />- The date format does not follow the ISO 8601 standard (YYYY-MM-DD)</p>
+
+<p><strong>Modified date unlikely</strong> <small>(date)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=MODIFIED_DATE_UNLIKELY">example</a></small><br />The modified date given is in the future or predates unix time (1970).<br /><small><strong>Terms</strong>: dc:modified</small><br /></p>
+
+<p><strong>Georeferenced date invalid</strong> <small>(date)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=GEOREFERENCED_DATE_INVALID">example</a></small><br />The georeference date given cannot be intrepreted because it is invalid.<br /> 
+<small><strong>Terms</strong>: dwc:georeferencedDate</small><br /></p>
+
+<p>Reasons include:<br /></p>
+<ul>
+  <li>A non-existing date (e.g “1995-04-34”).<br /></li>
+  <li>Missing date parts (e.g. without year).<br /></li>
+  <li>The date format does not follow the ISO 8601 standard (YYYY-MM-DD)</li>
+</ul>
+
+<p><strong>Georeferenced date unlikely</strong> <small>(date)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=GEOREFERENCED_DATE_UNLIKELY">example</a></small><br />The georeference date given is in the future or before Linnean times (1700).<br /><small><strong>Terms</strong>: dwc:georeferencedDate</small><br /></p>
+
+<p><br />
+<big><strong>Vocabulary Issues</strong></big></p>
+
+<hr />
+
+<p><strong>Basis of record invalid</strong> <small>(vocabulary)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=BASIS_OF_RECORD_INVALID">example</a></small><br />The given basis of record is impossible to interpret or very different from the recommended vocabulary: http://rs.gbif.org/vocabulary/dwc/basis_of_record.xml<br /><small><strong>Terms</strong>: dwc:basisOfRecord</small><br /></p>
+
+<p><strong>Type status invalid</strong> <small>(vocabulary)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=TYPE_STATUS_INVALID">example</a></small><br />The given type status is impossible to interpret or very different from the recommended vocabulary: https://rs.gbif.org/vocabulary/gbif/type_status.xml<br /><small><strong>Terms</strong>: dwc:typeStatus</small><br /></p>
+
+<p><strong>Occurrence status unparsable</strong> <small>(vocabulary)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=OCCURRENCE_STATUS_UNPARSABLE">example</a></small><br />The given occurenceStatus value cannot be interpreted; it does not match any of the known (vocabulary) values that indicate the presence or absence of a species at collection or observation event.<br /><small><strong>Terms</strong>: dwc:occurrenceStatus</small><br /></p>
+
+<p><br />
+<big><strong>GRSciColl-related Issues</strong></big></p>
+
+<hr />
+
+<p><strong>Ambiguous institution</strong> <small>(GRSciColl)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=AMBIGUOUS_INSTITUTION">example</a></small><br />Multiple institutions were found in <a href="https://www.gbif.org/grscicoll">GRSciColl</a> with the same level of confidence and it can’t be determined which one should be accepted. For example, there are several institutions with the same code and country. See <a href="https://www.gbif.org/faq?question=how-can-i-improve-the-matching-of-occurrence-records-with-grscicoll">this FAQ</a> on how to avoid ambiguous matches.<br /><small><strong>Terms</strong>: dwc:institutionCode, dwc:institutionID</small><br /></p>
+
+<p><strong>Ambiguous collection</strong> <small>(GRSciColl)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=AMBIGUOUS_COLLECTION">example</a></small><br />Multiple collections were found in <a href="https://www.gbif.org/grscicoll">GRSciColl</a> with the same level of confidence and it can’t be determined which one should be accepted. For example, there are several collections belonging to the same institution with the same code. See <a href="https://www.gbif.org/faq?question=how-can-i-improve-the-matching-of-occurrence-records-with-grscicoll">this FAQ</a> on how to avoid ambiguous matches.<br /><small><strong>Terms</strong>: dwc:collectionCode, dwc:collectionID</small><br /></p>
+
+<p><strong>Institution match none</strong> <small>(GRSciColl)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=INSTITUTION_MATCH_NONE">example</a></small><br />No macth was  found in <a href="https://www.gbif.org/grscicoll">GRSciColl</a>. Either the entry doesn’t exists in GRSciColl or it has a different code. Check <a href="https://www.gbif.org/grscicoll">GRSciColl</a> and request update if needed.<br /><small><strong>Terms</strong>: dwc:institutionCode, dwc:institutionID</small><br /></p>
+
+<p><strong>Collection match none</strong> <small>(GRSciColl)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=COLLECTION_MATCH_NONE">example</a></small><br />No macth was  found in <a href="https://www.gbif.org/grscicoll">GRSciColl</a>. Either the entry doesn’t exists in GRSciColl or it has a different code. Check <a href="https://www.gbif.org/grscicoll">GRSciColl</a> and request update if needed.<br /><small><strong>Terms</strong>: dwc:collectionCode, dwc:collectionID</small><br /></p>
+
+<p><strong>Institution match fuzzy</strong> <small>(GRSciColl)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=INSTITUTION_MATCH_FUZZY">example</a></small><br />A match was found in <a href="https://www.gbif.org/grscicoll">GRSciColl</a> but it was matched fuzzily. To know more about why this has happened you can use the <a href="https://www.gbif.org/developer/registry#lookup">lookup API</a> to see see the “reasons” returned in the response. A common case is when the name is used instead of the code or the identifier. To avoid fuzzy matches, publishers should use identifiers in additon to codes. More details available in <a href="https://www.gbif.org/faq?question=how-can-i-improve-the-matching-of-occurrence-records-with-grscicoll">this FAQ</a>.<br /><small><strong>Terms</strong>: dwc:institutionCode, dwc:institutionID</small><br /></p>
+
+<p><strong>Collection match fuzzy</strong> <small>(GRSciColl)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=COLLECTION_MATCH_FUZZY">example</a></small><br />A match was found in <a href="https://www.gbif.org/grscicoll">GRSciColl</a> but it was matched fuzzily. To know more about why this has happened you can use the <a href="https://www.gbif.org/developer/registry#lookup">lookup API</a> to see see the “reasons” returned in the response. A common case is when the name is used instead of the code or the identifier. To avoid fuzzy matches, publishers should use identifiers in additon to codes. More details available in <a href="https://www.gbif.org/faq?question=how-can-i-improve-the-matching-of-occurrence-records-with-grscicoll">this FAQ</a>.<br /><small><strong>Terms</strong>: dwc:collectionCode, dwc:collectionID</small><br /></p>
+
+<p><strong>Institution collection mismatch</strong> <small>(GRSciColl)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=INSTITUTION_COLLECTION_MISMATCH">example</a></small><br />At least one possible collection match was found in <a href="https://www.gbif.org/grscicoll">GRSciColl</a> but none of them belong to the institution matched.<br /><small><strong>Terms</strong>: dwc:collectionCode, dwc:collectionID, dwc:institutionCode, dwc:institutionID</small><br /></p>
+
+<p><strong>Different owner institution</strong> <small>(GRSciColl)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=DIFFERENT_OWNER_INSTITUTION">example</a></small><br />The institution doesn’t match the owner institution.<br /><small><strong>Terms</strong>: dwc:ownerInstitutionCode, dwc:institutionCode, dwc:institutionID</small><br /></p>
+
+<p><br />
+<big><strong>Other Issues</strong></big></p>
+
+<hr />
+
+<p><strong>Individual count invalid</strong> <small>(individual count)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=INDIVIDUAL_COUNT_INVALID">example</a></small><br />Individual count value not parsable into a positive integer.<br /><small><strong>Terms</strong>: dwc:individualCount</small><br /></p>
+
+<p><strong>Individual count conflicts with occurrence status</strong> <small>(individual count)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=INDIVIDUAL_COUNT_CONFLICTS_WITH_OCCURRENCE_STATUS">example</a></small><br />The values given for the individual count and for the status of the occurrence (present/absent) contradict each other (e.g. the count is 0 but the status says “present”).<br /><small><strong>Terms</strong>: dwc:individualCount, dwc:occurrenceStatus</small><br /></p>
+
+<p><strong>Occurrence status inferred from individual count</strong> <small>(occurrence status)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=OCCURRENCE_STATUS_INFERRED_FROM_INDIVIDUAL_COUNT">example</a></small><br />The present/absent status of the occurrence was inferred from the individual count value because no status value was supplied explicitly. An individual count of 0 is interpreted as status=”absent”, a value &gt; 0 as “present”<br /><small><strong>Terms</strong>: dwc:individualCount, dwc:occurrenceStatus</small><br /></p>
+
+<table class="table" class="table">
+  <tbody>
+    <tr>
+      <td><strong>References URI invalid</strong> <small>(uri)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=REFERENCES_URI_INVALID">example</a></small><br />The references URL cannot be resolved, and may be malformed or contain invalid characters. If there is more than one URL, the values have to be separated by a pipe symbol “</td>
+      <td>”.<br /><small><strong>Terms</strong>: dc:references</small><br /></td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="table" class="table">
+  <tbody>
+    <tr>
+      <td><strong>Multimedia URI invalid</strong> <small>(uri)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=MULTIMEDIA_URI_INVALID">example</a></small><br />The multimedia URL cannot be resolved, and may be malformed or contain invalid characters. If there is more than one URL, the values have to be separated by a pipe symbol “</td>
+      <td>”.<br /><small><strong>Terms</strong>: dwc:associatedMedia</small><br /></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Interpretation error</strong> <small>(interpretation)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=INTERPRETATION_ERROR">example</a></small><br />An error occurred during interpretation, leaving the record interpretation incomplete.<br /><small><strong>Terms</strong>: GBIF interpretation</small><br /></p>
+
+<p><strong>Occurrence status inferred from Basis Of Record</strong>  <small>(interpretation)</small> <small><a href="https://www.gbif.org/occurrence/search?issue=OCCURRENCE_STATUS_INFERRED_FROM_BASIS_OF_RECORD">example</a></small>
+<br />The occurrence status of preserved specimens (museum specimens) is assumed to be “present” (not absent). With other records occurrence status is usually inferred from from dwc:individualCount.<br /><small><strong>Terms</strong>: GBIF interpretation,  dwc:individualCount</small><br /></p>
+
+<h2 id="checklists-issues-and-flags-edit-from-2023-01-19">Checklists issues and flags [Edit from 2023-01-19]</h2>
+
+<p>The GBIF system also flags taxon records coming from checklists. You can search and select checklist records by flags in our <a href="https://www.gbif.org/species/search?advanced=1">Species search interface</a>:</p>
+
+<p><img src="/hp-data-blog/post/2020-10-09-issues-and-flags_files/checklist_flags.png" alt="" /></p>
+
+<p>See the definitions below:</p>
+
+<p><strong>Name unparsable</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=UNPARSABLE&amp;advanced=1">example</a></small><br />The value in the field flagged couldn’t be parsed by the GBIF system. You can check if a scientific name can be parsed with our name parser tool: https://www.gbif.org/tools/name-parser <br /><small><strong>Terms</strong>: any name field</small><br /></p>
+
+<p><strong>Name partially parsed</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=PARTIALLY_PARSABLE&amp;advanced=1">example</a></small><br />The value in the field flagged could only be partially parsed by the GBIF system. You can check if a scientific name can be parsed with our name parser tool: https://www.gbif.org/tools/name-parser <br /><small><strong>Terms</strong>: any name field</small><br /></p>
+
+<p><strong>ParentNameUsageID invalid</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=PARENT_NAME_USAGE_ID_INVALID&amp;advanced=1">example</a></small><br />The value for the ParentNameUsageID doesn’t correspond to a valid entry in the list. Check that the parentNameUsageID points to an existing taxon entry within the checklist (parentNameUsageID should contain the value of the taxonID of the parent taxon in the same checklist)<br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_parentNameUsageID">dwc:parentNameUsageID</a></small><br /></p>
+
+<p><strong>AcceptedNameUsageID invalid</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=ACCEPTED_NAME_USAGE_ID_INVALID&amp;advanced=1">example</a></small><br />The value for the acceptedNameUsageID could not be resolved. Check that the acceptedNameUsageID points to an existing taxon entry within the checklist (for synonyms or misapplied named, acceptedNameUsageID should contain the value of the taxonID of the accepted/valid taxon name in the checklist)<br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_acceptedNameUsageID">dwc:acceptedNameUsageID</a></small><br /></p>
+
+<p><strong>OriginalNameUsageID invalid</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=ORIGINAL_NAME_USAGE_ID_INVALID&amp;advanced=1">example</a></small><br />The value for originalNameUsageID could not be resolved. Check that the originalNameUsageID points to an existing taxon entry within the checklist (originalNameUsageID should contain the value of the taxonID of the scientificName in the checklist that represents the name originally established under the rules of the associated nomenclatural code, e.g. the basionym)<br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_originalNameUsageID">dwc:originalNameUsageID</a></small><br /></p>
+
+<p><strong>Rank unknown</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=RANK_INVALID&amp;advanced=1">example</a></small><br />The value for taxonRank could not be interpreted. Check if you can map the value to one of <a href="https://api.gbif.org/v1/enumeration/basic/Rank">the accepted taxon rank values</a><br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_taxonRank">dwc:taxonRank</a></small><br /></p>
+
+<p><strong>Nomenclatural status unknown</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=NOMENCLATURAL_STATUS_INVALID&amp;advanced=1">example</a></small><br />The value for nomenclaturalStatus could not be interpreted. Check if you can map the value to one of <a href="https://api.gbif.org/v1/enumeration/basic/NomenclaturalStatus">the accepted nomenclatural status values</a><br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_nomenclaturalStatus">dwc:nomenclaturalStatus</a></small><br /></p>
+
+<p><strong>Taxonomic status unknown</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=TAXONOMIC_STATUS_INVALID&amp;advanced=1">example</a></small><br />The value for taxonomicStatus could not be interpreted. Check if you can map the value to one of <a href="https://api.gbif.org/v1/enumeration/basic/TaxonomicStatus">the accepted taxonomic status values</a><br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_taxonomicStatus">dwc:TaxonomicStatus</a></small><br /></p>
+
+<p><strong>ScientificName assembled</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=SCIENTIFIC_NAME_ASSEMBLED&amp;advanced=1">example</a></small><br />The scientific name was assembled from the individual name components (e.g. genus name, species epithet, authors), and not supplied as a whole. This is simply for information, publishers can ignore it.<br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_scientificName">dwc:scientificName</a></small><br /></p>
+
+<p><strong>Chained synonym</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=CHAINED_SYNOYM&amp;advanced=1">example</a></small><br />The record is a synonym which has another synonym as it’s accepted name. The GBIF system resolves such chains and links every synonym to the final accepted name. Check that synonyms always point to accepted names.<br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_acceptedNameUsageID">dwc:acceptedNameUsageID</a></small><br /></p>
+
+<p><strong>Basionym author mismatch</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=BASIONYM_AUTHOR_MISMATCH&amp;advanced=1">example</a></small><br />The authorship of the original name does not match the authorship in brackets of the taxon name. This flags the relationship between the two names as suspicious, based on the formal rules defined by nomenclatural codes.<br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_scientificName">dwc:scientificName</a>, <a href="https://dwc.tdwg.org/list/#dwc_scientificNameAuthorship">dwc:scientificNameAuthorship</a>, <a href="https://dwc.tdwg.org/list/#dwc_originalNameUsage">dwc:originalNameUsage</a></small><br /></p>
+
+<!--- 
+**Taxonomic status mismatch**
+This flag is not implemented yet! 
+ <small>(checklist)</small> <small>[example](https://www.gbif.org/species/search?issue=TAXONOMIC_STATUS_MISMATCH&advanced=1)</small><br>The taxonomic status of a name is based on taxonomic opinion. In combination of data from various sources, taxonomic opinions can differ. This flag alerts to seeming inconsistencies within a group of names.<br><small>**Terms**: [dwc:taxonomicStatus](https://dwc.tdwg.org/list/#dwc_taxonomicStatus)</small><br>
+--->
+
+<p><strong>Classification parent cycle</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=PARENT_CYCLE&amp;advanced=1">example</a></small><br />The child-parent relationships between taxon names result in a cycle that needs to be resolved/cut. The classification should be a tree.<br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_parentNameUsageID">dwc:parentNameUsageID</a></small><br /></p>
+
+<!--- 
+**Classification rank order invalid**
+This flag is not implemented yet! 
+ <small>(checklist)</small> <small>[example](https://www.gbif.org/species/search?issue=CLASSIFICATION_RANK_ORDER_INVALID&advanced=1)</small><br>The taxon names in a child-parent chain are out of sequence relating to their ranks. Make sure that each child taxon points to its direct parent, as represented in the checklist.<br><small>**Terms**: [dwc:parentNameUsageID](https://dwc.tdwg.org/list/#dwc_parentNameUsageID), [dwc:taxonRank](https://dwc.tdwg.org/list/#dwc_taxonRank)</small><br>
+--->
+
+<p><strong>Classification not applied</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=CLASSIFICATION_NOT_APPLIED&amp;advanced=1">example</a></small><br />The denormalized classification of the checklist, i.e. values for terms like dwc:family or dwc:phylum, could not be applied to the name safely. This usually happens if there is also a normalised parentNameUsageID-based classification given with unspecified ranks.<br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_parentNameUsageID">dwc:parentNameUsageID</a></small><br /></p>
+
+<p><strong>Vernacular name invalid</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=VERNACULAR_NAME_INVALID&amp;advanced=1">example</a></small><br />At least one part of a vernacular name attached to this taxon name, linked from the Vernacular Names extension, could not be interpreted. This usually happens when  the name was blank, but it is also flagged if other controlled values such as language, lifestage, plural or sex in a Vernacular Name record cannot be interpreted. <br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_vernacularName">dwc:vernacularName</a> and <a href="https://tools.gbif.org/dwca-validator/extension.do?id=gbif:VernacularName">Vernacular Names</a> extension http://rs.gbif.org/extension/gbif/1.0/vernacularname.xml</small><br /></p>
+
+<p><strong>Description invalid</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=DESCRIPTION_INVALID&amp;advanced=1">example</a></small><br />At least one description record for this taxon name, linked from the Taxon Description extension, could not be interpreted because the mandatory description was missing or the language field was invalid.<br /><small><strong>Terms</strong>: <a href="https://tools.gbif.org/dwca-validator/extension.do?id=gbif:Description">Taxon Description</a> extension http://rs.gbif.org/extension/gbif/1.0/description.xml</small><br /></p>
+
+<p><strong>Distribution invalid</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=DISTRIBUTION_INVALID&amp;advanced=1">example</a></small><br />At least one species distribution record for this taxon name, linked from the Species Distribution extension, could not be interpreted.<br /><small><strong>Terms</strong>: <a href="https://tools.gbif.org/dwca-validator/extension.do?id=gbif:Distribution">Species Distribution</a> extension https://rs.gbif.org/extension/gbif/1.0/distribution.xml</small><br /></p>
+
+<p><strong>Species profile invalid</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=SPECIES_PROFILE_INVALID&amp;advanced=1">example</a></small><br />At least one species profile record for this taxon name, linked from the Species Profile extension, could not be interpreted.<br /><small><strong>Terms</strong>: <a href="https://tools.gbif.org/dwca-validator/extension.do?id=gbif:SpeciesProfile">Species Profile</a> extension https://rs.gbif.org/extension/gbif/1.0/speciesprofile_2019-01-29.xml</small><br /></p>
+
+<p><strong>Multimedia invalid</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=MULTIMEDIA_INVALID&amp;advanced=1">example</a></small><br />At least one multimedia extension record attached to this taxon name could not be interpreted. This covers multimedia coming in through various <a href="https://tools.gbif.org/dwca-validator/extensions.do">extensions</a>, including Audubon core, Simple images or multimedia or EOL media.<br /><small><strong>Terms</strong>: See https://data-blog.gbif.org/post/gbif-multimedia/</small><br /></p>
+
+<p><strong>Bibliographic references invalid</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=BIB_REFERENCE_INVALID&amp;advanced=1">example</a></small><br />At least one bibliographic reference for this taxon name, linked from the Literature References extension, could not be interpreted.<br /><small><strong>Terms</strong>: <a href="https://tools.gbif.org/dwca-validator/extension.do?id=gbif:Reference">Literature References</a> Extension https://rs.gbif.org/extension/gbif/1.0/references.xml</small><br /></p>
+
+<p><strong>Alternative identifiers invalid</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=ALT_IDENTIFIER_INVALID&amp;advanced=1">example</a></small><br />At least one alternative identifier for this taxon name, linked from the Alternative Identifiers extension, could not be interpreted.<br /><small><strong>Terms</strong>: <a href="https://tools.gbif.org/dwca-validator/extension.do?id=gbif:Identifier">Alternative Identifiers</a> extension https://rs.gbif.org/extension/gbif/1.0/identifier.xml</small><br /></p>
+
+<p><strong>Could not be matched to GBIF backbone</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=BACKBONE_MATCH_NONE&amp;advanced=1">example</a></small><br />The interpretation of the taxonomic name could not find an existing equivalent, or near-enough match, in the GBIF taxonomic backbone. If the taxon name is newly described or a recent recombination, this is expected, until the new name can be integrated into the backbone taxonomy. You can check how a scientific name is matched against the backbone taxonomy using our species name matching tool: https://www.gbif.org/tools/species-lookup<br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_scientificName">dwc:scientificName</a></small><br /></p>
+
+<p><strong>Fuzzy GBIF backbone match</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=BACKBONE_MATCH_FUZZY&amp;advanced=1">example</a></small><br />Name match to the GBIF backbone taxonomy could only be done using a fuzzy, non exact match.<br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_scientificName">dwc:scientificName</a></small><br /></p>
+
+<p><strong>Synonym lacking an accepted name</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=ACCEPTED_NAME_MISSING&amp;advanced=1">example</a></small><br />The taxon name is explicitly marked as a synonym, but lacking a reference to the corresponding accepted name. If the accepted name is contained in the same data source, consider adding a reference to it.<br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_taxonomicStatus">dwc:TaxonomicStatus</a>, <a href="https://dwc.tdwg.org/list/#dwc_acceptedNameUsageID">dwc:acceptedNameUsageID</a></small><br /></p>
+
+<p><strong>Accepted name not unique</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=ACCEPTED_NAME_NOT_UNIQUE&amp;advanced=1">example</a></small><br />The synonym record provides the accepted name as verbatim text, rather than as a cross-reference. The verbatim name is ambiguous and could refer to several different records in GBIF’s backbone taxonomy.<br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_acceptedNameUsage">dwc:acceptedNameUsage</a></small><br /></p>
+
+<p><strong>Parent name not unique</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=PARENT_NAME_NOT_UNIQUE&amp;advanced=1">example</a></small><br />The record provides the name of the taxonomic parent as verbatim text, rather than as a cross-reference. The verbatim name is ambiguous and could refer to several different records in GBIF’s backbone taxonomy.<br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_parentNameUsage">dwc:parentNameUsage</a></small><br /></p>
+
+<p><strong>Original name not unique</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=ORIGINAL_NAME_NOT_UNIQUE&amp;advanced=1">example</a></small><br />The record provides the original name of the taxon (e.g. basionym) as verbatim text, rather than as a cross-reference. The verbatim name is ambiguous and could refer to several different records in GBIF’s backbone taxonomy.<br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_originalNameUsage">dwc:originalNameUsage</a></small><br /></p>
+
+<p><strong>Relationship missing</strong> <small>(checklist)</small> <small><a href="https://www.gbif.org/species/search?issue=RELATIONSHIP_MISSING&amp;advanced=1">example</a></small><br />There were problems representing all name relationships, i.e. the link to the parent, accepted and/or original name. The interpreted record in GBIF is lacking some of the original source relation.<br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_originalNameUsage">dwc:originalNameUsage</a>, <a href="https://dwc.tdwg.org/list/#dwc_parentNameUsage">dwc:parentNameUsage</a>, <a href="https://dwc.tdwg.org/list/#dwc_acceptedNameUsage">dwc:acceptedNameUsage</a>, <a href="https://dwc.tdwg.org/list/#dwc_acceptedNameUsageID">dwc:acceptedNameUsageID</a>, <a href="https://dwc.tdwg.org/list/#dwc_taxonomicStatus">dwc:TaxonomicStatus</a>, <a href="https://dwc.tdwg.org/list/#dwc_parentNameUsageID">dwc:parentNameUsageID</a></small><br /></p>
+
+<p><strong>Basionym relation derived</strong> <small>(GBIF backbone)</small> <small><a href="https://www.gbif.org/species/search?issue=ORIGINAL_NAME_DERIVED&amp;advanced=1">example</a></small><br />The record in GBIF has a relationship to an original name (basionym) that was derived from name &amp; authorship comparison, but did not exist explicitly in the source data. This will only be flagged in programmatically generated GBIF backbone records of name usages. GBIF backbone specific issue.</p>
+
+<p><strong>Conflicting basionym combination</strong> <small>(GBIF backbone)</small> <small><a href="https://www.gbif.org/species/search?issue=CONFLICTING_BASIONYM_COMBINATION&amp;advanced=1">example</a></small><br />There have been more than one accepted name in a homotypical basionym group of names. GBIF backbone specific issue.<br /><small><strong>Terms</strong>: <a href="https://dwc.tdwg.org/list/#dwc_scientificName">dwc:scientificName</a></small><br /></p>
+
+<p><strong>No species included</strong> <small>(GBIF backbone)</small> <small><a href="https://www.gbif.org/species/search?issue=NO_SPECIES&amp;advanced=1">example</a></small><br />The group (currently only genera are tested) is lacking any accepted species. GBIF backbone specific issue.</p>
+
+<p><strong>Name parent mismatch</strong> <small>(GBIF backbone)</small> <small><a href="https://www.gbif.org/species/search?issue=NAME_PARENT_MISMATCH&amp;advanced=1">example</a></small><br />The (accepted) bi/trinomial name does not match the parent name and should be recombined into the parent genus/species. For example the species <em>Picea alba</em> with a parent genus <em>Abies</em> is a mismatch, and should be replaced by <em>Abies alba</em>. GBIF backbone specific issue.</p>
+
+<p><strong>Orthographic variant</strong> <small>(GBIF backbone)</small> <small><a href="https://www.gbif.org/species/search?issue=ORTHOGRAPHIC_VARIANT&amp;advanced=1">example</a></small><br />An entry in the backbone is suspected to be only a spelling variation of an otherwise existing name. GBIF backbone specific issue.</p>
+
+<p><strong>Homonym</strong> <small>(GBIF backbone)</small> <small><a href="https://www.gbif.org/species/search?issue=HOMONYM&amp;advanced=1">example</a></small><br />A not synonymized homonym exists for this name in some other backbone source which have been ignored at build time. GBIF backbone specific issue.
+<!--- 
+TODO: Need a better explanation. Why not-synonymized, and ignored? What does it mean to a user? I would have assumed this flag to notify users that a homonym (identical name but different authorship) does exist that describes an unrelated group of organisms (taxon).
+---></p>
+
+<p><strong>Published earlier than parent name</strong> <small>(GBIF backbone)</small> <small><a href="https://www.gbif.org/species/search?issue=PUBLISHED_BEFORE_GENUS&amp;advanced=1">example</a></small><br />A bi/trinomial name was seemingly published earlier than the parent genus/species. This might indicate a homonym issue, or that the name should rather be a recombination. GBIF backbone specific issue.</p>
+
+</div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/gbif-regional-statistics-2020/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">GBIF Regional Statistics - 2020</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/gbif-species-api/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">(Almost) everything you want to know about the GBIF Species API</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+<script src="/hp-data-blog/assets/js/code-blocks.js" defer></script>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/">GBIF.org</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1794391499"></script>
+
+
+
+
+
+  </body>
+</html>

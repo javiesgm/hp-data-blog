@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Finding citizen science datasets on GBIF
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1794391499">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/datablog-logo.svg" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=APIs%20and%20downloads"
+                    class="navbar-item "
+                  >
+                    APIs and downloads
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Publishing%20data"
+                    class="navbar-item "
+                  >
+                    Publishing data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Analysis%20and%20maps"
+                    class="navbar-item "
+                  >
+                    Analysis and maps
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Taxonomy"
+                    class="navbar-item "
+                  >
+                    Taxonomy
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Data%20quality"
+                    class="navbar-item "
+                  >
+                    Data quality
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citation%20and%20data%20use"
+                    class="navbar-item "
+                  >
+                    Citation and data use
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Collections"
+                    class="navbar-item "
+                  >
+                    Collections
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citizen%20science"
+                    class="navbar-item "
+                  >
+                    Citizen science
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Survey%20and%20monitoring"
+                    class="navbar-item "
+                  >
+                    Survey and monitoring
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Molecular%20data"
+                    class="navbar-item "
+                  >
+                    Molecular data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Multimedia"
+                    class="navbar-item "
+                  >
+                    Multimedia
+                  </a>
+                
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Finding citizen science datasets on GBIF</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=marie-grosjean" title="All posts by Marie Grosjean">Marie Grosjean</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2018-11-09">9 November 2018</time>
+        <span aria-hidden="true">·</span>
+        12 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Citizen+science">Citizen science</a>
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Publishing+data">Publishing data</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=citizen-science">#citizen science</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=dataset">#dataset</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=api">#API</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+      <div class="article">
+        <div class="content">
+  <blockquote>
+  <p><strong>Update (September 2026):</strong> Citizen science datasets in GBIF are now maintained using the <a href="https://registry.gbif.org/vocabulary/DatasetCategory">DatasetCategory vocabulary</a>, where <code class="language-plaintext highlighter-rouge">CitizenScience</code> is one of the supported categories. The category assignments are managed through the <a href="https://github.com/gbif/dataset-category-management">dataset-category-management</a> project. This post is retained as a historical description of an earlier approach to finding citizen science datasets.</p>
+</blockquote>
+
+<h1 id="can-we-automatically-label-citizen-science-datasets">Can we automatically label citizen science datasets?</h1>
+
+<p>The short answer is yes, partially.</p>
+
+<h2 id="why-label-gbif-datasets-as-citizen-science">Why label GBIF datasets as “citizen science”?</h2>
+
+<h3 id="what-is-citizen-science">What is citizen science?</h3>
+
+<p>Citizen science is scientific research conducted, in whole or in part, by amateur (or non-professional) scientists. Citizen science is sometimes described as “public participation in scientific research,” participatory monitoring, and participatory action research (<a href="https://en.wikipedia.org/wiki/Citizen_science">wikipedia definition</a>).</p>
+
+<!--more-->
+
+<h3 id="citizen-science-on-gbif">Citizen science on GBIF</h3>
+
+<p><a href="https://doi.org/10.1016/j.biocon.2016.09.004">A 2016 study</a> showed that nearly half of all occurrence records shared through the GBIF network come from datasets with significant volunteer contributions (for more information, see our <a href="https://www.gbif.org/citizen-science">“citizen science” page</a> on gbif.org).</p>
+
+<p>We would like to know what is the proportion of citizen science dataset now, two years later.</p>
+
+<h2 id="my-analysis">My analysis</h2>
+
+<h3 id="the-tools-i-used">The tools I used</h3>
+
+<p>I wrote my script in python, using the <a href="https://textblob.readthedocs.io/en/dev/">textblob</a> library and the <a href="https://www.gbif.org/developer/summary">GBIF API</a>.</p>
+
+<p>I found some inspiration here:</p>
+
+<ul>
+  <li>https://www.analyticsvidhya.com/blog/2018/02/the-different-methods-deal-text-data-predictive-python/</li>
+  <li>https://stevenloria.com/simple-text-classification/</li>
+</ul>
+
+<p>My script, training set and results are available on <a href="https://github.com/ManonGros/Small-scripts-using-GBIF-API/tree/master/find_citizen_science_datasets">GitHub</a>.</p>
+
+<h3 id="my-training-and-testing-set">My training and testing set</h3>
+
+<p>Before starting my analysis, I assembled a training and testing set. I included all the datasets used to write <a href="https://doi.org/10.1016/j.biocon.2016.09.004">this publication</a> and some datasets I annotated manually.</p>
+
+<p>The criteria I used to decide what I would label as citizen science (CS) are the following:</p>
+
+<ul>
+  <li>Metadata explicitly includes the words “citizen” or “citizen science” (or for the French version “science” or “enquête” participative)</li>
+  <li>The metadata mentions that the dataset is partly or entirely made by volunteers</li>
+  <li>Bioblitz datasets</li>
+  <li>Known citizen science project (Tela-botanica, for example)</li>
+</ul>
+
+<p>What I <strong>did not</strong> consider as citizen science was:</p>
+
+<ul>
+  <li>What seems like compulsory student work</li>
+  <li>Personal collections or notebook (unless the description includes clue from above)</li>
+</ul>
+
+<p>My training/testing set contains 226 CS datasets and 788 non-CS datasets. This set is available on<a href="https://github.com/ManonGros/Small-scripts-using-GBIF-API/blob/master/find_citizen_science_datasets/some_manually_annotated_datasets.tsv">GitHub</a>.</p>
+
+<h3 id="obtained-and-processed-the-data">Obtained and processed the data</h3>
+
+<p>The code I wrote for everything below is available on <a href="https://github.com/ManonGros/Small-scripts-using-GBIF-API/blob/master/find_citizen_science_datasets/scripts/citizen_science_gather_dataset_descriptions.ipynb">GitHub</a>.</p>
+
+<h3 id="title-description-keywords-methods-and-additional-data">Title, description, keywords, methods and additional data</h3>
+
+<p>As mentioned above, I used the <a href="https://www.gbif.org/developer/summary">GBIF API</a> to get the datasets’ descriptions. Since I would like to predict CS datasets using only datasets’ metadata, I chose to include:</p>
+
+<ul>
+  <li>The title of the dataset</li>
+  <li>The contain of its description box</li>
+  <li>Its keywords</li>
+  <li>Its method section if any</li>
+  <li>Anything contained in the “additional information” category</li>
+</ul>
+
+<p>I then concatenate this into a long string of character.</p>
+
+<p>For example, <a href="https://www.gbif.org/dataset/172149d2-2dc0-43fb-a7b1-57e3e4ec34a2">this  dataset</a> titled “Powdery Mildew Citizen Science Survey, UK, 2013-2015” would result into:</p>
+
+<blockquote>
+  <p>Powdery Mildew Citizen Science Survey, UK, 2013-2015 The distribution and identity of powdery mildew species samples sent to the University of Reading for the citizen science survey run between 2013 and 2016 The dataset has been shecked using the NBN Record Cleaner. Samples of this fungal plant disease were collected with their host plants randomly by members of the public. Samples were sent by post to the project convenor at the University of Reading, funded by the Royal Horticultural Society, who identified the different powdery mildew species. 
+Powdery mildews are traditionally identified using a combination of their appearance and the identification of their host plant.  Some plants have only one known powdery mildew so identification of the host allows an immediate tentative identification of the pathogen, while others have several known mildew pathogens. Using a light microscope morphological features of the mildew must be found and the mildew can then be identified using a key and by comparison with published images. In many cases these features can be difficult to distinguish between species or can only be found at a certain stage of the life cycle of the fungus. Molecular DNA extraction and sequencing then completes the process as sequences are matched to a database of known powdery mildews.</p>
+</blockquote>
+
+<p>NB: I didn’t include datasets from <a href="https://www.gbif.org/publisher/7ce8aef0-9e92-11dc-8738-b8a03c50a862">PLAZI</a> and <a href="https://www.gbif.org/publisher/d5778510-eb28-11da-8629-b8a03c50a862">PANGAEA</a>. Nor did I include checklists (check data classes <a href="https://www.gbif.org/dataset-classes">here</a> for more information).</p>
+
+<h3 id="process-the-data">Process the data</h3>
+
+<p>We would like to create a “bag of words” for each datasets, preferably with only informative words. For that, we will go through a few transformation steps.</p>
+
+<h3 id="1-set-everything-to-lower-case-remove-punctuation-numbers-hyphens-and-underscores">1) Set everything to lower case, remove punctuation, numbers, hyphens and underscores.</h3>
+
+<p>Our example would now look like:</p>
+
+<blockquote>
+  <p>powdery mildew citizen science survey uk   the distribution and identity of powdery mildew species samples sent to the university of reading for the citizen science survey run between  and  the dataset has been shecked using the nbn record cleaner samples of this fungal plant disease were collected with their host plants randomly by members of the public samples were sent by post to the project convenor at the university of reading funded by the royal horticultural society who identified the different powdery mildew species powdery mildews are traditionally identified using a combination of their appearance and the identification of their host plant some plants have only one known powdery mildew so identification of the host allows an immediate tentative identification of the pathogen while others have several known mildew pathogens using a light microscope morphological features of the mildew must be found and the mildew can then be identified using a key and by comparison with published images in many cases these features can be difficult to distinguish between species or can only be found at a certain stage of the life cycle of the fungus molecular dna extraction and sequencing then completes the process as sequences are matched to a database of known powdery mildews</p>
+</blockquote>
+
+<h3 id="2-remove-most-frequent-words">2) Remove most frequent words</h3>
+
+<p>They are unlikely to be informative and will be a lot more to process in the analysis. I decided to remove the most frequent words by language to avoid language bias. We don’t want words like “como” to be predictive just because the training set doesn’t contain a lot of Spanish description for citizen science projects.</p>
+
+<p>I chose the arbitrary threshold of removing the 15 most common words for each language. Note that I didn’t optimize this threshold.</p>
+
+<p>Our example would now be:</p>
+
+<blockquote>
+  <p>powdery mildew citizen science survey uk distribution identity powdery mildew samples sent university reading citizen science survey run between dataset has been shecked nbn record cleaner samples fungal plant disease collected with their host randomly members public samples sent post project convenor at university reading funded royal horticultural society who identified different powdery mildew powdery mildews traditionally identified combination their appearance identification their host plant some have only one known powdery mildew so identification host allows an immediate tentative identification pathogen while others have several known mildew pathogens light microscope morphological features mildew must be found mildew can then be identified key comparison with published images many cases these features can be difficult distinguish between or can only be found at certain stage life cycle fungus molecular dna extraction sequencing then completes process sequences matched known powdery mildews</p>
+</blockquote>
+
+<h3 id="3-replace-and-remove-some-key-words">3) Replace and remove some key words</h3>
+
+<p>This step involves mostly manual curation. This is partly how I get around the multi-language problem. I simply remove or translate a list of words I curated manually.</p>
+
+<p>This list is accessible on <a href="https://github.com/ManonGros/Small-scripts-using-GBIF-API/blob/master/find_citizen_science_datasets/wd_replace.txt">GitHub</a>.</p>
+
+<p>After this step, our example would still be the same.</p>
+
+<p><strong>About languages</strong>
+I tried using the translation function in Textblob and it worked! For about an hour. After that the Google API didn’t respond any more so I gave up. If anyone has a better method to deal with multi-language analysis, please leave a comment. I would be very grateful.</p>
+
+<p>This is the language distribution for the GBIF datasets (excluding PLAZI and PANGAEA’s):</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre>eng    6591
+spa    1757
+fra    1114
+por     223
+nor       6
+zho       6
+rus       2
+glg       1
+cat       1
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="4-remove-rare-words---optional">4) Remove rare words - optional</h3>
+
+<p>For the same reason we removed frequent words, we would also like to remove rare words (which I defined as occurring only once).
+However, there were so many rare words that the running time was very long so I decided to keep them (the code is available though).</p>
+
+<h3 id="5-correct-spelling---optional">5) Correct spelling - optional</h3>
+
+<p>I gave up on correcting the spelling mistakes because it didn’t make any sense for non-English datasets but the code is available.</p>
+
+<h3 id="6-lemmatization">6) Lemmatization</h3>
+
+<p>Lemmatization is the process of “making words more universal”. For example, the word “butterflies” would become “butterfly”, etc.</p>
+
+<p>Our lemmatized description would be:</p>
+
+<blockquote>
+  <p>powdery mildew citizen science survey uk distribution identity powdery mildew sample sent university reading citizen science survey run between dataset ha been shecked nbn record cleaner sample fungal plant disease collected with their host randomly member public sample sent post project convenor at university reading funded royal horticultural society who identified different powdery mildew powdery mildew traditionally identified combination their appearance identification their host plant some have only one known powdery mildew so identification host allows an immediate tentative identification pathogen while others have several known mildew pathogen light microscope morphological feature mildew must be found mildew can then be identified key comparison with published image many case these feature can be difficult distinguish between or can only be found at certain stage life cycle fungus molecular dna extraction sequencing then completes process sequence matched known powdery mildew</p>
+</blockquote>
+
+<h3 id="feature-selection">Feature selection</h3>
+
+<p>The feature selection is simply the process by which I select informative features. In other words: what words are important to label the datasets as CS?
+I would like a small set of informative words to avoid over-fitting my training set.</p>
+
+<p>The proper way to do this is to use a double loop cross-validation but I don’t have enough data for that. So instead, I chose the following arbitrary method:</p>
+
+<ol>
+  <li>Selected 800 random datasets as the “training set”.</li>
+  <li>Divide this training set in four subsets.</li>
+  <li>For each subset:
+  3.1  train a Naive Bayesian model,
+  3.2  extract the top 15 informative words.</li>
+  <li>Keep only the informative words that were selected more than once.</li>
+</ol>
+
+<p>The resulting list of informative words varies in length depending on the random selection but the most important ones are fairly consistent.
+In my latest iteration, the resulting list of features was the following:</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="rouge-code"><pre>na              3
+select          3
+professional    3
+occurence       3
+school          3
+validated       3
+organised       2
+amateur         2
+dedicated       2
+spot            2
+you             2
+citizen         2
+hosted          2
+volunteer       2
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="model-training">Model training</h3>
+
+<p>I then stripped my training/testing set of all the words that weren’t informative. I kept only the list above + <code class="language-plaintext highlighter-rouge">museum</code> + <code class="language-plaintext highlighter-rouge">herbarium</code> + <code class="language-plaintext highlighter-rouge">inaturalist</code> because I thought that it would improve the outcome (but I was wrong, it didn’t change anything).</p>
+
+<p>Our example became:</p>
+
+<blockquote>
+  <p>citizen citizen</p>
+</blockquote>
+
+<p>I know, I should use a completely new training set to re-train the final model but I don’t have enough data. So instead, I trained a decision tree on my previous 800 datasets (the ones I used for feature selection).</p>
+
+<p>I chose a decision tree model this time, because it is easier to interpret and implement.</p>
+
+<p>This is the resulting truncated tree written as pseudo-code:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre>if contains(citizen) == False: 
+  if contains(volunteer) == False: 
+    if contains(organised) == False: 
+      if contains(amateur) == False: return 'F'
+      if contains(amateur) == True: return 'T'
+    if contains(organised) == True: 
+      if contains(na) == False: return 'T'
+      if contains(na) == True: return 'T'
+  if contains(volunteer) == True: return 'T'
+if contains(citizen) == True: return 'T'
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="test-and-performance">Test and performance</h3>
+
+<p>I tested this tree on the testing set (which was never used for the feature selection nor the training).
+This testing set contained 21 CS and 121 non-CS.</p>
+
+<p>The performance on this test set was:</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre>Performance on testing set
+
+True positive:	 9.86 %
+True negative:	 85.21%
+False positive:	 4.93 %
+False negative:	 0.0  %
+-----------------------------------
+Accuracy:	 95.07%
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>It is clearly over estimated. I ran the feature selection and training a few times and overall, the accuracy is between <strong>83</strong> and <strong>95%</strong>.
+Every time I ran my script, I got more false positives than false negatives.</p>
+
+<h3 id="results">Results</h3>
+
+<p>The result of the model prediction for the unclassified datasets is available on <a href="https://github.com/ManonGros/Small-scripts-using-GBIF-API/blob/master/find_citizen_science_datasets/test_model_subsample.tsv">GitHub</a>.</p>
+
+<p>According to my model, about more 200 datasets can be labeled as “citizen science” (in addition to the 226 I manually annotated), which corresponds to 1% of the total number of datasets on GBIF.</p>
+
+<p>This number is probably greatly overestimated since the model gives us more false positive than false negative. Nevertheless, it is a relatively accurate estimation.</p>
+
+<p><strong>Edit 2018-11-27</strong>: I checked the predictions and made a list of citizen science datasets on GBIF available on <a href="https://github.com/ManonGros/Small-scripts-using-GBIF-API/blob/master/find_citizen_science_datasets/citizen_science_datasets_26nove2018_not_reviewed.tsv">GitHub</a>. I also tagged these datasets in the API using a machineTag. You can now look for them with the following call: http://api.gbif.org/v1/dataset?machineTagNamespace=citizenScience.gbif.org.
+If you don’t agree with any of these annotations, please let me know and I will update the tags.</p>
+
+<h3 id="my-conclusion">My conclusion</h3>
+
+<p>I tried to keep my model as simple as possible. Mostly because having a complicated and uninterpretable model wouldn’t be very useful for me.</p>
+
+<p>This means that, perhaps, I could have come up with this simple model myself (without having to use any machine learning). Especially since this model would require manual curation afterwards.</p>
+
+<p>However, my script has two advantages:</p>
+
+<ul>
+  <li>It transforms the input (mostly useful for non-English languages)</li>
+  <li>It evaluates the model performance.</li>
+</ul>
+
+<h3 id="what-do-you-think">What do you think?</h3>
+<p>Should GBIF explore a system like this to label datasets as “citizen science”? 
+Please let me know.</p>
+
+</div>
+      </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/gbif-download-trends/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">GBIF download trends</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/gbif-multimedia/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Sharing images, sounds and videos on GBIF</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+<script src="/hp-data-blog/assets/js/code-blocks.js" defer></script>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/">GBIF.org</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1794391499"></script>
+
+
+
+
+
+  </body>
+</html>

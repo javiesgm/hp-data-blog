@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Tutorial using Google Earth Engine with GBIF mediated occurrences
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1794391499">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/datablog-logo.svg" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=APIs%20and%20downloads"
+                    class="navbar-item "
+                  >
+                    APIs and downloads
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Publishing%20data"
+                    class="navbar-item "
+                  >
+                    Publishing data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Analysis%20and%20maps"
+                    class="navbar-item "
+                  >
+                    Analysis and maps
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Taxonomy"
+                    class="navbar-item "
+                  >
+                    Taxonomy
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Data%20quality"
+                    class="navbar-item "
+                  >
+                    Data quality
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citation%20and%20data%20use"
+                    class="navbar-item "
+                  >
+                    Citation and data use
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Collections"
+                    class="navbar-item "
+                  >
+                    Collections
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citizen%20science"
+                    class="navbar-item "
+                  >
+                    Citizen science
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Survey%20and%20monitoring"
+                    class="navbar-item "
+                  >
+                    Survey and monitoring
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Molecular%20data"
+                    class="navbar-item "
+                  >
+                    Molecular data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Multimedia"
+                    class="navbar-item "
+                  >
+                    Multimedia
+                  </a>
+                
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Tutorial using Google Earth Engine with GBIF mediated occurrences</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=kit-lewers" title="All posts by Kit Lewers">Kit Lewers</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2025-01-23">23 January 2025</time>
+        <span aria-hidden="true">·</span>
+        9 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+      <div class="article">
+        <div class="content">
+  <iframe src="https://www.loom.com/embed/ac617862ef8d4e978684c561d93e9950?sid=409893b6-ae8b-43dc-bcf4-ee6425507788" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="">
+
+</iframe>
+
+<p>In this tutorial, we explored how to integrate remote sensing data with biodiversity observations to analyze the relationships between environmental factors and species occurrences. Specifically, we focused on analyzing <strong>Land Surface Temperature (LST)</strong> over time and its relationship to observations of the Northern Cardinal (Cardinalis cardinalis), a well-known songbird species.</p>
+
+<!--more-->
+
+<h3 id="objectives">Objectives</h3>
+
+<ol>
+  <li><strong>Land Surface Temperature (LST) Analysis</strong></li>
+</ol>
+
+<p>We used remote sensing data from the Landsat 8 satellite to compute monthly averages of LST across a defined region of interest (ROI). The tutorial demonstrated how to:</p>
+
+<ul>
+  <li>Query LST data using Google Earth Engine (GEE) for specific months in 2019.</li>
+  <li>Aggregate LST data to calculate monthly average temperatures.</li>
+</ul>
+
+<ol>
+  <li><strong>Species Observation Time Series</strong> Using occurrence data for Cardinalis cardinalis from the Global Biodiversity Information Facility (GBIF), the tutorial guided users through:</li>
+</ol>
+
+<ul>
+  <li>Fetching observation records using spatial and temporal filters (e.g., only human observations from 2019).</li>
+  <li>Preprocessing these records to extract relevant metadata, such as the month of observation and geographical coordinates.</li>
+</ul>
+
+<ol>
+  <li><strong>Combining Datasets for Time-Series Analysis</strong> The LST data and <em>Cardinalis cardinalis</em> observation records were combined into a single dataset to enable time-series analysis. Key steps included:</li>
+</ol>
+
+<ul>
+  <li>Summarizing monthly observation counts.</li>
+  <li>Merging these counts with monthly average temperatures for the same region.</li>
+</ul>
+
+<ol>
+  <li><strong>Data Visualization</strong> The final step was visualizing the relationships between temperature and bird observations through:</li>
+</ol>
+
+<ul>
+  <li><strong>Scatter plots</strong> highlighting correlations between average monthly temperature and the number of <em>Cardinalis cardinalis</em> observations.</li>
+</ul>
+
+<h3 id="insights-and-applications">Insights and Applications</h3>
+
+<p>This tutorial demonstrates a practical workflow for integrating remote sensing and biodiversity data, offering a framework for analyzing species-environment interactions over time. It highlights how:</p>
+
+<ul>
+  <li>LST data can serve as a proxy for environmental conditions affecting species behavior and distribution.</li>
+  <li>Temporal trends in species observations can reveal seasonal or climatic influences.</li>
+  <li>Integrating geospatial and temporal datasets provides a powerful approach to ecological research.</li>
+</ul>
+
+<h3 id="tools-and-libraries-used">Tools and Libraries Used</h3>
+
+<ul>
+  <li><strong>Google Earth Engine (GEE)</strong>: For querying and processing LST imagery.</li>
+  <li><strong>GBIF API</strong>: To fetch species occurrence data filtered by time, location, and observation method.</li>
+</ul>
+
+<p><strong>Python Libraries</strong>:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">pandas</code> and <code class="language-plaintext highlighter-rouge">geopandas</code> for data manipulation.</li>
+  <li><code class="language-plaintext highlighter-rouge">matplotlib</code> and <code class="language-plaintext highlighter-rouge">plotly</code> for visualization.</li>
+  <li><code class="language-plaintext highlighter-rouge">shapely</code> for spatial operations.</li>
+</ul>
+
+<blockquote>
+  <p>Feel to reach out to <a href="mailto:krle4401@colorado.edu">krle4401\@colorado.edu</a> with questions and make the subject something like “GBIF LST Tutorial Questions”</p>
+</blockquote>
+
+<p><strong>Step One</strong>: Import Libraries and Initialize Google Earth Engine</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="rouge-code"><pre><span class="c1"># Required Libraries
+</span><span class="kn">import</span> <span class="nn">ee</span>
+<span class="kn">import</span> <span class="nn">geemap</span>
+<span class="kn">import</span> <span class="nn">geemap.colormaps</span> <span class="k">as</span> <span class="n">cm</span>
+<span class="kn">from</span> <span class="nn">pygbif</span> <span class="kn">import</span> <span class="n">occurrences</span> <span class="k">as</span> <span class="n">gbif_occ</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="n">gpd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="n">widgets</span>  <span class="c1"># Import ipywidgets
+</span>
+<span class="c1"># Initialize Earth Engine
+</span><span class="n">ee</span><span class="p">.</span><span class="n">Authenticate</span><span class="p">()</span>
+<span class="n">ee</span><span class="p">.</span><span class="n">Initialize</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="s">"ee-krle4401"</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>Step Two</strong>: Set a ROI (Region of Interest), Fetch Landsat Imagery with the Thermal Band, and Inspect Cloud Coverage</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+</pre></td><td class="rouge-code"><pre><span class="c1"># ROI: DC/Virginia area
+</span><span class="n">roi</span> <span class="o">=</span> <span class="n">ee</span><span class="p">.</span><span class="n">Geometry</span><span class="p">.</span><span class="n">Polygon</span><span class="p">(</span>
+    <span class="p">[[[</span><span class="o">-</span><span class="mf">77.5</span><span class="p">,</span> <span class="mf">38.3</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">77.5</span><span class="p">,</span> <span class="mf">39.1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">76.9</span><span class="p">,</span> <span class="mf">39.1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">76.9</span><span class="p">,</span> <span class="mf">38.3</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">77.5</span><span class="p">,</span> <span class="mf">38.3</span><span class="p">]]]</span>
+<span class="p">)</span>
+
+<span class="c1"># Function to fetch monthly LST and count images
+</span><span class="k">def</span> <span class="nf">get_landsat_lst</span><span class="p">(</span><span class="n">month</span><span class="p">):</span>
+    <span class="n">start_date</span> <span class="o">=</span> <span class="s">f"2019-</span><span class="si">{</span><span class="n">month</span><span class="p">:</span><span class="mi">02</span><span class="n">d</span><span class="si">}</span><span class="s">-01"</span>
+    <span class="n">end_date</span> <span class="o">=</span> <span class="s">f"2019-</span><span class="si">{</span><span class="n">month</span><span class="p">:</span><span class="mi">02</span><span class="n">d</span><span class="si">}</span><span class="s">-</span><span class="si">{</span><span class="mi">31</span> <span class="k">if</span> <span class="n">month</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span> <span class="k">else</span> <span class="p">(</span><span class="mi">30</span> <span class="k">if</span> <span class="n">month</span> <span class="o">!=</span> <span class="mi">2</span> <span class="k">else</span> <span class="mi">28</span><span class="p">)</span><span class="si">}</span><span class="s">"</span>
+
+    <span class="n">collection</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">ee</span><span class="p">.</span><span class="n">ImageCollection</span><span class="p">(</span><span class="s">"LANDSAT/LC08/C02/T1_L2"</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">filterBounds</span><span class="p">(</span><span class="n">roi</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">filterDate</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">)</span>
+        <span class="p">.</span><span class="nb">filter</span><span class="p">(</span><span class="n">ee</span><span class="p">.</span><span class="n">Filter</span><span class="p">.</span><span class="n">lt</span><span class="p">(</span><span class="s">"CLOUD_COVER"</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+    <span class="p">)</span>
+
+    <span class="n">image_count</span> <span class="o">=</span> <span class="n">collection</span><span class="p">.</span><span class="n">size</span><span class="p">().</span><span class="n">getInfo</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">image_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">f"No images available for </span><span class="si">{</span><span class="n">start_date</span><span class="si">}</span><span class="s"> to </span><span class="si">{</span><span class="n">end_date</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span><span class="p">,</span> <span class="n">image_count</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s">f"</span><span class="si">{</span><span class="n">image_count</span><span class="si">}</span><span class="s"> images available for </span><span class="si">{</span><span class="n">start_date</span><span class="si">}</span><span class="s"> to </span><span class="si">{</span><span class="n">end_date</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">lst</span> <span class="o">=</span> <span class="n">collection</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">img</span><span class="p">:</span> <span class="n">img</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="s">"ST_B10"</span><span class="p">).</span><span class="n">multiply</span><span class="p">(</span><span class="mf">0.00341802</span><span class="p">).</span><span class="n">add</span><span class="p">(</span><span class="mi">149</span><span class="p">).</span><span class="n">subtract</span><span class="p">(</span><span class="mf">273.15</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">lst</span><span class="p">.</span><span class="n">mean</span><span class="p">().</span><span class="n">clip</span><span class="p">(</span><span class="n">roi</span><span class="p">),</span> <span class="n">image_count</span>
+
+<span class="c1"># Fetch LST images and log image counts
+</span><span class="n">lst_monthly</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">image_counts</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">month</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">):</span>
+    <span class="n">lst</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="n">get_landsat_lst</span><span class="p">(</span><span class="n">month</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">lst</span><span class="p">:</span>
+        <span class="n">lst_monthly</span><span class="p">[</span><span class="n">month</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span>
+    <span class="n">image_counts</span><span class="p">[</span><span class="n">month</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+
+<span class="c1"># Visualize the image counts as a bar chart
+</span><span class="n">months</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">image_counts</span><span class="p">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">counts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">image_counts</span><span class="p">.</span><span class="n">values</span><span class="p">())</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">bar</span><span class="p">(</span><span class="n">months</span><span class="p">,</span> <span class="n">counts</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"skyblue"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Month"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"Number of Images"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Landsat Images per Month (2019)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">months</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="images/download%20(1).png" alt="" /></p>
+
+<p>If you wanted to pull everything, use the below, but make sure you have a lot of time!</p>
+
+<p><strong>Step Three</strong>: Let’s look at records over the year of <em>Cardinalis cardinalis</em></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">pygbif</span> <span class="kn">import</span> <span class="n">occurrences</span> <span class="k">as</span> <span class="n">gbif_occ</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="n">gpd</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">Polygon</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+
+<span class="c1"># Define bounding box coordinates for ROI
+</span><span class="n">bounding_box_coords</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="o">-</span><span class="mf">77.5</span><span class="p">,</span> <span class="mf">38.3</span><span class="p">),</span>  <span class="c1"># Bottom-left
+</span>    <span class="p">(</span><span class="o">-</span><span class="mf">76.9</span><span class="p">,</span> <span class="mf">38.3</span><span class="p">),</span>  <span class="c1"># Bottom-right
+</span>    <span class="p">(</span><span class="o">-</span><span class="mf">76.9</span><span class="p">,</span> <span class="mf">39.1</span><span class="p">),</span>  <span class="c1"># Top-right
+</span>    <span class="p">(</span><span class="o">-</span><span class="mf">77.5</span><span class="p">,</span> <span class="mf">39.1</span><span class="p">),</span>  <span class="c1"># Top-left
+</span>    <span class="p">(</span><span class="o">-</span><span class="mf">77.5</span><span class="p">,</span> <span class="mf">38.3</span><span class="p">),</span>  <span class="c1"># Close the polygon
+</span><span class="p">]</span>
+
+<span class="c1"># Create a polygon from the bounding box
+</span><span class="n">bounding_polygon</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">(</span><span class="n">bounding_box_coords</span><span class="p">)</span>
+
+<span class="c1"># Iterate through each month
+</span><span class="k">for</span> <span class="n">month</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="c1"># Define a unique output CSV file for each month
+</span>    <span class="n">output_csv</span> <span class="o">=</span> <span class="s">f"cardinalis_cardinalis_2019_month_</span><span class="si">{</span><span class="n">month</span><span class="p">:</span><span class="mi">02</span><span class="n">d</span><span class="si">}</span><span class="s">.csv"</span>
+
+    <span class="c1"># Create the CSV file with headers for this month
+</span>    <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">"species"</span><span class="p">,</span> <span class="s">"kingdom"</span><span class="p">,</span> <span class="s">"basisOfRecord"</span><span class="p">,</span> <span class="s">"latitude"</span><span class="p">,</span> <span class="s">"longitude"</span><span class="p">,</span> <span class="s">"date_collected"</span><span class="p">]).</span><span class="n">to_csv</span><span class="p">(</span>
+        <span class="n">output_csv</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s">f"Fetching data for month </span><span class="si">{</span><span class="n">month</span><span class="p">:</span><span class="mi">02</span><span class="n">d</span><span class="si">}</span><span class="s">..."</span><span class="p">)</span>
+
+    <span class="c1"># Pagination variables
+</span>    <span class="n">limit</span> <span class="o">=</span> <span class="mi">300</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="c1"># Query GBIF API for Cardinalis cardinalis for the specific month
+</span>        <span class="n">response</span> <span class="o">=</span> <span class="n">gbif_occ</span><span class="p">.</span><span class="n">search</span><span class="p">(</span>
+            <span class="n">geometry</span><span class="o">=</span><span class="n">bounding_polygon</span><span class="p">.</span><span class="n">wkt</span><span class="p">,</span>
+            <span class="n">hasCoordinate</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+            <span class="n">basisOfRecord</span><span class="o">=</span><span class="s">"HUMAN_OBSERVATION"</span><span class="p">,</span>
+            <span class="n">year</span><span class="o">=</span><span class="mi">2019</span><span class="p">,</span>
+            <span class="n">month</span><span class="o">=</span><span class="n">month</span><span class="p">,</span>
+            <span class="n">scientificName</span><span class="o">=</span><span class="s">"Cardinalis cardinalis"</span><span class="p">,</span>  <span class="c1"># Filter for Cardinalis cardinalis
+</span>            <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span>
+            <span class="n">offset</span><span class="o">=</span><span class="n">offset</span>
+        <span class="p">)</span>
+        
+
+        <span class="c1"># Extract results
+</span>        <span class="n">results</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"results"</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">results</span><span class="p">:</span>
+            <span class="k">break</span>
+
+        <span class="c1"># Process records
+</span>        <span class="n">batch_records</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">occ</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Extract required fields
+</span>                <span class="n">latitude</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">occ</span><span class="p">[</span><span class="s">"decimalLatitude"</span><span class="p">])</span>
+                <span class="n">longitude</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">occ</span><span class="p">[</span><span class="s">"decimalLongitude"</span><span class="p">])</span>
+                <span class="n">event_date</span> <span class="o">=</span> <span class="n">occ</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"eventDate"</span><span class="p">,</span> <span class="s">"Unknown Date"</span><span class="p">)</span>
+                <span class="n">species</span> <span class="o">=</span> <span class="n">occ</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"species"</span><span class="p">,</span> <span class="s">"Unknown"</span><span class="p">)</span>
+                <span class="n">kingdom</span> <span class="o">=</span> <span class="n">occ</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"kingdom"</span><span class="p">,</span> <span class="s">"Unknown"</span><span class="p">)</span>
+                <span class="n">basis_of_record</span> <span class="o">=</span> <span class="n">occ</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"basisOfRecord"</span><span class="p">,</span> <span class="s">"Unknown"</span><span class="p">)</span>
+                
+                <span class="c1"># Check if the point is inside the bounding polygon
+</span>                <span class="n">point</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="n">longitude</span><span class="p">,</span> <span class="n">latitude</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">bounding_polygon</span><span class="p">.</span><span class="n">contains</span><span class="p">(</span><span class="n">point</span><span class="p">):</span>
+                    <span class="n">batch_records</span><span class="p">.</span><span class="n">append</span><span class="p">({</span>
+                        <span class="s">"species"</span><span class="p">:</span> <span class="n">species</span><span class="p">,</span>
+                        <span class="s">"kingdom"</span><span class="p">:</span> <span class="n">kingdom</span><span class="p">,</span>
+                        <span class="s">"basisOfRecord"</span><span class="p">:</span> <span class="n">basis_of_record</span><span class="p">,</span>
+                        <span class="s">"latitude"</span><span class="p">:</span> <span class="n">latitude</span><span class="p">,</span>
+                        <span class="s">"longitude"</span><span class="p">:</span> <span class="n">longitude</span><span class="p">,</span>
+                        <span class="s">"date_collected"</span><span class="p">:</span> <span class="n">event_date</span><span class="p">,</span>
+                    <span class="p">})</span>
+            <span class="k">except</span> <span class="p">(</span><span class="nb">KeyError</span><span class="p">,</span> <span class="nb">TypeError</span><span class="p">,</span> <span class="nb">ValueError</span><span class="p">):</span>
+                <span class="c1"># Skip malformed records
+</span>                <span class="k">continue</span>
+
+        <span class="c1"># Append batch to the month's CSV
+</span>        <span class="k">if</span> <span class="n">batch_records</span><span class="p">:</span>
+            <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">batch_records</span><span class="p">).</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_csv</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">"a"</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+        <span class="c1"># Update offset for next batch
+</span>        <span class="n">offset</span> <span class="o">+=</span> <span class="n">limit</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="s">f"Fetched </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="si">}</span><span class="s"> records so far for month </span><span class="si">{</span><span class="n">month</span><span class="p">:</span><span class="mi">02</span><span class="n">d</span><span class="si">}</span><span class="s">, offset: </span><span class="si">{</span><span class="n">offset</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s">f"Data for month </span><span class="si">{</span><span class="n">month</span><span class="p">:</span><span class="mi">02</span><span class="n">d</span><span class="si">}</span><span class="s"> saved to </span><span class="si">{</span><span class="n">output_csv</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Data fetching complete!"</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">geemap</span>
+
+<span class="c1"># Initialize geemap.Map for LST data
+</span><span class="n">map_lst</span> <span class="o">=</span> <span class="n">geemap</span><span class="p">.</span><span class="n">Map</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">[</span><span class="mf">38.7</span><span class="p">,</span> <span class="o">-</span><span class="mf">77.2</span><span class="p">],</span> <span class="n">zoom</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="c1"># Add LST layers for months with data
+</span><span class="n">palette</span> <span class="o">=</span> <span class="n">cm</span><span class="p">.</span><span class="n">palettes</span><span class="p">.</span><span class="n">inferno</span>
+<span class="k">for</span> <span class="n">month</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">lst_monthly</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">f"Adding LST layer for month </span><span class="si">{</span><span class="n">month</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">map_lst</span><span class="p">.</span><span class="n">addLayer</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">{</span><span class="s">"min"</span><span class="p">:</span> <span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="s">"max"</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s">"palette"</span><span class="p">:</span> <span class="n">palette</span><span class="p">},</span> <span class="s">f"LST - Month </span><span class="si">{</span><span class="n">month</span><span class="p">:</span><span class="mi">02</span><span class="n">d</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+
+<span class="c1"># Save the LST map to an HTML file
+</span><span class="n">output_html_lst</span> <span class="o">=</span> <span class="s">"lst_data_map.html"</span>
+<span class="n">map_lst</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">output_html_lst</span><span class="p">)</span>
+
+<span class="n">map_lst</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="images/map.png" alt="" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="n">gpd</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+<span class="kn">import</span> <span class="nn">geemap</span>
+<span class="kn">from</span> <span class="nn">dateutil</span> <span class="kn">import</span> <span class="n">parser</span>
+
+<span class="c1"># Function to safely parse dates and extract the month
+</span><span class="k">def</span> <span class="nf">parse_date_and_get_month</span><span class="p">(</span><span class="n">date_str</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">parser</span><span class="p">.</span><span class="n">parse</span><span class="p">(</span><span class="n">date_str</span><span class="p">).</span><span class="n">month</span>  <span class="c1"># Use dateutil.parser to handle mixed formats
+</span>    <span class="k">except</span> <span class="p">(</span><span class="nb">ValueError</span><span class="p">,</span> <span class="nb">TypeError</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">None</span>  <span class="c1"># Return None for invalid dates
+</span>
+<span class="c1"># Initialize geemap.Map
+</span><span class="n">map_combined</span> <span class="o">=</span> <span class="n">geemap</span><span class="p">.</span><span class="n">Map</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">[</span><span class="mf">38.7</span><span class="p">,</span> <span class="o">-</span><span class="mf">77.2</span><span class="p">],</span> <span class="n">zoom</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="c1"># Add LST layers for months with data
+</span><span class="n">palette</span> <span class="o">=</span> <span class="n">cm</span><span class="p">.</span><span class="n">palettes</span><span class="p">.</span><span class="n">inferno</span>
+<span class="k">for</span> <span class="n">month</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">lst_monthly</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">f"Adding LST layer for month </span><span class="si">{</span><span class="n">month</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">map_combined</span><span class="p">.</span><span class="n">addLayer</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">{</span><span class="s">"min"</span><span class="p">:</span> <span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="s">"max"</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s">"palette"</span><span class="p">:</span> <span class="n">palette</span><span class="p">},</span> <span class="s">f"LST - Month </span><span class="si">{</span><span class="n">month</span><span class="p">:</span><span class="mi">02</span><span class="n">d</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+
+<span class="c1"># Combine all 12 CSV files into a single DataFrame
+</span><span class="n">csv_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="s">"cardinalis_cardinalis_2019_month_*.csv"</span><span class="p">))</span>  <span class="c1"># Match your CSV files
+</span><span class="n">dfs</span> <span class="o">=</span> <span class="p">[</span><span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_file</span><span class="p">)</span> <span class="k">for</span> <span class="n">csv_file</span> <span class="ow">in</span> <span class="n">csv_files</span><span class="p">]</span>  <span class="c1"># Use pandas to read CSVs
+</span><span class="n">combined_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  <span class="c1"># Combine all DataFrames
+</span>
+<span class="c1"># Parse 'date_collected' to extract the month
+</span><span class="n">combined_df</span><span class="p">[</span><span class="s">"month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">combined_df</span><span class="p">[</span><span class="s">"date_collected"</span><span class="p">].</span><span class="nb">apply</span><span class="p">(</span><span class="n">parse_date_and_get_month</span><span class="p">)</span>
+
+<span class="c1"># Drop rows with invalid months
+</span><span class="n">combined_df</span> <span class="o">=</span> <span class="n">combined_df</span><span class="p">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s">"month"</span><span class="p">])</span>
+
+<span class="c1"># Select the first 30 records for each month
+</span><span class="n">selected_df</span> <span class="o">=</span> <span class="n">combined_df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">"month"</span><span class="p">).</span><span class="n">head</span><span class="p">(</span><span class="mi">30</span><span class="p">).</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># Convert the selected DataFrame into a GeoDataFrame
+</span><span class="n">selected_gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="p">.</span><span class="n">GeoDataFrame</span><span class="p">(</span>
+    <span class="n">selected_df</span><span class="p">,</span>
+    <span class="n">geometry</span><span class="o">=</span><span class="n">gpd</span><span class="p">.</span><span class="n">points_from_xy</span><span class="p">(</span><span class="n">selected_df</span><span class="p">[</span><span class="s">"longitude"</span><span class="p">],</span> <span class="n">selected_df</span><span class="p">[</span><span class="s">"latitude"</span><span class="p">]),</span>
+    <span class="n">crs</span><span class="o">=</span><span class="s">"EPSG:4326"</span>
+<span class="p">)</span>
+
+<span class="c1"># Add the selected GeoDataFrame as a single layer on the map
+</span><span class="n">map_combined</span><span class="p">.</span><span class="n">add_gdf</span><span class="p">(</span><span class="n">selected_gdf</span><span class="p">,</span> <span class="n">layer_name</span><span class="o">=</span><span class="s">"Selected Cardinal Observations"</span><span class="p">)</span>
+
+<span class="c1"># Display the map in the notebook (if using Jupyter)
+</span><span class="n">map_combined</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="n">gpd</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="n">px</span>
+
+<span class="c1"># Combine all 12 CSV files into a single DataFrame
+</span><span class="n">csv_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="s">"cardinalis_cardinalis_2019_month_*.csv"</span><span class="p">))</span>  <span class="c1"># Match your CSV files
+</span><span class="n">dfs</span> <span class="o">=</span> <span class="p">[</span><span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_file</span><span class="p">)</span> <span class="k">for</span> <span class="n">csv_file</span> <span class="ow">in</span> <span class="n">csv_files</span><span class="p">]</span>
+<span class="n">combined_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># Convert 'date_collected' to datetime with mixed format handling
+</span><span class="n">combined_df</span><span class="p">[</span><span class="s">"date_collected"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">combined_df</span><span class="p">[</span><span class="s">"date_collected"</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s">"coerce"</span><span class="p">,</span> <span class="n">utc</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># Extract the month from valid dates
+</span><span class="n">combined_df</span><span class="p">[</span><span class="s">"month"</span><span class="p">]</span> <span class="o">=</span> <span class="n">combined_df</span><span class="p">[</span><span class="s">"date_collected"</span><span class="p">].</span><span class="n">dt</span><span class="p">.</span><span class="n">month</span>
+
+<span class="c1"># Drop rows with invalid dates (if necessary)
+</span><span class="n">combined_df</span> <span class="o">=</span> <span class="n">combined_df</span><span class="p">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s">"month"</span><span class="p">])</span>
+
+<span class="c1"># Summarize GBIF Observations by Month
+</span><span class="n">monthly_observations</span> <span class="o">=</span> <span class="n">combined_df</span><span class="p">[</span><span class="s">"month"</span><span class="p">].</span><span class="n">value_counts</span><span class="p">().</span><span class="n">sort_index</span><span class="p">()</span>
+
+<span class="c1"># Assuming `lst_monthly` contains precomputed LST images
+# Step 2: Compute Average Temperature for Each Month
+</span><span class="n">monthly_avg_temp</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">month</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">lst_monthly</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">mean_temp</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">reduceRegion</span><span class="p">(</span>
+        <span class="n">reducer</span><span class="o">=</span><span class="n">ee</span><span class="p">.</span><span class="n">Reducer</span><span class="p">.</span><span class="n">mean</span><span class="p">(),</span>
+        <span class="n">geometry</span><span class="o">=</span><span class="n">roi</span><span class="p">,</span>
+        <span class="n">scale</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+        <span class="n">bestEffort</span><span class="o">=</span><span class="bp">True</span>
+    <span class="p">).</span><span class="n">getInfo</span><span class="p">()</span>
+    <span class="n">monthly_avg_temp</span><span class="p">[</span><span class="n">month</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean_temp</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"ST_B10"</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+<span class="c1"># Step 3: Combine Observations and Temperature into a DataFrame
+</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s">"Month"</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">),</span>
+    <span class="s">"Observations"</span><span class="p">:</span> <span class="n">monthly_observations</span><span class="p">.</span><span class="n">reindex</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">),</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="s">"AvgTemperature Celsius"</span><span class="p">:</span> <span class="p">[</span><span class="n">monthly_avg_temp</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">)],</span>
+<span class="p">})</span>
+
+<span class="c1"># Display the combined DataFrame
+</span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Step 4: Scatter Plot with Hover Tooltip
+</span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s">"AvgTemperature Celsius"</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s">"Observations"</span><span class="p">,</span>
+    <span class="n">text</span><span class="o">=</span><span class="s">"Month"</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s">"x"</span><span class="p">:</span> <span class="s">"Avg Temperature (°C)"</span><span class="p">,</span> <span class="s">"y"</span><span class="p">:</span> <span class="s">"Number of Observations"</span><span class="p">},</span>
+    <span class="n">title</span><span class="o">=</span><span class="s">"Cardinal Observations vs Avg Temperature"</span><span class="p">,</span>
+    <span class="n">template</span><span class="o">=</span><span class="s">"plotly"</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Add hover info to display the month
+</span><span class="n">fig</span><span class="p">.</span><span class="n">update_traces</span><span class="p">(</span>
+    <span class="n">marker</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"purple"</span><span class="p">),</span>
+    <span class="n">textposition</span><span class="o">=</span><span class="s">"top center"</span><span class="p">,</span>
+    <span class="n">hovertemplate</span><span class="o">=</span><span class="s">"&lt;b&gt;Month: %{text}&lt;/b&gt;&lt;br&gt;Avg Temperature: %{x}°C&lt;br&gt;Observations: %{y}&lt;extra&gt;&lt;/extra&gt;"</span>
+<span class="p">)</span>
+
+<span class="n">fig</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Save the DataFrame for further inspection
+</span><span class="n">data</span><span class="p">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">"observations_vs_temperature.csv"</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="images/end.png" alt="" /></p>
+
+</div>
+      </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/grscicoll-collection-descriptors/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Making collection content discoverable when you don’t have occurrences published on GBIF</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/2025-01-29-understanding-google-earth-engine-gee-and-its-python-api-a-primer-for-gbif-users/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Understanding Google Earth Engine (GEE) and Its Python API</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+<script src="/hp-data-blog/assets/js/code-blocks.js" defer></script>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/">GBIF.org</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1794391499"></script>
+
+
+
+
+
+  </body>
+</html>

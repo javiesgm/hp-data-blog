@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>GBIF API beginners guide
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1794391499">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/datablog-logo.svg" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=APIs%20and%20downloads"
+                    class="navbar-item "
+                  >
+                    APIs and downloads
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Publishing%20data"
+                    class="navbar-item "
+                  >
+                    Publishing data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Analysis%20and%20maps"
+                    class="navbar-item "
+                  >
+                    Analysis and maps
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Taxonomy"
+                    class="navbar-item "
+                  >
+                    Taxonomy
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Data%20quality"
+                    class="navbar-item "
+                  >
+                    Data quality
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citation%20and%20data%20use"
+                    class="navbar-item "
+                  >
+                    Citation and data use
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Collections"
+                    class="navbar-item "
+                  >
+                    Collections
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citizen%20science"
+                    class="navbar-item "
+                  >
+                    Citizen science
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Survey%20and%20monitoring"
+                    class="navbar-item "
+                  >
+                    Survey and monitoring
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Molecular%20data"
+                    class="navbar-item "
+                  >
+                    Molecular data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Multimedia"
+                    class="navbar-item "
+                  >
+                    Multimedia
+                  </a>
+                
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>GBIF API beginners guide</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=john-waller" title="All posts by John Waller">John Waller</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2021-09-07">7 September 2021</time>
+        <span aria-hidden="true">·</span>
+        7 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=api">#API</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+      <div class="article">
+        <div class="content">
+  <p>This a <strong>GBIF API</strong> beginners guide.</p>
+
+<p>The <a href="https://www.gbif.org/developer/summary">GBIF API technical documentation</a> might be a bit confusing if you have never used an API before. The goal of this guide is to introduce the GBIF API to a semi-technical user who may have never used an API before.</p>
+
+<p>The purpose of the GBIF API is to give users access to GBIF databases in a <strong>safe way</strong>. The GBIF API also allows <a href="https://www.gbif.org/">GBIF.org</a> and <a href="https://github.com/ropensci/rgbif">rgbif</a> to function.</p>
+
+<!--more-->
+
+<p>You do not need any special software or skills to access the GBIF API. You simply have to visit a URL.</p>
+
+<center><big><a href="https://api.gbif.org/v1/species/match?name=Passer%20domesticus">https://api.gbif.org/v1/species/match?name=Passer%20domesticus</a></big></center>
+
+<p>You should see a <strong>wall of text</strong> known as <a href="https://www.w3schools.com/js/js_json_intro.asp">JSON</a>.</p>
+
+<pre><code class="language-JSON">{
+  "usageKey": 5231190,
+  "scientificName": "Passer domesticus (Linnaeus, 1758)",
+  "canonicalName": "Passer domesticus",
+  "rank": "SPECIES",
+  "status": "ACCEPTED",
+  "confidence": 98,
+  "matchType": "EXACT",
+  "kingdom": "Animalia",
+  "phylum": "Chordata",
+  "order": "Passeriformes",
+  "family": "Passeridae",
+  "genus": "Passer",
+  "species": "Passer domesticus",
+  "kingdomKey": 1,
+  "phylumKey": 44,
+  "classKey": 212,
+  "orderKey": 729,
+  "familyKey": 5264,
+  "genusKey": 2492321,
+  "speciesKey": 5231190,
+  "synonym": false,
+  "class": "Aves"
+}
+</code></pre>
+
+<p><small>You can use a <a href="https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh">chrome extension</a> to make the JSON look more readable. </small></p>
+
+<p>This link just performed a <strong>match query</strong> of all species records with “Passer domesticus” (House sparrow) in the GBIF backbone. This is useful for getting GBIF taxonkeys (“usageKey” here). See <a href="https://discourse.gbif.org/t/understanding-gbif-taxonomic-keys-usagekey-taxonkey-specieskey/3045">this post</a> explaining the difference between different GBIF taxonomic keys.</p>
+
+<p>JSON can become very complex and nested. You might be thinking that a <strong>table would be more convenient</strong>. I will show you some strategies for converting to a table later on. Highly nested data is a <strong>common headache of working with JSON</strong>.</p>
+
+<h2 id="api-examples">API Examples</h2>
+
+<style>
+.w3-card{
+box-shadow:0 1px 2px 0 rgba(0,0,0,0.16),0 2px 5px 0 rgba(0,0,0,0.12)
+}
+.w3-panel{
+padding:0.01em 10px;
+margin-top:2px;
+margin-bottom:2px
+}
+</style>
+
+<p>The <strong>basic pattern</strong> of an API call: &lt;p&gt;
+https:// <span style="color:#73B273"><b>base url</b></span> / <span style="color:#CD915E"><b>api</b></span> / <span style="color:#3498DB"><b>function</b></span> ? <span style="color:#231F20"><b>parameter</b></span> = <span style="color:#d62d20"><b>query</b></span>
+&lt;/p&gt;</p>
+
+<ul>
+  <li><span style="color:#73B273"><b>base url</b></span> : this will always be <b>https://api.gbif.org/v1/</b></li>
+    <li><span style="color:#CD915E"><b>api</b></span> : this is the GBIF API group/namespace you want to query. GBIF has a few of these: species, download, occurrence, dataset ...</li>
+  <li><span style="color:#3498DB"><b>function</b></span> : the functionality you want to use.</li>
+  <li><span style="color:#231F20"><b>parameter</b></span> : the parameters for your API call. A <b>?</b> is sometimes used.  </li>
+  <li><span style="color:#d62d20"><b>query</b></span> : the query you fill in. Sometimes will be free text and sometimes will be a predefined argument.  </li>
+</ul>
+
+<p>The <a href="https://www.gbif.org/developer/species">GBIF species API</a> is one of the more useful APIs to know. Often the best way to learn how an API works is by looking at examples. The <a href="https://www.gbif.org/tools/species-lookup">name matcher</a> is one of the more useful GBIF API endpoints.</p>
+
+<div class="w3-panel w3-card"><p>
+https://<b><span style="color:#73B273">api.gbif.org/v1</span></b>/<span style="color:#CD915E"><b>species</b></span>/<span style="color:#3498DB"><b>match</b></span>?<span style="color:#231F20"><b>name</b></span>=<span style="color:#d62d20"><b>Passer domesticus</b></span><br />
+<small><a href="https://api.gbif.org/v1/species/match?name=Passer domesticus">https://api.gbif.org/v1/species/match?name=Passer domesticus</a></small> <br /> The most interesting part of the JSON result is the "usageKey": 5231190, which is the GBIF taxonkey for house sparrows. A taxonkey is a GBIF internal id for a species or taxnomic group. These are useful in other parts of the API.<br />
+</p></div>
+
+<div class="w3-panel w3-card"><p>
+https://<b><span style="color:#73B273">api.gbif.org/v1</span></b>/<span style="color:#CD915E"><b>species</b></span>/<span style="color:#3498DB"><b>match</b></span>?<span style="color:#231F20"><b>name</b></span>=<span style="color:#d62d20"><b>Tracheophyta</b></span><br />
+<small><a href="https://api.gbif.org/v1/species/match?name=Tracheophyta">https://api.gbif.org/v1/species/match?name=Tracheophyta</a></small> <br />"usageKey": 7707728 is the GBIF taxonkey for vascular plants.<br />
+</p></div>
+
+<p><code class="language-plaintext highlighter-rouge">?</code> is the so-called <strong>query parameter</strong> (<a href="https://stackoverflow.com/questions/4024271/rest-api-best-practices-where-to-put-parameters">more info</a>). It is usually hard to predict when you will need <code class="language-plaintext highlighter-rouge">?</code> before seeing an example. You might have noticed that your web browser filled in <code class="language-plaintext highlighter-rouge">%20</code> for the <strong>spaces</strong> in the last examples (you usually don’t need to add this yourself).</p>
+
+<p>You can also get <strong>lists of species</strong> from higher groups using the species API.</p>
+
+<div class="w3-panel w3-card"><p>
+https://<b><span style="color:#73B273">api.gbif.org/v1</span></b>/<span style="color:#CD915E"><b>species</b></span>/<span style="color:#3498DB"><b>search</b></span>?<span style="color:#231F20"><b>rank</b></span>=<span style="color:#d62d20"><b>SPECIES</b></span>&amp;<span style="color:#231F20"><b>highertaxon_key</b></span>=<span style="color:#d62d20"><b>7707728</b></span><br />
+<small><a href="https://api.gbif.org/v1/species/search?rank=SPECIES&amp;highertaxon_key=7707728">https://api.gbif.org/v1/species/search?rank=SPECIES&amp;highertaxon_key=7707728
+</a></small><br />Will give back a list of vascular plant species information. This will just be the first 20 records, so it is not very useful.<br />
+</p></div>
+
+<p>You can make use of the <strong>limit</strong> parameter to get back more results, <strong>but only up to 1000 at a time</strong>. This is because these results are usually held in a memory cache on GBIF servers. This design decision helps GBIF.org run more quickly. These <a href="https://www.gbif.org/occurrence/search?taxon_key=7707728">20 results</a> should load quickly. And these <a href="https://www.gbif.org/occurrence/search?taxon_key=7707728&amp;limit=100">100 results</a> should load more slowly.</p>
+
+<div class="w3-panel w3-card"><p>
+https://<b><span style="color:#73B273">api.gbif.org/v1</span></b>/<span style="color:#CD915E"><b>species</b></span>/<span style="color:#3498DB"><b>search</b></span><span style="color:#231F20">?<b>rank</b></span>=<span style="color:#d62d20"><b>SPECIES</b></span>&amp;<span style="color:#231F20"><b>highertaxon_key</b></span>=<span style="color:#d62d20"><b>212</b></span>&amp;&lt;/span&gt;<span style="color:#231F20"><b>limit</b></span>=<span style="color:#d62d20"><b>100</b></span><br />
+<small><a href="https://api.gbif.org/v1/species/search?rank=SPECIES&amp;highertaxon_key=212&amp;limit=100">https://api.gbif.org/v1/species/search?rank=SPECIES&amp;highertaxon_key=212&amp;limit=100</a></small> <br /> Will give back 100 bird species records.<br />
+</p></div>
+
+<p>You can also use the <span style="color:#231F20"><b>offset</b></span> parameter to skip through the first page of results to get to the next 1000 records.</p>
+
+<div class="w3-panel w3-card"><p>
+https://<b><span style="color:#73B273">api.gbif.org/v1</span></b>/<span style="color:#CD915E"><b>species</b></span>/<span style="color:#3498DB"><b>search</b></span><span style="color:#231F20">?<b>rank</b></span>=<span style="color:#d62d20"><b>SPECIES</b></span>&amp;<span style="color:#231F20"><b>highertaxon_key</b></span>=<span style="color:#d62d20"><b>212</b></span>&amp;&lt;/span&gt;<span style="color:#231F20"><b>limit</b></span>=<span style="color:#d62d20"><b>1000</b></span>&amp;<span style="color:#231F20"><b>offset</b>=</span><span style="color:#d62d20"><b>1000</b></span><br />
+<small><a href="https://api.gbif.org/v1/species/search?rank=SPECIES&amp;highertaxon_key=212&amp;limit=1000&amp;offset=1000">https://api.gbif.org/v1/species/search?rank=SPECIES&amp;highertaxon_key=212&amp;limit=1000&amp;offset=1000</a></small> 
+<br />Get the next 1000 records of birds. Offset will move the window of results up by 1000. You can <b>page through</b> API results if you want more records, but you can only go 100,000 records deep.<br />
+</p></div>
+
+<p>Notice the use of <strong>&amp;</strong> to combine parameters.</p>
+
+<div class="w3-panel w3-card"><p>
+https://<b><span style="color:#73B273">api.gbif.org/v1</span></b>/<span style="color:#CD915E"><b>species</b></span>/<span style="color:#3498DB"><b>search</b></span><span style="color:#231F20">?<b>rank</b></span>=<span style="color:#d62d20"><b>SPECIES</b></span>&amp;<span style="color:#231F20"><b>highertaxon_key</b></span>=<span style="color:#d62d20"><b>212</b></span>&amp;&lt;/span&gt;<span style="color:#231F20"><b>limit</b></span>=<span style="color:#d62d20"><b>1000</b></span>&amp;<span style="color:#231F20"><b>offset</b>=</span><span style="color:#d62d20"><b>2000</b></span><br />
+<small><a href="https://api.gbif.org/v1/species/search?rank=SPECIES&amp;highertaxon_key=212&amp;limit=1000&amp;offset=2000">https://api.gbif.org/v1/species/search?rank=SPECIES&amp;highertaxon_key=212&amp;limit=1000&amp;offset=2000</a></small> 
+<br />Page through 1000 more records.<br />
+</p></div>
+
+<p>There are also other useful functions of the species API. Here are few examples of how to get synonyms and common names.</p>
+
+<div class="w3-panel w3-card"><p>
+https://<b><span style="color:#73B273">api.gbif.org/v1</span></b>/<span style="color:#CD915E"><b>species</b></span>/<span style="color:#d62d20"><b>212</b></span>/<span style="color:#231F20"><b>synonyms</b></span><br />
+<small><a href="https://api.gbif.org/v1/species/212/synonyms">https://api.gbif.org/v1/species/212/synonyms</a></small> <br />All taxonomic synonyms of birds (there are none).<br />
+</p></div>
+
+<div class="w3-panel w3-card"><p>
+https://<b><span style="color:#73B273">api.gbif.org/v1</span></b>/<span style="color:#CD915E"><b>species</b></span>/<span style="color:#d62d20"><b>7707728</b></span>/<span style="color:#231F20"><b>synonyms</b></span><br />
+<small><a href="https://api.gbif.org/v1/species/7707728/synonyms">https://api.gbif.org/v1/species/7707728/synonyms</a></small> <br />All taxonomic synonyms of Tracheophyta.<br />
+</p></div>
+
+<div class="w3-panel w3-card"><p>
+https://<b><span style="color:#73B273">api.gbif.org/v1</span></b>/<span style="color:#CD915E"><b>species</b></span>/<span style="color:#d62d20"><b>7707728</b></span>/<span style="color:#231F20"><b>vernacularNames</b></span><br />
+<small><a href="https://api.gbif.org/v1/species/7707728/vernacularNames">https://api.gbif.org/v1/species/7707728/vernacularNames</a></small> <br />Gives you any common names for Tracheophyta, commonly known as "vascular plants".<br />
+</p></div>
+
+<p>Hopefully with this introduction you will be able to figure out how the other GBIF API(s) work. Check out these other examples.</p>
+
+<ul>
+  <li>https://api.gbif.org/v1/occurrence/1258202889
+    <ul>
+      <li>information about this occurrence id</li>
+    </ul>
+  </li>
+  <li>https://api.gbif.org/v1/occurrence/1258202889/verbatim
+    <ul>
+      <li>information about this occurrence with no GBIF interpretation</li>
+    </ul>
+  </li>
+  <li>https://api.gbif.org/v1/dataset/4fa7b334-ce0d-4e88-aaae-2e0c138d049e
+    <ul>
+      <li>information about this dataset</li>
+    </ul>
+  </li>
+  <li>https://api.gbif.org/v1/dataset/8409e32e-f762-11e1-a439-00145eb45e9a/machineTag
+    <ul>
+      <li>all the machine tags (special/tags labels) for a certain dataset</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="using-curl">Using Curl</h2>
+
+<p>So far all of the examples I have been showing you are just links accessed in the browser. Usually the main reason you would want to use an API is because you want <strong>software</strong>, to interact with GBIF somehow.</p>
+
+<p>Along with your web browser you can also use a command line program called <a href="https://curl.se/download.html">curl</a>. We can visit this page using curl https://api.gbif.org/v1/species/7707728/vernacularNames. If you have curl <a href="https://stackoverflow.com/questions/9507353/how-do-i-install-and-use-curl-on-windows">installed</a>, you should be able to paste this into your any command line shell.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>curl <span class="nt">-i</span> <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="nt">-X</span> GET https://api.gbif.org/v1/species/7707728/vernacularNames
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>This should print the same result you saw in your web browser. This by itself is not useful. This would need to be back of something larger, to be useful. For example, getting all the vernacular names of humming birds would be an <a href="https://gist.github.com/jhnwllr/0c10feb4be1c64cfec81f92a1047fddd">interesting project</a>.</p>
+
+<p>Most scripting languages will have a library for doing <strong>http requests</strong>. I often use use the GBIF API from <strong>within R</strong> with the packages <code class="language-plaintext highlighter-rouge">httr</code> or <code class="language-plaintext highlighter-rouge">jsonlite</code>.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="n">httr</span><span class="o">::</span><span class="n">GET</span><span class="p">(</span><span class="s2">"https://api.gbif.org/v1/species/match?name=Trochilidae"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+</span><span class="n">httr</span><span class="o">::</span><span class="n">content</span><span class="p">()</span><span class="w">
+
+</span><span class="n">jsonlite</span><span class="o">::</span><span class="n">fromJSON</span><span class="p">(</span><span class="s2">"https://api.gbif.org/v1/species/match?name=Trochilidae"</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="working-with-json-results-in-r">Working with JSON results in R</h3>
+
+<p>JSON usually isn’t a useful format for most end users, <strong>who would usually rather have a table</strong>. Turning JSON into a table can usually be done with a little bit of effort depending on the degree of JSON nesting.</p>
+
+<p>Below gets all of the vernacular names of Tracheophyta back as a data.frame in R.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="n">library</span><span class="p">(</span><span class="n">jsonlite</span><span class="p">)</span><span class="w">
+
+</span><span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fromJSON</span><span class="p">(</span><span class="s2">"https://api.gbif.org/v1/species/7707728/vernacularNames"</span><span class="p">,</span><span class="n">flatten</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+
+</span><span class="n">res</span><span class="o">$</span><span class="n">results</span><span class="w"> </span><span class="c1"># get a table of results</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Unfortunately, <strong>turning JSON into a table is not always this easy</strong>. I have found <a href="https://purrr.tidyverse.org/">purrr</a> to be helpful in working with highly nested JSON.</p>
+
+<h3 id="downloads">Downloads</h3>
+
+<p>So far we have only covered <strong>getting</strong> data from the GBIF api. With the query (<code class="language-plaintext highlighter-rouge">?</code>) parameter we have sent back a few words or numbers, but often we need to send something more significant back to the GBIF servers, <strong>like an entire file</strong>.</p>
+
+<p>The <a href="https://www.gbif.org/developer/occurrence#predicates">downloads API</a> is the primary place where sending a file to GBIF is useful.</p>
+
+<p>This file is a request to GBIF to download all of the <a href="https://www.gbif.org/occurrence/search?country=CL">occurrences from Chile</a>. Put this in a file called <strong>query.json</strong>.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="rouge-code"><pre><span class="p">{</span><span class="w">
+</span><span class="nl">"creator"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fakeuser12"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"notification_address"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+</span><span class="s2">"youremail1984@gbif.org"</span><span class="w">
+</span><span class="p">],</span><span class="w">
+</span><span class="nl">"sendNotification"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+</span><span class="nl">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SIMPLE_CSV"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"predicate"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"and"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"predicates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+</span><span class="p">{</span><span class="w">
+</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"in"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"COUNTRY"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"CL"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="p">]}}</span><span class="w">
+
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>userName:PASSWORD</strong> should be replaced with your <strong>GBIF username and password</strong> (for example: fakeuser12:12dfakePassword#osj323). Run this on the command line in the directory where you have your query.json file.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>curl <span class="nt">--include</span> <span class="nt">--user</span> userName:PASSWORD <span class="nt">--header</span> <span class="s2">"Content-Type: application/json"</span> <span class="nt">--data</span> @query.json https://api.gbif.org/v1/occurrence/download/request
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>You could do the same thing also in R. Again here <code class="language-plaintext highlighter-rouge">user</code> and <code class="language-plaintext highlighter-rouge">pwd</code> are the your GBIF username and password.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="n">library</span><span class="p">(</span><span class="n">httr</span><span class="p">)</span><span class="w">
+
+</span><span class="n">POST</span><span class="p">(</span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">http</span><span class="o">://</span><span class="n">api.gbif.org</span><span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">occurrence</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">request</span><span class="p">,</span><span class="w"> 
+</span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">authenticate</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="w"> </span><span class="n">pwd</span><span class="p">),</span><span class="w"> 
+</span><span class="n">add_headers</span><span class="p">(</span><span class="s2">"Content-Type: application/json"</span><span class="p">),</span><span class="w">
+</span><span class="n">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">upload_file</span><span class="p">(</span><span class="s2">"query.json"</span><span class="p">),</span><span class="w"> </span><span class="c1"># path to your local file</span><span class="w">
+</span><span class="n">encode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'json'</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+</span><span class="n">content</span><span class="p">(</span><span class="n">as</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"text"</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>And again you can always turn to <code class="language-plaintext highlighter-rouge">rgbif</code> for doing something like this quite compactly. See <a href="https://discourse.gbif.org/t/setting-up-your-rgbif-environment-with-username-and-password/3017">here</a> for a nice way to save your GBIF credentials.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="c1"># Here user,pwd, and email are your GBIF credentials.</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">rgbif</span><span class="p">)</span><span class="w">
+
+</span><span class="n">occ_download</span><span class="p">(</span><span class="w">
+</span><span class="n">pred</span><span class="p">(</span><span class="s2">"country"</span><span class="p">,</span><span class="w"> </span><span class="s2">"CL"</span><span class="p">),</span><span class="w">
+</span><span class="n">format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"SIMPLE_CSV"</span><span class="p">,</span><span class="w">
+</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span><span class="n">pwd</span><span class="o">=</span><span class="n">pwd</span><span class="p">,</span><span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="w">
+</span><span class="p">)</span><span class="w">
+
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>You might be thinking that this query is <a href="https://www.gbif.org/occurrence/search?country=CL">easier to do in the web portal</a>. This is true. The motivation to do it this way would be if you need to do it repeatedly. Also certain features (such as <a href="https://www.gbif.org/developer/occurrence#download">not queries</a>) are only available via the API.</p>
+
+<h3 id="further-reading">Further reading</h3>
+
+<ul>
+  <li><a href="https://www.gbif.org/developer/summary">GBIF API Documentation</a></li>
+  <li><a href="https://data-blog.gbif.org/post/gbif-species-api/">(Almost) everything you want to know about the GBIF Species API</a></li>
+</ul>
+
+
+</div>
+      </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/did-you-know/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Did you know that...? - some of the lesser known functionalities around GBIF.org</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/grscicoll-flags/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">What are the flags "Collection match fuzzy", "Collection match none", "Institution match fuzzy", "Institution match none" and how to remove them?</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+<script src="/hp-data-blog/assets/js/code-blocks.js" defer></script>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/">GBIF.org</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1794391499"></script>
+
+
+
+
+
+  </body>
+</html>

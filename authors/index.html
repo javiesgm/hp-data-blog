@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Authors
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1794391499">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/datablog-logo.svg" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=APIs%20and%20downloads"
+                    class="navbar-item "
+                  >
+                    APIs and downloads
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Publishing%20data"
+                    class="navbar-item "
+                  >
+                    Publishing data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Analysis%20and%20maps"
+                    class="navbar-item "
+                  >
+                    Analysis and maps
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Taxonomy"
+                    class="navbar-item "
+                  >
+                    Taxonomy
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Data%20quality"
+                    class="navbar-item "
+                  >
+                    Data quality
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citation%20and%20data%20use"
+                    class="navbar-item "
+                  >
+                    Citation and data use
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Collections"
+                    class="navbar-item "
+                  >
+                    Collections
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citizen%20science"
+                    class="navbar-item "
+                  >
+                    Citizen science
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Survey%20and%20monitoring"
+                    class="navbar-item "
+                  >
+                    Survey and monitoring
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Molecular%20data"
+                    class="navbar-item "
+                  >
+                    Molecular data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Multimedia"
+                    class="navbar-item "
+                  >
+                    Multimedia
+                  </a>
+                
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+
+
+
+
+
+
+
+
+
+<section class="blog-intro">
+  <div class="container">
+    <h1 class="blog-intro__title">Authors</h1>
+    <p class="blog-intro__lede">18 people have written for the GBIF Data Blog. Pick one to see their posts.</p>
+  </div>
+</section>
+
+<section class="blog-page">
+  <div class="container">
+    <ul class="author-list">
+      
+        
+        
+        
+        
+        
+        <li class="author-list__item">
+          <a class="author-list__name" href="/hp-data-blog/?author=john-waller">John Waller</a>
+          <span class="author-list__count">27 posts</span>
+          <span class="author-list__latest">Latest: <a href="/hp-data-blog/post/sql-downloads-col-xr/">Recent breaking changes to SQL downloads to support the COL XR</a> · Oct 2026</span>
+        </li>
+      
+        
+        
+        
+        
+        
+        <li class="author-list__item">
+          <a class="author-list__name" href="/hp-data-blog/?author=marie-grosjean">Marie Grosjean</a>
+          <span class="author-list__count">18 posts</span>
+          <span class="author-list__latest">Latest: <a href="/hp-data-blog/post/sam-survey-protocol/">Good SAMaritans – How to model sampling protocols in Survey and Monitoring (SAM) datasets</a> · Oct 2026</span>
+        </li>
+      
+        
+        
+        
+        
+        
+        <li class="author-list__item">
+          <a class="author-list__name" href="/hp-data-blog/?author=kate-ingenloff">Kate Ingenloff</a>
+          <span class="author-list__count">4 posts</span>
+          <span class="author-list__latest">Latest: <a href="/hp-data-blog/post/sam-survey-protocol/">Good SAMaritans – How to model sampling protocols in Survey and Monitoring (SAM) datasets</a> · Oct 2026</span>
+        </li>
+      
+        
+        
+        
+        
+        
+        <li class="author-list__item">
+          <a class="author-list__name" href="/hp-data-blog/?author=andrew-rodrigues">Andrew Rodrigues</a>
+          <span class="author-list__count">3 posts</span>
+          <span class="author-list__latest">Latest: <a href="/hp-data-blog/post/community-metrics/">Community Metrics</a> · Sep 2026</span>
+        </li>
+      
+        
+        
+        
+        
+        
+        <li class="author-list__item">
+          <a class="author-list__name" href="/hp-data-blog/?author=daniel-noesgaard">Daniel Noesgaard</a>
+          <span class="author-list__count">2 posts</span>
+          <span class="author-list__latest">Latest: <a href="/hp-data-blog/post/derived-datasets/">Derived datasets</a> · May 2021</span>
+        </li>
+      
+        
+        
+        
+        
+        
+        <li class="author-list__item">
+          <a class="author-list__name" href="/hp-data-blog/?author=kit-lewers">Kit Lewers</a>
+          <span class="author-list__count">2 posts</span>
+          <span class="author-list__latest">Latest: <a href="/hp-data-blog/post/2025-01-29-understanding-google-earth-engine-gee-and-its-python-api-a-primer-for-gbif-users/">Understanding Google Earth Engine (GEE) and Its Python API</a> · Feb 2025</span>
+        </li>
+      
+        
+        
+        
+        
+        
+        <li class="author-list__item">
+          <a class="author-list__name" href="/hp-data-blog/?author=andrea-hahn">Andrea Hahn</a>
+          <span class="author-list__count">1 post</span>
+          <span class="author-list__latest">Latest: <a href="/hp-data-blog/post/did-you-know/">Did you know that...? - some of the lesser known functionalities around GBIF.org</a> · Aug 2021</span>
+        </li>
+      
+        
+        
+        
+        
+        
+        <li class="author-list__item">
+          <a class="author-list__name" href="/hp-data-blog/?author=andré-heughebaert">André Heughebaert</a>
+          <span class="author-list__count">1 post</span>
+          <span class="author-list__latest">Latest: <a href="/hp-data-blog/post/frictionless-data-and-darwin-core/">Frictionless Data and Darwin Core</a> · Jan 2020</span>
+        </li>
+      
+        
+        
+        
+        
+        
+        <li class="author-list__item">
+          <a class="author-list__name" href="/hp-data-blog/?author=carl-boettiger">Carl Boettiger</a>
+          <span class="author-list__count">1 post</span>
+          <span class="author-list__latest">Latest: <a href="/hp-data-blog/post/apache-arrow-and-parquet/">Using Apache Arrow and Parquet with GBIF-mediated occurrences</a> · Feb 2022</span>
+        </li>
+      
+        
+        
+        
+        
+        
+        <li class="author-list__item">
+          <a class="author-list__name" href="/hp-data-blog/?author=cecilie-svenningsen">Cecilie Svenningsen</a>
+          <span class="author-list__count">1 post</span>
+          <span class="author-list__latest">Latest: <a href="/hp-data-blog/post/data-shareability/">Which data can be shared through GBIF and what cannot</a> · Nov 2022</span>
+        </li>
+      
+        
+        
+        
+        
+        
+        <li class="author-list__item">
+          <a class="author-list__name" href="/hp-data-blog/?author=deborah-paul">Deborah Paul</a>
+          <span class="author-list__count">1 post</span>
+          <span class="author-list__latest">Latest: <a href="/hp-data-blog/post/wikidata/">Does Biodiversity Informatics 💘 Wikidata?</a> · Feb 2020</span>
+        </li>
+      
+        
+        
+        
+        
+        
+        <li class="author-list__item">
+          <a class="author-list__name" href="/hp-data-blog/?author=jan-kristoffer-legind">Jan Kristoffer Legind</a>
+          <span class="author-list__count">1 post</span>
+          <span class="author-list__latest">Latest: <a href="/hp-data-blog/post/shapefiles/">Using shapefiles on GBIF data with R</a> · Nov 2018</span>
+        </li>
+      
+        
+        
+        
+        
+        
+        <li class="author-list__item">
+          <a class="author-list__name" href="/hp-data-blog/?author=joe-miller">Joe Miller</a>
+          <span class="author-list__count">1 post</span>
+          <span class="author-list__latest">Latest: <a href="/hp-data-blog/post/senegalia-clustering-in-brazil/">Exploring Related Records in the Flowering Plant Genus Senegalia in Brazil</a> · Jan 2023</span>
+        </li>
+      
+        
+        
+        
+        
+        
+        <li class="author-list__item">
+          <a class="author-list__name" href="/hp-data-blog/?author=kumiko-totsu">Kumiko Totsu</a>
+          <span class="author-list__count">1 post</span>
+          <span class="author-list__latest">Latest: <a href="/hp-data-blog/post/improve-identifier-stability/">GBIF attempts to improve identifier stability by monitoring changes of occurrenceIDs</a> · Nov 2023</span>
+        </li>
+      
+        
+        
+        
+        
+        
+        <li class="author-list__item">
+          <a class="author-list__name" href="/hp-data-blog/?author=leonardo-buitrago">Leonardo Buitrago</a>
+          <span class="author-list__count">1 post</span>
+          <span class="author-list__latest">Latest: <a href="/hp-data-blog/post/issues-and-flags/">GBIF Issues & Flags</a> · Oct 2020</span>
+        </li>
+      
+        
+        
+        
+        
+        
+        <li class="author-list__item">
+          <a class="author-list__name" href="/hp-data-blog/?author=matthew-blissett">Matthew Blissett</a>
+          <span class="author-list__count">1 post</span>
+          <span class="author-list__latest">Latest: <a href="/hp-data-blog/post/extending-parquet-snapshots/">Extending the Parquet data snapshots</a> · Oct 2026</span>
+        </li>
+      
+        
+        
+        
+        
+        
+        <li class="author-list__item">
+          <a class="author-list__name" href="/hp-data-blog/?author=quentin-groom">Quentin Groom</a>
+          <span class="author-list__count">1 post</span>
+          <span class="author-list__latest">Latest: <a href="/hp-data-blog/post/wikidata/">Does Biodiversity Informatics 💘 Wikidata?</a> · Feb 2020</span>
+        </li>
+      
+        
+        
+        
+        
+        
+        <li class="author-list__item">
+          <a class="author-list__name" href="/hp-data-blog/?author=tim-robertson">Tim Robertson</a>
+          <span class="author-list__count">1 post</span>
+          <span class="author-list__latest">Latest: <a href="/hp-data-blog/post/clustering-occurrences/">Identifying potentially related records - How does the GBIF data-clustering feature work?</a> · Nov 2021</span>
+        </li>
+      
+    </ul>
+  </div>
+</section>
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/">GBIF.org</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1794391499"></script>
+
+
+
+
+
+  </body>
+</html>

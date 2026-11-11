@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Common things to look out for when post-processing GBIF downloads
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1794391499">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/datablog-logo.svg" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=APIs%20and%20downloads"
+                    class="navbar-item "
+                  >
+                    APIs and downloads
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Publishing%20data"
+                    class="navbar-item "
+                  >
+                    Publishing data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Analysis%20and%20maps"
+                    class="navbar-item "
+                  >
+                    Analysis and maps
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Taxonomy"
+                    class="navbar-item "
+                  >
+                    Taxonomy
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Data%20quality"
+                    class="navbar-item "
+                  >
+                    Data quality
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citation%20and%20data%20use"
+                    class="navbar-item "
+                  >
+                    Citation and data use
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Collections"
+                    class="navbar-item "
+                  >
+                    Collections
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citizen%20science"
+                    class="navbar-item "
+                  >
+                    Citizen science
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Survey%20and%20monitoring"
+                    class="navbar-item "
+                  >
+                    Survey and monitoring
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Molecular%20data"
+                    class="navbar-item "
+                  >
+                    Molecular data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Multimedia"
+                    class="navbar-item "
+                  >
+                    Multimedia
+                  </a>
+                
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  postHeader--withToc ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Common things to look out for when post-processing GBIF downloads</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=john-waller" title="All posts by John Waller">John Waller</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2021-02-17">17 February 2021</time>
+        <span aria-hidden="true">·</span>
+        6 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Data+quality">Data quality</a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+    <div class="article--toc">
+      <div>
+        <div class="toc-wrapper  toc__removeOnMobile ">
+          <aside class="toc">
+  <div class="toc_header">
+    On this page
+  </div>
+  <div class="toc_list">
+    <ul>
+  <li><a href="#gbif-default-geospatial-issues">GBIF default geospatial issues</a></li>
+  <li><a href="#absence-data">Absence data</a></li>
+  <li><a href="#fossils-and-living-specimens">Fossils and living specimens</a></li>
+  <li><a href="#old-records">Old records</a></li>
+  <li><a href="#high-uncertainty">High uncertainty</a></li>
+  <li><a href="#points-along-equator-or-prime-merdidian">Points along equator or prime merdidian</a></li>
+  <li><a href="#country-centroids">Country centroids</a></li>
+  <li><a href="#zoo-and-herbaria-locations">Zoo and herbaria locations</a></li>
+  <li><a href="#in-the-ocean">In the ocean</a></li>
+  <li><a href="#location-duplicates">Location duplicates</a></li>
+  <li><a href="#r-packages-for-filtering-data">R packages for filtering data</a></li>
+  <li><a href="#additional-filters">Additional filters</a></li>
+</ul>
+  </div>
+</aside>
+        </div>
+        <div class="article">
+          <div class="content">
+  <blockquote>
+  <p>Post was updated on April 20 2022 to accommodate changes to dwc:establishmentMeans vocabulary handling.</p>
+</blockquote>
+
+<p>Here I present a <strong>checklist</strong> for filtering <strong>GBIF downloads</strong>.</p>
+
+<p>In this guide, I will assume you are <strong>familar with R</strong>. This guide is also somewhat general, <strong>so your solution might differ</strong>. 
+This guide is intended to give you a checklist of <strong>common things</strong> to look out for when post-processing GBIF downloads.</p>
+
+<!--more-->
+
+<!-- ## The checklist :  -->
+
+<!-- - check **default geospatial issues** -->
+<!-- - check **occurrenceStatus** -->
+<!-- - check **basisOfRecord** ("FOSSIL_SPECIMEN" "LIVING_SPECIMEN")  -->
+<!-- - check **establishmentMeans** ("MANAGED", "INTRODUCED", "INVASIVE", "NATURALISED") -->
+<!-- - check **event date** or year -->
+<!-- - check **uncertainty** (coordinatePrecision, coordinateUncertaintyInMeters) -->
+<!-- - check if **zero coordinates** (decimalLatitude=0 or decimallongitude= 0) -->
+<!-- - check if **country centroid** or other centroid -->
+<!-- - check if in **ocean** -->
+<!-- - check for **location duplicates**  -->
+
+<p>Below is an example a <strong>filtering checklist script</strong> that would work for most users. Individual users might want to <strong>add/remove</strong> some steps. After the script, I discuss each of these steps in <strong>more detail below</strong>. I would recommend looking at these two articles before continuing:</p>
+
+<ol>
+  <li><a href="https://docs.ropensci.org/rgbif/articles/getting_occurrence_data.html">Getting GBIF mediated occurrence data with rgbif</a></li>
+  <li><a href="https://docs.ropensci.org/rgbif/articles/gbif_credentials.html">Setting up GBIF credentials</a></li>
+</ol>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+</pre></td><td class="rouge-code"><pre><span class="n">library</span><span class="p">(</span><span class="n">rgbif</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">CoordinateCleaner</span><span class="p">)</span><span class="w">
+
+</span><span class="n">taxonkey</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">name_backbone</span><span class="p">(</span><span class="s2">"Calopteryx xanthostoma"</span><span class="p">)</span><span class="o">$</span><span class="n">usageKey</span><span class="w">
+
+</span><span class="c1"># set up gbif credentials first</span><span class="w">
+</span><span class="c1"># https://docs.ropensci.org/rgbif/articles/gbif_credentials.html</span><span class="w">
+
+</span><span class="n">gbif_download</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">occ_download</span><span class="p">(</span><span class="w">
+  </span><span class="n">pred</span><span class="p">(</span><span class="s2">"taxonKey"</span><span class="p">,</span><span class="w"> </span><span class="n">taxonkey</span><span class="p">),</span><span class="w">
+  </span><span class="n">pred</span><span class="p">(</span><span class="s2">"hasCoordinate"</span><span class="p">,</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> 
+  </span><span class="n">pred</span><span class="p">(</span><span class="s2">"hasGeospatialIssue"</span><span class="p">,</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">),</span><span class="w"> </span><span class="c1"># remove GBIF default geospatial issues</span><span class="w">
+  </span><span class="n">format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"SIMPLE_CSV"</span><span class="p">)</span><span class="w"> 
+
+</span><span class="n">occ_download_wait</span><span class="p">(</span><span class="n">gbif_download</span><span class="p">)</span><span class="w"> 
+
+</span><span class="c1"># filtering pipeline  </span><span class="w">
+</span><span class="n">gbif_download</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">occ_download_get</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">occ_download_import</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">setNames</span><span class="p">(</span><span class="n">tolower</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">.</span><span class="p">)))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># set lowercase column names to work with CoordinateCleaner</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">occurrencestatus</span><span class="w">  </span><span class="o">==</span><span class="w"> </span><span class="s2">"PRESENT"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="o">!</span><span class="n">basisofrecord</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"FOSSIL_SPECIMEN"</span><span class="p">,</span><span class="s2">"LIVING_SPECIMEN"</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">year</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">1900</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">coordinateprecision</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">0.01</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nf">is.na</span><span class="p">(</span><span class="n">coordinateprecision</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">coordinateuncertaintyinmeters</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">10000</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nf">is.na</span><span class="p">(</span><span class="n">coordinateuncertaintyinmeters</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="o">!</span><span class="n">coordinateuncertaintyinmeters</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">301</span><span class="p">,</span><span class="m">3036</span><span class="p">,</span><span class="m">999</span><span class="p">,</span><span class="m">9999</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">filter</span><span class="p">(</span><span class="o">!</span><span class="n">decimallatitude</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">!</span><span class="n">decimallongitude</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">cc_cen</span><span class="p">(</span><span class="n">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2000</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># remove country centroids within 2km </span><span class="w">
+  </span><span class="n">cc_cap</span><span class="p">(</span><span class="n">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2000</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># remove capitals centroids within 2km</span><span class="w">
+  </span><span class="n">cc_inst</span><span class="p">(</span><span class="n">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2000</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># remove zoo and herbaria within 2km </span><span class="w">
+  </span><span class="n">cc_sea</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># remove from ocean </span><span class="w">
+  </span><span class="n">distinct</span><span class="p">(</span><span class="n">decimallongitude</span><span class="p">,</span><span class="n">decimallatitude</span><span class="p">,</span><span class="n">specieskey</span><span class="p">,</span><span class="n">datasetkey</span><span class="p">,</span><span class="w"> </span><span class="n">.keep_all</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">glimpse</span><span class="p">()</span><span class="w"> </span><span class="c1"># look at results of pipeline</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<!--
+It is usually a good idea to move as much of your data filtering into the **download stage** as possible. Some filters I list above are **not available** at the download stage.
+
+Here a script that moves **most** filters from above into the **downloads api**. 
+
+```R 
+library(rgbif)
+
+user="" # GBIF user name
+pwd="" # GBIF password
+email="" # your email
+
+gbif_download = occ_download(
+type="and",
+pred("taxonKey", 5052020),
+pred("hasGeospatialIssue", FALSE),
+pred("hasCoordinate", TRUE),
+pred_gte("year", 1900),
+pred_not(pred("basisOfRecord", "FOSSIL_SPECIMEN")),
+pred_or(
+pred_not(pred("establishmentMeans","MANAGED")),
+pred_not(pred_notnull("establishmentMeans"))
+),
+pred_or(
+pred_not(pred("establishmentMeans","INTRODUCED")),
+pred_not(pred_notnull("establishmentMeans"))
+),
+pred_or(
+pred_not(pred("establishmentMeans","INVASIVE")),
+pred_not(pred_notnull("establishmentMeans"))
+),
+pred_or(
+pred_not(pred("establishmentMeans","NATURALISED")),
+pred_not(pred_notnull("establishmentMeans"))
+),
+pred_or(
+pred_lt("coordinateUncertaintyInMeters",10000),
+pred_not(pred_notnull("coordinateUncertaintyInMeters"))
+),
+format = "SIMPLE_CSV",
+user=user,pwd=pwd,email=email
+)
+
+# rest of the pipeline after download
+# not yet possible to use these filters in the download stage 
+
+gbif_download %>%
+filter(coordinateprecision < 0.01 | is.na(coordinateprecision)) %>% 
+filter(!coordinateuncertaintyinmeters %in% c(301,3036,999,9999)) %>% 
+filter(!decimallatitude == 0 | !decimallongitude == 0) %>%
+cc_cen(buffer = 2000) %>% # remove country centroids within 2km 
+cc_cap(buffer = 2000) %>% # remove capitals centroids within 2km
+cc_inst(buffer = 2000) %>% # remove zoo and herbaria within 2km 
+cc_sea() %>% # remove from ocean 
+distinct(decimallongitude,decimallatitude,specieskey,datasetkey, .keep_all = TRUE) %>%
+glimpse() # look at results of pipeline
+
+```
+-->
+
+<h2 id="gbif-default-geospatial-issues">GBIF default geospatial issues</h2>
+
+<p>GBIF removes <strong>common geospatial issues</strong> by default if you choose to have data with a location.</p>
+
+<p>The following things will be removed:</p>
+
+<ol>
+  <li><strong>Zero coordinate</strong> : Coordinates are exactly (0,0). <a href="https://en.wikipedia.org/wiki/Null_Island">null island</a></li>
+  <li><strong>Country coordinate mismatch</strong> : The coordinates fall outside of the given country’s polygon.</li>
+  <li><strong>Coordinate invalid</strong> : GBIF is unable to interpret the coordiantes.</li>
+  <li><strong>Coordinate out of range</strong> : The coordinates are outside of the range for decimal lat/lon values ((-90,90), (-180,180)).</li>
+</ol>
+
+<p>You can do this on the <a href="https://www.gbif.org/occurrence/search?has_coordinate=true&amp;has_geospatial_issue=false&amp;occurrence_status=present">web portal</a>.</p>
+
+<h2 id="absence-data">Absence data</h2>
+
+<p>GBIF now has a field called <strong>occurrence status</strong>, which will tell you whether an occurrence is a presence or absence.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">gbif_download</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+</span><span class="n">filter</span><span class="p">(</span><span class="n">occurrenceStatus</span><span class="w">  </span><span class="o">==</span><span class="w"> </span><span class="s2">"PRESENT"</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+<p>You can also do this on the <a href="https://www.gbif.org/occurrence/search?occurrence_status=present&amp;q=">web portal</a> before downloading.</p>
+
+<h2 id="fossils-and-living-specimens">Fossils and living specimens</h2>
+
+<p>You might want to remove <strong>fossils</strong> and <strong>living specimens</strong>.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">gbif_download</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+</span><span class="n">filter</span><span class="p">(</span><span class="o">!</span><span class="n">basisOfRecord</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"FOSSIL_SPECIMEN"</span><span class="p">,</span><span class="s2">"LIVING_SPECIMEN"</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="old-records">Old records</h2>
+
+<p>You might also want to remove old records.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">gbif_download</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+</span><span class="n">filter</span><span class="p">(</span><span class="n">year</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">1900</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>You can also do this on the <a href="https://www.gbif.org/occurrence/search?year=1900,2020&amp;occurrence_status=present">web portal</a> before downloading.</p>
+
+<h2 id="high-uncertainty">High uncertainty</h2>
+
+<p>There are two fields that come with <strong>simple csv downloads</strong> that give uncertainty.</p>
+
+<ol>
+  <li><strong>coordinatePrecision</strong> : A decimal representation of the precision of the coordinates.</li>
+  <li><strong>coordinateUncertaintyInMeters</strong> : the uncertainty of the coordinates in meters.</li>
+</ol>
+
+<p>These fields are not frequently used by publishers (around 600M occurrences do not fill in either), <strong>so filter with caution</strong>. I have kept missing values in my example.</p>
+
+<p>If you want to be sure that a point has the acceptable level of uncertainty or precision for your study, you can remove those with missing values, but this will be removing a lot “ok” records.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="c1"># I keep missing values here</span><span class="w">
+</span><span class="n">gbif_download</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+</span><span class="n">filter</span><span class="p">(</span><span class="w">
+</span><span class="n">coordinatePrecision</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">0.01</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nf">is.na</span><span class="p">(</span><span class="n">coordinatePrecision</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+</span><span class="n">filter</span><span class="p">(</span><span class="w">
+</span><span class="n">coordinateUncertaintyInMeters</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">1000</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nf">is.na</span><span class="p">(</span><span class="n">coordinateUncertaintyInMeters</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> 
+
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>You also want to remove records with <a href="https://github.com/ropensci/CoordinateCleaner/issues/55">known default values</a> for <strong>coordinateUncertaintyInMeters</strong>. These can be <strong>GeoLocate centroids</strong> or some other default. It is good to remove them because usually the uncertainy is larger than what is stated by the value.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="n">gbif_download</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+</span><span class="n">filter</span><span class="p">(</span><span class="o">!</span><span class="n">coordinateUncertaintyInMeters</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">301</span><span class="p">,</span><span class="m">3036</span><span class="p">,</span><span class="m">999</span><span class="p">,</span><span class="m">9999</span><span class="p">))</span><span class="w"> 
+</span><span class="c1"># known inaccurate default values</span><span class="w">
+
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+<h2 id="points-along-equator-or-prime-merdidian">Points along equator or prime merdidian</h2>
+
+<p>Point plotted along the <strong>prime meridian</strong> or <strong>equator</strong>.</p>
+
+<p>As of the writing of this guide there are 37K occurrences along the <strong>equator</strong> and 28K along the <strong>Prime meridian</strong>.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="n">gbif_download</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+</span><span class="n">filter</span><span class="p">(</span><span class="n">decimalLatitude</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">decimalLongitude</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># see also CoordinateCleaner::cc_zero()</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="country-centroids">Country centroids</h2>
+
+<blockquote>
+  <p>Sometimes GBIF data publishers will not know the exact lat-lon location of a record and will enter the lat-long center of the country instead. This is a data issue because users might be unaware that an observation is pinned to a country center and assume it is a precise location.</p>
+</blockquote>
+
+<p>It is now possible to filter out country/area centroids in a download using the <strong>distanceFromCentroidInMeters</strong> filter.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="c1"># download occurrences that are at least 2km from a centroid in Sweden</span><span class="w">
+</span><span class="n">occ_download</span><span class="p">(</span><span class="w">
+</span><span class="n">pred_gte</span><span class="p">(</span><span class="s2">"distanceFromCentroidInMeters"</span><span class="p">,</span><span class="s2">"2000"</span><span class="p">),</span><span class="w">
+</span><span class="n">pred</span><span class="p">(</span><span class="s2">"country"</span><span class="p">,</span><span class="s2">"SE"</span><span class="p">),</span><span class="w">
+</span><span class="n">format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"SIMPLE_CSV"</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>GBIF currently uses only PCLI level centroids from the <a href="https://github.com/jhnwllr/catalogue-of-centroids">Catalogue of Centroids</a>.</p>
+
+<p>You can also remove country centroids and province centroids using <strong>CoordinateCleaner</strong>.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="n">library</span><span class="p">(</span><span class="n">CoordinateCleaner</span><span class="p">)</span><span class="w">
+
+</span><span class="n">gbif_download</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+</span><span class="n">cc_cen</span><span class="p">(</span><span class="w">
+</span><span class="n">lon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"decimalLongitude"</span><span class="p">,</span><span class="w"> 
+</span><span class="n">lat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"decimalLatitude"</span><span class="p">,</span><span class="w"> 
+</span><span class="n">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2000</span><span class="p">,</span><span class="w"> </span><span class="c1"># radius of circle around centroid to look for centroids</span><span class="w">
+</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"clean"</span><span class="p">,</span><span class="w">
+</span><span class="n">test</span><span class="o">=</span><span class="s2">"both"</span><span class="p">)</span><span class="w">  
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+<p>Centroids tend to be more common for geocoded museum collections (PRESERVED_SPECIMEN), so you might want to only filter centroids for preserved specimens, since other occurrences might be false positives.</p>
+
+<p>You might also want to filter <strong>country capitals</strong>.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="n">gbif_download</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+</span><span class="n">cc_cap</span><span class="p">(</span><span class="w">
+</span><span class="n">lon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"decimalLongitude"</span><span class="p">,</span><span class="w"> 
+</span><span class="n">lat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"decimalLatitude"</span><span class="p">,</span><span class="w"> 
+</span><span class="n">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2000</span><span class="p">,</span><span class="w"> </span><span class="c1"># radius of circle around centroid to look for centroids</span><span class="w">
+</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"clean"</span><span class="p">)</span><span class="w">
+
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="zoo-and-herbaria-locations">Zoo and herbaria locations</h2>
+
+<p>Publishers do not always fill in the establishmentMeans=”MANAGED” or basisOfRecord=”LIVING_SPECIMEN”, so it is usually good to filter known <strong>zoo</strong> and <strong>herbaria</strong> locations.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre><span class="n">library</span><span class="p">(</span><span class="n">CoordinateCleaner</span><span class="p">)</span><span class="w">
+
+</span><span class="n">gbif_download</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+</span><span class="n">cc_inst</span><span class="p">(</span><span class="w">
+</span><span class="n">lon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"decimalLongitude"</span><span class="p">,</span><span class="w">
+</span><span class="n">lat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"decimalLatitude"</span><span class="p">,</span><span class="w">
+</span><span class="n">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2000</span><span class="p">,</span><span class="w">
+</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"clean"</span><span class="p">,</span><span class="w">
+</span><span class="n">verbose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="w">
+</span><span class="p">)</span><span class="w">
+
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="in-the-ocean">In the ocean</h2>
+
+<p>Obviously not to be used with marine species. If marine, you might want to do the opposite.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="n">library</span><span class="p">(</span><span class="n">CoordinateCleaner</span><span class="p">)</span><span class="w">
+
+</span><span class="n">gbif_download</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+</span><span class="n">cc_sea</span><span class="p">(</span><span class="w">
+</span><span class="n">lon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"decimalLongitude"</span><span class="p">,</span><span class="w">
+</span><span class="n">lat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"decimalLatitude"</span><span class="w">
+</span><span class="p">)</span><span class="w">
+
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="location-duplicates">Location duplicates</h2>
+
+<p>Some of you will want to remove potential <strong>location duplicates</strong>.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">gbif_download</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+</span><span class="n">distinct</span><span class="p">(</span><span class="n">decimalLongitude</span><span class="p">,</span><span class="n">decimalLatitude</span><span class="p">,</span><span class="n">speciesKey</span><span class="p">,</span><span class="n">datasetKey</span><span class="p">,</span><span class="w"> </span><span class="n">.keep_all</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> 
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>It is probably a good idea to keep the <strong>datasetKey</strong> for citing the download later, if you post a derived dataset on Zenodo or something similar.</p>
+
+<p>In general removing duplicates is not difficult based on location. GBIF also has a experimental feature for indentifying <a href="https://www.gbif.org/news/4U1dz8LygQvqIywiRIRpAU/new-data-clustering-feature-aims-to-improve-data-quality-and-reveal-cross-dataset-connections">related records</a>. It is, however, not optimized for data filtering yet.</p>
+
+<h2 id="r-packages-for-filtering-data">R packages for filtering data</h2>
+
+<p>There are currently 3 <strong>R packages</strong> for filtering GBIF occurrences:</p>
+
+<ol>
+  <li><a href="https://github.com/ropensci/CoordinateCleaner">CoordinateCleaner</a></li>
+  <li><a href="https://cran.r-project.org/web/packages/biogeo/index.html">biogeo</a></li>
+  <li><a href="https://github.com/ropensci/scrubr">scrubr</a></li>
+</ol>
+
+<p><strong>CoordinateCleaner</strong> is probably the most <a href="https://cran.r-project.org/web/packages/CoordinateCleaner/vignettes/Comparison_other_software.html">most complete</a>.</p>
+
+<h2 id="additional-filters">Additional filters</h2>
+
+<p>There are some <strong>additional</strong> things you might want to check for which invovle more judgement calls:</p>
+
+<ul>
+  <li>outliers</li>
+  <li>metagenomics</li>
+  <li>outside native ranges</li>
+  <li>gridded datasets</li>
+  <li>automated identifications</li>
+</ul>
+
+<p>I have written some companion R scripts for handling these issues as well <a href="https://github.com/jhnwllr/GBIF_additional_filters/blob/main/README.md">link to scripts</a>.</p>
+
+
+</div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/gbif-species-api/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">(Almost) everything you want to know about the GBIF Species API</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/grscicoll-2021/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">The Global Registry of Scientific Collections (GRSciColl) in 2021</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+<script src="/hp-data-blog/assets/js/code-blocks.js" defer></script>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/">GBIF.org</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1794391499"></script>
+
+
+
+
+
+  </body>
+</html>

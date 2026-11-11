@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  
+  
+
+  
+  
+
+  
+    <title>Using shapefiles on GBIF data with R
+ - GBIF Data Blog
+</title>
+  
+  
+  
+  <meta name="description" content="Tutorials, analyses and news about GBIF data from the GBIF Secretariat and guest authors.">
+  
+
+  
+
+
+  <!-- Language versions -->
+  
+
+  <!-- useful variables -->
+  <script>
+    var pageLang = 'en';
+    var rootLang = 'en';
+    var basename = pageLang === rootLang ? undefined : pageLang;
+    var languageSettings = {"en":{"label":"English","archive_permalink":"/"},"da":{"label":"Dansk","archive_permalink":"/da/post/"},"es":{"label":"Español","archive_permalink":"/es/post/"},"it":{"label":"Italiano","archive_permalink":"/it/post/"},"ru":{"label":"Русский","archive_permalink":"/ru/post/"},"ar":{"label":"العربية","archive_permalink":"/ar/post/"},"fr":{"label":"Français","archive_permalink":"/fr/post/"},"zh":{"label":"中文","archive_permalink":"/zh/post/"},"zh-tw":{"label":"繁體中文","archive_permalink":"/zh-tw/post/"},"ja":{"label":"日本語","archive_permalink":"/ja/post/"}};
+  </script>
+
+  <!-- Widget requirements -->
+  <!--react and gbif component-->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script>window.React || document.write('<script src="/hp-data-blog/assets/theme/js/react.js">\x3C/script>')</script>
+
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>window.ReactDOM || document.write('<script src="/hp-data-blog/assets/theme/js/react-dom.js">\x3C/script>')</script>
+  
+  <link rel="stylesheet" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.1.1/mapbox-gl.min.css" integrity="sha512-j4BKLk7HB2Umio2SKGP4gh1L3jouxJDuBxcWoq4kf1fYIkJyXQUGxs9me8yz2wexxAIHIcQHzn64UfPIG232xQ==" crossorigin="anonymous" />
+  <link rel='stylesheet' crossorigin href='https://cdnjs.cloudflare.com/ajax/libs/openlayers/6.1.1/ol.min.css' />
+
+  
+  
+  <link rel='stylesheet' crossorigin href='https://www-lib.gbif-staging.org/style.css?' />
+  
+
+  
+    <script type="text/javascript" crossorigin src="https://react-components.gbif-staging.org/lib/gbif-react-components.js"></script>
+  
+
+  <script type="text/javascript" src="/hp-data-blog/assets/theme/js/config.js"></script>
+
+  <!-- CSS -->
+  <!-- Bulma is included in main.css -->
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/main.css?v=1794391499">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/hp-data-blog/assets/theme/css/v4-shims.css">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="GBIF Data Blog - RSS feed" href="https://javiesgm.github.io/hp-data-blog/feed.xml" >
+
+  <!-- favicon - to set a favicon add favicon.ico to your root folder -->
+  <!-- to add more favicon types, then add /_include/favicon.html to your project -->
+  
+
+  
+
+  
+</head>
+
+
+  <body class="">
+    
+    
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar 
+   
+   
+  " 
+  
+  role="navigation" aria-label="main navigation">
+  <div class="testSiteBanner"></div>
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a class="navbar-item navbar-logo" href="/hp-data-blog/">
+        
+          <img class="navbar-logo_img" src="/hp-data-blog/assets/images/datablog-logo.svg" alt="GBIF Data Blog - Home" height="28" />
+        
+        
+      </a>
+
+      
+        <a
+          role="button"
+          id="navbarBurger"
+          class="navbar-burger burger menu-toggle"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="mainNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      
+    </div>
+
+    
+    <div id="mainNavbar" class="navbar-menu">
+      <div class="navbar-start">
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/"
+            >
+            Posts
+          </a>
+          
+        
+          
+          <div class="navbar-top-item navbar-item has-dropdown">
+            <a class="navbar-link"> Topics </a>
+
+            <div class="navbar-dropdown">
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=APIs%20and%20downloads"
+                    class="navbar-item "
+                  >
+                    APIs and downloads
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Publishing%20data"
+                    class="navbar-item "
+                  >
+                    Publishing data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Analysis%20and%20maps"
+                    class="navbar-item "
+                  >
+                    Analysis and maps
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Taxonomy"
+                    class="navbar-item "
+                  >
+                    Taxonomy
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Data%20quality"
+                    class="navbar-item "
+                  >
+                    Data quality
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citation%20and%20data%20use"
+                    class="navbar-item "
+                  >
+                    Citation and data use
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Collections"
+                    class="navbar-item "
+                  >
+                    Collections
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Citizen%20science"
+                    class="navbar-item "
+                  >
+                    Citizen science
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Survey%20and%20monitoring"
+                    class="navbar-item "
+                  >
+                    Survey and monitoring
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Molecular%20data"
+                    class="navbar-item "
+                  >
+                    Molecular data
+                  </a>
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/?category=Multimedia"
+                    class="navbar-item "
+                  >
+                    Multimedia
+                  </a>
+                
+              
+                
+                  <hr class="navbar-divider" />
+                
+              
+                
+                  <a
+                    href="/hp-data-blog/tags/"
+                    class="navbar-item "
+                  >
+                    All topics and tags
+                  </a>
+                
+              
+            </div>
+          </div>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/series/"
+            >
+            Series
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/authors/"
+            >
+            Authors
+          </a>
+          
+        
+          
+            <a
+              class="navbar-top-item navbar-item"
+              href="/hp-data-blog/about/"
+            >
+            About
+          </a>
+          
+        
+      </div>
+
+      
+      
+    </div>
+  </div>
+  
+</nav>
+
+
+    <main>
+
+      <div>
+          
+        
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="">
+  <div class="postHeader  postHeader--withToc ">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="feature-content  feature-content--centered ">
+  <div class="feature-text">
+    
+    
+    
+    
+    <h3 class="feature-title">
+      
+      <p>Using shapefiles on GBIF data with R</p>
+
+      
+    </h3>
+    
+  </div>
+  
+  
+
+  
+
+  
+
+</div>
+
+
+  </div>
+</section>
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<section class="post-meta">
+  <div class="container">
+    <div class="article">
+      <p class="post-meta__byline">
+        <a href="/hp-data-blog/?author=jan-kristoffer-legind" title="All posts by Jan Kristoffer Legind">Jan Kristoffer Legind</a>
+        <span aria-hidden="true">·</span>
+        <time datetime="2018-11-22">22 November 2018</time>
+        <span aria-hidden="true">·</span>
+        5 min read
+      </p>
+      
+      <div class="tags post-meta__topics">
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=APIs+and+downloads">APIs and downloads</a>
+        
+          <a class="tag is-light" href="/hp-data-blog/?category=Analysis+and+maps">Analysis and maps</a>
+        
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=rstats">#rstats</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=maps">#maps</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=arctic">#arctic</a>
+        
+          <a class="tag post-meta__tag" href="/hp-data-blog/?tag=shapefile">#shapefile</a>
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+<script>
+document.gbifTocMaxDepth = 6;
+</script>
+
+
+<section className="">
+  <div class="container">
+    
+    <div class="article--toc">
+      <div>
+        <div class="toc-wrapper  toc__removeOnMobile ">
+          <aside class="toc">
+  <div class="toc_header">
+    On this page
+  </div>
+  <div class="toc_list">
+    <ul>
+  <li><a href="#not-all-filters-are-born-equal">Not all filters are born equal</a></li>
+  <li><a href="#the-shapefile">The shapefile</a></li>
+  <li><a href="#the-gbif-data">The GBIF data</a></li>
+  <li><a href="#putting-it-together-in-r">Putting it together in R</a></li>
+</ul>
+  </div>
+</aside>
+        </div>
+        <div class="article">
+          <div class="content">
+  <h2 id="not-all-filters-are-born-equal">Not all filters are born equal</h2>
+
+<p>It happens sometimes that users need GBIF data that fall within specific boundaries. The GBIF Portal provides a location filter where it is possible to draw a rectangle or a polygon on the map and get the occurrence records within this shape. However these tools have a limited precision and occasionally the job calls for more complex shapes than the GBIF Portal currently supports.</p>
+
+<h2 id="the-shapefile">The shapefile</h2>
+<p>In this case I want to use a <strong>Circumpolar Arctic Map</strong> which already here is providing us with some challenges.<br />
+The map projection for this is ‘laea’ (<em>Lambert Azimuthal Equal Area</em> for those of you out in mercator land) and it is well suited to polar perspective.<br />
+So the task is to identify the Plant records that fall within this shape file of land areas in the Arctic region.<br />
+The arctic shape file can be downloaded here: <a href="https://github.com/jlegind/Polygon-Shapefile-Occurrence-Filter/blob/master/Bioclimate_Subzones%5B1%5D.zip">Bioclimate subzones</a></p>
+
+<p><img src="/hp-data-blog/post/2018-11-22-R_shapefiles_GBIF/arcticPlot.png" alt="arctic" /></p>
+
+<h2 id="the-gbif-data">The GBIF data</h2>
+<p>Since we are not going to work on GBIF data directly in the portal, we have to download a subset to work on in R. Now, the more data we grab the bigger the risk that we will blow through memory. These are the steps taken to reduce the initial GBIF data download:</p>
+
+<ol>
+  <li>As the target is the <em>arctic region</em> it would be reasonable to query for all plant records above 55 degrees latitude. This returns a file of about ~35 million records. This is too large.</li>
+  <li>Remove records within Sweden, Finland, Denmark and Great Britain.</li>
+  <li>Filter records out that have the geospatial issues flag and now we are down to ~12 million records. Further reductions are possible with some judicious taxonomic discrimination.<br />
+ The records are available from GBIF using this <a href="https://www.gbif.org/occurrence/search?country=NO&amp;country=FI&amp;country=IS&amp;country=RU&amp;country=CA&amp;country=US&amp;country=SJ&amp;taxon_key=6&amp;geometry=POLYGON((-180%2055,180%2055,180%2090,-180%2090,-180%2055))">filtered search</a></li>
+</ol>
+
+<p>The GBIF download comes with many columns but for the purpose of using the shape file we only need the coordinates and the unique record ID. More on this later.
+Due to the size of the download file the R function <em>fread()</em> is recommended for turning the GBIF records into a data table because it is much faster than <em>read.table</em> or <em>read.csv</em>.</p>
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">gbif</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">fread</span><span class="p">(</span><span class="s2">"arctic_plants.txt"</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"\t"</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">na.strings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"\\N"</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="putting-it-together-in-r">Putting it together in R</h2>
+<p>It would be sensible to insert a warning here that the R script relies on a suite of packages and that there could be some dependencies that need to be resolved before these will load. Make sure these are installed:</p>
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="n">library</span><span class="p">(</span><span class="n">rgeos</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">maptools</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">proj4</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">data.table</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">rgdal</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">raster</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Assuming the shape file archive is unpacked and in the work directory:</p>
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">shpfile</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"Bioclimate_Subzones.shp"</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+<p>The <em>readOGR</em> function from the <em>rgdal</em> package is used to pull the shape data into a spatial vector object in R.<br />
+Now comes a function that takes as arguments the shapefile (.shp), a data frame/data table, the three column names we need lat/long coordinates and the record ID, and lastly the datum for the GBIF records.</p>
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+</pre></td><td class="rouge-code"><pre><span class="cd">#'Filter georeferenced records by shapefile</span><span class="w">
+</span><span class="cd">#'</span><span class="w">
+</span><span class="cd">#' @param shapefile A shapefile object (.shp)</span><span class="w">
+</span><span class="cd">#' @param occurrence_df A data frame of georeferenced records. For large csv use fread()</span><span class="w">
+</span><span class="cd">#' @param lat The column name for latitude in the data frame</span><span class="w">
+</span><span class="cd">#' @param lon The column name for longitude in the data frame</span><span class="w">
+</span><span class="cd">#' @param gbifid A unique record key</span><span class="w">
+</span><span class="cd">#' @param map_crs The datum assigned to the occurrence data frame</span><span class="w">
+</span><span class="cd">#' @param mkplot Whether to draw the map plots. Can be very expensive</span><span class="w">
+</span><span class="n">occurrence.from.shapefile</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">shapefile</span><span class="p">,</span><span class="w"> </span><span class="n">occurrence_df</span><span class="p">,</span><span class="w"> </span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">lon</span><span class="p">,</span><span class="w"> </span><span class="n">gbifid</span><span class="p">,</span><span class="w"> </span><span class="n">map_crs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"+proj=longlat +datum=WGS84"</span><span class="p">,</span><span class="w"> </span><span class="n">mkplot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">){</span><span class="w">
+    
+    </span><span class="n">shape</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">readOGR</span><span class="p">(</span><span class="n">shapefile</span><span class="p">)</span><span class="w">
+    </span><span class="n">print</span><span class="p">(</span><span class="n">proj4string</span><span class="p">(</span><span class="n">shape</span><span class="p">))</span><span class="w">
+    
+    </span><span class="c1">#subset the GBIF data into a data frame</span><span class="w">
+    </span><span class="n">occ.map</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">occurrence_df</span><span class="p">[[</span><span class="n">lon</span><span class="p">]],</span><span class="w"> </span><span class="n">occurrence_df</span><span class="p">[[</span><span class="n">lat</span><span class="p">]],</span><span class="w"> </span><span class="n">occurrence_df</span><span class="p">[[</span><span class="n">gbifid</span><span class="p">]])</span><span class="w">
+    </span><span class="n">print</span><span class="p">(</span><span class="n">str</span><span class="p">(</span><span class="n">occ.map</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w">
+    </span><span class="c1">#simplify column names</span><span class="w">
+    </span><span class="nf">names</span><span class="p">(</span><span class="n">occ.map</span><span class="p">)[</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'long'</span><span class="p">,</span><span class="w"> </span><span class="s1">'lat'</span><span class="p">,</span><span class="w"> </span><span class="s1">'gbifid'</span><span class="p">)</span><span class="w">
+    </span><span class="n">print</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">occ.map</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">))</span><span class="w">
+    </span><span class="c1">#turning the data frame into a "spatial points data frame"</span><span class="w">
+    </span><span class="n">coordinates</span><span class="p">(</span><span class="n">occ.map</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"long"</span><span class="p">,</span><span class="w"> </span><span class="s2">"lat"</span><span class="p">)</span><span class="w">
+    </span><span class="c1">#defining the datum </span><span class="w">
+    </span><span class="n">proj4string</span><span class="p">(</span><span class="n">occ.map</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">CRS</span><span class="p">(</span><span class="n">map_crs</span><span class="p">)</span><span class="w">
+    </span><span class="c1">#reprojecting the 'gbif' data frame to the same as in the 'shape' object </span><span class="w">
+    </span><span class="n">occ.map</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">spTransform</span><span class="p">(</span><span class="n">occ.map</span><span class="p">,</span><span class="w"> </span><span class="n">proj4string</span><span class="p">(</span><span class="n">shape</span><span class="p">))</span><span class="w">
+    
+    </span><span class="c1">#Identifying records from gbif that fall within the shape polygons</span><span class="w">
+    </span><span class="n">inside</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">occ.map</span><span class="p">[</span><span class="n">apply</span><span class="p">(</span><span class="n">gIntersects</span><span class="p">(</span><span class="n">occ.map</span><span class="p">,</span><span class="w"> </span><span class="n">shape</span><span class="p">,</span><span class="w"> </span><span class="n">byid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">any</span><span class="p">),]</span><span class="w">
+
+    </span><span class="k">if</span><span class="p">(</span><span class="n">mkplot</span><span class="p">){</span><span class="w">
+        </span><span class="n">raster</span><span class="o">::</span><span class="n">plot</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span><span class="w">
+        </span><span class="n">points</span><span class="p">(</span><span class="n">inside</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"olivedrab3"</span><span class="p">)</span><span class="w">
+    </span><span class="p">}</span><span class="w">  
+    
+    </span><span class="c1">#Prepare data frame for joining with the occcurrence df so only records </span><span class="w">
+    </span><span class="c1">#that fall inside the polygons get selected </span><span class="w">
+    </span><span class="n">res.gbif</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">inside</span><span class="o">@</span><span class="n">data</span><span class="p">)</span><span class="w">
+    </span><span class="n">final.gbif</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">gbif</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">semi_join</span><span class="p">(</span><span class="n">res.gbif</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">gbifid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"gbifid"</span><span class="p">))</span><span class="w">
+        
+    </span><span class="nf">return</span><span class="p">(</span><span class="n">final.gbif</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">  
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+<p>A brief explanation of the CRS function used is in order; the occ.map spatial points data frame becomes associated with the Coordinate Reference System (the <em>map_crs</em> argument).</p>
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="table" class="table" class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">proj4string</span><span class="p">(</span><span class="n">occ.map</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">CRS</span><span class="p">(</span><span class="n">map_crs</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+<p>This allows us to reproject the GBIF data to the same projection that the shape file comes with which is, as mentioned above, the <em>Lambert Azimuthal Equal Area</em> projection.<br />
+The next part of the function picks out the GBIF record IDs which are located within the polygons in the shape file. Now we are ready to join the initial GBIF records data frame with the selected GBIF IDs we have found (res.gbif) for the final data frame output. The filtered output comes to 11,108 GBIF plant records.</p>
+
+<p>Of course it would be really nice to have a plot of the shape file with the occurrence records displayed. If RStudio is used the plot will render in the Plots tab when the <em>mkplot</em> parameter is set to TRUE.<br />
+<img src="/hp-data-blog/post/2018-11-22-R_shapefiles_GBIF/arcticPlantsBlog.png" alt="arctic_plants" />
+The complete <a href="https://github.com/jlegind/Polygon-Shapefile-Occurrence-Filter/blob/master/arctic6.R">R code can be found here.</a></p>
+
+
+</div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+<section class="post-end">
+  <div class="container">
+    <div class="article">
+      <p class="post-end__disclaimer">This post represents the ideas of the author.</p>
+
+      <nav class="post-end__nav" aria-label="More posts">
+        
+          <a class="post-end__link" href="/hp-data-blog/post/gbif-multimedia/">
+            <span class="post-end__label">← Older</span>
+            <span class="post-end__title">Sharing images, sounds and videos on GBIF</span>
+          </a>
+        
+        
+          <a class="post-end__link post-end__link--next" href="/hp-data-blog/post/gbif-citizen-science-data/">
+            <span class="post-end__label">Newer →</span>
+            <span class="post-end__title">Will citizen science take over?</span>
+          </a>
+        
+      </nav>
+
+      
+    </div>
+  </div>
+</section>
+
+<script src="/hp-data-blog/assets/js/code-blocks.js" defer></script>
+
+
+
+
+  
+
+
+
+      </div>
+    </main>
+    
+    
+
+<div class="terms-notice is-hidden" id="termsNotice">
+  <p>We use cookies on our website. Some are technically necessary, others help us improve your user experience. You can decline non-essential cookies by selecting “Reject”. Please see our <a href="/privacy">Privacy Policy</a> for further information about our privacy practices and use of cookies.</p>
+
+  <div style="margin-top: 8px">
+    <button class="button is-primary" onclick="gbif_acceptCookies();">
+      Accept
+    </button>
+    <button class="button is-error" onclick="gbif_rejectCookies();">
+      Reject
+    </button>
+  </div>
+</div>
+    <footer>
+  
+
+<div class="footer">
+  <div>
+    
+  </div>
+  <div>
+    <div class="footer-groups">
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF Data Blog</p>
+        
+        <div class="footer-description">
+          <p>Tutorials, analyses and news about GBIF data, written by the GBIF Secretariat and guest authors.
+Posts represent the ideas of their authors.</p>
+
+        </div>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="/hp-data-blog/about/">About the blog</a>
+          </li>
+          
+          <li>
+            <a href="/hp-data-blog/index.xml">RSS feed</a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/gbif/data-blog#readme">Write a post</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">GBIF</p>
+        
+        
+        <ul class="footer-links">
+          
+          <li>
+            <a href="https://www.gbif.org/">GBIF.org</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/what-is-gbif">What is GBIF?</a>
+          </li>
+          
+          <li>
+            <a href="https://techdocs.gbif.org/en/openapi/">API documentation</a>
+          </li>
+          
+          <li>
+            <a href="https://www.gbif.org/faq">FAQ</a>
+          </li>
+          
+          <li>
+            <a href="https://discourse.gbif.org/">Community forum</a>
+          </li>
+          
+        </ul>
+        
+        
+        
+
+      </div>
+      
+      <div class="footer-column">
+        <p class="footer-column-name">Contact</p>
+        
+        <div class="footer-description">
+          <p>GBIF Secretariat<br />
+Universitetsparken 15<br />
+DK-2100 Copenhagen Ø<br />
+Denmark</p>
+
+        </div>
+        
+        
+        
+        
+        <ul class="footer-online-list">
+          
+          
+          <li>
+            <a href="https://github.com/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.youtube.com/@GBIFvideo">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li>
+            <a href="https://bsky.app/profile/gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-bluesky fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="https://www.linkedin.com/company/gbif">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="mailto:info@gbif.org">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        
+
+      </div>
+      
+    </div>
+
+    
+
+  </div>
+</div>
+
+  <div class="footer-hostedby">
+    <div><a href="https://gbif.org/hosted-portals"><img src="/hp-data-blog/assets/theme/img/hostedby.svg"/></a></div>
+  </div>
+</footer>
+
+<script>
+  ;
+  var currentLocale = 'en';
+</script>
+
+<script src="/hp-data-blog/assets/theme/js/script.js?v=1794391499"></script>
+
+
+
+
+
+  </body>
+</html>
