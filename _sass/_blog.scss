@@ -60,6 +60,7 @@ h1, h2, h3, h4,
   letter-spacing: -0.005em;
 }
 .feature-title, .postHeader .feature-title, .blog-intro__title { font-weight: 600; }   // serif-h1…h5 are SemiBold
+.feature .feature-title { line-height: 1.3; }   // beats Bulma's .content h3 (1.125)
 .content h2, .content h3 { font-weight: 600; }
 .content h4 { font-weight: 700; }                                                    // serif-h6: Bold 16
 
@@ -148,7 +149,7 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
 .features.blog-list { background-color: #efefef; }   // surface-sunken: band behind the cards
 .blog-list .feature.is-search-hidden { display: none !important; }
 .blog-list__empty { text-align: center; color: $blog-muted; padding: 2rem 1rem 4rem; }
-.blog-list .feature-pre-title { text-transform: none; letter-spacing: 0; }
+.blog-list .feature-pre-title { text-transform: none; letter-spacing: 0; margin-bottom: 0.6666em; }
 
 // ---------- Post page ----------
 // The theme gives each .article block large vertical margins; tighten them for our extra blocks.
