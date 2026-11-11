@@ -26,6 +26,7 @@ POSTS_IN = SRC / "content" / "post"
 # Tag -> category. First matching rule wins; a post gets at most 2 categories.
 # --------------------------------------------------------------------------
 CATEGORY_RULES = [
+    ("Survey and monitoring", {"sam", "humboldt", "survey", "monitoring"}),
     ("Publishing data", {"publishing", "publish", "darwin core", "dwc-a", "dwc-dp", "sampling-event",
                          "sam", "humboldt", "ipt", "metadata", "dataset", "dataset type", "dataset classes",
                          "frictionless data", "dublin core", "protocols", "target", "location", "date",

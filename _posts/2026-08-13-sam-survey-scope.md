@@ -7,6 +7,7 @@ date: '2026-08-13'
 last_modified_at: '2026-10-15'
 slug: sam-survey-scope
 categories:
+- Survey and monitoring
 - Publishing data
 tags:
 - SAM

@@ -48,11 +48,16 @@ filtered list the next time the site is built. Write your name exactly as on you
 To choose a different one, add `slug: something-else`.
 
 **Topics** (`categories`): APIs and downloads · Publishing data · Analysis and maps · Taxonomy ·
-Data quality · Citation and data use · Collections · Citizen science · Molecular data · Multimedia.
+Data quality · Citation and data use · Collections · Citizen science · Survey and monitoring · Molecular data · Multimedia.
 Every post needs at least one. A new topic appears by itself on the home page and on the
 Topics and tags page, but not in the Topics menu: the menu is curated by hand in
 `_data/navigation.yml`. Only create a new topic when none of these fits, and add it to the menu
-if it should be there.
+if it should be there:
+
+```yaml
+  - text: Survey and monitoring
+    href: /?category=Survey%20and%20monitoring   # spaces written as %20
+```
 
 **Tags** are free keywords. Check [the tags page](/tags/) first and reuse an existing tag
 (`publishing`, not `publish`; `checklist`, not `checklists`) so posts on the same subject end up together.
