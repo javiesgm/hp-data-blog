@@ -244,7 +244,7 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
   .feature-categories { margin-top: .5em; }
 }
 @media (max-width: 640px) {
-  .blog-list.is-list .feature .feature-img { flex-basis: 96px !important; min-height: 96px; }
+  .blog-list.is-list .feature .feature-img { display: none; }   // phones: list rows are text only
   .blog-list.is-list .feature-description { display: none; }
   .blog-view-btn span { display: none; }
 }
