@@ -72,7 +72,7 @@ h1, h2, h3, h4, .title, .feature-title, .postHeader .feature-title, .blog-intro_
 .navbar-logo { padding-left: 0 !important; }
 @media screen and (min-width: 1024px) { #mainNavbar .navbar-start > .navbar-item:last-child { padding-right: 0; } }
 .navbar-logo .navbar-logo_img { height: 38px; }
-.navbar-item, .navbar-link { font: 400 14px/1 var(--m-sans); color: var(--m-ink); background: transparent !important; }
+.navbar-item, .navbar-link { font: 400 16px/1 var(--m-sans); color: var(--m-ink); background: transparent !important; }
 a.navbar-item:hover, .navbar-link:hover, .navbar-item.has-dropdown:hover .navbar-link { color: var(--brand); text-decoration: underline; text-underline-offset: 4px; background: transparent !important; }
 .navbar-link:not(.is-arrowless)::after { border-color: var(--m-ink) !important; width: .45em; height: .45em; border-width: 1px; }
 .navbar-dropdown { background: var(--m-paper); border: 1px solid var(--m-rule); border-radius: var(--m-radius); box-shadow: none; padding: 8px 0; }
@@ -86,7 +86,7 @@ a.navbar-item:hover, .navbar-link:hover, .navbar-item.has-dropdown:hover .navbar
 .blog-intro { padding: clamp(56px, 9vw, 120px) 0 clamp(32px, 5vw, 64px); }
 .blog-intro .container { max-width: var(--m-wide); padding: 0 var(--m-gutter); text-align: center; }
 .blog-intro__title {
-  font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 600; line-height: 1;
+  font-size: clamp(2.25rem, 6vw, 3.5rem); font-weight: 600; line-height: 1.1;
   letter-spacing: -0.015em !important; color: var(--m-ink);
   margin: 0 auto 28px; max-width: 16ch;
 }
