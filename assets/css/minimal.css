@@ -255,6 +255,41 @@ main .article { max-width: var(--m-text); margin: clamp(40px, 6vw, 72px) auto; p
 .article .content table tbody tr:nth-child(even) { background-color: var(--paper); }
 .article .content table, .article .content .table { background: transparent; }
 
+/* ---------- Posts with a table of contents (toc: true) ----------
+   The theme puts the text and the contents side by side in a 70rem box, which pushes the text left.
+   Here the text keeps the centred 680px column of every other post, and the contents sit in the
+   right-hand margin, their first line level with the first line of the text. Below 1100px there is
+   no room beside the text: the contents are hidden (or shown above the text with mobileToc: true). */
+.article--toc { max-width: none; }
+.article--toc .toc_header {
+  position: static; background: transparent; padding: 0 0 12px; margin: 0 !important;
+  color: var(--m-muted); font: 500 13px/1.4 var(--m-sans); text-transform: none !important; letter-spacing: 0 !important;
+}
+.article--toc .toc { padding: 0; overflow: visible; max-height: none; }
+.article--toc .toc ul { font-size: 14px; line-height: 1.4; margin: 0; }
+.article--toc .toc ul a { color: var(--m-ink); padding: 6px 0 6px 12px; border-left: 2px solid transparent; background: transparent !important; }
+.article--toc .toc ul a:hover { color: var(--brand); background: transparent !important; }
+.article--toc .toc a.active, .article--toc .toc .active { border-left-color: var(--brand) !important; color: var(--m-ink); font-weight: 500; }
+.article--toc .toc ul li ul { border-left: 0; margin: 0; padding-left: 12px; }
+@media screen and (min-width: 1100px) {
+  .article--toc > div {
+    display: grid !important; grid-template-columns: minmax(0, 1fr) var(--m-text) minmax(0, 1fr);
+    align-items: start; column-gap: 0;
+  }
+  .article--toc .article { grid-column: 2; grid-row: 1; width: auto !important; max-width: none; margin-left: 0; margin-right: 0; }
+  .article--toc .toc-wrapper {
+    display: block !important; grid-column: 3; grid-row: 1; width: auto !important; max-width: 260px;
+    margin-top: clamp(40px, 6vw, 72px); padding-top: 4px;   /* level with the text's first line (17px type, 1.75 leading) */
+    position: sticky; top: 24px;
+  }
+}
+@media screen and (max-width: 1099px) {
+  .article--toc > div { display: block !important; }
+  .article--toc .toc-wrapper.toc__removeOnMobile { display: none !important; }
+  .article--toc .toc-wrapper.toc__keepOnMobile { width: auto !important; max-width: var(--m-text); margin: 40px auto 0; padding: 0 var(--m-gutter); }
+  .article--toc .article { width: auto !important; }
+}
+
 /* Series box and end of post: hairlines instead of cards */
 .post-series { margin: 0; }
 .series-card, .series-card--in-post, .author-list__item, .post-end__link {
