@@ -1,19 +1,38 @@
 /* GBIF Data Blog – minimal design test (v2)
    Loaded after the theme and _sass/_blog.scss, only when site.variant is "minimal" (_config_v2.yml).
-   Idea: a quiet, editorial page. Warm paper background, one sans-serif (Rubik), a large uppercase
-   title, hairline rules instead of card shadows, pill-shaped chips and much more white space.
-   Green stays as the GBIF accent for focus, hover and links in post text. */
+   Idea: a quiet, editorial page. One sans-serif (Rubik), a large uppercase title, hairline rules
+   instead of card shadows, pill-shaped chips and much more white space.
+   Colours: GBIF.org Design System tokens (names in the variables below). The page is `paper`,
+   text and rules are `text` (ink-80, the grey of the GBIF logotype), and `brand` green marks
+   everything you can act on or that is selected: links, Read more, the active topic, focus.
+   The categorical hues tint the picture panel of posts without a thumbnail, one hue per topic. */
 
 :root {
-  --m-paper: #f6f5f1;        /* page */
-  --m-surface: #fbfaf8;      /* empty picture boxes, code */
-  --m-ink: #1d1b1c;          /* text and rules */
-  --m-ink-2: #4f4c4d;        /* body text in posts (GBIF ink-80) */
-  --m-muted: #6f6c6d;        /* dates, bylines */
-  --m-rule: #1d1b1c;         /* hairlines of the grid */
-  --m-rule-soft: #d9d6d0;    /* quiet separators */
-  --m-green: #4c9c2e;        /* GBIF brand */
-  --m-green-ink: #3d7d25;    /* green text, 4.5:1 */
+  /* GBIF.org Design System tokens */
+  --white: #ffffff;          /* white */
+  --paper: #f8f7f7;          /* paper: quiet ground, here the whole page */
+  --ink-100: #231f20;        /* ink-100: solid black */
+  --text: #4f4c4d;           /* text (ink-80): body, headings and hairlines. 7.9:1 on paper */
+  --ink-strong: #575757;     /* ink-strong: small meta (dates, bylines, counts). 6.8:1 on paper */
+  --text-muted: #7b7979;     /* text-muted (ink-60): 14px and up only */
+  --border: #d3d2d2;         /* border (ink-20): quiet separators */
+  --border-subtle: #e9e8e8;  /* border-subtle (ink-10) */
+  --brand: #4c9c2e;          /* brand (green-100): actions, links, selected states, focus. 3.2:1 on paper: green text is always underlined or 500 weight */
+  --brand-strong: #499134;   /* brand-strong (green-stroke): outlines of green elements, hover */
+  --brand-soft: #edf5ea;     /* brand-soft (green-10): the only fill behind green text, hover fills */
+  --green-20: #dbebd5;       /* green-20: text selection */
+  --text-on-brand: #ffffff;  /* text-on-brand */
+
+  /* Roles used below */
+  --m-paper: var(--paper);
+  --m-surface: var(--white);
+  --m-ink: var(--text);
+  --m-ink-2: var(--text);
+  --m-muted: var(--ink-strong);
+  --m-rule: var(--text);
+  --m-rule-soft: var(--border);
+  --m-green: var(--brand);
+  --m-green-ink: var(--brand-strong);
   --m-sans: "Rubik", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --m-wide: 1240px;          /* grid and header width */
   --m-text: 680px;           /* reading column */
@@ -30,18 +49,18 @@ h1, h2, h3, h4, .title, .feature-title, .postHeader .feature-title, .blog-intro_
   font-family: var(--m-sans) !important;
   letter-spacing: -0.01em;
 }
-::selection { background: var(--m-ink); color: var(--m-paper); }
+::selection { background: var(--green-20); color: var(--ink-100); }
 
 /* ---------- Design test bar (preview only) ---------- */
 .design-switch {
   display: flex; justify-content: center; align-items: center; gap: 4px;
-  padding: 8px var(--m-gutter); background: var(--m-ink); color: var(--m-paper);
+  padding: 8px var(--m-gutter); background: var(--ink-100); color: var(--white);
   font: 400 12px/1 var(--m-sans); letter-spacing: .04em;
 }
 .design-switch__label { text-transform: uppercase; opacity: .7; margin-right: 8px; }
-.design-switch__link { color: var(--m-paper); padding: 4px 10px; border-radius: 999px; text-decoration: none; }
-.design-switch__link:hover { color: var(--m-paper); background: rgba(255,255,255,.12); }
-.design-switch__link.is-current { background: var(--m-paper); color: var(--m-ink); }
+.design-switch__link { color: var(--white); padding: 4px 10px; border-radius: 999px; text-decoration: none; }
+.design-switch__link:hover { color: var(--white); background: rgba(255,255,255,.12); }
+.design-switch__link.is-current { background: var(--brand); color: var(--text-on-brand); }
 
 /* ---------- Navigation: thin bar with a hairline ---------- */
 .navbar { background: var(--m-paper) !important; box-shadow: none !important; border-bottom: 1px solid var(--m-rule); min-height: 64px; }
@@ -50,7 +69,7 @@ h1, h2, h3, h4, .title, .feature-title, .postHeader .feature-title, .blog-intro_
 @media screen and (min-width: 1024px) { #mainNavbar .navbar-start > .navbar-item:last-child { padding-right: 0; } }
 .navbar-logo .navbar-logo_img { height: 32px; }
 .navbar-item, .navbar-link { font: 400 14px/1 var(--m-sans); color: var(--m-ink); background: transparent !important; }
-a.navbar-item:hover, .navbar-link:hover, .navbar-item.has-dropdown:hover .navbar-link { color: var(--m-ink); text-decoration: underline; text-underline-offset: 4px; background: transparent !important; }
+a.navbar-item:hover, .navbar-link:hover, .navbar-item.has-dropdown:hover .navbar-link { color: var(--brand); text-decoration: underline; text-underline-offset: 4px; background: transparent !important; }
 .navbar-link:not(.is-arrowless)::after { border-color: var(--m-ink) !important; width: .45em; height: .45em; border-width: 1px; }
 .navbar-dropdown { background: var(--m-paper); border: 1px solid var(--m-rule); border-radius: 0; box-shadow: none; padding: 8px 0; }
 .navbar-dropdown .navbar-item { padding: 10px 20px; }
@@ -90,8 +109,9 @@ body:not(:has(#blog-list)) .blog-intro__title { font-size: clamp(2.5rem, 7vw, 5.
   background: transparent; color: var(--m-ink); border: 1px solid var(--m-rule); border-radius: 999px;
   font: 400 13px/1.2 var(--m-sans);
 }
-.blog-topics a.tag:not(.is-delete):hover { background: var(--m-ink); color: var(--m-paper); border-color: var(--m-ink); }
-.blog-topics .tag.is-active { background: var(--m-ink) !important; color: var(--m-paper) !important; }
+.blog-topics a.tag:not(.is-delete):hover { background: var(--brand-soft); color: var(--text); border-color: var(--brand-strong); }
+.blog-topics .tag.is-active { background: var(--brand) !important; color: var(--text-on-brand) !important; border-color: var(--brand) !important; font-weight: 500; }
+.blog-topics .tag.is-active .blog-topics__count { opacity: 1; }
 .blog-topics__count { opacity: .55; font-size: .9em; }
 /* Phones: one scrolling row of chips instead of six lines */
 @media (max-width: 640px) {
@@ -102,17 +122,17 @@ body:not(:has(#blog-list)) .blog-intro__title { font-size: clamp(2.5rem, 7vw, 5.
 }
 .blog-browse { text-align: center; margin-top: 20px; font-size: 13px; color: var(--m-muted); }
 .blog-browse a { color: var(--m-ink); text-decoration-color: var(--m-rule-soft); }
-.blog-browse a:hover { color: var(--m-ink); text-decoration-color: currentColor; }
+.blog-browse a:hover { color: var(--brand); text-decoration-color: currentColor; }
 
 /* ---------- Toolbar above the grid ---------- */
 .features.blog-list { background: transparent; padding: 0 0 clamp(64px, 8vw, 120px); }
 .blog-toolbar { max-width: calc(var(--m-wide) + 2 * var(--m-gutter)); margin: 0 auto; padding: 0 var(--m-gutter) 14px; }
 .blog-filter__label, .blog-filter__count { color: var(--m-muted); font-size: 13px; }
-.blog-filter__chip.tag { background: var(--m-ink) !important; color: var(--m-paper) !important; border-radius: 999px; font-weight: 400; }
+.blog-filter__chip.tag { background: var(--brand) !important; color: var(--text-on-brand) !important; border-radius: 999px; font-weight: 500; }
 .blog-toolbar__view { border: 1px solid var(--m-rule); background: transparent; }
 .blog-view-btn { font: 400 13px/18px var(--m-sans); color: var(--m-ink); padding: 6px 14px; }
-.blog-view-btn[aria-pressed="true"] { background: var(--m-ink); color: var(--m-paper); }
-.blog-view-btn:not([aria-pressed="true"]):hover { background: rgba(29,27,28,.06); }
+.blog-view-btn[aria-pressed="true"] { background: var(--brand); color: var(--text-on-brand); }
+.blog-view-btn:not([aria-pressed="true"]):hover { background: var(--brand-soft); }
 
 /* ---------- Card grid: cells share hairline borders, no shadows ---------- */
 .blog-list .feature-cards {
@@ -138,29 +158,40 @@ body:not(:has(#blog-list)) .blog-intro__title { font-size: clamp(2.5rem, 7vw, 5.
   font-size: 11px; line-height: 1; padding: 6px 10px; border: 1px solid var(--m-rule); border-radius: 999px;
   color: var(--m-ink); text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60%;
 }
-.mcard__topic:hover { background: var(--m-ink); color: var(--m-paper); }
-.mcard__img { display: block; aspect-ratio: 4 / 3; overflow: hidden; background: #fff; margin-bottom: 24px; }
+.mcard__topic:hover { background: var(--brand-soft); border-color: var(--brand-strong); color: var(--text); }
+.mcard__img { display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--white); margin-bottom: 24px; }
 .mcard__img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
 .mcard:hover .mcard__img img { transform: scale(1.03); }
-/* No picture: a dotted panel with the topic name, so the grid stays even */
+/* No picture: a dotted panel with the topic name, tinted with the topic's GBIF categorical hue
+   (10% ground, 40% dots), so the grid stays even. Text is ink-80 on the 10% tint (7.6:1 or better). */
 .mcard__img--empty {
+  --tint: var(--paper); --dot: var(--border);
   display: flex; align-items: flex-end; padding: 20px; text-decoration: none;
-  background-color: var(--m-surface);
-  background-image: radial-gradient(rgba(29,27,28,.22) 1px, transparent 1.2px);
+  background-color: var(--tint);
+  background-image: radial-gradient(var(--dot) 1.2px, transparent 1.4px);
   background-size: 14px 14px;
-  border: 1px solid var(--m-rule-soft);
 }
-.mcard__img--empty span { font-size: clamp(18px, 1.8vw, 24px); line-height: 1.15; color: var(--m-ink); background: var(--m-surface); padding: 6px 10px 6px 0; letter-spacing: -0.01em; }
+.mcard__img--empty span { font-size: clamp(18px, 1.8vw, 24px); line-height: 1.15; color: var(--text); background: var(--tint); padding: 6px 10px 6px 0; letter-spacing: -0.01em; }
+.mcard__img--empty[data-topic="apis-and-downloads"]    { --tint: #e5f1f7; --dot: #99c9e1; }  /* ocean (Matisse) */
+.mcard__img--empty[data-topic="analysis-and-maps"]     { --tint: #e5f8fd; --dot: #99e2f8; }  /* cyan (Cerulean) */
+.mcard__img--empty[data-topic="taxonomy"]              { --tint: #efecf4; --dot: #c2b3d3; }  /* purple (Kingfisher daisy) */
+.mcard__img--empty[data-topic="molecular-data"]        { --tint: #f0f3f9; --dot: #c3cee6; }  /* periwinkle (Purple sky) */
+.mcard__img--empty[data-topic="citation-and-data-use"] { --tint: #faeff3; --dot: #edc0d2; }  /* pink (Mulberry) */
+.mcard__img--empty[data-topic="data-quality"]          { --tint: #fcf2f1; --dot: #f4cbc7; }  /* coral (Japonica) */
+.mcard__img--empty[data-topic="collections"]           { --tint: #fdf7f2; --dot: #f7decb; }  /* peach (Fawn) */
+.mcard__img--empty[data-topic="citizen-science"]       { --tint: #fef8ec; --dot: #fae5b6; }  /* yellow (Ronchi) */
+.mcard__img--empty[data-topic="publishing-data"],
+.mcard__img--empty[data-topic="survey-and-monitoring"] { --tint: #edf5ea; --dot: #b7d7ab; }  /* green */
 .mcard__title { font: 500 20px/1.3 var(--m-sans) !important; margin: 0 0 10px !important; letter-spacing: -0.01em; }
 .mcard__title a { color: var(--m-ink); text-decoration: none; }
-.mcard__title a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; color: var(--m-ink); }
+.mcard__title a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; color: var(--brand); }
 .mcard__by { font-size: 13px; color: var(--m-muted); margin: 0 0 12px; }
 .mcard__excerpt {
   font-size: 14px; line-height: 1.6; color: var(--m-ink-2); margin: 0 0 24px;
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
 .mcard__more {
-  margin-top: auto; align-self: flex-start; font-size: 13px; color: var(--m-ink);
+  margin-top: auto; align-self: flex-start; font-size: 14px; font-weight: 500; color: var(--brand);
   text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px;
 }
 .mcard__more:hover { color: var(--m-green-ink); }
@@ -201,14 +232,14 @@ body:not(:has(#blog-list)) .blog-intro__title { font-size: clamp(2.5rem, 7vw, 5.
   border-top: 1px solid var(--m-rule); border-bottom: 1px solid var(--m-rule);
 }
 .post-meta__byline a { color: var(--m-ink); font-weight: 400; text-decoration-color: var(--m-rule-soft); }
-.post-meta__byline a:hover { color: var(--m-ink); text-decoration-color: currentColor; }
+.post-meta__byline a:hover { color: var(--brand); text-decoration-color: currentColor; }
 .post-meta__topics { gap: 6px; }
 .post-meta__topics .tag:not(.is-delete), .post-meta__topics .tag.is-light, .tags .tag.post-meta__tag {
   background: transparent; color: var(--m-ink); border: 1px solid var(--m-rule); border-radius: 999px;
   font: 400 12px/1 var(--m-sans); padding: 6px 11px; height: auto; margin: 0 !important;
 }
 .tags .tag.post-meta__tag { border-color: var(--m-rule-soft); color: var(--m-muted); }
-.post-meta__topics a.tag:hover, .tags a.tag.post-meta__tag:hover { background: var(--m-ink); color: var(--m-paper); border-color: var(--m-ink); }
+.post-meta__topics a.tag:hover, .tags a.tag.post-meta__tag:hover { background: var(--brand-soft); color: var(--text); border-color: var(--brand-strong); }
 
 /* Reading column */
 main .article { max-width: var(--m-text); margin: clamp(40px, 6vw, 72px) auto; padding: 0 var(--m-gutter); }
@@ -219,10 +250,10 @@ main .article { max-width: var(--m-text); margin: clamp(40px, 6vw, 72px) auto; p
 .article .content h4 { font-size: 1.05rem; font-weight: 500; color: var(--m-ink); }
 .article .content img { display: block; margin: 2.2em auto; }
 .article .content a:not(.button):not(.tag) { text-decoration-thickness: 1px; text-underline-offset: 3px; }   /* links stay GBIF green */
-.content blockquote { background: transparent; border-left: 1px solid var(--m-ink); border-radius: 0; padding: .2em 0 .2em 1.5em; font-size: 1.1em; color: var(--m-ink); }
+.content blockquote { background: transparent; border-left: 2px solid var(--brand); border-radius: 0; padding: .2em 0 .2em 1.5em; font-size: 1.1em; color: var(--m-ink); }
 .content code, .content pre, .article .content div.highlighter-rouge { background: var(--m-surface); border-color: var(--m-rule-soft); }
 .code-header { background: transparent; border-bottom-color: var(--m-rule-soft); }
-.article .content table tbody tr:nth-child(even) { background-color: rgba(29,27,28,.035); }
+.article .content table tbody tr:nth-child(even) { background-color: var(--white); }
 .article .content table, .article .content .table { background: transparent; }
 
 /* Series box and end of post: hairlines instead of cards */
@@ -235,11 +266,11 @@ main .article { max-width: var(--m-text); margin: clamp(40px, 6vw, 72px) auto; p
 .series-card__title a, .series-card__title--small a { color: var(--m-ink); }
 .series-parts, .series-parts__item { border-color: var(--m-rule-soft) !important; }
 .series-parts__num { border-color: var(--m-ink); color: var(--m-ink); border-radius: 999px; }
-.series-parts__item.is-current .series-parts__num { background: var(--m-ink); color: var(--m-paper); }
+.series-parts__item.is-current .series-parts__num { background: var(--brand); border-color: var(--brand); color: var(--text-on-brand); }
 .series-parts__here { color: var(--m-muted); }
-a.series-parts__title:hover { color: var(--m-ink); }
+a.series-parts__title:hover { color: var(--brand); }
 .series-card__count, .series-card__start { border-color: var(--m-ink); color: var(--m-ink); border-radius: 999px; }
-.series-card__start:hover { background: var(--m-ink); color: var(--m-paper); }
+.series-card__start:hover { background: var(--brand-soft); border-color: var(--brand-strong); color: var(--text); }
 .series-card__footer { border-top-color: var(--m-rule-soft); }
 
 .post-end { margin-bottom: clamp(64px, 8vw, 120px); }
@@ -264,10 +295,10 @@ footer { background: var(--m-paper); }
 .footer-column { padding: 40px 32px 48px !important; border-right: 1px solid var(--m-rule); margin: 0 !important; max-width: none !important; width: auto !important; }
 .footer-column-name { font: 500 13px/1 var(--m-sans) !important; color: var(--m-ink) !important; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 18px !important; }
 .footer-description, .footer-description p, .footer-links a { color: var(--m-ink-2) !important; font-size: 14px; line-height: 1.7; }
-.footer-links a:hover { color: var(--m-ink) !important; text-decoration: underline; text-underline-offset: 3px; }
+.footer-links a:hover { color: var(--brand) !important; text-decoration: underline; text-underline-offset: 3px; }
 .footer-online-list .fa-stack .fa-circle { color: var(--m-ink) !important; }
-.footer-online-list .fa-inverse { color: var(--m-paper) !important; }
-.footer-hostedby { background: var(--m-ink) !important; padding: 20px var(--m-gutter) !important; }   /* the badge is white text */
+.footer-online-list .fa-inverse { color: var(--white) !important; }
+.footer-hostedby { background: var(--text) !important; padding: 20px var(--m-gutter) !important; }   /* the badge is white text */
 @media (max-width: 760px) {
   .footer > div { padding: 0 !important; }
   .footer-groups { grid-template-columns: 1fr; border-left: 0; margin: 0 !important; }
@@ -278,7 +309,7 @@ footer { background: var(--m-paper); }
 .terms-notice { background: var(--m-paper) !important; color: var(--m-ink) !important; border: 1px solid var(--m-rule); border-radius: 0 !important; box-shadow: none !important; font-size: 13px; }
 .terms-notice a { color: var(--m-ink); text-decoration: underline; }
 .terms-notice .button { border-radius: 999px; font-size: 13px; }
-.terms-notice .button.is-primary { background: var(--m-ink); color: var(--m-paper); border: 1px solid var(--m-ink); }
+.terms-notice .button.is-primary { background: var(--brand); color: var(--text-on-brand); border: 1px solid var(--brand-strong); font-weight: 700; }
 .terms-notice .button.is-error { background: transparent; color: var(--m-ink); border: 1px solid var(--m-ink); }
 
 /* Focus */
