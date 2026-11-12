@@ -24,8 +24,8 @@
   --text-on-brand: #ffffff;  /* text-on-brand */
 
   /* Roles used below */
-  --m-paper: var(--paper);
-  --m-surface: var(--white);
+  --m-paper: var(--white);   /* page ground: white (test; was paper #F8F7F7) */
+  --m-surface: var(--paper);  /* quiet fills on white: empty picture panels, code, zebra rows */
   --m-ink: var(--text);
   --m-ink-2: var(--text);
   --m-muted: var(--ink-strong);
@@ -35,7 +35,7 @@
   --m-green-ink: var(--brand-strong);
   --m-sans: "Rubik", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --m-serif: "Bitter", Georgia, "Times New Roman", serif;   /* titles: GBIF editorial scale (Bitter SemiBold headings, Rubik body) */
-  --m-wide: 1240px;          /* grid and header width */
+  --m-wide: 1320px;          /* grid and header width: the 1400px artboard minus 40px margins */
   --m-text: 680px;           /* reading column */
   --m-gutter: clamp(16px, 4vw, 40px);
 }
@@ -138,7 +138,7 @@ body:not(:has(#blog-list)) .blog-intro__title { font-size: clamp(2.25rem, 6vw, 3
 /* ---------- Card grid: cells share hairline borders, no shadows ---------- */
 .blog-list .feature-cards {
   max-width: var(--m-wide); padding: 0; gap: 0;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   border-top: 1px solid var(--m-rule); border-left: 1px solid var(--m-rule);
   margin: 0 auto;
   width: calc(100% - 2 * var(--m-gutter));
@@ -149,10 +149,12 @@ body:not(:has(#blog-list)) .blog-intro__title { font-size: clamp(2.25rem, 6vw, 3
   overflow: visible;
 }
 .blog-list .feature-cards .feature:hover, .blog-list .feature-cards .feature:focus-within { box-shadow: none !important; }
+/* 4 columns, then 3, 2 and 1 as the window narrows */
+@media (max-width: 1280px) { .blog-list .feature-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 960px) { .blog-list .feature-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .blog-list .feature-cards { grid-template-columns: 1fr; } }
 
-.mcard { display: flex; flex-direction: column; height: 100%; padding: clamp(20px, 2.4vw, 32px); }
+.mcard { display: flex; flex-direction: column; height: 100%; padding: clamp(20px, 2vw, 28px); }
 .mcard__top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 20px; min-height: 26px; }
 .mcard__date { font-size: 12px; color: var(--m-muted); letter-spacing: .01em; }
 .mcard__topic {
@@ -164,15 +166,15 @@ body:not(:has(#blog-list)) .blog-intro__title { font-size: clamp(2.25rem, 6vw, 3
 .mcard__img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
 .mcard:hover .mcard__img img { transform: scale(1.03); }
 /* No picture: a neutral dotted panel with the topic name, so the grid stays even.
-   White ground, ink-20 dots, ink-10 outline; topic name in text (ink-80). */
+   Paper ground, ink-20 dots, ink-10 outline; topic name in text (ink-80). */
 .mcard__img--empty {
   display: flex; align-items: flex-end; padding: 20px; text-decoration: none;
-  background-color: var(--white);
+  background-color: var(--m-surface);
   background-image: radial-gradient(var(--border) 1.2px, transparent 1.4px);
   background-size: 14px 14px;
   border: 1px solid var(--border-subtle);
 }
-.mcard__img--empty span { font-size: clamp(18px, 1.8vw, 24px); line-height: 1.15; color: var(--text); background: var(--white); padding: 6px 10px 6px 0; letter-spacing: -0.01em; }
+.mcard__img--empty span { font-size: clamp(16px, 1.4vw, 20px); line-height: 1.15; color: var(--text); background: var(--m-surface); padding: 6px 10px 6px 0; letter-spacing: -0.01em; }
 .mcard__title { font: 600 20px/1.3 var(--m-serif) !important; margin: 0 0 10px !important; letter-spacing: -0.005em; }
 .mcard__title a { color: var(--m-ink); text-decoration: none; }
 .mcard__title a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; color: var(--brand); }
@@ -244,7 +246,7 @@ main .article { max-width: var(--m-text); margin: clamp(40px, 6vw, 72px) auto; p
 .content blockquote { background: transparent; border-left: 2px solid var(--brand); border-radius: 0; padding: .2em 0 .2em 1.5em; font-size: 1.1em; color: var(--m-ink); }
 .content code, .content pre, .article .content div.highlighter-rouge { background: var(--m-surface); border-color: var(--m-rule-soft); }
 .code-header { background: transparent; border-bottom-color: var(--m-rule-soft); }
-.article .content table tbody tr:nth-child(even) { background-color: var(--white); }
+.article .content table tbody tr:nth-child(even) { background-color: var(--paper); }
 .article .content table, .article .content .table { background: transparent; }
 
 /* Series box and end of post: hairlines instead of cards */
