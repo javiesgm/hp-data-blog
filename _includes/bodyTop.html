@@ -1,0 +1,10 @@
+{% comment %}Preview only: a bar to switch between design versions of the same page (site.design_versions in _config_preview.yml).{% endcomment %}
+{% if site.design_versions %}
+<div class="design-switch" role="navigation" aria-label="Design versions">
+  <span class="design-switch__label">Design test</span>
+  {% for v in site.design_versions %}
+    {% assign isCurrent = false %}{% if v.variant == site.variant %}{% assign isCurrent = true %}{% endif %}
+    <a class="design-switch__link{% if isCurrent %} is-current{% endif %}" href="{{ v.path }}{{ page.url }}"{% if isCurrent %} aria-current="page"{% endif %}>{{ v.name }}</a>
+  {% endfor %}
+</div>
+{% endif %}

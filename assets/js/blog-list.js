@@ -113,6 +113,15 @@
   try { saved = localStorage.getItem('blog-view'); } catch (e) {}
   setView(params.get('view') || saved || 'cards', false);
 
+  // Mark the topic chip of the active ?category= (or "All" when there is no filter)
+  Array.prototype.slice.call(document.querySelectorAll('.blog-topics a')).forEach(function (a) {
+    var c = null;
+    try { c = new URL(a.href).searchParams.get('category'); } catch (e) {}
+    var on = filter ? (filter.key === 'category' && c === filter.value) : (c === null && a.classList.contains('blog-topics__all'));
+    a.classList.toggle('is-active', on);
+    if (on) a.setAttribute('aria-current', 'true');
+  });
+
   // The theme's own ?category= script runs on load; run after it so both agree
   apply();
   window.addEventListener('load', apply);

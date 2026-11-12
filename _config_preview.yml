@@ -4,3 +4,9 @@ testSite: true            # theme marks the header as a test site
 discourse_comments: false # Discourse only allows embedding on data-blog.gbif.org
 plausible:
   enabled: false          # don't count preview visits in the blog's statistics
+design_versions:          # "Design test" bar at the top of both preview builds (_includes/bodyTop.html)
+  - name: Current
+    path: /hp-data-blog
+  - name: Minimal
+    path: /hp-data-blog/v2
+    variant: minimal

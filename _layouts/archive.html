@@ -24,6 +24,7 @@ description: Blog post list with search, filters (topic, author, tag, series) an
     </div>
 
     <div class="blog-topics tags" aria-label="Topics">
+      {% if site.variant == "minimal" %}<a class="tag is-medium blog-topics__all" href="{{ site.algae.archive_permalink | relative_url }}">All <span class="blog-topics__count">{{ posts.size }}</span></a>{% endif %}
       {% for cat in cats %}
         <a class="tag is-medium" href="{{ site.algae.archive_permalink | relative_url }}?category={{ cat[0] | url_encode }}">{{ cat[0] }} <span class="blog-topics__count">{{ cat[1].size }}</span></a>
       {% endfor %}
@@ -65,7 +66,26 @@ description: Blog post list with search, filters (topic, author, tag, series) an
                data-tags="{{ tagSlugs }}" data-tag-names="{{ post.tags | join: '|' | escape }}"
                {% if post.series %}data-series="{{ post.series | slugify }}" data-series-name="{{ post.series | escape }}"{% endif %}
                data-search="{{ searchText | strip_newlines | downcase | escape }}">
+        {% if site.variant == "minimal" %}
+          {% comment %}Minimal card: date and first topic on top, picture, title, authors, excerpt, Read more.{% endcomment %}
+          {% assign firstCat = post.categories | first %}
+          {% assign thumbFirst = background | slice: 0 %}
+          <div class="mcard">
+            <div class="mcard__top">
+              <time class="mcard__date" datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%-d %b %Y" }}</time>
+              {% if firstCat %}<a class="mcard__topic" href="{{ site.algae.archive_permalink | relative_url }}?category={{ firstCat | url_encode }}">{{ firstCat }}</a>{% endif %}
+            </div>
+            <a class="mcard__img{% unless background %} mcard__img--empty{% endunless %}" href="{{ href }}" tabindex="-1" aria-hidden="true">
+              {% if background %}<img src="{% if thumbFirst == '/' %}{{ background | relative_url }}{% else %}{{ background }}{% endif %}" alt="" loading="lazy">{% else %}<span>{{ firstCat }}</span>{% endif %}
+            </a>
+            <h2 class="mcard__title"><a href="{{ href }}">{{ post.title | escape_once }}</a></h2>
+            {% if authorList.size > 0 %}<p class="mcard__by">{{ authorList | join: ", " }}</p>{% endif %}
+            <p class="mcard__excerpt">{{ description }}</p>
+            <a class="mcard__more" href="{{ href }}" aria-hidden="true" tabindex="-1">Read more</a>
+          </div>
+        {% else %}
         {% include blocks/parts/feature.html content=post preTitle=preTitle description=description href=href background=background imageLicense=false ignoreThumbor=true %}
+        {% endif %}
       </article>
     {% endfor %}
   </div>

@@ -422,3 +422,14 @@ $code-lineno: #918f8f;     // ink-50, decorative
   th { font-weight: 600; }
 }
 .article .content div.highlighter-rouge table tr { background-color: transparent !important; }
+
+// ---------- Design test bar (preview builds only, _includes/bodyTop.html) ----------
+// Switches between the current design and the minimal test (/v2/, assets/css/minimal.css restyles it there).
+.design-switch {
+  display: flex; justify-content: center; align-items: center; gap: 4px; padding: 8px 16px;
+  background: #231f20; color: #fff; font: 400 12px/1 $gbif-body; letter-spacing: .04em;
+}
+.design-switch__label { text-transform: uppercase; opacity: .7; margin-right: 8px; }
+.design-switch__link { color: #fff; padding: 4px 10px; border-radius: 999px; text-decoration: none; }
+.design-switch__link:hover { color: #fff; background: rgba(255, 255, 255, .12); }
+.design-switch__link.is-current { background: #fff; color: #231f20; }

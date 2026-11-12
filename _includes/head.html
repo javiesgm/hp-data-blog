@@ -1,0 +1,7 @@
+{% comment %}Overrides the theme's head.html: same Plausible snippet, plus the stylesheet of a design variant (site.variant, see _config_v2.yml).{% endcomment %}
+{% if site.plausible.enabled %}
+  <script defer data-domain="{{ site.plausible.dataDomain }}" src="https://plausible.io/js/script.js"></script>
+{% endif %}
+{% if site.variant == "minimal" %}
+  <link rel="stylesheet" href="{{ '/assets/css/minimal.css' | relative_url }}?v={{ site.time | date:'%s' }}">
+{% endif %}

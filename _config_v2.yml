@@ -1,0 +1,4 @@
+# Design test: the minimal version of the blog, built next to the current one.
+# Used only by the GitHub Pages preview (.github/workflows/preview.yml), which builds the site a
+# second time with this file and publishes it at /<repo>/v2/. Delete it to drop the test.
+variant: minimal   # loads assets/css/minimal.css (_includes/head.html) and the minimal post cards (_layouts/archive.html)
