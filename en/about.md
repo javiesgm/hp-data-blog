@@ -16,12 +16,11 @@ A place for GBIF staff and guest bloggers to contribute:
 
 ## Who can contribute?
 
-If you would like to contribute you can contact jwaller@gbif.org. **Guest posts are very welcome.**
+If you would like to contribute, contact [jwaller@gbif.org](mailto:jwaller@gbif.org). **Guest posts are very welcome.**
 
 ## How can I write a post?
 
-There is a short tutorial on the [blog github](
-https://github.com/gbif/data-blog).
+There is a short tutorial, [How to write a post](https://github.com/gbif/data-blog#readme), in the blog's GitHub repository.
 
 ## What about the developer blog?
 

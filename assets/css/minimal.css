@@ -38,6 +38,9 @@
   --m-wide: 1320px;          /* grid and header width: the 1400px artboard minus 40px margins */
   --m-text: 680px;           /* reading column */
   --m-gutter: clamp(16px, 4vw, 40px);
+  /* Corners: the Data Blog logo (datablog-gbif.svg) has a 21.62 corner on a 175.37-high box, 12.3% of
+     its height. Shown 38px high (the header logo), that is 4.7px; 4px, the design system's radius-sm, is kept. Every rounded thing uses it. */
+  --m-radius: 4px;
 }
 
 /* ---------- Page ---------- */
@@ -59,7 +62,7 @@ h1, h2, h3, h4, .title, .feature-title, .postHeader .feature-title, .blog-intro_
   font: 400 12px/1 var(--m-sans); letter-spacing: .04em;
 }
 .design-switch__label { opacity: .7; margin-right: 8px; }
-.design-switch__link { color: var(--white); padding: 4px 10px; border-radius: 999px; text-decoration: none; }
+.design-switch__link { color: var(--white); padding: 4px 10px; border-radius: var(--m-radius); text-decoration: none; }
 .design-switch__link:hover { color: var(--white); background: rgba(255,255,255,.12); }
 .design-switch__link.is-current { background: var(--brand); color: var(--text-on-brand); }
 
@@ -68,11 +71,11 @@ h1, h2, h3, h4, .title, .feature-title, .postHeader .feature-title, .blog-intro_
 .navbar-content { max-width: calc(var(--m-wide) + 2 * var(--m-gutter)) !important; margin: 0 auto; padding: 0 var(--m-gutter) !important; width: 100%; box-sizing: border-box; }
 .navbar-logo { padding-left: 0 !important; }
 @media screen and (min-width: 1024px) { #mainNavbar .navbar-start > .navbar-item:last-child { padding-right: 0; } }
-.navbar-logo .navbar-logo_img { height: 32px; }
+.navbar-logo .navbar-logo_img { height: 38px; }
 .navbar-item, .navbar-link { font: 400 14px/1 var(--m-sans); color: var(--m-ink); background: transparent !important; }
 a.navbar-item:hover, .navbar-link:hover, .navbar-item.has-dropdown:hover .navbar-link { color: var(--brand); text-decoration: underline; text-underline-offset: 4px; background: transparent !important; }
 .navbar-link:not(.is-arrowless)::after { border-color: var(--m-ink) !important; width: .45em; height: .45em; border-width: 1px; }
-.navbar-dropdown { background: var(--m-paper); border: 1px solid var(--m-rule); border-radius: 0; box-shadow: none; padding: 8px 0; }
+.navbar-dropdown { background: var(--m-paper); border: 1px solid var(--m-rule); border-radius: var(--m-radius); box-shadow: none; padding: 8px 0; }
 .navbar-dropdown .navbar-item { padding: 10px 20px; }
 .navbar-divider { background: var(--m-rule-soft); }
 @media screen and (min-width: 1024px) {
@@ -107,7 +110,7 @@ body:not(:has(#blog-list)) .blog-intro__title { font-size: clamp(2.25rem, 6vw, 3
 .blog-topics { justify-content: center; gap: 8px; margin: 32px auto 0 !important; max-width: 980px; }
 .blog-topics .tag:not(.is-delete), .blog-topics .tag.is-medium {
   margin: 0 !important; height: auto; padding: 7px 14px;
-  background: transparent; color: var(--m-ink); border: 1px solid var(--m-rule); border-radius: 999px;
+  background: transparent; color: var(--m-ink); border: 1px solid var(--m-rule); border-radius: var(--m-radius);
   font: 400 13px/1.2 var(--m-sans);
 }
 .blog-topics a.tag:not(.is-delete):hover { background: var(--brand-soft); color: var(--text); border-color: var(--brand-strong); }
@@ -129,26 +132,28 @@ body:not(:has(#blog-list)) .blog-intro__title { font-size: clamp(2.25rem, 6vw, 3
 .features.blog-list { background: transparent; padding: 0 0 clamp(64px, 8vw, 120px); }
 .blog-toolbar { max-width: calc(var(--m-wide) + 2 * var(--m-gutter)); margin: 0 auto; padding: 0 var(--m-gutter) 14px; }
 .blog-filter__label, .blog-filter__count { color: var(--m-muted); font-size: 13px; }
-.blog-filter__chip.tag { background: var(--brand) !important; color: var(--text-on-brand) !important; border-radius: 999px; font-weight: 500; }
-.blog-toolbar__view { border: 1px solid var(--m-rule); background: transparent; }
+.blog-filter__chip.tag { background: var(--brand) !important; color: var(--text-on-brand) !important; border-radius: var(--m-radius); font-weight: 500; }
+.blog-toolbar__view { border: 1px solid var(--m-rule); background: transparent; border-radius: var(--m-radius); }
 .blog-view-btn { font: 400 13px/18px var(--m-sans); color: var(--m-ink); padding: 6px 14px; }
 .blog-view-btn[aria-pressed="true"] { background: var(--brand); color: var(--text-on-brand); }
 .blog-view-btn:not([aria-pressed="true"]):hover { background: var(--brand-soft); }
 
-/* ---------- Card grid: cells share hairline borders, no shadows ---------- */
+/* ---------- Card grid: one hairline frame with the logo's rounded corners ----------
+   The frame is the grid's own border. The lines between cells are 1px shadows to the right of and
+   below each cell; the frame's overflow clip hides the ones on its edges, so the corners stay clean. */
 .blog-list .feature-cards {
   max-width: var(--m-wide); padding: 0; gap: 0;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  border-top: 1px solid var(--m-rule); border-left: 1px solid var(--m-rule);
+  border: 1px solid var(--m-rule); border-radius: var(--m-radius); overflow: hidden;
   margin: 0 auto;
   width: calc(100% - 2 * var(--m-gutter));
 }
-.blog-list .feature-cards .feature {
-  background: transparent !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
-  border-right: 1px solid var(--m-rule) !important; border-bottom: 1px solid var(--m-rule) !important;
+.blog-list .feature-cards .feature,
+.blog-list .feature-cards .feature:hover, .blog-list .feature-cards .feature:focus-within {
+  background: transparent !important; border: 0 !important; border-radius: 0 !important;
+  box-shadow: 1px 0 0 var(--m-rule), 0 1px 0 var(--m-rule) !important;
   overflow: visible;
 }
-.blog-list .feature-cards .feature:hover, .blog-list .feature-cards .feature:focus-within { box-shadow: none !important; }
 /* 4 columns, then 3, 2 and 1 as the window narrows */
 @media (max-width: 1280px) { .blog-list .feature-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 960px) { .blog-list .feature-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -158,16 +163,17 @@ body:not(:has(#blog-list)) .blog-intro__title { font-size: clamp(2.25rem, 6vw, 3
 .mcard__top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 20px; min-height: 26px; }
 .mcard__date { font-size: 12px; color: var(--m-muted); letter-spacing: .01em; }
 .mcard__topic {
-  font-size: 11px; line-height: 1; padding: 6px 10px; border: 1px solid var(--m-rule); border-radius: 999px;
+  font-size: 11px; line-height: 1; padding: 6px 10px; border: 1px solid var(--m-rule); border-radius: var(--m-radius);
   color: var(--m-ink); text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60%;
 }
 .mcard__topic:hover { background: var(--brand-soft); border-color: var(--brand-strong); color: var(--text); }
-.mcard__img { display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--white); margin-bottom: 24px; }
+.mcard__img { display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--white); margin-bottom: 24px; border-radius: var(--m-radius); }
 .mcard__img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
 .mcard:hover .mcard__img img { transform: scale(1.03); }
 /* No picture: a neutral dotted panel with the topic name, so the grid stays even.
    Paper ground, ink-20 dots, ink-10 outline; topic name in text (ink-80). */
 .mcard__img--empty {
+  border-radius: var(--m-radius);
   display: flex; align-items: flex-end; padding: 20px; text-decoration: none;
   background-color: var(--m-surface);
   background-image: radial-gradient(var(--border) 1.2px, transparent 1.4px);
@@ -190,8 +196,8 @@ body:not(:has(#blog-list)) .blog-intro__title { font-size: clamp(2.25rem, 6vw, 3
 .mcard__more:hover { color: var(--m-green-ink); }
 
 /* List view: one row per post, still on hairlines */
-.blog-list.is-list .feature-cards { display: block; max-width: 900px; border-left: 0; }
-.blog-list.is-list .feature { display: block; margin: 0 !important; border-right: 0 !important; }
+.blog-list.is-list .feature-cards { display: block; max-width: 900px; border: 0; border-top: 1px solid var(--m-rule); border-radius: 0; overflow: visible; }
+.blog-list.is-list .feature, .blog-list.is-list .feature:hover, .blog-list.is-list .feature:focus-within { display: block; margin: 0 !important; box-shadow: 0 1px 0 var(--m-rule) !important; }
 .blog-list.is-list .mcard {
   display: grid; grid-template-columns: 200px 1fr; grid-template-rows: auto auto auto 1fr; column-gap: 32px;
   padding: 28px 0;
@@ -228,7 +234,7 @@ body:not(:has(#blog-list)) .blog-intro__title { font-size: clamp(2.25rem, 6vw, 3
 .post-meta__byline a:hover { color: var(--brand); text-decoration-color: currentColor; }
 .post-meta__topics { gap: 6px; }
 .post-meta__topics .tag:not(.is-delete), .post-meta__topics .tag.is-light, .tags .tag.post-meta__tag {
-  background: transparent; color: var(--m-ink); border: 1px solid var(--m-rule); border-radius: 999px;
+  background: transparent; color: var(--m-ink); border: 1px solid var(--m-rule); border-radius: var(--m-radius);
   font: 400 12px/1 var(--m-sans); padding: 6px 11px; height: auto; margin: 0 !important;
 }
 .tags .tag.post-meta__tag { border-color: var(--m-rule-soft); color: var(--m-muted); }
@@ -258,11 +264,11 @@ main .article { max-width: var(--m-text); margin: clamp(40px, 6vw, 72px) auto; p
 .series-card__label { color: var(--m-muted); font-weight: 400; font-size: 13px; letter-spacing: 0; }
 .series-card__title a, .series-card__title--small a { color: var(--m-ink); }
 .series-parts, .series-parts__item { border-color: var(--m-rule-soft) !important; }
-.series-parts__num { border-color: var(--m-ink); color: var(--m-ink); border-radius: 999px; }
+.series-parts__num { border-color: var(--m-ink); color: var(--m-ink); border-radius: var(--m-radius); }
 .series-parts__item.is-current .series-parts__num { background: var(--brand); border-color: var(--brand); color: var(--text-on-brand); }
 .series-parts__here { color: var(--m-muted); }
 a.series-parts__title:hover { color: var(--brand); }
-.series-card__count, .series-card__start { border-color: var(--m-ink); color: var(--m-ink); border-radius: 999px; }
+.series-card__count, .series-card__start { border-color: var(--m-ink); color: var(--m-ink); border-radius: var(--m-radius); }
 .series-card__start:hover { background: var(--brand-soft); border-color: var(--brand-strong); color: var(--text); }
 .series-card__footer { border-top-color: var(--m-rule-soft); }
 
@@ -299,11 +305,35 @@ footer { background: var(--m-paper); }
 }
 
 /* Cookie notice */
-.terms-notice { background: var(--m-paper) !important; color: var(--m-ink) !important; border: 1px solid var(--m-rule); border-radius: 0 !important; box-shadow: none !important; font-size: 13px; }
+.terms-notice { background: var(--m-paper) !important; color: var(--m-ink) !important; border: 1px solid var(--m-rule); border-radius: var(--m-radius) !important; box-shadow: none !important; font-size: 13px; }
 .terms-notice a { color: var(--m-ink); text-decoration: underline; }
-.terms-notice .button { border-radius: 999px; font-size: 13px; }
+.terms-notice .button { border-radius: var(--m-radius); font-size: 13px; }
 .terms-notice .button.is-primary { background: var(--brand); color: var(--text-on-brand); border: 1px solid var(--brand-strong); font-weight: 700; }
 .terms-notice .button.is-error { background: transparent; color: var(--m-ink); border: 1px solid var(--m-ink); }
+
+/* ---------- Text pages (layout: blog-page, e.g. About): laid out like a post ----------
+   Same title size as a post title, centred; a hairline; then the post's 680px reading column. */
+body:has(.blog-prose) .blog-intro { padding-bottom: 0; }
+body:has(.blog-prose) .blog-intro__title {
+  font-size: clamp(2rem, 4.2vw, 3.25rem) !important; line-height: 1.12; max-width: 980px; margin-bottom: 0;
+}
+body:has(.blog-prose) .blog-intro__lede { margin-top: 20px; }
+.blog-page.blog-prose { padding: 32px 0 clamp(64px, 8vw, 120px); }
+.blog-page.blog-prose .container { max-width: calc(var(--m-text) + 2 * var(--m-gutter)); padding: 0 var(--m-gutter); }
+.blog-prose .content {
+  max-width: none; border-top: 1px solid var(--m-rule); padding-top: clamp(32px, 4vw, 48px);
+  font-size: 17px; line-height: 1.75; color: var(--m-ink-2);
+}
+.blog-prose .content p, .blog-prose .content ul, .blog-prose .content ol { margin-bottom: 1.4em; }
+.blog-prose .content h2 { font-size: 1.7rem; font-weight: 600; color: var(--m-ink); margin: 2.2em 0 .6em; }
+.blog-prose .content h2:first-child { margin-top: 0; }
+.blog-prose .content h3 { font-size: 1.3rem; font-weight: 600; color: var(--m-ink); margin: 2em 0 .5em; }
+.blog-prose .content li + li { margin-top: .25em; }
+.blog-prose .content a:not(.button):not(.tag) { text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+/* Same corners on the remaining boxes: post images, code, series numbers, the design-test bar */
+.article .content img, .article .content div.highlighter-rouge, .content pre, .series-parts__num { border-radius: var(--m-radius) !important; }
+.article .content code { border-radius: 2px; }
 
 /* No all-caps anywhere in this version (labels inherited from _blog.scss and the theme included) */
 .series-card__label, .series-parts__here, .code-header__lang, .footer-column-name, .feature-pre-title,

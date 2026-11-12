@@ -2,3 +2,5 @@
 # Used only by the GitHub Pages preview (.github/workflows/preview.yml), which builds the site a
 # second time with this file and publishes it at /<repo>/v2/. Delete it to drop the test.
 variant: minimal   # loads assets/css/minimal.css (_includes/head.html) and the minimal post cards (_layouts/archive.html)
+algae:
+  logo: /assets/images/datablog-gbif.svg   # updated Data Blog logo (its 4px corners set --m-radius in minimal.css)
