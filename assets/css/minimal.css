@@ -1,6 +1,6 @@
 /* GBIF Data Blog – minimal design test (v2)
    Loaded after the theme and _sass/_blog.scss, only when site.variant is "minimal" (_config_v2.yml).
-   Idea: a quiet, editorial page. One sans-serif (Rubik), a large uppercase title, hairline rules
+   Idea: a quiet, editorial page. Bitter titles and Rubik text (GBIF editorial scale), a large sentence-case title, no all-caps text, hairline rules
    instead of card shadows, pill-shaped chips and much more white space.
    Colours: GBIF.org Design System tokens (names in the variables below). The page is `paper`,
    text and rules are `text` (ink-80, the grey of the GBIF logotype), and `brand` green marks
@@ -34,6 +34,7 @@
   --m-green: var(--brand);
   --m-green-ink: var(--brand-strong);
   --m-sans: "Rubik", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --m-serif: "Bitter", Georgia, "Times New Roman", serif;   /* titles: GBIF editorial scale (Bitter SemiBold headings, Rubik body) */
   --m-wide: 1240px;          /* grid and header width */
   --m-text: 680px;           /* reading column */
   --m-gutter: clamp(16px, 4vw, 40px);
@@ -46,8 +47,8 @@ main { background: transparent; }
 h1, h2, h3, h4, .title, .feature-title, .postHeader .feature-title, .blog-intro__title,
 .content h1, .content h2, .content h3, .content h4,
 .post-end__title, .series-card__title, .author-list__name, .terms-heading {
-  font-family: var(--m-sans) !important;
-  letter-spacing: -0.01em;
+  font-family: var(--m-serif) !important;
+  letter-spacing: -0.005em;
 }
 ::selection { background: var(--green-20); color: var(--ink-100); }
 
@@ -57,7 +58,7 @@ h1, h2, h3, h4, .title, .feature-title, .postHeader .feature-title, .blog-intro_
   padding: 8px var(--m-gutter); background: var(--ink-100); color: var(--white);
   font: 400 12px/1 var(--m-sans); letter-spacing: .04em;
 }
-.design-switch__label { text-transform: uppercase; opacity: .7; margin-right: 8px; }
+.design-switch__label { opacity: .7; margin-right: 8px; }
 .design-switch__link { color: var(--white); padding: 4px 10px; border-radius: 999px; text-decoration: none; }
 .design-switch__link:hover { color: var(--white); background: rgba(255,255,255,.12); }
 .design-switch__link.is-current { background: var(--brand); color: var(--text-on-brand); }
@@ -78,20 +79,20 @@ a.navbar-item:hover, .navbar-link:hover, .navbar-item.has-dropdown:hover .navbar
   #mainNavbar .navbar-start { gap: 8px; }
 }
 
-/* ---------- Page header: big uppercase title ---------- */
+/* ---------- Page header: big title ---------- */
 .blog-intro { padding: clamp(56px, 9vw, 120px) 0 clamp(32px, 5vw, 64px); }
 .blog-intro .container { max-width: var(--m-wide); padding: 0 var(--m-gutter); text-align: center; }
 .blog-intro__title {
-  font-size: clamp(2.75rem, 10vw, 8.5rem); font-weight: 400; line-height: .92;
-  text-transform: uppercase; letter-spacing: -0.035em !important; color: var(--m-ink);
-  margin: 0 auto 28px; max-width: 12ch;
+  font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 600; line-height: 1;
+  letter-spacing: -0.015em !important; color: var(--m-ink);
+  margin: 0 auto 28px; max-width: 16ch;
 }
 .blog-intro__title::after { display: none; }
 .blog-intro__lede { font-size: 1.05rem; line-height: 1.6; color: var(--m-muted); max-width: 34rem; margin: 0 auto; }
 
 /* Other pages (Series, Authors, Topics, About): same title, smaller */
 .blog-intro + .blog-page .container, .blog-page .container { max-width: var(--m-wide); padding: 0 var(--m-gutter); }
-body:not(:has(#blog-list)) .blog-intro__title { font-size: clamp(2.5rem, 7vw, 5.5rem); }
+body:not(:has(#blog-list)) .blog-intro__title { font-size: clamp(2.25rem, 6vw, 3.5rem); }
 
 /* Search: a single underline, centred under the lede */
 .blog-search { max-width: 520px; margin: 44px auto 0; }
@@ -162,27 +163,17 @@ body:not(:has(#blog-list)) .blog-intro__title { font-size: clamp(2.5rem, 7vw, 5.
 .mcard__img { display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--white); margin-bottom: 24px; }
 .mcard__img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
 .mcard:hover .mcard__img img { transform: scale(1.03); }
-/* No picture: a dotted panel with the topic name, tinted with the topic's GBIF categorical hue
-   (10% ground, 40% dots), so the grid stays even. Text is ink-80 on the 10% tint (7.6:1 or better). */
+/* No picture: a neutral dotted panel with the topic name, so the grid stays even.
+   White ground, ink-20 dots, ink-10 outline; topic name in text (ink-80). */
 .mcard__img--empty {
-  --tint: var(--paper); --dot: var(--border);
   display: flex; align-items: flex-end; padding: 20px; text-decoration: none;
-  background-color: var(--tint);
-  background-image: radial-gradient(var(--dot) 1.2px, transparent 1.4px);
+  background-color: var(--white);
+  background-image: radial-gradient(var(--border) 1.2px, transparent 1.4px);
   background-size: 14px 14px;
+  border: 1px solid var(--border-subtle);
 }
-.mcard__img--empty span { font-size: clamp(18px, 1.8vw, 24px); line-height: 1.15; color: var(--text); background: var(--tint); padding: 6px 10px 6px 0; letter-spacing: -0.01em; }
-.mcard__img--empty[data-topic="apis-and-downloads"]    { --tint: #e5f1f7; --dot: #99c9e1; }  /* ocean (Matisse) */
-.mcard__img--empty[data-topic="analysis-and-maps"]     { --tint: #e5f8fd; --dot: #99e2f8; }  /* cyan (Cerulean) */
-.mcard__img--empty[data-topic="taxonomy"]              { --tint: #efecf4; --dot: #c2b3d3; }  /* purple (Kingfisher daisy) */
-.mcard__img--empty[data-topic="molecular-data"]        { --tint: #f0f3f9; --dot: #c3cee6; }  /* periwinkle (Purple sky) */
-.mcard__img--empty[data-topic="citation-and-data-use"] { --tint: #faeff3; --dot: #edc0d2; }  /* pink (Mulberry) */
-.mcard__img--empty[data-topic="data-quality"]          { --tint: #fcf2f1; --dot: #f4cbc7; }  /* coral (Japonica) */
-.mcard__img--empty[data-topic="collections"]           { --tint: #fdf7f2; --dot: #f7decb; }  /* peach (Fawn) */
-.mcard__img--empty[data-topic="citizen-science"]       { --tint: #fef8ec; --dot: #fae5b6; }  /* yellow (Ronchi) */
-.mcard__img--empty[data-topic="publishing-data"],
-.mcard__img--empty[data-topic="survey-and-monitoring"] { --tint: #edf5ea; --dot: #b7d7ab; }  /* green */
-.mcard__title { font: 500 20px/1.3 var(--m-sans) !important; margin: 0 0 10px !important; letter-spacing: -0.01em; }
+.mcard__img--empty span { font-size: clamp(18px, 1.8vw, 24px); line-height: 1.15; color: var(--text); background: var(--white); padding: 6px 10px 6px 0; letter-spacing: -0.01em; }
+.mcard__title { font: 600 20px/1.3 var(--m-serif) !important; margin: 0 0 10px !important; letter-spacing: -0.005em; }
 .mcard__title a { color: var(--m-ink); text-decoration: none; }
 .mcard__title a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; color: var(--brand); }
 .mcard__by { font-size: 13px; color: var(--m-muted); margin: 0 0 12px; }
@@ -222,8 +213,8 @@ body:not(:has(#blog-list)) .blog-intro__title { font-size: clamp(2.5rem, 7vw, 5.
 .postHeader { background: transparent !important; padding: clamp(56px, 8vw, 112px) var(--m-gutter) 0; }
 .postHeader .feature-content { background: transparent !important; max-width: 980px; margin: 0 auto; padding: 0 !important; }
 .postHeader .feature-title, .postHeader .feature-title p {
-  font-size: clamp(2rem, 4.6vw, 3.6rem) !important; font-weight: 400 !important; line-height: 1.08 !important;
-  letter-spacing: -0.025em !important; color: var(--m-ink) !important; text-align: center;
+  font-size: clamp(2rem, 4.2vw, 3.25rem) !important; font-weight: 600 !important; line-height: 1.12 !important;
+  letter-spacing: -0.01em !important; color: var(--m-ink) !important; text-align: center;
 }
 .post-meta { margin: 0; padding: 32px 0 0; }
 .post-meta .article, .post-series .article, .post-end .article { max-width: var(--m-text); margin-left: auto !important; margin-right: auto !important; padding: 0 var(--m-gutter) !important; }
@@ -245,9 +236,9 @@ body:not(:has(#blog-list)) .blog-intro__title { font-size: clamp(2.5rem, 7vw, 5.
 main .article { max-width: var(--m-text); margin: clamp(40px, 6vw, 72px) auto; padding: 0 var(--m-gutter); }
 .article .content { font-size: 17px; line-height: 1.75; color: var(--m-ink-2); }
 .article .content p, .article .content ul, .article .content ol { margin-bottom: 1.4em; }
-.article .content h2 { font-size: 1.7rem; font-weight: 500; color: var(--m-ink); margin: 2.6em 0 .8em; }
-.article .content h3 { font-size: 1.3rem; font-weight: 500; color: var(--m-ink); margin: 2.2em 0 .6em; }
-.article .content h4 { font-size: 1.05rem; font-weight: 500; color: var(--m-ink); }
+.article .content h2 { font-size: 1.7rem; font-weight: 600; color: var(--m-ink); margin: 2.6em 0 .8em; }
+.article .content h3 { font-size: 1.3rem; font-weight: 600; color: var(--m-ink); margin: 2.2em 0 .6em; }
+.article .content h4 { font-size: 1.05rem; font-weight: 700; color: var(--m-ink); }
 .article .content img { display: block; margin: 2.2em auto; }
 .article .content a:not(.button):not(.tag) { text-decoration-thickness: 1px; text-underline-offset: 3px; }   /* links stay GBIF green */
 .content blockquote { background: transparent; border-left: 2px solid var(--brand); border-radius: 0; padding: .2em 0 .2em 1.5em; font-size: 1.1em; color: var(--m-ink); }
@@ -262,7 +253,7 @@ main .article { max-width: var(--m-text); margin: clamp(40px, 6vw, 72px) auto; p
   background: transparent !important; border: 0 !important; border-top: 1px solid var(--m-rule) !important;
   border-radius: 0 !important; box-shadow: none !important; padding-left: 0; padding-right: 0;
 }
-.series-card__label { color: var(--m-muted); font-weight: 400; letter-spacing: .06em; }
+.series-card__label { color: var(--m-muted); font-weight: 400; font-size: 13px; letter-spacing: 0; }
 .series-card__title a, .series-card__title--small a { color: var(--m-ink); }
 .series-parts, .series-parts__item { border-color: var(--m-rule-soft) !important; }
 .series-parts__num { border-color: var(--m-ink); color: var(--m-ink); border-radius: 999px; }
@@ -278,13 +269,13 @@ a.series-parts__title:hover { color: var(--brand); }
 .post-end__nav { gap: 32px; }
 .post-end__link { padding: 20px 0 0; }
 .post-end__link:hover .post-end__title { text-decoration: underline; text-underline-offset: 3px; }
-.post-end__label { font-size: 12px; color: var(--m-muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
-.post-end__title { font-weight: 400; font-size: 1.15rem; color: var(--m-ink); }
+.post-end__label { font-size: 13px; color: var(--m-muted); margin-bottom: 6px; }
+.post-end__title { font-weight: 600; font-size: 1.15rem; color: var(--m-ink); }
 
 /* Authors page */
 .author-list { gap: 0 32px; }
 .author-list__item { padding: 20px 0; }
-.author-list__name { font-weight: 500; color: var(--m-ink); }
+.author-list__name { font-weight: 600; color: var(--m-ink); }
 .author-list__count { color: var(--m-muted); font-weight: 400; }
 
 /* ---------- Footer: columns separated by hairlines ---------- */
@@ -293,7 +284,7 @@ footer { background: var(--m-paper); }
 .footer > div { max-width: none !important; margin: 0 !important; padding: 0 var(--m-gutter) !important; }
 .footer-groups { display: grid !important; grid-template-columns: repeat(3, 1fr); gap: 0 !important; max-width: var(--m-wide); margin: 0 auto !important; border-left: 1px solid var(--m-rule); }
 .footer-column { padding: 40px 32px 48px !important; border-right: 1px solid var(--m-rule); margin: 0 !important; max-width: none !important; width: auto !important; }
-.footer-column-name { font: 500 13px/1 var(--m-sans) !important; color: var(--m-ink) !important; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 18px !important; }
+.footer-column-name { font: 500 14px/1 var(--m-sans) !important; color: var(--m-ink) !important; text-transform: none !important; letter-spacing: 0; margin-bottom: 18px !important; }
 .footer-description, .footer-description p, .footer-links a { color: var(--m-ink-2) !important; font-size: 14px; line-height: 1.7; }
 .footer-links a:hover { color: var(--brand) !important; text-decoration: underline; text-underline-offset: 3px; }
 .footer-online-list .fa-stack .fa-circle { color: var(--m-ink) !important; }
@@ -311,6 +302,10 @@ footer { background: var(--m-paper); }
 .terms-notice .button { border-radius: 999px; font-size: 13px; }
 .terms-notice .button.is-primary { background: var(--brand); color: var(--text-on-brand); border: 1px solid var(--brand-strong); font-weight: 700; }
 .terms-notice .button.is-error { background: transparent; color: var(--m-ink); border: 1px solid var(--m-ink); }
+
+/* No all-caps anywhere in this version (labels inherited from _blog.scss and the theme included) */
+.series-card__label, .series-parts__here, .code-header__lang, .footer-column-name, .feature-pre-title,
+.design-switch__label, .blog-filter__label { text-transform: none !important; letter-spacing: 0 !important; }
 
 /* Focus */
 :focus-visible { outline: 2px solid var(--m-green); outline-offset: 2px; }

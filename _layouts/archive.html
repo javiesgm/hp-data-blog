@@ -75,7 +75,7 @@ description: Blog post list with search, filters (topic, author, tag, series) an
               <time class="mcard__date" datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%-d %b %Y" }}</time>
               {% if firstCat %}<a class="mcard__topic" href="{{ site.algae.archive_permalink | relative_url }}?category={{ firstCat | url_encode }}">{{ firstCat }}</a>{% endif %}
             </div>
-            <a class="mcard__img{% unless background %} mcard__img--empty{% endunless %}" href="{{ href }}"{% unless background %} data-topic="{{ firstCat | slugify }}"{% endunless %} tabindex="-1" aria-hidden="true">
+            <a class="mcard__img{% unless background %} mcard__img--empty{% endunless %}" href="{{ href }}" tabindex="-1" aria-hidden="true">
               {% if background %}<img src="{% if thumbFirst == '/' %}{{ background | relative_url }}{% else %}{{ background }}{% endif %}" alt="" loading="lazy">{% else %}<span>{{ firstCat }}</span>{% endif %}
             </a>
             <h2 class="mcard__title"><a href="{{ href }}">{{ post.title | escape_once }}</a></h2>
