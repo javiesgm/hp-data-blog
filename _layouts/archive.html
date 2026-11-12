@@ -84,6 +84,11 @@ description: Blog post list with search, filters (topic, author, tag, series) an
             <a class="mcard__more" href="{{ href }}" aria-hidden="true" tabindex="-1">Read more</a>
           </div>
         {% else %}
+        {% unless background %}
+          {% comment %}No picture: a dotted panel with the first topic, so every card has the same top (_sass/_blog.scss){% endcomment %}
+          {% assign firstCat = post.categories | first %}
+          <div class="feature-img feature-img--empty" aria-hidden="true"><span>{{ firstCat }}</span><a href="{{ href }}" class="feature-overlay" tabindex="-1"></a></div>
+        {% endunless %}
         {% include blocks/parts/feature.html content=post preTitle=preTitle description=description href=href background=background imageLicense=false ignoreThumbor=true %}
         {% endif %}
       </article>

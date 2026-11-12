@@ -7,7 +7,7 @@ $blog-line: #e9e8e8;         // border-subtle (ink-10)
 // - $blog-column (840px): page headers (title, description, search, topic chips), page content
 //   (About, Series, Authors, Topics and tags) and list rows (images included, about 12–15 words per line)
 // - $blog-cards-width: only the card grid, and the toolbar above it (same width in both views)
-$blog-cards-width: 1176px;
+$blog-cards-width: 1344px;   // 1320px of cards (the 1400px artboard minus 40px margins) + 12px padding each side
 $blog-column: 840px;
 $blog-wash: #edf5ea;         // brand-soft (green-10): the only fill behind green text
 
@@ -214,7 +214,7 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
 // is on. The list is narrower (840px) and centred below it, under the page header. The theme's fixed-width flex cards are replaced
 // by a grid that fills its row (3 columns on desktop, 2 on tablets, 1 on phones).
 .blog-list .feature-cards {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px;
   max-width: $blog-cards-width; margin: 0 auto; padding: 0 12px;
 }
 .blog-list.is-list .feature-cards { max-width: $blog-column + 24px; }
@@ -223,7 +223,28 @@ a.tag:not(.is-delete):hover { border-color: $gbif-green-dark; color: #3d7d25; te
   @include gbif-card;
   .feature-content { padding: $card-padding; }
 }
+// 4 columns, then 3, 2 and 1 as the window narrows (same steps as the minimal version)
+@media (max-width: 1280px) { .blog-list .feature-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 960px) { .blog-list .feature-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .blog-list .feature-cards { grid-template-columns: 1fr; gap: 16px; } }
+
+// Every card's picture is the same shape. The theme makes the last card's picture full height in
+// some grid positions (.feature:last-of-type:nth-child(3n) etc.); keep the 60% picture instead.
+.blog-list .feature-cards .feature .feature-img { height: 0 !important; padding-bottom: 60%; max-height: none; border-right: 0; border-bottom: 1px solid #0000001a; }
+
+// Card titles a step smaller so four columns stay readable (list view sets its own size)
+.blog-list .feature-cards .feature-title { font-size: 1.3rem !important; line-height: 1.3; }
+
+// No picture: a dotted panel with the post's first topic (archive.html), so the grid stays even
+.feature-img--empty {
+  background-color: $gbif-surface-2;                                            // paper
+  background-image: radial-gradient(#d3d2d2 1.2px, transparent 1.4px);          // border (ink-20) dots
+  background-size: 14px 14px; background-repeat: repeat;
+  span {
+    position: absolute; left: $card-padding; bottom: 16px; padding: 4px 8px 4px 0;
+    background: $gbif-surface-2; color: $gbif-ink; font: 400 18px/1.2 $gbif-body;
+  }
+}
 
 // ---------- List view ----------
 .blog-list.is-list {
